@@ -29,5 +29,5 @@ enum SortType{
     BY_VIEW,
     BY_PRICE,
     BY_BOUGHT_AMOUNT,
-    BT_TIME
+    BT_TIME;
 }
