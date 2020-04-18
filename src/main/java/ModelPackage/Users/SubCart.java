@@ -1,4 +1,4 @@
-package ModelPackage;
+package ModelPackage.Users;
 
 import ModelPackage.Product.Product;
 import lombok.*;

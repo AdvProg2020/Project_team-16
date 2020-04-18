@@ -1,5 +1,6 @@
 package ModelPackage.Product;
 
+import ModelPackage.Users.Seller;
 import lombok.Builder;
 import lombok.Data;
 

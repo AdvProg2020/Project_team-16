@@ -1,7 +1,6 @@
 package ModelPackage.Users;
 
 
-import ModelPackage.Cart;
 import lombok.*;
 
 @Data
