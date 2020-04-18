@@ -16,4 +16,5 @@ public class DiscountCode {
     private int offPercentage;
     private long maxDiscount;
     private HashMap<User,Integer> users;
+
 }
