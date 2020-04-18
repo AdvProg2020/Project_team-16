@@ -1,6 +1,7 @@
 package ModelPackage.Log;
 
 import ModelPackage.Product.Product;
+import ModelPackage.Users.User;
 import lombok.*;
 
 @Setter @Getter @Builder @RequiredArgsConstructor
