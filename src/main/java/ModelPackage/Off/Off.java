@@ -1,4 +1,4 @@
-package ModelPackage;
+package ModelPackage.Off;
 
 import ModelPackage.Product.Product;
 import ModelPackage.Users.Seller;
@@ -16,8 +16,7 @@ public class Off {
     private OffStatus offStatus;
     private Time startTime;
     private Time endTime;
-    private long maxDiscount;
-
+    private int offPercentage;
 }
 enum OffStatus{
     CREATION,

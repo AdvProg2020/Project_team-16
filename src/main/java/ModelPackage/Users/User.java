@@ -1,10 +1,12 @@
 package ModelPackage.Users;
 
 
+import ModelPackage.Cart;
 import lombok.*;
 
 @Data
 @NoArgsConstructor
+@Builder
 public class User {
     protected String username;
     protected String password;
