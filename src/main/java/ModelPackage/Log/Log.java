@@ -1,12 +1,10 @@
 package ModelPackage.Log;
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Data @Builder @NoArgsConstructor
+@Data
 abstract class Log {
     private String logId;
     private Date date;

@@ -3,8 +3,8 @@ package View.PrintModels;
 import lombok.Builder;
 import lombok.Data;
 
-@Data @Builder
-public class InCartPM extends CartPM {
+@Data
+public class InCartPM{
     private MiniProductPM product;
     private String sellerId;
     private int amount;

@@ -4,7 +4,7 @@ import ModelPackage.Product.Product;
 import ModelPackage.Users.User;
 import lombok.*;
 
-@Setter @Getter @Builder @RequiredArgsConstructor
+@Setter @Getter @RequiredArgsConstructor
 public class SellLog extends Log {
     @NonNull private Product product;
     @NonNull private int moneyGotten;

@@ -1,12 +1,9 @@
 package View;
 
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@Builder @lombok.Data @NoArgsConstructor
+@lombok.Data
 public class Data {
     private String username;
     private String categoryInId;
