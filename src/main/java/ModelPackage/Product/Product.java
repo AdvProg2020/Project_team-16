@@ -1,6 +1,7 @@
 package ModelPackage.Product;
 
 import ModelPackage.Users.Seller;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-@Data @Builder
+@Data @AllArgsConstructor
 public class Product {
     private String productId;
     private ProductStatus productStatus;
@@ -22,7 +23,7 @@ public class Product {
     private HashMap<String,String> specialFeatures;
     private String description;
     private ArrayList<Score> allScores;
-    private float totalScore;
+    private double totalScore;
     private ArrayList<Comment> allComments;
     private HashMap<String,Integer> stock;
     private HashMap<String,Integer> prices;
