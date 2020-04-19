@@ -22,4 +22,18 @@ public class CSCLManagerTest {
         CSCLManager test = CSCLManager.getInstance();
         Assert.assertEquals(test, csclManager);
     }
+                            /*both states of find company by name*/
+    @Test
+    public void getCompanyByNameTest() {
+        String name = "Adidas";
+        Company actualCompany = csclManager.getCompanyByName(name);
+        Company expectedCompany = adidas;
+        Assert.assertEquals(actualCompany, expectedCompany);
+    }
+    @Test
+    public void  getCompanyByNameNotFoundTest() {
+        String name = "Pishgaman";
+        Company actualCompany = csclManager.getCompanyByName(name);
+        Assert.assertNull(actualCompany);
+    }
 }

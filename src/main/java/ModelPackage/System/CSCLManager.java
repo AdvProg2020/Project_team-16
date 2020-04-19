@@ -31,5 +31,12 @@ public class CSCLManager {
     public void createCompany(Company newCompany) {
         allCompanies.add(newCompany);
     }
-
+                                /*find company by name*/
+    public Company getCompanyByName(String companyName) {
+        for (Company company : allCompanies) {
+            if (companyName.equals(company.getName()))
+                return company;
+        }
+        return null;
+    }
 }
