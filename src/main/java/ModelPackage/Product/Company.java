@@ -16,6 +16,7 @@ public class Company {
         this.name = name;
         this.phone = phone;
         this.group = group;
+        this.productsIn = new ArrayList<Product>();
     }
 
     public String getName() {
