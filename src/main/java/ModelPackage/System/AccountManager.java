@@ -18,7 +18,15 @@ public class AccountManager {
 
     public void login(User user){}
 
-    public void changeInfo(User user, String info, String newInfo){}
+    public void changeInfo(User user, String info, String newInfo){
+        switch (info){
+            case "password" : user.setPassword(newInfo); break;
+            case "firstName" : user.setFirstName(newInfo); break;
+            case "lastName" : user.setLastName(newInfo); break;
+            case "email" : user.setEmail(newInfo); break;
+            case "phoneNumber" : user.setPhoneNumber(newInfo); break;
+        }
+    }
 
     public void logout(User user){}
 
