@@ -9,7 +9,7 @@ import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 
-@Builder @Data
+//@Builder @Data
 public class CSCLManager {
     private static CSCLManager csclManager = new CSCLManager();
     private ArrayList<Company> allCompanies;
@@ -38,5 +38,9 @@ public class CSCLManager {
                 return company;
         }
         return null;
+    }
+                            /*edit name of company*/
+    public void editCompanyName(String formerName, String newName) {
+        getCompanyByName(formerName).setName(newName);
     }
 }

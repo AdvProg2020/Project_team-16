@@ -36,4 +36,12 @@ public class CSCLManagerTest {
         Company actualCompany = csclManager.getCompanyByName(name);
         Assert.assertNull(actualCompany);
     }
+                        /*edit name of company test*/
+    @Test
+    public void editCompanyNameTest() {
+        String expectedName = "Pishgaman";
+        csclManager.editCompanyName("Adidas", expectedName);
+        String actualName = adidas.getName();
+        Assert.assertEquals(actualName, expectedName);
+    }
 }
