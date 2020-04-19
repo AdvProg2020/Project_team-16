@@ -23,7 +23,15 @@ public class Company {
         return name;
     }
 
+    public String getGroup() {
+        return group;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 }

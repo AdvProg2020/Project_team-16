@@ -39,8 +39,12 @@ public class CSCLManager {
         }
         return null;
     }
-                            /*edit name of company*/
+                                 /*edit name of company*/
     public void editCompanyName(String formerName, String newName) {
         getCompanyByName(formerName).setName(newName);
+    }
+                                /*edit group of company*/
+    public void editCompanyGroup(String companyName, String newGroup) {
+        getCompanyByName(companyName).setGroup(newGroup);
     }
 }

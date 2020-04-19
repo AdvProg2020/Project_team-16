@@ -12,7 +12,7 @@ public class CSCLManagerTest {
     {
         csclManager = CSCLManager.getInstance();
         adidas = new Company("Adidas", "34524532", "Sports");
-        puma = new Company("Puma", "12434565", "sports");
+        puma = new Company("Puma", "12434565", "Sports");
         csclManager.createCompany(adidas);
         csclManager.createCompany(puma);
     }
@@ -43,5 +43,13 @@ public class CSCLManagerTest {
         csclManager.editCompanyName("Adidas", expectedName);
         String actualName = adidas.getName();
         Assert.assertEquals(actualName, expectedName);
+    }
+                        /*edit group of company test*/
+    @Test
+    public void editCompanyGroupTest() {
+        String expectedGroup = "SuperSport";
+        csclManager.editCompanyGroup("Puma", expectedGroup);
+        String actualGroup = puma.getGroup();
+        Assert.assertEquals(actualGroup, expectedGroup);
     }
 }
