@@ -10,11 +10,11 @@ import java.util.List;
 
 @Data
 public class ProductManager {
-    private static ArrayList<Product> allProducts;
+    private ArrayList<Product> allProducts;
     private static ProductManager productManager = null;
 
-    public ProductManager(){
-        allProducts = new ArrayList<Product>();
+    private ProductManager(){
+        allProducts = new ArrayList<>();
     }
 
     public static ProductManager getInstance(){
@@ -53,5 +53,17 @@ public class ProductManager {
 
     public void addProductToList(Product product){
         allProducts.add(product);
+    }
+
+    public void addView(Product product){
+        product.setView(product.getView()+1);
+    }
+
+    public void addBought(Product product){
+        product.setBoughtAmount(product.getBoughtAmount()+1);
+    }
+
+    public void clear(){
+        allProducts.clear();
     }
 }

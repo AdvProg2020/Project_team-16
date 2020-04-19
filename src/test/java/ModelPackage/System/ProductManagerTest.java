@@ -82,6 +82,7 @@ public class ProductManagerTest {
                 new HashMap<>(prices),
                 460,2);
 
+        productManager.clear();
         productManager.addProductToList(product);
         productManager.addProductToList(product2);
     }
@@ -128,5 +129,23 @@ public class ProductManagerTest {
 
         Product[] actual = productManager.findProductByName("ShiRt");
         Assert.assertArrayEquals(expected,actual);
+    }
+
+    @Test
+    public void addViewTest(){
+        productManager.addView(product);
+        int expected = 21;
+        int actual = product.getView();
+
+        Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void addBoughtTest(){
+        productManager.addBought(product);
+        int expected = 9;
+        int actual = product.getBoughtAmount();
+
+        Assert.assertEquals(expected,actual);
     }
 }
