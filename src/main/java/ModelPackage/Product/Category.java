@@ -1,12 +1,11 @@
 package ModelPackage.Product;
 
-import lombok.Builder;
+
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 
-@Builder @Data @RequiredArgsConstructor
+@Data
 public class Category {
     private String name;
     private String id;

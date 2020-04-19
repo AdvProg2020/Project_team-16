@@ -1,11 +1,15 @@
 package ModelPackage.System;
 
 import ModelPackage.Users.User;
+import lombok.Data;
+import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
+
 public class AccountManager {
-    private static List<User> users;
+    @Getter private static List<User> users = new ArrayList<>();
     private static AccountManager accountManager = null;
     private AccountManager(){}
     public static AccountManager getInstance(){
@@ -18,7 +22,8 @@ public class AccountManager {
 
     public void login(User user){}
 
-    public void changeInfo(User user, String info, String newInfo){
+    public void changeInfo(String username, String info, String newInfo){
+        User user = getUserByUsername(username);
         switch (info){
             case "password" : user.setPassword(newInfo); break;
             case "firstName" : user.setFirstName(newInfo); break;
@@ -30,12 +35,17 @@ public class AccountManager {
 
     public void logout(User user){}
 
-    public User getUserByName(String username){
-        return null;
-    }
-
     private boolean isCorrectPassword(String password,String username){
         return false;
+    }
+
+    private User getUserByUsername(String username){
+        for (User user : users) {
+            if (user.getUsername().equals(username)){
+                return user;
+            }
+        }
+        return null;
     }
 
 

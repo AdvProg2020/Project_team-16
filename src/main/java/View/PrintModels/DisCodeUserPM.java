@@ -1,10 +1,15 @@
 package View.PrintModels;
 
-import lombok.Builder;
 import lombok.Data;
 
-@Data @Builder
+import java.sql.Time;
 
+@Data
 public class DisCodeUserPM extends DiscountPM {
     private int count;
+
+    public DisCodeUserPM(String discountCode, Time startTime, Time endTime, int offPercentage, int maxOfPriceDiscounted, int count) {
+        super(discountCode, startTime, endTime, offPercentage, maxOfPriceDiscounted);
+        this.count = count;
+    }
 }

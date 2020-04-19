@@ -5,7 +5,7 @@ import lombok.*;
 
 @Data
 @Builder
-public class SubCart extends Cart {
+public class SubCart{
     private Product product;
     private String productId;
     private String sellerId;
