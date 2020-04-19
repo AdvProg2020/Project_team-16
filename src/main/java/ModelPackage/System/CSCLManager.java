@@ -27,4 +27,9 @@ public class CSCLManager {
     public static CSCLManager getInstance() {
         return csclManager;
     }
+                                /*create Company*/
+    public void createCompany(Company newCompany) {
+        allCompanies.add(newCompany);
+    }
+
 }
