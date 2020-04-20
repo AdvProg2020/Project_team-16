@@ -4,6 +4,7 @@ import ModelPackage.Users.Seller;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,4 +30,13 @@ public class Product {
     private HashMap<String,Integer> prices;
     private int view;
     private int boughtAmount;
+
+    public Product(){
+        this.productId = generateId();
+    }
+
+    private String generateId(){
+        Date date = new Date();
+        return String.format("PR%s%04d",date.toString().replaceAll("\\s","".replaceAll(":","")),(int)(Math.random()*9999+1));
+    }
 }

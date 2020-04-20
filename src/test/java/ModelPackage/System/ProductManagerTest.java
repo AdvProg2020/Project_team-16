@@ -18,7 +18,7 @@ public class ProductManagerTest {
     private Seller reza;
     private Seller saeed;
     private Company company;
-    private Category category;
+
     //Creating a Product
     {
         productManager = ProductManager.getInstance();
@@ -38,7 +38,7 @@ public class ProductManagerTest {
         sellers.add(reza);
         sellers.add(saeed);
 
-        category = new Category("Cloth","CT321654987",null);
+        Category category = new Category("Cloth", "CT321654987", null);
 
         HashMap<String,String> publicFeatures = new HashMap<>();
         publicFeatures.put("Color","Red");
@@ -70,13 +70,13 @@ public class ProductManagerTest {
         prices.put("see120",21500);
 
         product = new Product("PR20200405332158465",
-                ProductStatus.VERIFIED,"Shirt",new Date(),company,sellers,category,"CT321654987",
+                ProductStatus.VERIFIED,"Shirt",new Date(),company,sellers, category,"CT321654987",
                 publicFeatures,specialFeatures,"Bullshit",scores,5,comments,stock,prices,
                 20,8
         );
 
         product2 = new Product("PR19800404879154555",
-                ProductStatus.UNDER_EDIT,"Shirt XXL",new Date(),company,new ArrayList<>(sellers),category,"CT321654987",
+                ProductStatus.UNDER_EDIT,"Shirt XXL",new Date(),company,new ArrayList<>(sellers), category,"CT321654987",
                 new HashMap<>(publicFeatures),new HashMap<>(specialFeatures),
                 "Bull",scores,3,new ArrayList<>(comments),new HashMap<>(stock),
                 new HashMap<>(prices),

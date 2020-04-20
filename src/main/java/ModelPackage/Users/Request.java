@@ -23,12 +23,17 @@ public class Request {
         this.request = request;
 
         String className = toChange.getClass().getName();
-        if(className.equals("ModelPackage.Off.Off")){
-            off = (Off)toChange;
-        }else if(className.equals("ModelPackage.Product.Comment")){
-            comment = (Comment)toChange;
-        }else if((className.equals("ModelPackage.Product.Product"))){
-            product = (Product) toChange;
+
+        switch (className) {
+            case "ModelPackage.Off.Off":
+                off = (Off) toChange;
+                break;
+            case "ModelPackage.Product.Comment":
+                comment = (Comment) toChange;
+                break;
+            case "ModelPackage.Product.Product":
+                product = (Product) toChange;
+                break;
         }
 
         this.requestId = generateId();
