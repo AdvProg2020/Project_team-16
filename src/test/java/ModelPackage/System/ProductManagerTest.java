@@ -2,6 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.Product.*;
 import ModelPackage.Users.Cart;
+import ModelPackage.Users.Request;
 import ModelPackage.Users.Seller;
 import org.junit.Assert;
 import org.junit.Test;
@@ -69,18 +70,26 @@ public class ProductManagerTest {
         prices.put("reza120",22000);
         prices.put("see120",21500);
 
-        product = new Product("PR20200405332158465",
-                ProductStatus.VERIFIED,"Shirt",new Date(),company,sellers, category,"CT321654987",
-                publicFeatures,specialFeatures,"Bullshit",scores,5,comments,stock,prices,
-                20,8
-        );
+        product = new Product("Shirt","Adidas",sellers,category.getId(),publicFeatures,specialFeatures,
+                "bulshit",stock,prices);
+        product.setAllComments(comments);
+        product.setAllScores(scores);
+        product.setTotalScore(5);
+        product.setView(20);
+        product.setBoughtAmount(8);
+        product.setProductId("PR20200405332158465");
+        product.setProductStatus(ProductStatus.VERIFIED);
 
-        product2 = new Product("PR19800404879154555",
-                ProductStatus.UNDER_EDIT,"Shirt XXL",new Date(),company,new ArrayList<>(sellers), category,"CT321654987",
-                new HashMap<>(publicFeatures),new HashMap<>(specialFeatures),
-                "Bull",scores,3,new ArrayList<>(comments),new HashMap<>(stock),
-                new HashMap<>(prices),
-                460,2);
+
+        product2 = new Product("Shirt XXL","Adidas",new ArrayList<>(sellers),category.getId(),new HashMap<>(publicFeatures),new HashMap<>(specialFeatures),
+                "Bull",new HashMap<>(stock),new HashMap<>(prices));
+        product2.setAllComments(comments);
+        product2.setAllScores(scores);
+        product2.setTotalScore(3);
+        product2.setView(460);
+        product2.setBoughtAmount(2);
+        product2.setProductId("PR20200407545358465");
+        product2.setProductStatus(ProductStatus.UNDER_EDIT);
 
         productManager.clear();
         productManager.addProductToList(product);
@@ -214,4 +223,27 @@ public class ProductManagerTest {
         Assert.assertFalse(exist);
     }
 
+    @Test
+    public void createProductTest(){
+        productManager.clear();
+        productManager.createProduct(product,"asghar120");
+        Request request = RequestManager.getInstance().getRequests().get(0);
+        RequestManager.getInstance().accept(request.getRequestId());
+        boolean successful = productManager.doesThisProductExist(product.getProductId());
+        Assert.assertTrue(successful);
+    }
+
+    @Test
+    public void editProductTest(){
+        productManager.clear();
+        productManager.addProductToList(product);
+        Product edit = new Product(product);
+        edit.setCompany("Brazzers");
+        productManager.editProduct(edit,"asghar120");
+        Request request = RequestManager.getInstance().getRequests().get(0);
+        RequestManager.getInstance().accept(request.getRequestId());
+        String company = productManager.findProductById(product.getProductId()).getCompany();
+
+        Assert.assertEquals("Brazzers",company);
+    }
 }

@@ -4,6 +4,8 @@ import ModelPackage.Product.Comment;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.Product.Score;
+import ModelPackage.Users.Request;
+import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
 import lombok.Data;
 
@@ -27,6 +29,20 @@ public class ProductManager {
         else{
             return productManager;
         }
+    }
+
+    public void createProduct(Product product,String sellerId){
+        String requestStr = String.format("%s has requested to create Product \"%s\" with id %s",sellerId,product.getName(),product.getProductId());
+        Request request = new Request(sellerId, RequestType.CREATE_PRODUCT,requestStr,product);
+        RequestManager.getInstance().addRequest(request);
+    }
+
+    public void editProduct(Product edited,String editor){
+        String requestStr = String.format("%s has requested to edit Product \"%s\" with id %s",edited,edited.getName(),edited.getProductId());
+        Product product = findProductById(edited.getProductId());
+        product.setProductStatus(ProductStatus.UNDER_EDIT);
+        Request request = new Request(editor,RequestType.CHANGE_PRODUCT,requestStr,edited);
+        RequestManager.getInstance().addRequest(request);
     }
 
     public void addAmountOfStock(String productId, String sellerId,int amount){
