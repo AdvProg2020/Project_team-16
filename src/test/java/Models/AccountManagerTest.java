@@ -3,6 +3,7 @@ package Models;
 import ModelPackage.System.AccountManager;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.User;
+import mockit.Expectations;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,5 +18,19 @@ public class AccountManagerTest {
         accountManager.changeInfo("a","password", "b");
         Assert.assertEquals("b",user.getPassword());
     }
+
+    @Test
+    public void createAccount(){
+        accountManager.createAccount("a","a","a","a","a","a");
+        String expected = AccountManager.getUsers().get(0).getUsername();
+        String actual = "a";
+        Assert.assertEquals(expected,actual);
+    }
+
+
+
+
+
+
 }
 
