@@ -1,11 +1,10 @@
 package ModelPackage.Product;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
-@Data @Builder
+@Data
 public class Comment {
     private String id;
     private String productId;

@@ -1,5 +1,7 @@
 package ModelPackage.System;
 
+import ModelPackage.Product.Comment;
+import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Company;
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,6 +10,7 @@ public class CSCLManagerTest {
     private CSCLManager csclManager;
     private Company adidas;
     private Company puma;
+    private Comment comment;
                                 /*create company*/
     {
         csclManager = CSCLManager.getInstance();
@@ -15,6 +18,7 @@ public class CSCLManagerTest {
         puma = new Company("Puma", "12434565", "Sports");
         csclManager.createCompany(adidas);
         csclManager.createCompany(puma);
+        comment = new Comment("12", "ali12", "solution", "solved correctly", CommentStatus.VERIFIED, true);
     }
                                 /*getInstance*/
     @Test

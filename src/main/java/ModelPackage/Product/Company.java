@@ -1,11 +1,10 @@
 package ModelPackage.Product;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
 
-
+@Data
 public class Company {
     private String name;
     private String phone;
@@ -16,22 +15,6 @@ public class Company {
         this.name = name;
         this.phone = phone;
         this.group = group;
-        this.productsIn = new ArrayList<Product>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
+        this.productsIn = new ArrayList<>();
     }
 }

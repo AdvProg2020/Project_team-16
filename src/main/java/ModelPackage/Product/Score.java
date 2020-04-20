@@ -1,9 +1,8 @@
 package ModelPackage.Product;
 
-import lombok.Builder;
 import lombok.Data;
 
-@Data @Builder
+@Data
 public class Score {
     private String userId;
     private String productId;
