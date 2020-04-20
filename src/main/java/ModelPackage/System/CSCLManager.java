@@ -1,5 +1,7 @@
 package ModelPackage.System;
 
+import ModelPackage.Log.DeliveryStatus;
+import ModelPackage.Log.SellLog;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Company;
@@ -9,6 +11,7 @@ import lombok.Data;
 import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 //@Builder @Data
 public class CSCLManager {
@@ -55,5 +58,16 @@ public class CSCLManager {
                                 /*create score*/
     public void createScore(String userId, String productId, int score) {
         allScores.add(new Score(userId, productId, score));
+    }
+                                /*create sellLog*/
+    public void createSellLog(String[] ids, int[] numbers, Date dateAdded, DeliveryStatus deliveryStatus) {
+        String logId = ids[0];
+        String productId = ids[1];
+        String userId = ids[2];
+        int moneyGotten = numbers[0];
+        int discount = numbers[1];
+        Log log = new SellLog(ProductManager.findProductById(productId), moneyGotten, discount,
+                AccountManager.getUserByName(userId), logId, dateAdded, deliveryStatus);
+        allLogs.add(log);
     }
 }
