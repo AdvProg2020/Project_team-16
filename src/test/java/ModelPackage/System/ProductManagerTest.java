@@ -170,4 +170,10 @@ public class ProductManagerTest {
 
         Assert.assertEquals(expected,actual,0);
     }
+
+    @Test
+    public void showCommentsTest(){
+        Comment[] comments = productManager.showComments(product.getProductId());
+        Assert.assertEquals(product.getAllComments().get(0),comments[0]);
+    }
 }

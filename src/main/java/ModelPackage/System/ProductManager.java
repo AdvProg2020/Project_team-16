@@ -84,6 +84,14 @@ public class ProductManager {
         product.setTotalScore((product.getTotalScore()*amount + score.getScore())/(amount+1));
     }
 
+    public Comment[] showComments(String productId){
+        Product product = findProductById(productId);
+        ArrayList<Comment> comments = product.getAllComments();
+        Comment[] toReturn = new Comment[comments.size()];
+        comments.toArray(toReturn);
+        return toReturn;
+    }
+
     public void clear(){
         allProducts.clear();
     }
