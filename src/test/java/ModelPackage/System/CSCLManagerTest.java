@@ -10,7 +10,7 @@ public class CSCLManagerTest {
     private CSCLManager csclManager;
     private Company adidas;
     private Company puma;
-    private Comment comment;
+    private String[] data = {"12", "ali12", "solution", "solved correctly"};
                                 /*create company*/
     {
         csclManager = CSCLManager.getInstance();
@@ -18,7 +18,6 @@ public class CSCLManagerTest {
         puma = new Company("Puma", "12434565", "Sports");
         csclManager.createCompany(adidas);
         csclManager.createCompany(puma);
-        comment = new Comment("12", "ali12", "solution", "solved correctly", CommentStatus.VERIFIED, true);
     }
                                 /*getInstance*/
     @Test
@@ -55,5 +54,13 @@ public class CSCLManagerTest {
         csclManager.editCompanyGroup("Puma", expectedGroup);
         String actualGroup = puma.getGroup();
         Assert.assertEquals(actualGroup, expectedGroup);
+    }
+    @Test
+    public void createCommentTest() {
+        csclManager.createComment(data, true);
+        csclManager.getAllComments().get(0).setId("1");
+        String actualId = "1";
+        String expectedId = csclManager.getAllComments().get(0).getId();
+        Assert.assertEquals(expectedId, actualId);
     }
 }
