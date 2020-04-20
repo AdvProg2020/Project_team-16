@@ -53,6 +53,14 @@ public class CSCLManager {
     public void editCompanyGroup(String companyName, String newGroup) {
         getCompanyByName(companyName).setGroup(newGroup);
     }
+                                /*add product to company*/
+    public void addProductToCompany(String productId, String companyName) {
+        getCompanyByName(companyName).getProductsIn().add(ProductManager.findProductById(productId));
+    }
+                                /*remove product from company*/
+    public void removeProductFromCompany(String productId, String companyName) {
+        getCompanyByName(companyName).getProductsIn().remove(ProductManager.findProductById(productId));
+    }
                                 /*create comment*/
     public void createComment(String[] data, boolean hasBoughtProduct) {
         String productId = data[0];
@@ -66,7 +74,7 @@ public class CSCLManager {
         allScores.add(new Score(userId, productId, score));
     }
                                 /*create sellLog*/
-    /*public void createSellLog(String[] ids, int[] numbers, Date dateAdded, DeliveryStatus deliveryStatus) {
+    public void createSellLog(String[] ids, int[] numbers, Date dateAdded, DeliveryStatus deliveryStatus) {
         String productId = ids[0];
         String userId = ids[1];
         int moneyGotten = numbers[0];
@@ -74,7 +82,7 @@ public class CSCLManager {
         Log log = new SellLog(ProductManager.findProductById(productId), moneyGotten, discount,
                 AccountManager.getUserByName(userId), dateAdded, deliveryStatus);
         allLogs.add(log);
-    }*/
+    }
                                 /*create purchase log*/
     public void createPurchaseLog(int[] prices, Date dateAdded, DeliveryStatus deliveryStatus, HashMap<Product, Integer> productsAndItsPrices, HashMap<Seller, Integer> sellers) {
         int pricePaid = prices[0];

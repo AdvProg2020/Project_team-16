@@ -55,12 +55,4 @@ public class CSCLManagerTest {
         String actualGroup = puma.getGroup();
         Assert.assertEquals(actualGroup, expectedGroup);
     }
-    @Test
-    public void createCommentTest() {
-        csclManager.createComment(data, true);
-        csclManager.getAllComments().get(0).setId("1");
-        String actualId = "1";
-        String expectedId = csclManager.getAllComments().get(0).getId();
-        Assert.assertEquals(expectedId, actualId);
-    }
 }
