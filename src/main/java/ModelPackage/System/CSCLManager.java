@@ -1,17 +1,15 @@
 package ModelPackage.System;
 
 import ModelPackage.Log.DeliveryStatus;
-import ModelPackage.Log.SellLog;
-import ModelPackage.Product.Comment;
-import ModelPackage.Product.CommentStatus;
-import ModelPackage.Product.Company;
-import ModelPackage.Product.Score;
-import lombok.Builder;
-import lombok.Data;
-import sun.rmi.runtime.Log;
+import ModelPackage.Log.LOG;
+import ModelPackage.Log.PurchaseLOG;
+import ModelPackage.Log.SellLOG;
+import ModelPackage.Product.*;
+import ModelPackage.Users.Seller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 //@Builder @Data
 public class CSCLManager {
@@ -19,11 +17,11 @@ public class CSCLManager {
     private ArrayList<Company> allCompanies;
     private ArrayList<Comment> allComments;
     private ArrayList<Score> allScores;
-    private ArrayList<Log> allLogs;
+    private ArrayList<LOG> allLogs;
 
     private CSCLManager() {
         this.allCompanies = new ArrayList<Company>();
-        this.allLogs = new ArrayList<Log>();
+        this.allLogs = new ArrayList<LOG>();
         this.allScores = new ArrayList<Score>();
         this.allComments = new ArrayList<Comment>();
     }
@@ -65,8 +63,16 @@ public class CSCLManager {
         String userId = ids[1];
         int moneyGotten = numbers[0];
         int discount = numbers[1];
-        Log log = new SellLog(ProductManager.findProductById(productId), moneyGotten, discount,
+        LOG log = new SellLOG(ProductManager.findProductById(productId), moneyGotten, discount,
                 AccountManager.getUserByName(userId), dateAdded, deliveryStatus);
+        allLogs.add(log);
+    }
+                                /*create purchase log*/
+    public void createPurchaseLog(int[] prices, Date dateAdded, DeliveryStatus deliveryStatus, HashMap<Product, Integer> productsAndItsPrices, HashMap<Seller, Integer> sellers) {
+        int pricePaid = prices[0];
+        int discount = prices[1];
+        LOG log = new PurchaseLOG(dateAdded, deliveryStatus, productsAndItsPrices,
+                pricePaid, discount, sellers);
         allLogs.add(log);
     }
 }

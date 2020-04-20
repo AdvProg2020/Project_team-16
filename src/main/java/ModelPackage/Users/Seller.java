@@ -1,6 +1,6 @@
 package ModelPackage.Users;
 
-import ModelPackage.Log.SellLog;
+import ModelPackage.Log.SellLOG;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.Company;
 import lombok.*;
@@ -14,7 +14,7 @@ public class Seller extends User {
     private long balance;
     private List<String> productIds;
     private List<Off> offs;
-    private List<SellLog> sellLogs;
+    private List<SellLOG> sellLogs;
 
     public Seller(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart, Company company, long balance) {
         super(username, password, firstName, lastName, email, phoneNumber, cart);
@@ -22,6 +22,6 @@ public class Seller extends User {
         this.balance = balance;
         this.offs = new ArrayList<Off>();
         this.productIds = new ArrayList<String>();
-        this.sellLogs = new ArrayList<SellLog>();
+        this.sellLogs = new ArrayList<SellLOG>();
     }
 }

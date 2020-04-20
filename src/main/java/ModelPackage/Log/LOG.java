@@ -5,12 +5,12 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-abstract class Log {
+public abstract class LOG {
     private String logId;
     private Date date;
     private DeliveryStatus deliveryStatus;
 
-    public Log(Date date, DeliveryStatus deliveryStatus) {
+    public LOG(Date date, DeliveryStatus deliveryStatus) {
         this.logId = generateId();
         this.date = date;
         this.deliveryStatus = deliveryStatus;
