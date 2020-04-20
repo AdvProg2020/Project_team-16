@@ -3,8 +3,11 @@ package ModelPackage.Product;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data @Builder
 public class Comment {
+    private String id;
     private String productId;
     private String userId;
     private String title;
@@ -19,5 +22,10 @@ public class Comment {
         this.text = text;
         this.status = status;
         this.boughtThisProduct = boughtThisProduct;
+        this.id = generateId();
+    }
+    private static String generateId(){
+        Date date = new Date();
+        return String.format("CM%s%04d",date.toString().replaceAll("\\s | ':'",""),(int)(Math.random()*9999+1));
     }
 }
