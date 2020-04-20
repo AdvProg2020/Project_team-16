@@ -76,7 +76,7 @@ public class ProductManagerTest {
         );
 
         product2 = new Product("PR19800404879154555",
-                ProductStatus.VERIFIED,"Shirt XXL",new Date(),company,new ArrayList<>(sellers),category,"CT321654987",
+                ProductStatus.UNDER_EDIT,"Shirt XXL",new Date(),company,new ArrayList<>(sellers),category,"CT321654987",
                 new HashMap<>(publicFeatures),new HashMap<>(specialFeatures),
                 "Bull",scores,3,new ArrayList<>(comments),new HashMap<>(stock),
                 new HashMap<>(prices),
@@ -190,4 +190,14 @@ public class ProductManagerTest {
         actual = productManager.doesThisProductExist("PR20200405852158465");
         Assert.assertFalse(actual);
     }
+
+    @Test
+    public void isThisProductAvailableTest(){
+        boolean actual = productManager.isThisProductAvailable(product2.getProductId());
+        Assert.assertFalse(actual);
+
+        actual = productManager.isThisProductAvailable(product.getProductId());
+        Assert.assertTrue(actual);
+    }
+
 }

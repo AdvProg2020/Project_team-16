@@ -2,6 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.Product;
+import ModelPackage.Product.ProductStatus;
 import ModelPackage.Product.Score;
 import ModelPackage.Users.Seller;
 import lombok.Data;
@@ -103,6 +104,12 @@ public class ProductManager {
     public boolean doesThisProductExist(String productId){
         Product product = findProductById(productId);
         return (product != null);
+    }
+
+    public boolean isThisProductAvailable(String id){
+        Product product = findProductById(id);
+        ProductStatus productStatus = product.getProductStatus();
+        return productStatus == ProductStatus.VERIFIED;
     }
 
     public void clear(){
