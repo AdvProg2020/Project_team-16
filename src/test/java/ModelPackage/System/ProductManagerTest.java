@@ -176,4 +176,18 @@ public class ProductManagerTest {
         Comment[] comments = productManager.showComments(product.getProductId());
         Assert.assertEquals(product.getAllComments().get(0),comments[0]);
     }
+
+    @Test
+    public void showScoresTest(){
+        Score[] scores = productManager.showScores(product.getProductId());
+        Assert.assertEquals(product.getAllScores().get(0),scores[0]);
+    }
+
+    @Test
+    public void doesThisProductExistTest(){
+        boolean actual = productManager.doesThisProductExist("PR20200405332158465");
+        Assert.assertTrue(actual);
+        actual = productManager.doesThisProductExist("PR20200405852158465");
+        Assert.assertFalse(actual);
+    }
 }

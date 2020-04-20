@@ -92,6 +92,19 @@ public class ProductManager {
         return toReturn;
     }
 
+    public Score[] showScores(String productId){
+        Product product = findProductById(productId);
+        ArrayList<Score> scores = product.getAllScores();
+        Score[] toReturn = new Score[scores.size()];
+        scores.toArray(toReturn);
+        return toReturn;
+    }
+
+    public boolean doesThisProductExist(String productId){
+        Product product = findProductById(productId);
+        return (product != null);
+    }
+
     public void clear(){
         allProducts.clear();
     }
