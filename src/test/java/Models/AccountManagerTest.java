@@ -21,9 +21,10 @@ public class AccountManagerTest {
 
     @Test
     public void createAccount(){
-        accountManager.createAccount("a","a","a","a","a","a");
-        String expected = AccountManager.getUsers().get(0).getUsername();
-        String actual = "a";
+        String[] info = {"a","a","a","a","a","a"};
+        accountManager.createAccount(info,"manager");
+        User actual = AccountManager.getUsers().get(0);
+        User expected = user;
         Assert.assertEquals(expected,actual);
     }
 
@@ -33,8 +34,6 @@ public class AccountManagerTest {
         boolean actual = accountManager.login("a","b");
         Assert.assertFalse(actual);
     }
-
-
 
 
 }
