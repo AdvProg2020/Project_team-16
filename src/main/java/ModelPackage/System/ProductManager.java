@@ -122,6 +122,17 @@ public class ProductManager {
         return leastPrice;
     }
 
+    public void deleteProduct(String productId){
+        Product product = findProductById(productId);
+        allProducts.remove(product);
+        /* TODO : delete it from its Category */
+        /*
+        1.CategoryManager
+        2.GetCategoryObject
+        3.deleteProductFromCategory
+        */
+    }
+
     public void clear(){
         allProducts.clear();
     }

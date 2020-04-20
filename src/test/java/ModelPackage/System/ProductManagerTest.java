@@ -207,4 +207,11 @@ public class ProductManagerTest {
         Assert.assertEquals(expected,actual);
     }
 
+    @Test
+    public void deleteProductTest(){
+        productManager.deleteProduct(product.getProductId());
+        boolean exist = productManager.doesThisProductExist(product.getProductId());
+        Assert.assertFalse(exist);
+    }
+
 }
