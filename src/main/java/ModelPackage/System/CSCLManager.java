@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Product.Comment;
+import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Score;
 import lombok.Builder;
@@ -46,5 +47,13 @@ public class CSCLManager {
                                 /*edit group of company*/
     public void editCompanyGroup(String companyName, String newGroup) {
         getCompanyByName(companyName).setGroup(newGroup);
+    }
+                                /*create comment*/
+    public void createComment(String productId, String userId, String title, String text, boolean hasBoughtProduct) {
+        allComments.add(new Comment(productId, userId, title, text, CommentStatus.VERIFIED, hasBoughtProduct));
+    }
+                                /*create score*/
+    public void createScore(String userId, String productId, int score) {
+        allScores.add(new Score(userId, productId, score));
     }
 }
