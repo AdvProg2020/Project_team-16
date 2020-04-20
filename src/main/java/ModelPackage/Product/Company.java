@@ -18,4 +18,11 @@ public class Company {
         this.group = group;
         this.productsIn = new ArrayList<Product>();
     }
+
+    public Company(String name, String phone, String group, ArrayList<Product> productsIn) {
+        this.name = name;
+        this.phone = phone;
+        this.group = group;
+        this.productsIn = productsIn;
+    }
 }
