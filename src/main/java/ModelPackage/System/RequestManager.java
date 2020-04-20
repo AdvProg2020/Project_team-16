@@ -1,11 +1,13 @@
 package ModelPackage.System;
 
+import ModelPackage.Off.Off;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
+import ModelPackage.Users.Seller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ public class RequestManager {
 
     public void addRequest(Request request){
         requests.add(request);
+        /* TODO : Add in database */
     }
 
     public Request findRequestById(String id){
@@ -39,9 +42,10 @@ public class RequestManager {
                 acceptEditProduct(request);
                 break;
             case CREATE_OFF:
-            case EDIT_OFF:
-                acceptCreateOrEditOff(request);
+                acceptCreateOff(request);
                 break;
+            case EDIT_OFF:
+                acceptEditOff(request);
             case ASSIGN_COMMENT:
                 acceptAssignComment(request);
                 break;
@@ -67,8 +71,20 @@ public class RequestManager {
         productManager.setAllProducts(products);
     }
 
-    private void acceptCreateOrEditOff(Request request){
+    private void acceptCreateOff(Request request){
+        Off off = request.getOff();
+        Seller seller = off.getSeller();
+        List<Off> offs = seller.getOffs();
+        offs.add(off);
+        seller.setOffs(offs);
+    }
 
+    private void acceptEditOff(Request request){
+        Off off = request.getOff();
+        Seller seller = off.getSeller();
+        List<Off> offs = seller.getOffs();
+        Off offf = off;/* TODO : = CLCSManager.getInstance().findOffById(off.getId());*/
+        offs.set(offs.indexOf(offf),off);
     }
 
     private void acceptAssignComment(Request request){
@@ -77,8 +93,17 @@ public class RequestManager {
         ProductManager.getInstance().assignAComment(comment.getProductId(),comment);
     }
 
-    private void acceptSeller(Request request){
+    private void acceptSeller(Request request) {
+        Seller seller = request.getSeller();
+        /*TODO :
+         *  1. save in database
+         *  2. load it into AccountManager */
+    }
 
+    public void decline(String requestId){
+        Request request = findRequestById(requestId);
+        /* TODO : remove from database */
+        requests.remove(request);
     }
 
     public static RequestManager getInstance(){

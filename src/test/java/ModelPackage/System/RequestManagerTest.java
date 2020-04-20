@@ -3,8 +3,6 @@ package ModelPackage.System;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
-import ModelPackage.Users.Cart;
-import ModelPackage.Users.Customer;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import org.junit.Assert;
@@ -87,5 +85,11 @@ public class RequestManagerTest {
         Assert.assertEquals(comment.getId(),product.getAllComments().get(0).getId());
     }
 
+    @Test
+    public void declineTest(){
+        requestManager.decline(request.getRequestId());
+        Request request1 = requestManager.findRequestById(request.getRequestId());
 
+        Assert.assertNull(request1);
+    }
 }
