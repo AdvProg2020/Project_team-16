@@ -1,5 +1,6 @@
 package ModelPackage.System;
 
+import ModelPackage.Users.Cart;
 import ModelPackage.Users.User;
 import lombok.Data;
 import lombok.Getter;
@@ -18,9 +19,13 @@ public class AccountManager {
         return accountManager;
     }
 
-    public void createAccount(User user){}
+    public void createAccount(String username, String password, String firstName, String lastName, String email, String phoneNumber){
+        users.add(new User(username, password, firstName, lastName, email, phoneNumber, new Cart()));
+    }
 
-    public void login(User user){}
+    public boolean login(String username,String password){
+
+    }
 
     public void changeInfo(String username, String info, String newInfo){
         User user = getUserByUsername(username);
@@ -33,10 +38,10 @@ public class AccountManager {
         }
     }
 
-    public void logout(User user){}
+    public void logout(String username){ }
 
-    private boolean isCorrectPassword(String password,String username){
-        return false;
+    private boolean isCorrectPassword(String username,String password){
+
     }
 
     private User getUserByUsername(String username){
@@ -47,6 +52,8 @@ public class AccountManager {
         }
         return null;
     }
+
+
 
 
 }
