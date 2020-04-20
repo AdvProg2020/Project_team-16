@@ -52,7 +52,7 @@ public class ProductManagerTest {
         scores.add(new Score("3215","PR20200405332158465",5));
 
         ArrayList<Comment> comments = new ArrayList<>();
-        comments.add(new Comment("CM6541326548970",
+        comments.add(new Comment("PR20200405332158465",
                 "reza120",
                 "good",
                 "it was good",
@@ -95,7 +95,7 @@ public class ProductManagerTest {
 
     @Test
     public void addAmountOfStockTest(){
-        productManager.addAmountOfStock(product,"reza120",8);
+        productManager.addAmountOfStock(product.getProductId(),"reza120",8);
         int expected = 20;
         int actual = product.getStock().get("reza120");
         Assert.assertEquals(expected,actual);
@@ -103,7 +103,7 @@ public class ProductManagerTest {
 
     @Test
     public void addAmountOfStockNegativeNumTest(){
-        productManager.addAmountOfStock(product,"reza120",-8);
+        productManager.addAmountOfStock(product.getProductId(),"reza120",-8);
         int expected = 4;
         int actual = product.getStock().get("reza120");
         Assert.assertEquals(expected,actual);
@@ -133,7 +133,7 @@ public class ProductManagerTest {
 
     @Test
     public void addViewTest(){
-        productManager.addView(product);
+        productManager.addView(product.getProductId());
         int expected = 21;
         int actual = product.getView();
 
@@ -142,10 +142,32 @@ public class ProductManagerTest {
 
     @Test
     public void addBoughtTest(){
-        productManager.addBought(product);
+        productManager.addBought(product.getProductId());
         int expected = 9;
         int actual = product.getBoughtAmount();
 
         Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void assignACommentTest(){
+        Comment comment = new Comment("PR20200405332158465",
+                "reza120",
+                "very Good",
+                "Awesome !",
+                CommentStatus.VERIFIED,
+                true);
+        productManager.assignAComment(product.getProductId(),comment);
+        Assert.assertEquals(comment.getId(),product.getAllComments().get(1).getId());
+    }
+
+    @Test
+    public void assignAScoreTest(){
+        Score score = new Score("asghar120","PR20200405332158465",4);
+        productManager.assignAScore("PR20200405332158465",score);
+        double expected = 4.5;
+        double actual = product.getTotalScore();
+
+        Assert.assertEquals(expected,actual,0);
     }
 }
