@@ -24,7 +24,7 @@ public class AccountManager {
     }
 
     public boolean login(String username,String password){
-
+        return isCorrectPassword(username, password);
     }
 
     public void changeInfo(String username, String info, String newInfo){
@@ -41,7 +41,7 @@ public class AccountManager {
     public void logout(String username){ }
 
     private boolean isCorrectPassword(String username,String password){
-
+        return getUserByUsername(username).getPassword().equals(password);
     }
 
     private User getUserByUsername(String username){
@@ -53,7 +53,14 @@ public class AccountManager {
         return null;
     }
 
-
+    public boolean isUsernameAvailable(String username){
+        for (User user : users) {
+            if (user.getUsername().equals(username)){
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 }
