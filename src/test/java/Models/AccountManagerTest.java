@@ -27,7 +27,12 @@ public class AccountManagerTest {
         Assert.assertEquals(expected,actual);
     }
 
-
+    @Test
+    public void login(){
+        AccountManager.getUsers().add(user);
+        boolean actual = accountManager.login("a","b");
+        Assert.assertFalse(actual);
+    }
 
 
 
