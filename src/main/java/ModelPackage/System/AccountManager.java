@@ -1,8 +1,7 @@
 package ModelPackage.System;
 
-import ModelPackage.Users.Cart;
-import ModelPackage.Users.User;
-import lombok.Data;
+import ModelPackage.Product.Company;
+import ModelPackage.Users.*;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -18,9 +17,28 @@ public class AccountManager {
             accountManager = new AccountManager();
         return accountManager;
     }
+    private CSCLManager csclManager = CSCLManager.getInstance();
 
-    public void createAccount(String username, String password, String firstName, String lastName, String email, String phoneNumber){
-        users.add(new User(username, password, firstName, lastName, email, phoneNumber, new Cart()));
+    public void createAccount(String[] info, String type){
+        User user = null;
+        switch (type){
+            case "seller" : user = createSeller(info); break;
+            case "manager" : user = createManager(info); break;
+            case  "customer" : user = createCustomer(info); break;
+        }
+        users.add(user);
+    }
+
+    private Seller createSeller(String[] info){
+        return new Seller(info[0],info[1],info[2],info[3],info[4],info[5],new Cart(),csclManager.getCompanyByName(info[6]),Long.parseLong(info[7]));
+    }
+
+    private Manager createManager(String[] info){
+        return new Manager(info[0],info[1],info[2],info[3],info[4],info[5],new Cart());
+    }
+
+    private Customer createCustomer(String[] info){
+        return new Customer(info[0],info[1],info[2],info[3],info[4],info[5],new Cart(),Long.parseLong(info[6]));
     }
 
     public boolean login(String username,String password){
@@ -56,10 +74,10 @@ public class AccountManager {
     public boolean isUsernameAvailable(String username){
         for (User user : users) {
             if (user.getUsername().equals(username)){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
 
