@@ -112,6 +112,16 @@ public class ProductManager {
         return productStatus == ProductStatus.VERIFIED;
     }
 
+    public int leastPriceOf(String productId){
+        Product product = findProductById(productId);
+        HashMap<String,Integer> prices = product.getPrices();
+        int leastPrice = 2147483647;
+        for (Integer value : prices.values()) {
+            if(leastPrice > value) leastPrice = value;
+        }
+        return leastPrice;
+    }
+
     public void clear(){
         allProducts.clear();
     }

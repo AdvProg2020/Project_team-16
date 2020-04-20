@@ -65,7 +65,7 @@ public class ProductManagerTest {
         stock.put("see120",25);
 
         HashMap<String,Integer> prices = new HashMap<>();
-        prices.put("asghar120",21000);
+        prices.put("asghar120",25000);
         prices.put("reza120",22000);
         prices.put("see120",21500);
 
@@ -198,6 +198,13 @@ public class ProductManagerTest {
 
         actual = productManager.isThisProductAvailable(product.getProductId());
         Assert.assertTrue(actual);
+    }
+
+    @Test
+    public void leastPriceOfTest(){
+        int actual = productManager.leastPriceOf("PR20200405332158465");
+        int expected = 21500;
+        Assert.assertEquals(expected,actual);
     }
 
 }
