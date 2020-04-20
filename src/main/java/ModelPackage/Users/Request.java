@@ -16,6 +16,7 @@ public class Request {
     Off off;
     Product product;
     Comment comment;
+    Seller seller;
 
     public Request(String usernameHasRequested, RequestType requestType, String request,Object toChange) {
         this.usernameHasRequested = usernameHasRequested;
@@ -33,6 +34,9 @@ public class Request {
                 break;
             case "ModelPackage.Product.Product":
                 product = (Product) toChange;
+                break;
+            case "ModelPackage.Users.Seller":
+                seller = (Seller) toChange;
                 break;
         }
 

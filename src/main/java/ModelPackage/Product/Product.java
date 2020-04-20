@@ -37,6 +37,6 @@ public class Product {
 
     private String generateId(){
         Date date = new Date();
-        return String.format("PR%s%04d",date.toString().replaceAll("\\s","".replaceAll(":","")),(int)(Math.random()*9999+1));
+        return String.format("PR%s%04d",date.toString().replaceAll("\\s","").replaceAll(":",""),(int)(Math.random()*9999+1));
     }
 }
