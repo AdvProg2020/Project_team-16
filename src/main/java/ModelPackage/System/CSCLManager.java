@@ -61,13 +61,12 @@ public class CSCLManager {
     }
                                 /*create sellLog*/
     public void createSellLog(String[] ids, int[] numbers, Date dateAdded, DeliveryStatus deliveryStatus) {
-        String logId = ids[0];
-        String productId = ids[1];
-        String userId = ids[2];
+        String productId = ids[0];
+        String userId = ids[1];
         int moneyGotten = numbers[0];
         int discount = numbers[1];
         Log log = new SellLog(ProductManager.findProductById(productId), moneyGotten, discount,
-                AccountManager.getUserByName(userId), logId, dateAdded, deliveryStatus);
+                AccountManager.getUserByName(userId), dateAdded, deliveryStatus);
         allLogs.add(log);
     }
 }

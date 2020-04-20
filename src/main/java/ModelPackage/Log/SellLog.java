@@ -13,8 +13,8 @@ public class SellLog extends Log {
     private int discount;
     private User buyer;
 
-    public SellLog(Product product, int moneyGotten, int discount, User buyer, String logId, Date date, DeliveryStatus deliveryStatus) {
-        super(logId, date, deliveryStatus);
+    public SellLog(Product product, int moneyGotten, int discount, User buyer, Date date, DeliveryStatus deliveryStatus) {
+        super(date, deliveryStatus);
         this.product = product;
         this.moneyGotten = moneyGotten;
         this.discount = discount;
