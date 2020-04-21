@@ -3,6 +3,7 @@ package ModelPackage.System;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Company;
+import ModelPackage.Product.Product;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,10 +12,14 @@ public class CSCLManagerTest {
     private Company adidas;
     private Company puma;
     private String[] data = {"12", "ali12", "solution", "solved correctly"};
+    private Product product;
     {
         csclManager = CSCLManager.getInstance();
         adidas = new Company("Adidas", "34524532", "Sports");
         puma = new Company("Puma", "12434565", "Sports");
+        product = new Product();
+        product.setProductId("12");
+        ProductManager.getInstance().addProductToList(product);
         csclManager.createCompany(adidas);
         csclManager.createCompany(puma);
     }
@@ -56,5 +61,18 @@ public class CSCLManagerTest {
         Assert.assertTrue(actual);
         actual = csclManager.doesCompanyExist("pishgaman");
         Assert.assertFalse(actual);
+    }
+    @Test
+    public void addProductToCompanyTest() {
+        csclManager.addProductToCompany("12", "Adidas");
+        String actualId = adidas.getProductsIn().get(0).getProductId();
+        Assert.assertEquals("12", actualId);
+    }
+    @Test
+    public void removeProductFromCompanyTest() {
+        csclManager.addProductToCompany("12", "Puma");
+        csclManager.removeProductFromCompany("12", "Puma");
+        int actualSize = puma.getProductsIn().size();
+        Assert.assertEquals(0, actualSize);
     }
 }
