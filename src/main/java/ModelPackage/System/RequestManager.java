@@ -49,7 +49,7 @@ public class RequestManager {
             case ASSIGN_COMMENT:
                 acceptAssignComment(request);
                 break;
-            case REGIDTER_SELLER:
+            case REGISTER_SELLER:
                 acceptSeller(request);
                 break;
         }

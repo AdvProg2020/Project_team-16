@@ -1,4 +1,4 @@
-package Models;
+package ModelPackage.System;
 
 import ModelPackage.System.AccountManager;
 import ModelPackage.Users.Cart;

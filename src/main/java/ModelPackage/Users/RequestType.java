@@ -1,7 +1,7 @@
 package ModelPackage.Users;
 
 public enum  RequestType {
-    REGIDTER_SELLER,
+    REGISTER_SELLER,
     ASSIGN_COMMENT,
     CHANGE_PRODUCT,
     CREATE_PRODUCT,

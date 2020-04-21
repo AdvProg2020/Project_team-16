@@ -1,15 +1,13 @@
 package ModelPackage.System;
 
-import ModelPackage.Product.Company;
 import ModelPackage.Users.*;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class AccountManager {
-    @Getter private static List<User> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
     private static AccountManager accountManager = null;
     private AccountManager(){}
     public static AccountManager getInstance(){
@@ -17,28 +15,54 @@ public class AccountManager {
             accountManager = new AccountManager();
         return accountManager;
     }
-    private CSCLManager csclManager = CSCLManager.getInstance();
+    private RequestManager requestManager = RequestManager.getInstance();
+    private CLCSManager clcsManager = CLCSManager.getInstance();
 
     public void createAccount(String[] info, String type){
         User user = null;
         switch (type){
-            case "seller" : user = createSeller(info); break;
+            case "seller" : createSeller(info); break;
             case "manager" : user = createManager(info); break;
             case  "customer" : user = createCustomer(info); break;
         }
         users.add(user);
     }
 
-    private Seller createSeller(String[] info){
-        return new Seller(info[0],info[1],info[2],info[3],info[4],info[5],new Cart(),csclManager.getCompanyByName(info[6]),Long.parseLong(info[7]));
+    private void createSeller(String[] info){
+        Seller seller = new Seller(
+                info[0],
+                info[1],
+                info[2],
+                info[3],
+                info[4],
+                info[5],
+                new Cart(),
+                clcsManager.getCompanyByName(info[6]);
+                Long.parseLong(info[7]);
+        String requestStr = String.format("%s has requested to create a seller with email %s", info[0], info[4]);
+        requestManager.addRequest(new Request(info[0],RequestType.REGISTER_SELLER,requestStr,seller));
     }
 
     private Manager createManager(String[] info){
-        return new Manager(info[0],info[1],info[2],info[3],info[4],info[5],new Cart());
+        return new Manager(info[0],
+                info[1],
+                info[2],
+                info[3],
+                info[4],
+                info[5],
+                new Cart());
     }
 
     private Customer createCustomer(String[] info){
-        return new Customer(info[0],info[1],info[2],info[3],info[4],info[5],new Cart(),Long.parseLong(info[6]));
+        return new Customer(
+                info[0],
+                info[1],
+                info[2],
+                info[3],
+                info[4],
+                info[5],
+                new Cart(),
+                Long.parseLong(info[6]));
     }
 
     public boolean login(String username,String password){
@@ -80,5 +104,7 @@ public class AccountManager {
         return false;
     }
 
-
+    public static List<User> getUsers() {
+        return users;
+    }
 }
