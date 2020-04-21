@@ -4,8 +4,12 @@ import ModelPackage.Log.DeliveryStatus;
 import ModelPackage.Log.Log;
 import ModelPackage.Log.PurchaseLog;
 import ModelPackage.Log.SellLog;
+import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.*;
+import ModelPackage.Users.Cart;
 import ModelPackage.Users.Seller;
+import ModelPackage.Users.SubCart;
+import ModelPackage.Users.User;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -89,11 +93,26 @@ public class CSCLManager {
         allLogs.add(log);
     }*/
 
-    public void createPurchaseLog(int[] prices, Date dateAdded, DeliveryStatus deliveryStatus, HashMap<Product, Integer> productsAndItsPrices, HashMap<Seller, Integer> sellers) {
-        int pricePaid = prices[0];
-        int discount = prices[1];
-        Log log = new PurchaseLog(dateAdded, deliveryStatus, productsAndItsPrices,
-                pricePaid, discount, sellers);
-        allLogs.add(log);
+    public void createPurchaseLog(Cart cart, Date dateAdded, String userId) {
+        HashMap<Product, Integer> productsAndTheirPrices = new HashMap<>();
+        int discount = 0;
+        for (SubCart subCart : cart.getSubCarts()) {
+            productsAndTheirPrices.put(subCart.getProduct(), subCart.getAmount() * subCart.getProduct().getPrices().
+                    get(subCart.getSellerId()));
+        }
+        HashMap<String, String> sellersAndTheirProducts = new HashMap<>();
+        for (SubCart subCart : cart.getSubCarts()) {
+            sellersAndTheirProducts.put(subCart.getSellerId(), subCart.getProductId());
+        }
+        for (DiscountCode discountCode : DiscountManager.getInstance().getDiscountCodes()) {
+            for (User user : discountCode.getUsers().keySet()) {
+                if (user.getUsername().equals(userId)) {
+                    discount = discountCode.getOffPercentage();
+                    break;
+                }
+            }
+        }
+        int pricePaid =(int)(cart.getTotalPrice() - (double)discount / 100 * cart.getTotalPrice());
+        allLogs.add(new PurchaseLog(dateAdded, DeliveryStatus.DEOENDING, productsAndTheirPrices, pricePaid, discount, sellersAndTheirProducts));
     }
 }

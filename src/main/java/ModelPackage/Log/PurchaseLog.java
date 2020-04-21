@@ -13,9 +13,9 @@ public class PurchaseLog extends Log {
     private HashMap<Product,Integer> productsAndItsPrices;
     private int pricePaid;
     private int discount;
-    private HashMap<Seller,Integer> sellers;
+    private HashMap<String,String> sellers;
 
-    public PurchaseLog(Date date, DeliveryStatus deliveryStatus, HashMap<Product, Integer> productsAndItsPrices, int pricePaid, int discount, HashMap<Seller, Integer> sellers) {
+    public PurchaseLog(Date date, DeliveryStatus deliveryStatus, HashMap<Product, Integer> productsAndItsPrices, int pricePaid, int discount, HashMap<String, String> sellers) {
         super(date, deliveryStatus);
         this.productsAndItsPrices = productsAndItsPrices;
         this.pricePaid = pricePaid;

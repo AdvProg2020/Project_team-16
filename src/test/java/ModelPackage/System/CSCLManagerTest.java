@@ -37,7 +37,7 @@ public class CSCLManagerTest {
     }
     @Test
     public void  getCompanyByNameNotFoundTest() {
-        String name = "Pishgaman";
+        String name = "Pish";
         Company actualCompany = csclManager.getCompanyByName(name);
         Assert.assertNull(actualCompany);
     }
@@ -46,14 +46,14 @@ public class CSCLManagerTest {
         String expectedName = "Pishgaman";
         csclManager.editCompanyName("Adidas", expectedName);
         String actualName = adidas.getName();
-        Assert.assertEquals(actualName, expectedName);
+        Assert.assertEquals(expectedName, actualName);
     }
     @Test
     public void editCompanyGroupTest() {
         String expectedGroup = "SuperSport";
         csclManager.editCompanyGroup("Puma", expectedGroup);
         String actualGroup = puma.getGroup();
-        Assert.assertEquals(actualGroup, expectedGroup);
+        Assert.assertEquals(expectedGroup, actualGroup);
     }
     @Test
     public void doesCompanyExistTest() {
@@ -74,5 +74,9 @@ public class CSCLManagerTest {
         csclManager.removeProductFromCompany("12", "Puma");
         int actualSize = puma.getProductsIn().size();
         Assert.assertEquals(0, actualSize);
+    }
+    @Test
+    public void createCommentTest() {
+
     }
 }
