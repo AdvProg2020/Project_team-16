@@ -1,5 +1,6 @@
 package ModelPackage.Product;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
@@ -23,8 +24,9 @@ public class Comment {
         this.boughtThisProduct = boughtThisProduct;
         this.id = generateId();
     }
+
     private static String generateId(){
         Date date = new Date();
-        return String.format("CM%s%04d",date.toString().replaceAll("\\s | ':'",""),(int)(Math.random()*9999+1));
+        return String.format("CM%s%04d",date.toString().replaceAll("\\s","").replaceAll(":",""),(int)(Math.random()*9999+1));
     }
 }
