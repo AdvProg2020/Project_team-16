@@ -50,5 +50,11 @@ public class CSCLManagerTest {
         String actualGroup = puma.getGroup();
         Assert.assertEquals(actualGroup, expectedGroup);
     }
-
+    @Test
+    public void doesCompanyExistTest() {
+        boolean actual = csclManager.doesCompanyExist("Adidas");
+        Assert.assertTrue(actual);
+        actual = csclManager.doesCompanyExist("pishgaman");
+        Assert.assertFalse(actual);
+    }
 }
