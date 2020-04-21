@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Data
+@Setter @Getter
 public class Customer extends User {
     private long balance;
     private List<PurchaseLog> purchaseLogs;

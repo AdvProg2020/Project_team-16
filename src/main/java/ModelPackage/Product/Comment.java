@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.Random;
 
 @Data
 public class Comment {
@@ -28,6 +27,6 @@ public class Comment {
 
     private static String generateId(){
         Date date = new Date();
-        return String.format("CM%s%04d",date.toString().replaceAll("\\s | ':'",""),(int)(Math.random()*9999+1));
+        return String.format("CM%s%04d",date.toString().replaceAll("\\s","").replaceAll(":",""),(int)(Math.random()*9999+1));
     }
 }

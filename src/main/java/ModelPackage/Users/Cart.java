@@ -12,6 +12,6 @@ public class Cart {
     private long totalPrice;
 
     public Cart() {
-        this.subCarts = new ArrayList<>();
+        subCarts = new ArrayList<>();
     }
 }
