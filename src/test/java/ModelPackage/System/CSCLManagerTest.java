@@ -11,7 +11,6 @@ public class CSCLManagerTest {
     private Company adidas;
     private Company puma;
     private String[] data = {"12", "ali12", "solution", "solved correctly"};
-                                /*create company*/
     {
         csclManager = CSCLManager.getInstance();
         adidas = new Company("Adidas", "34524532", "Sports");
@@ -19,13 +18,11 @@ public class CSCLManagerTest {
         csclManager.createCompany(adidas);
         csclManager.createCompany(puma);
     }
-                                /*getInstance*/
     @Test
     public void getInstanceTest() {
         CSCLManager test = CSCLManager.getInstance();
         Assert.assertEquals(test, csclManager);
     }
-                            /*both states of find company by name*/
     @Test
     public void getCompanyByNameTest() {
         String name = "Adidas";
@@ -39,7 +36,6 @@ public class CSCLManagerTest {
         Company actualCompany = csclManager.getCompanyByName(name);
         Assert.assertNull(actualCompany);
     }
-                        /*edit name of company test*/
     @Test
     public void editCompanyNameTest() {
         String expectedName = "Pishgaman";
@@ -47,7 +43,6 @@ public class CSCLManagerTest {
         String actualName = adidas.getName();
         Assert.assertEquals(actualName, expectedName);
     }
-                        /*edit group of company test*/
     @Test
     public void editCompanyGroupTest() {
         String expectedGroup = "SuperSport";
@@ -55,4 +50,5 @@ public class CSCLManagerTest {
         String actualGroup = puma.getGroup();
         Assert.assertEquals(actualGroup, expectedGroup);
     }
+
 }

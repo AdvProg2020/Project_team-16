@@ -55,11 +55,11 @@ public class CSCLManager {
     }
                                 /*add product to company*/
     public void addProductToCompany(String productId, String companyName) {
-        getCompanyByName(companyName).getProductsIn().add(ProductManager.findProductById(productId));
+        getCompanyByName(companyName).getProductsIn().add(ProductManager.getInstance().findProductById(productId));
     }
                                 /*remove product from company*/
     public void removeProductFromCompany(String productId, String companyName) {
-        getCompanyByName(companyName).getProductsIn().remove(ProductManager.findProductById(productId));
+        getCompanyByName(companyName).getProductsIn().remove(ProductManager.getInstance().findProductById(productId));
     }
                                 /*create comment*/
     public void createComment(String[] data, boolean hasBoughtProduct) {
@@ -79,7 +79,7 @@ public class CSCLManager {
         String userId = ids[1];
         int moneyGotten = numbers[0];
         int discount = numbers[1];
-        Log log = new SellLog(ProductManager.findProductById(productId), moneyGotten, discount,
+        Log log = new SellLog(ProductManager.getInstance().findProductById(productId), moneyGotten, discount,
                 AccountManager.getUserByName(userId), dateAdded, deliveryStatus);
         allLogs.add(log);
     }
