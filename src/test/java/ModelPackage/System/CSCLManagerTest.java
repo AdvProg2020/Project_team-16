@@ -1,6 +1,8 @@
 package ModelPackage.System;
 
+import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.*;
+import ModelPackage.Users.Cart;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -82,5 +84,12 @@ public class CSCLManagerTest {
                 thenComparing(Score::getScore).compare(
                         csclManager.getAllScores().get(0), score);
         Assert.assertEquals(0, a);
+    }
+    @Test
+    public void createPurchaseLog() {
+        csclManager.createPurchaseLog(new Cart(), new DiscountCode());
+        csclManager.getAllLogs().get(0).setLogId("12");
+        String actualId = csclManager.getAllLogs().get(0).getLogId();
+        Assert.assertEquals("12", actualId);
     }
 }

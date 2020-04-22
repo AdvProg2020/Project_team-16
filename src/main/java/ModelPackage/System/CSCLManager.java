@@ -83,7 +83,7 @@ public class CSCLManager {
         allScores.add(new Score(userId, productId, score));
     }
 
-    public void createSellLog(Cart cart, String sellerId, String buyerId) {
+    /*public void createSellLog(Cart cart, String sellerId, String buyerId) {
         ArrayList<Product> soldProducts = new ArrayList<>();
         for (SubCart subCart : cart.getSubCarts()) {
             if (subCart.getSellerId().equals(sellerId))
@@ -97,15 +97,15 @@ public class CSCLManager {
         allLogs.add(new SellLog(soldProducts, gottenPrice, offPrice,
                         AccountManager.getInstance().getUserByName(buyerId), new Date(),
                 DeliveryStatus.DEOENDING));
-        /*for (Product product : soldProducts) {
+        for (Product product : soldProducts) {
             for (String id : product.getPrices().keySet()) {
                 if (id.equals(sellerId)) {
                     gottenPrice += product.getPrices().get(id);
                     break;
                 }
             }
-        }*/
-    }
+        }
+    }*/
 
     public void createPurchaseLog(Cart cart, DiscountCode discountCode) {
         HashMap<String, String> productsAndTheirSellers = new HashMap<>();

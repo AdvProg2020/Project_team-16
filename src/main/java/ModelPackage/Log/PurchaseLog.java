@@ -1,7 +1,5 @@
 package ModelPackage.Log;
 
-import ModelPackage.Product.Product;
-import ModelPackage.Users.Seller;
 import lombok.Getter;
 import lombok.Setter;
 
