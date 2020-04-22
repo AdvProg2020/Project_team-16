@@ -107,21 +107,22 @@ public class CSCLManager {
         }*/
     }
 
-    public void createPurchaseLog(Cart cart, Date dateAdded, String userId) {
+    public void createPurchaseLog(Cart cart, DiscountCode discountCode) {
         HashMap<String, String> productsAndTheirSellers = new HashMap<>();
-        int discount = 0;
+        int discount = discountCode.getOffPercentage();
         for (SubCart subCart : cart.getSubCarts()) {
             productsAndTheirSellers.put(subCart.getProductId(), subCart.getSellerId());
         }
-        for (DiscountCode discountCode : DiscountManager.getInstance().getDiscountCodes()) {
+                    // discountCode should be passed to this method
+        /*for (DiscountCode discountCode : DiscountManager.getInstance().getDiscountCodes()) {
             for (User user : discountCode.getUsers().keySet()) {
                 if (user.getUsername().equals(userId)) {
                     discount = discountCode.getOffPercentage();
                     break;
                 }
             }
-        }
+        }*/
         int pricePaid =(int)(cart.getTotalPrice() - (double)discount / 100 * cart.getTotalPrice());
-        allLogs.add(new PurchaseLog(dateAdded, DeliveryStatus.DEOENDING, productsAndTheirSellers, pricePaid, discount));
+        allLogs.add(new PurchaseLog(new Date(), DeliveryStatus.DEOENDING, productsAndTheirSellers, pricePaid, discount));
     }
 }
