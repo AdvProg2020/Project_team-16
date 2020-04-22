@@ -93,7 +93,7 @@ public class CSCLManager {
         allLogs.add(log);
     }*/
 
-    public void createPurchaseLog(Cart cart, Date dateAdded, String userId) {
+    /*public void createPurchaseLog(Cart cart, Date dateAdded, String userId) {
         HashMap<Product, Integer> productsAndTheirPrices = new HashMap<>();
         int discount = 0;
         for (SubCart subCart : cart.getSubCarts()) {
@@ -114,5 +114,5 @@ public class CSCLManager {
         }
         int pricePaid =(int)(cart.getTotalPrice() - (double)discount / 100 * cart.getTotalPrice());
         allLogs.add(new PurchaseLog(dateAdded, DeliveryStatus.DEOENDING, productsAndTheirPrices, pricePaid, discount, sellersAndTheirProducts));
-    }
+    }*/
 }

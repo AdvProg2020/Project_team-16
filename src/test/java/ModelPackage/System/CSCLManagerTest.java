@@ -1,11 +1,10 @@
 package ModelPackage.System;
 
-import ModelPackage.Product.Comment;
-import ModelPackage.Product.CommentStatus;
-import ModelPackage.Product.Company;
-import ModelPackage.Product.Product;
+import ModelPackage.Product.*;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Comparator;
 
 public class CSCLManagerTest {
     private CSCLManager csclManager;
@@ -76,7 +75,12 @@ public class CSCLManagerTest {
         Assert.assertEquals(0, actualSize);
     }
     @Test
-    public void createCommentTest() {
-
+    public void createScoreTest() {
+        csclManager.createScore("Akbar", "12", 4);
+        Score score = new Score("Akbar", "12", 4);
+        int a = Comparator.comparing(Score::getUserId).thenComparing(Score::getProductId).
+                thenComparing(Score::getScore).compare(
+                        csclManager.getAllScores().get(0), score);
+        Assert.assertEquals(0, a);
     }
 }
