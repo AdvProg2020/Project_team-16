@@ -86,7 +86,7 @@ public class CSCLManagerTest {
         Assert.assertEquals(0, a);
     }
     @Test
-    public void createPurchaseLog() {
+    public void createPurchaseLogTest() {
         csclManager.createPurchaseLog(new Cart(), new DiscountCode());
         csclManager.getAllLogs().get(0).setLogId("12");
         String actualId = csclManager.getAllLogs().get(0).getLogId();
