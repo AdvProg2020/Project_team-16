@@ -83,15 +83,29 @@ public class CSCLManager {
         allScores.add(new Score(userId, productId, score));
     }
 
-    /*public void createSellLog(String[] ids, int[] numbers, Date dateAdded, DeliveryStatus deliveryStatus) {
-        String productId = ids[0];
-        String userId = ids[1];
-        int moneyGotten = numbers[0];
-        int discount = numbers[1];
-        Log log = new SellLog(ProductManager.getInstance().findProductById(productId), moneyGotten, discount,
-                AccountManager.getUserByName(userId), dateAdded, deliveryStatus);
-        allLogs.add(log);
-    }*/
+    public void createSellLog(Cart cart, String sellerId, String buyerId) {
+        ArrayList<Product> soldProducts = new ArrayList<>();
+        for (SubCart subCart : cart.getSubCarts()) {
+            if (subCart.getSellerId().equals(sellerId))
+                soldProducts.add(subCart.getProduct());
+        }
+        // TODO : building calculateProductsOffs method in SellerManager
+        int offPrice = SellerManager.getInstance().calculateProductsOffs(soldProducts,
+                AccountManager.getInstance().getUserByName(sellerId));
+        // TODO : building calculatePriceOfSeller method in ProductManager like the code commented below
+        int gottenPrice = ProductManager.getInstance().calculatePriceOfSeller(soldProducts, sellerId);
+        allLogs.add(new SellLog(soldProducts, gottenPrice, offPrice,
+                        AccountManager.getInstance().getUserByName(buyerId), new Date(),
+                DeliveryStatus.DEOENDING));
+        /*for (Product product : soldProducts) {
+            for (String id : product.getPrices().keySet()) {
+                if (id.equals(sellerId)) {
+                    gottenPrice += product.getPrices().get(id);
+                    break;
+                }
+            }
+        }*/
+    }
 
     public void createPurchaseLog(Cart cart, Date dateAdded, String userId) {
         HashMap<String, String> productsAndTheirSellers = new HashMap<>();
