@@ -3,6 +3,8 @@ package ModelPackage.System;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.*;
 import ModelPackage.Users.Cart;
+import ModelPackage.Users.Customer;
+import ModelPackage.Users.Seller;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,6 +16,10 @@ public class CSCLManagerTest {
     private Company puma;
     private String[] data = {"12", "ali12", "solution", "solved correctly"};
     private Product product;
+    private Customer customer = new Customer("Ali12", "ali008",
+            "Ali", "Alavi", "ali@gmail.com", "8227366", new Cart(), 12);
+    private Seller seller = new Seller("sapa", "12wq", "sajad", "paksima"
+    , "paksima@gmail.com", "09200979011", new Cart(), adidas, 12);
     {
         csclManager = CSCLManager.getInstance();
         adidas = new Company("Adidas", "34524532", "Sports");
@@ -87,7 +93,7 @@ public class CSCLManagerTest {
     }
     @Test
     public void createPurchaseLogTest() {
-        csclManager.createPurchaseLog(new Cart(), new DiscountCode());
+        csclManager.createPurchaseLog(new Cart(), 2);
         csclManager.getAllLogs().get(0).setLogId("12");
         String actualId = csclManager.getAllLogs().get(0).getLogId();
         Assert.assertEquals("12", actualId);

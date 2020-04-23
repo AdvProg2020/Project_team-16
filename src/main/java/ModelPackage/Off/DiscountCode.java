@@ -8,7 +8,7 @@ import java.sql.Time;
 import java.util.HashMap;
 
 @Data
-@Builder @NoArgsConstructor
+@Builder
 public class DiscountCode {
     private String code;
     private Time startTime;

@@ -93,35 +93,25 @@ public class CSCLManager {
         int offPrice = SellerManager.getInstance().calculateProductsOffs(soldProducts,
                 AccountManager.getInstance().getUserByName(sellerId));
         // TODO : building calculatePriceOfSeller method in ProductManager like the code commented below
-        int gottenPrice = ProductManager.getInstance().calculatePriceOfSeller(soldProducts, sellerId);
+        int gottenPrice = ProductManager.getInstance().calculatePriceOfSeller(soldProducts, sellerId) - offPrice;
         allLogs.add(new SellLog(soldProducts, gottenPrice, offPrice,
                         AccountManager.getInstance().getUserByName(buyerId), new Date(),
                 DeliveryStatus.DEOENDING));
-        for (Product product : soldProducts) {
+        /*for (Product product : soldProducts) {
             for (String id : product.getPrices().keySet()) {
                 if (id.equals(sellerId)) {
                     gottenPrice += product.getPrices().get(id);
                     break;
                 }
             }
-        }
-    }*/
+        }*/
+    //}
 
-    public void createPurchaseLog(Cart cart, DiscountCode discountCode) {
+    public void createPurchaseLog(Cart cart, int discount) {
         HashMap<String, String> productsAndTheirSellers = new HashMap<>();
-        int discount = discountCode.getOffPercentage();
         for (SubCart subCart : cart.getSubCarts()) {
             productsAndTheirSellers.put(subCart.getProductId(), subCart.getSellerId());
         }
-                    // discountCode should be passed to this method
-        /*for (DiscountCode discountCode : DiscountManager.getInstance().getDiscountCodes()) {
-            for (User user : discountCode.getUsers().keySet()) {
-                if (user.getUsername().equals(userId)) {
-                    discount = discountCode.getOffPercentage();
-                    break;
-                }
-            }
-        }*/
         int pricePaid =(int)(cart.getTotalPrice() - (double)discount / 100 * cart.getTotalPrice());
         allLogs.add(new PurchaseLog(new Date(), DeliveryStatus.DEOENDING, productsAndTheirSellers, pricePaid, discount));
     }
