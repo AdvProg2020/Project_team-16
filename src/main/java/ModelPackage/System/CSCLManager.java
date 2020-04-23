@@ -83,29 +83,18 @@ public class CSCLManager {
         allScores.add(new Score(userId, productId, score));
     }
 
-    /*public void createSellLog(Cart cart, String sellerId, String buyerId) {
-        ArrayList<Product> soldProducts = new ArrayList<>();
-        for (SubCart subCart : cart.getSubCarts()) {
-            if (subCart.getSellerId().equals(sellerId))
-                soldProducts.add(subCart.getProduct());
-        }
-        // TODO : building calculateProductsOffs method in SellerManager
-        int offPrice = SellerManager.getInstance().calculateProductsOffs(soldProducts,
-                AccountManager.getInstance().getUserByName(sellerId));
-        // TODO : building calculatePriceOfSeller method in ProductManager like the code commented below
-        int gottenPrice = ProductManager.getInstance().calculatePriceOfSeller(soldProducts, sellerId) - offPrice;
-        allLogs.add(new SellLog(soldProducts, gottenPrice, offPrice,
-                        AccountManager.getInstance().getUserByName(buyerId), new Date(),
-                DeliveryStatus.DEOENDING));
-        /*for (Product product : soldProducts) {
-            for (String id : product.getPrices().keySet()) {
-                if (id.equals(sellerId)) {
-                    gottenPrice += product.getPrices().get(id);
-                    break;
-                }
+    public void createSellLog(SubCart subCart, String buyerId, int discount) {
+        Product product = subCart.getProduct();
+        int moneyGotten = 0;
+        for (String id : product.getPrices().keySet()) {
+            if (id.equals(subCart.getSellerId())) {
+                moneyGotten = product.getPrices().get(id) * subCart.getAmount();
+                break;
             }
-        }*/
-    //}
+        }
+        allLogs.add(new SellLog(product, moneyGotten, discount, AccountManager.getUserByName(buyerId),
+                new Date(), DeliveryStatus.DEOENDING));
+    }
 
     public void createPurchaseLog(Cart cart, int discount) {
         HashMap<String, String> productsAndTheirSellers = new HashMap<>();
