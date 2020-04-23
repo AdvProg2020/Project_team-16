@@ -1,10 +1,10 @@
 package ModelPackage.System;
 
-import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.*;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
 import ModelPackage.Users.Seller;
+import ModelPackage.Users.SubCart;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,6 +16,8 @@ public class CSCLManagerTest {
     private Company puma;
     private String[] data = {"12", "ali12", "solution", "solved correctly"};
     private Product product;
+    private Cart cart;
+    private SubCart subCart;
     private Customer customer = new Customer("Ali12", "ali008",
             "Ali", "Alavi", "ali@gmail.com", "8227366", new Cart(), 12);
     private Seller seller = new Seller("sapa", "12wq", "sajad", "paksima"
@@ -26,6 +28,9 @@ public class CSCLManagerTest {
         puma = new Company("Puma", "12434565", "Sports");
         product = new Product();
         product.setProductId("12");
+        subCart = new SubCart();
+        cart = new Cart();
+        cart.getSubCarts().add(subCart);
         ProductManager.getInstance().addProductToList(product);
         csclManager.createCompany(adidas);
         csclManager.createCompany(puma);
@@ -97,5 +102,12 @@ public class CSCLManagerTest {
         csclManager.getAllLogs().get(0).setLogId("12");
         String actualId = csclManager.getAllLogs().get(0).getLogId();
         Assert.assertEquals("12", actualId);
+    }
+    @Test
+    public void createSellLogTest() {
+        csclManager.createSellLog(subCart, "Ali12", 12);
+        csclManager.getAllLogs().get(0).setLogId("1");
+        String actualId = csclManager.getAllLogs().get(0).getLogId();
+        Assert.assertEquals("1", actualId);
     }
 }

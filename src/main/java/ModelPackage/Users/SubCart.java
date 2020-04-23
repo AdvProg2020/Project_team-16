@@ -4,7 +4,7 @@ import ModelPackage.Product.Product;
 import lombok.*;
 
 @Data
-@Builder
+@Builder @NoArgsConstructor
 public class SubCart{
     private Product product;
     private String productId;
