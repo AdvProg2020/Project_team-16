@@ -4,6 +4,7 @@ import ModelPackage.Product.Comment;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.Product.Score;
+import ModelPackage.System.exeption.product.*;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
@@ -120,6 +121,11 @@ public class ProductManager {
     public boolean doesThisProductExist(String productId){
         Product product = findProductById(productId);
         return (product != null);
+    }
+
+    public void checkIfThisProductExists(String productId) throws NoSuchAProductException{
+        Product product = findProductById(productId);
+        if (product == null) throw new NoSuchAProductException(productId);
     }
 
     public boolean isThisProductAvailable(String id){

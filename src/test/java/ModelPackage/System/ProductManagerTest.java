@@ -39,7 +39,7 @@ public class ProductManagerTest {
         sellers.add(reza);
         sellers.add(saeed);
 
-        Category category = new Category("Cloth", "CT321654987", null);
+        Category category = new Category("Cloth", null);
 
         HashMap<String,String> publicFeatures = new HashMap<>();
         publicFeatures.put("Color","Red");
