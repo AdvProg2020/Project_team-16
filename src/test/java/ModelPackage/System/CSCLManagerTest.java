@@ -18,6 +18,10 @@ public class CSCLManagerTest {
     private Comment comment;
     private Comment comment1;
     {
+        csclManager.getAllCompanies().clear();
+        csclManager.getAllComments().clear();
+        csclManager.getAllLogs().clear();
+        csclManager.getAllScores().clear();
         csclManager = CSCLManager.getInstance();
         adidas = new Company("Adidas", "34524532", "Sports");
         puma = new Company("Puma", "12434565", "Sports");
@@ -106,13 +110,13 @@ public class CSCLManagerTest {
         String actualId = csclManager.getAllLogs().get(0).getLogId();
         Assert.assertEquals("12", actualId);
     }
-    /*@Test
+    @Test
     public void createSellLogTest() {
         csclManager.createSellLog(subCart, "Ali12", 12);
         csclManager.getAllLogs().get(0).setLogId("1");
         String actualId = csclManager.getAllLogs().get(0).getLogId();
         Assert.assertEquals("1", actualId);
-    }*/
+    }
     @Test
     public void createCommentTest() {
         csclManager.createComment(comment);
