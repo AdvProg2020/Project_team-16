@@ -1,10 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Product.*;
-import ModelPackage.Users.Cart;
-import ModelPackage.Users.Customer;
-import ModelPackage.Users.Seller;
-import ModelPackage.Users.SubCart;
+import ModelPackage.Users.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,10 +15,7 @@ public class CSCLManagerTest {
     private Product product;
     private Cart cart;
     private SubCart subCart;
-    private Customer customer = new Customer("Ali12", "ali008",
-            "Ali", "Alavi", "ali@gmail.com", "8227366", new Cart(), 12);
-    private Seller seller = new Seller("sapa", "12wq", "sajad", "paksima"
-    , "paksima@gmail.com", "09200979011", new Cart(), adidas, 12);
+    private Comment comment;
     {
         csclManager = CSCLManager.getInstance();
         adidas = new Company("Adidas", "34524532", "Sports");
@@ -34,6 +28,12 @@ public class CSCLManagerTest {
         ProductManager.getInstance().addProductToList(product);
         csclManager.createCompany(adidas);
         csclManager.createCompany(puma);
+        comment = new Comment("PR20200405332158465",
+                "reza120",
+                "very Good",
+                "Awesome !",
+                CommentStatus.VERIFIED,
+                true);
     }
     @Test
     public void getInstanceTest() {
@@ -109,5 +109,13 @@ public class CSCLManagerTest {
         csclManager.getAllLogs().get(0).setLogId("1");
         String actualId = csclManager.getAllLogs().get(0).getLogId();
         Assert.assertEquals("1", actualId);
+    }
+    @Test
+    public void createCommentTest() {
+        csclManager.createComment(comment);
+        Request request = RequestManager.getInstance().getRequests().get(0);
+        RequestManager.getInstance().accept(request.getRequestId());
+        boolean successful = csclManager.doesThisCommentExists(comment.getId());
+        Assert.assertTrue(successful);
     }
 }
