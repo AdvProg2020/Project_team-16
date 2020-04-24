@@ -6,10 +6,7 @@ import ModelPackage.Log.PurchaseLog;
 import ModelPackage.Log.SellLog;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.*;
-import ModelPackage.Users.Cart;
-import ModelPackage.Users.Seller;
-import ModelPackage.Users.SubCart;
-import ModelPackage.Users.User;
+import ModelPackage.Users.*;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -71,12 +68,12 @@ public class CSCLManager {
         getCompanyByName(companyName).getProductsIn().remove(ProductManager.getInstance().findProductById(productId));
     }
 
-    public void createComment(String[] data, boolean hasBoughtProduct) {
-        String productId = data[0];
-        String userId = data[1];
-        String title = data[2];
-        String text = data[3];
-        allComments.add(new Comment(productId, userId, title, text, CommentStatus.VERIFIED, hasBoughtProduct));
+    public void createComment(Comment comment) {
+        String requestStr = String.format("%s has requested to create comment with title %s and text %s \n with id " +
+                        "%s on product with id %s",
+                comment.getUserId(), comment.getTitle(), comment.getText(), comment.getId(), comment.getProductId());
+        Request request = new Request(comment.getUserId(), RequestType.CREATE_COMMENT, requestStr, comment);
+        RequestManager.getInstance().addRequest(request);
     }
 
     public void createScore(String userId, String productId, int score) {

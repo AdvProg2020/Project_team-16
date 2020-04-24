@@ -52,6 +52,9 @@ public class RequestManager {
             case REGIDTER_SELLER:
                 acceptSeller(request);
                 break;
+            case CREATE_COMMENT:
+                acceptCreateComment(request);
+                break;
         }
     }
 
@@ -59,6 +62,10 @@ public class RequestManager {
         Product product = request.getProduct();
         product.setProductStatus(ProductStatus.VERIFIED);
         ProductManager.getInstance().addProductToList(product);
+    }
+
+    private void acceptCreateComment(Request request) {
+
     }
 
     private void acceptEditProduct(Request request){
