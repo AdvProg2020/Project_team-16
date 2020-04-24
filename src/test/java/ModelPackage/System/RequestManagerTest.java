@@ -13,14 +13,24 @@ import java.util.ArrayList;
 public class RequestManagerTest {
     private RequestManager requestManager;
     private Request request;
+    private Request requestComment;
 
     {
         requestManager = RequestManager.getInstance();
         request = new Request("asghar",RequestType.CREATE_PRODUCT,
                 "adsfasdf asdf",new Product());
+        Comment comment = new Comment("PR20200405332158465",
+                "reza120",
+                "very Good",
+                "Awesome !",
+                CommentStatus.VERIFIED,
+                true);
+        requestComment = new Request("asghar", RequestType.CREATE_COMMENT,
+                "asdfgh", comment);
 
         requestManager.clear();
         requestManager.addRequest(request);
+        requestManager.addRequest(requestComment);
     }
 
     @Test
@@ -54,6 +64,13 @@ public class RequestManagerTest {
     public void acceptCreateProductTest(){
         requestManager.accept(request.getRequestId());
         boolean successful = ProductManager.getInstance().doesThisProductExist(request.getProduct().getProductId());
+        Assert.assertTrue(successful);
+    }
+
+    @Test
+    public void acceptCreateCommentTest() {
+        requestManager.accept(requestComment.getRequestId());
+        boolean successful = CSCLManager.getInstance().doesThisCommentExists(requestComment.getComment().getId());
         Assert.assertTrue(successful);
     }
 
