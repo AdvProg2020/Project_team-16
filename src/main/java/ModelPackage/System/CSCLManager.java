@@ -76,6 +76,10 @@ public class CSCLManager {
         RequestManager.getInstance().addRequest(request);
     }
 
+    public void addCommentToList(Comment comment) {
+        allComments.add(comment);
+    }
+
     public void createScore(String userId, String productId, int score) {
         allScores.add(new Score(userId, productId, score));
     }

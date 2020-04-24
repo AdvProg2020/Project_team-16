@@ -65,7 +65,9 @@ public class RequestManager {
     }
 
     private void acceptCreateComment(Request request) {
-
+        Comment comment = request.getComment();
+        comment.setStatus(CommentStatus.VERIFIED);
+        CSCLManager.getInstance().addCommentToList(comment);
     }
 
     private void acceptEditProduct(Request request){
