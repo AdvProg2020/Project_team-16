@@ -16,6 +16,7 @@ public class CSCLManagerTest {
     private Cart cart;
     private SubCart subCart;
     private Comment comment;
+    private Comment comment1;
     {
         csclManager = CSCLManager.getInstance();
         adidas = new Company("Adidas", "34524532", "Sports");
@@ -34,6 +35,8 @@ public class CSCLManagerTest {
                 "Awesome !",
                 CommentStatus.VERIFIED,
                 true);
+        comment1 = new Comment("12", "ali12", "very Good", "Awesome!", CommentStatus.VERIFIED, false);
+        csclManager.getAllComments().add(comment1);
     }
     @Test
     public void getInstanceTest() {
@@ -117,5 +120,13 @@ public class CSCLManagerTest {
         RequestManager.getInstance().accept(request.getRequestId());
         boolean successful = csclManager.doesThisCommentExists(comment.getId());
         Assert.assertTrue(successful);
+    }
+    @Test
+    public void doesThisCommentExistTest() {
+        comment1.setId("PRCOM1");
+        boolean actual = csclManager.doesThisCommentExists("PRCOM1");
+        Assert.assertTrue(actual);
+        actual = csclManager.doesThisCommentExists("PRCOM2");
+        Assert.assertFalse(actual);
     }
 }
