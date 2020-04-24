@@ -11,7 +11,6 @@ public class CSCLManagerTest {
     private CSCLManager csclManager;
     private Company adidas;
     private Company puma;
-    private String[] data = {"12", "ali12", "solution", "solved correctly"};
     private Product product;
     private Cart cart;
     private SubCart subCart;
