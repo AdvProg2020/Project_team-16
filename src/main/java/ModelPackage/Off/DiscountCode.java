@@ -16,4 +16,13 @@ public class DiscountCode {
     private int offPercentage;
     private long maxDiscount;
     private HashMap<User,Integer> users;
+
+    public DiscountCode(String code, Date startTime, Date endTime, int offPercentage, long maxDiscount, HashMap<User, Integer> users) {
+        this.code = code;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.offPercentage = offPercentage;
+        this.maxDiscount = maxDiscount;
+        this.users = users;
+    }
 }

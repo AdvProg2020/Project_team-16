@@ -1,10 +1,12 @@
 package ModelPackage.System;
 
 import ModelPackage.Off.DiscountCode;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class DiscountManager {
     private List<DiscountCode> discountCodes;
 
@@ -16,5 +18,13 @@ public class DiscountManager {
 
     private DiscountManager() {
         this.discountCodes = new ArrayList<>();
+    }
+
+    public DiscountCode getDiscountByCode(String code) {
+        for (DiscountCode discountCode : discountCodes) {
+            if (code.equals(discountCode.getCode()))
+                return discountCode;
+        }
+        return null;
     }
 }

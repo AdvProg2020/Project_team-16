@@ -92,7 +92,7 @@ public class CSCLManager {
         allScores.add(new Score(userId, productId, score));
     }
 
-    public void createSellLog(SubCart subCart, String buyerId, int discount) {
+    /*public void createSellLog(SubCart subCart, String buyerId, int discount) {
         Product product = subCart.getProduct();
         int moneyGotten = 0;
         for (String id : product.getPrices().keySet()) {
@@ -103,7 +103,7 @@ public class CSCLManager {
         }
         allLogs.add(new SellLog(product, moneyGotten, discount, AccountManager.getUserByName(buyerId),
                 new Date(), DeliveryStatus.DEOENDING));
-    }
+    }*/
 
     public void createPurchaseLog(Cart cart, int discount) {
         HashMap<String, String> productsAndTheirSellers = new HashMap<>();
