@@ -102,6 +102,13 @@ public class CategoryManager {
         category.setAllProductInThis(products);
     }
 
+    public void editName(String name,String categoryId) throws
+            NoSuchACategoryException, RepeatedNameInParentCategoryExeption {
+        Category category = getCategoryById(categoryId);
+        Category parent = getCategoryById(category.getParentId());
+        checkIfThisNameIsValidForThisParent(name,parent);
+        category.setName(name);
+    }
 
     public void clear(){
         allCategories.clear();
