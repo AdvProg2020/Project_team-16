@@ -55,7 +55,8 @@ public class AccountManager {
                 info[3],
                 info[4],
                 info[5],
-                new Cart());
+                new Cart()
+        );
 
         String managerJson = new Gson().toJson(manager);
         try {
@@ -70,7 +71,7 @@ public class AccountManager {
     }
 
     private Customer createCustomer(String[] info){
-        return new Customer(
+        Customer customer = new Customer(
                 info[0],
                 info[1],
                 info[2],
@@ -78,7 +79,19 @@ public class AccountManager {
                 info[4],
                 info[5],
                 new Cart(),
-                Long.parseLong(info[6]));
+                Long.parseLong(info[6])
+        );
+
+        String customerJson = new Gson().toJson(customer);
+        try {
+            FileWriter fileWriter = new FileWriter("src/main/resources/users.user",true);
+            fileWriter.write(customerJson);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return customer;
     }
 
     public void login(String username,String password){
