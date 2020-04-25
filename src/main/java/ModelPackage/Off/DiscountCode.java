@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 
 @Data
-//@Builder
 public class DiscountCode {
     private String code;
     private Date startTime;

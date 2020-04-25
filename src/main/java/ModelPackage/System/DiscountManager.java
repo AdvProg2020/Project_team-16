@@ -4,6 +4,7 @@ import ModelPackage.Off.DiscountCode;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -26,5 +27,13 @@ public class DiscountManager {
                 return discountCode;
         }
         return null;
+    }
+
+    public boolean isDiscountAvailable(String code) {
+        DiscountCode discountCode = getDiscountByCode(code);
+        Date date = new Date();
+        Date startDate = discountCode.getStartTime();
+        Date endDate = discountCode.getEndTime();
+        return !date.before(startDate) && !date.after(endDate);
     }
 }
