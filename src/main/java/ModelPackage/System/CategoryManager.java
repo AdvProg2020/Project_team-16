@@ -4,6 +4,7 @@ import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
+import View.PrintModels.CategoryPM;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -219,6 +220,8 @@ public class CategoryManager {
         }
         return products;
     }
+
+    /* TODO : Get Categories in Another Category */
 
     public void clear(){
         allCategories.clear();
