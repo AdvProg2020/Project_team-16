@@ -17,11 +17,11 @@ public class CSCLManagerTest {
     private Comment comment;
     private Comment comment1;
     {
+        csclManager = CSCLManager.getInstance();
         csclManager.getAllCompanies().clear();
         csclManager.getAllComments().clear();
         csclManager.getAllLogs().clear();
         csclManager.getAllScores().clear();
-        csclManager = CSCLManager.getInstance();
         adidas = new Company("Adidas", "34524532", "Sports");
         puma = new Company("Puma", "12434565", "Sports");
         product = new Product();
