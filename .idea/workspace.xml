@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b6225fb-5746-46d8-b879-3483196f6af1" name="Default Changelist" comment="assign comment and score">
+    <list default="true" id="0b6225fb-5746-46d8-b879-3483196f6af1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ModelPackage/System/CategoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/System/CategoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/PrintModels/CategoryPM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/PrintModels/CategoryPM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ModelPackage/System/CategoryManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/CategoryManagerTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -48,8 +46,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/System/CategoryManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="146" column="5" lean-forward="true" selection-start-line="146" selection-start-column="5" selection-end-line="146" selection-end-column="5" />
+            <state relative-caret-position="386">
+              <caret line="153" column="5" lean-forward="true" selection-start-line="153" selection-start-column="5" selection-end-line="153" selection-end-column="5" />
               <folding>
                 <element signature="method#getCategoryById#0;class#CategoryManager#0" />
                 <element signature="method#createCategory#0;class#CategoryManager#0" />
@@ -57,10 +55,13 @@
                 <element signature="method#addProductToCategory#0;class#CategoryManager#0" />
                 <element signature="method#getAllSpecialFeaturesFromCategory#0;class#CategoryManager#0" />
                 <element signature="method#editProductCategory#0;class#CategoryManager#0" />
+                <element signature="method#setNewFeaturesToProduct#0;class#CategoryManager#0" />
                 <element signature="method#checkIfThisProductExistInThisCategory#0;class#CategoryManager#0" />
                 <element signature="method#removeProductFromCategory#0;class#CategoryManager#0" />
                 <element signature="method#editName#0;class#CategoryManager#0" />
                 <element signature="method#moveCategoryToAnotherParent#0;class#CategoryManager#0" />
+                <element signature="method#checkIfThisFeatureExistInThisCategory#0;class#CategoryManager#0" />
+                <element signature="method#addNewFeatureToProducts#0;class#CategoryManager#0" />
                 <element signature="method#clear#0;class#CategoryManager#0" />
                 <element signature="method#addToBase#0;class#CategoryManager#0" />
               </folding>
@@ -80,8 +81,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/ModelPackage/System/CategoryManagerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="168" column="72" selection-start-line="168" selection-start-column="72" selection-end-line="168" selection-end-column="72" />
+            <state relative-caret-position="496">
+              <caret line="186" column="5" lean-forward="true" selection-start-line="186" selection-start-column="5" selection-end-line="186" selection-end-column="5" />
               <folding>
                 <element signature="initializer##0;class#CategoryManagerTest#0" />
                 <element signature="method#getInstanceTest#0;class#CategoryManagerTest#0" />
@@ -99,6 +100,7 @@
                 <element signature="method#editNameTest#0;class#CategoryManagerTest#0" />
                 <element signature="method#editNameRenExcTest#0;class#CategoryManagerTest#0" />
                 <element signature="method#moveCategoryToAnotherParent#0;class#CategoryManagerTest#0" />
+                <element signature="method#moveCategoryToAnotherParentRenExcTest#0;class#CategoryManagerTest#0" />
               </folding>
             </state>
           </provider>
@@ -109,8 +111,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Singleton" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -134,8 +136,9 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/ModelPackage/System/exeption/category/NoSuchAProductInCategoryException.java" />
         <option value="$PROJECT_DIR$/src/main/java/ModelPackage/System/ProductManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ModelPackage/System/CategoryManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/View/PrintModels/CategoryPM.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ModelPackage/System/exeption/category/RepeatedFeatureException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ModelPackage/System/CategoryManager.java" />
         <option value="$PROJECT_DIR$/src/test/java/ModelPackage/System/CategoryManagerTest.java" />
       </list>
     </option>
@@ -200,7 +203,8 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="View" type="462c0819:PsiDirectoryNode" />
+              <item name="ModelPackage" type="462c0819:PsiDirectoryNode" />
+              <item name="System" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
@@ -208,8 +212,20 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="View" type="462c0819:PsiDirectoryNode" />
-              <item name="PrintModels" type="462c0819:PsiDirectoryNode" />
+              <item name="ModelPackage" type="462c0819:PsiDirectoryNode" />
+              <item name="System" type="462c0819:PsiDirectoryNode" />
+              <item name="exeption" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project_team-16" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ModelPackage" type="462c0819:PsiDirectoryNode" />
+              <item name="System" type="462c0819:PsiDirectoryNode" />
+              <item name="exeption" type="462c0819:PsiDirectoryNode" />
+              <item name="category" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
@@ -253,8 +269,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CategoryManagerTest.moveCategoryToAnotherParentRenExcTest">
-    <configuration name="CategoryManagerTest.editNameRenExcTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.CategoryManagerTest.checkIfThisFeatureExistInThisCategoryReFeatureExcTest">
+    <configuration name="CategoryManagerTest.checkIfThisFeatureExistInThisCategoryReFeatureExcTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project_team-16" />
       <extension name="coverage">
         <pattern>
@@ -264,13 +280,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="ModelPackage.System" />
       <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CategoryManagerTest" />
-      <option name="METHOD_NAME" value="editNameRenExcTest" />
+      <option name="METHOD_NAME" value="checkIfThisFeatureExistInThisCategoryReFeatureExcTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CategoryManagerTest.editNameTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CategoryManagerTest.checkIfThisFeatureExistInThisCategoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project_team-16" />
       <extension name="coverage">
         <pattern>
@@ -280,7 +296,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="ModelPackage.System" />
       <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CategoryManagerTest" />
-      <option name="METHOD_NAME" value="editNameTest" />
+      <option name="METHOD_NAME" value="checkIfThisFeatureExistInThisCategoryTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -336,11 +352,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CategoryManagerTest.checkIfThisFeatureExistInThisCategoryReFeatureExcTest" />
+        <item itemvalue="JUnit.CategoryManagerTest.checkIfThisFeatureExistInThisCategoryTest" />
         <item itemvalue="JUnit.CategoryManagerTest.moveCategoryToAnotherParentRenExcTest" />
         <item itemvalue="JUnit.CategoryManagerTest.moveCategoryToAnotherParentTest" />
         <item itemvalue="JUnit.CategoryManagerTest.moveCategoryToAnotherParent" />
-        <item itemvalue="JUnit.CategoryManagerTest.editNameRenExcTest" />
-        <item itemvalue="JUnit.CategoryManagerTest.editNameTest" />
       </list>
     </recent_temporary>
   </component>
@@ -361,7 +377,7 @@
       <workItem from="1587375696492" duration="8615000" />
       <workItem from="1587389811340" duration="2153000" />
       <workItem from="1587771478961" duration="24000" />
-      <workItem from="1587815905294" duration="14557000" />
+      <workItem from="1587815905294" duration="17589000" />
     </task>
     <task id="LOCAL-00001" summary="addBoughtAmount and addView methods added in ProductManager">
       <created>1587301091983</created>
@@ -419,28 +435,24 @@
       <option name="project" value="LOCAL" />
       <updated>1587845395289</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="move category to a new parent&#10;some changes in CategoryPM">
+      <created>1587846825622</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1587846825622</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add new Feature to category">
+      <created>1587849323916</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1587849323916</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CategoryManagerTest_editProductCategoryNoPrInCtExcTest - 2020.04.25 at 20h 45m 30s.xml">
-      <configuration name="CategoryManagerTest.editProductCategoryNoPrInCtExcTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CategoryManagerTest_editProductCategoryNoPrInCtExcTest - 2020.04.25 at 20h 45m 43s.xml">
-      <configuration name="CategoryManagerTest.editProductCategoryNoPrInCtExcTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CategoryManagerTest_editProductCategoryNoPrInCtExcTest - 2020.04.25 at 20h 46m 30s.xml">
-      <configuration name="CategoryManagerTest.editProductCategoryNoPrInCtExcTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CategoryManagerTest_removeProductFromCategoryTest - 2020.04.26 at 00h 28m 17s.xml">
-      <configuration name="CategoryManagerTest.removeProductFromCategoryTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CategoryManagerTest_editNameTest - 2020.04.26 at 00h 35m 28s.xml">
-      <configuration name="CategoryManagerTest.editNameTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CategoryManagerTest_editNameTest - 2020.04.26 at 00h 37m 09s.xml">
-      <configuration name="CategoryManagerTest.editNameTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CategoryManagerTest_editNameTest - 2020.04.26 at 00h 37m 14s.xml">
       <configuration name="CategoryManagerTest.editNameTest" configurationId="JUnit" />
     </history-entry>
@@ -453,15 +465,33 @@
     <history-entry file="CategoryManagerTest_moveCategoryToAnotherParent - 2020.04.26 at 00h 56m 03s.xml">
       <configuration name="CategoryManagerTest.moveCategoryToAnotherParent" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CategoryManagerTest_moveCategoryToAnotherParentTest - 2020.04.26 at 01h 02m 13s.xml">
+      <configuration name="CategoryManagerTest.moveCategoryToAnotherParentTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CategoryManagerTest_moveCategoryToAnotherParentRenExcTest - 2020.04.26 at 01h 02m 17s.xml">
+      <configuration name="CategoryManagerTest.moveCategoryToAnotherParentRenExcTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CategoryManagerTest_moveCategoryToAnotherParentRenExcTest - 2020.04.26 at 01h 02m 57s.xml">
+      <configuration name="CategoryManagerTest.moveCategoryToAnotherParentRenExcTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CategoryManagerTest_checkIfThisFeatureExistInThisCategoryTest - 2020.04.26 at 01h 43m 54s.xml">
+      <configuration name="CategoryManagerTest.checkIfThisFeatureExistInThisCategoryTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CategoryManagerTest_checkIfThisFeatureExistInThisCategoryTest - 2020.04.26 at 01h 44m 23s.xml">
+      <configuration name="CategoryManagerTest.checkIfThisFeatureExistInThisCategoryTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CategoryManagerTest_checkIfThisFeatureExistInThisCategoryTest - 2020.04.26 at 01h 44m 43s.xml">
+      <configuration name="CategoryManagerTest.checkIfThisFeatureExistInThisCategoryTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28263000" />
+    <option name="totallyTimeSpent" value="31295000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26845637" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26845637" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -631,7 +661,9 @@
     <MESSAGE value="Edit Category Product Method (Category Related)" />
     <MESSAGE value="remove Product from category" />
     <MESSAGE value="edit category name method" />
-    <option name="LAST_COMMIT_MESSAGE" value="edit category name method" />
+    <MESSAGE value="move category to a new parent&#10;some changes in CategoryPM" />
+    <MESSAGE value="add new Feature to category" />
+    <option name="LAST_COMMIT_MESSAGE" value="add new Feature to category" />
   </component>
   <component name="WindowStateProjectService">
     <state x="618" y="321" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" />
@@ -844,6 +876,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/System/exeption/category/RepeatedFeatureException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/View/PrintModels/CategoryPM.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -853,8 +892,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/System/CategoryManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="146" column="5" lean-forward="true" selection-start-line="146" selection-start-column="5" selection-end-line="146" selection-end-column="5" />
+        <state relative-caret-position="386">
+          <caret line="153" column="5" lean-forward="true" selection-start-line="153" selection-start-column="5" selection-end-line="153" selection-end-column="5" />
           <folding>
             <element signature="method#getCategoryById#0;class#CategoryManager#0" />
             <element signature="method#createCategory#0;class#CategoryManager#0" />
@@ -862,10 +901,13 @@
             <element signature="method#addProductToCategory#0;class#CategoryManager#0" />
             <element signature="method#getAllSpecialFeaturesFromCategory#0;class#CategoryManager#0" />
             <element signature="method#editProductCategory#0;class#CategoryManager#0" />
+            <element signature="method#setNewFeaturesToProduct#0;class#CategoryManager#0" />
             <element signature="method#checkIfThisProductExistInThisCategory#0;class#CategoryManager#0" />
             <element signature="method#removeProductFromCategory#0;class#CategoryManager#0" />
             <element signature="method#editName#0;class#CategoryManager#0" />
             <element signature="method#moveCategoryToAnotherParent#0;class#CategoryManager#0" />
+            <element signature="method#checkIfThisFeatureExistInThisCategory#0;class#CategoryManager#0" />
+            <element signature="method#addNewFeatureToProducts#0;class#CategoryManager#0" />
             <element signature="method#clear#0;class#CategoryManager#0" />
             <element signature="method#addToBase#0;class#CategoryManager#0" />
           </folding>
@@ -874,8 +916,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/ModelPackage/System/CategoryManagerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="168" column="72" selection-start-line="168" selection-start-column="72" selection-end-line="168" selection-end-column="72" />
+        <state relative-caret-position="496">
+          <caret line="186" column="5" lean-forward="true" selection-start-line="186" selection-start-column="5" selection-end-line="186" selection-end-column="5" />
           <folding>
             <element signature="initializer##0;class#CategoryManagerTest#0" />
             <element signature="method#getInstanceTest#0;class#CategoryManagerTest#0" />
@@ -893,6 +935,7 @@
             <element signature="method#editNameTest#0;class#CategoryManagerTest#0" />
             <element signature="method#editNameRenExcTest#0;class#CategoryManagerTest#0" />
             <element signature="method#moveCategoryToAnotherParent#0;class#CategoryManagerTest#0" />
+            <element signature="method#moveCategoryToAnotherParentRenExcTest#0;class#CategoryManagerTest#0" />
           </folding>
         </state>
       </provider>

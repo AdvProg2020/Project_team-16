@@ -3,6 +3,7 @@ package ModelPackage.System;
 import ModelPackage.Product.Category;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
+import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import mockit.*;
@@ -179,4 +180,10 @@ public class CategoryManagerTest {
 
         categoryManager.addFeatureToCategory(category1.getId(),"AllO");
     }
+
+    @Test(expected = RepeatedFeatureException.class)
+    public void checkIfThisFeatureExistInThisCategoryReFeatureExcTest() throws Exception{
+        categoryManager.addFeatureToCategory(category1.getId(),"art");
+    }
+
 }
