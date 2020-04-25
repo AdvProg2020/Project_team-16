@@ -45,6 +45,7 @@ public class CategoryManagerTest {
         category2.setAllProductInThis(productCat2);
 
         category3.setAllProductInThis(new ArrayList<>());
+        category3.setSpecialFeatures(new ArrayList<>());
 
         categoryManager.clear();
         categoryManager.add(main);
@@ -107,14 +108,9 @@ public class CategoryManagerTest {
     }
 
     @Test
-    public void getAllSpecialFeaturesFromCategoryTest() throws Exception{
-        ArrayList<String> expected = new ArrayList<>();
-        expected.add("art");
-        expected.add("size");
-        expected.add("color");
-
-        ArrayList<String> actual = categoryManager.getAllSpecialFeaturesFromCategory(category1.getId());
-        Assert.assertEquals(expected,actual);
+    public void getAllSpecialFeaturesTest() throws Exception{
+        Assert.assertEquals(category1.getSpecialFeatures(),
+                categoryManager.getAllSpecialFeaturesFromCategory(category3.getId()));
     }
 
     @Test(expected = NoSuchACategoryException.class)
@@ -199,4 +195,14 @@ public class CategoryManagerTest {
 
         categoryManager.getCategoryById(category1.getId());
     }
+
+    @Test
+    public void getAllProductsInThisCategoryTest() throws Exception{
+        ArrayList<String> actulaProducts = categoryManager.getAllProductsInThisCategory(main.getId());
+        ArrayList<String> expectedProducts = new ArrayList<>();
+        expectedProducts.add("654");
+        expectedProducts.add("123");
+        Assert.assertEquals(expectedProducts,actulaProducts);
+    }
+
 }

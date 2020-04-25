@@ -63,7 +63,19 @@ public class CategoryManager {
     public ArrayList<String> getAllSpecialFeaturesFromCategory(String categoryId)
             throws NoSuchACategoryException{
         Category category = getCategoryById(categoryId);
-        return category.getSpecialFeatures();
+        return getAllSpecialFeatures(category);
+    }
+
+    private ArrayList<String> getAllSpecialFeatures(Category category)
+            throws NoSuchACategoryException {
+        ArrayList<String> features = new ArrayList<>();
+        String parentId = category.getParentId();
+        if (!parentId.equals("MNCTCFKala")){
+            Category parent = getCategoryById(parentId);
+            features = new ArrayList<>(getAllSpecialFeatures(parent));
+        }
+        features.addAll(category.getSpecialFeatures());
+        return features;
     }
 
     public void editProductCategory(String productId,String oldCategoryId, String newCategoryId)
@@ -189,6 +201,23 @@ public class CategoryManager {
         for (String product : category.getAllProductInThis()) {
             ProductManager.getInstance().deleteProductCategoryOrder(product);
         }
+    }
+
+    public ArrayList<String> getAllProductsInThisCategory(String categoryId)
+            throws NoSuchACategoryException {
+        Category category = getCategoryById(categoryId);
+        return getAllProductsInThisCategory(category);
+    }
+
+    private ArrayList<String> getAllProductsInThisCategory(Category category){
+        ArrayList<String> products = new ArrayList<>(category.getAllProductInThis());
+        ArrayList<Category> subcategories = category.getSubCategories();
+        if (!subcategories.isEmpty()){
+            for (Category subcategory : subcategories) {
+                products.addAll(getAllProductsInThisCategory(subcategory));
+            }
+        }
+        return products;
     }
 
     public void clear(){
