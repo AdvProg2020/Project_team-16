@@ -20,6 +20,7 @@ public class CSCLManager {
     private ArrayList<Comment> allComments;
     private ArrayList<Score> allScores;
     private ArrayList<Log> allLogs;
+    private AccountManager accountManager = AccountManager.getInstance();
 
     private CSCLManager() {
         this.allCompanies = new ArrayList<>();
@@ -101,8 +102,8 @@ public class CSCLManager {
                 break;
             }
         }
-        allLogs.add(new SellLog(product, moneyGotten, discount, AccountManager.getUserByName(buyerId),
-                new Date(), DeliveryStatus.DEOENDING));
+        allLogs.add(new SellLog(product, moneyGotten, discount, accountManager.getUserByUsername(buyerId),
+                new Date(), DeliveryStatus.DEPENDING));
     }
 
     public void createPurchaseLog(Cart cart, int discount) {
@@ -111,6 +112,6 @@ public class CSCLManager {
             productsAndTheirSellers.put(subCart.getProductId(), subCart.getSellerId());
         }
         int pricePaid =(int)(cart.getTotalPrice() - (double)discount / 100 * cart.getTotalPrice());
-        allLogs.add(new PurchaseLog(new Date(), DeliveryStatus.DEOENDING, productsAndTheirSellers, pricePaid, discount));
+        allLogs.add(new PurchaseLog(new Date(), DeliveryStatus.DEPENDING, productsAndTheirSellers, pricePaid, discount));
     }
 }
