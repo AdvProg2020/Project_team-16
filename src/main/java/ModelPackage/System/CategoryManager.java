@@ -110,6 +110,23 @@ public class CategoryManager {
         category.setName(name);
     }
 
+    public void moveCategoryToAnotherParent(String newParentId,String categoryId)
+            throws NoSuchACategoryException, RepeatedNameInParentCategoryExeption {
+        Category category = getCategoryById(categoryId);
+        Category currentParent = getCategoryById(category.getParentId());
+        Category  newParent = getCategoryById(newParentId);
+        checkIfThisNameIsValidForThisParent(category.getName(),newParent);
+        category.setParentId(newParent.getId());
+
+        ArrayList<Category> subcategories = newParent.getSubCategories();
+        subcategories.add(category);
+        newParent.setSubCategories(subcategories);
+
+        subcategories = currentParent.getSubCategories();
+        subcategories.remove(category);
+        currentParent.setSubCategories(subcategories);
+    }
+
     public void clear(){
         allCategories.clear();
         allMainCategories.clear();

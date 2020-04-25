@@ -155,5 +155,22 @@ public class CategoryManagerTest {
         categoryManager.editName("mobile",category1.getId());
     }
 
+    @Test
+    public void moveCategoryToAnotherParentTest() throws Exception{
+        categoryManager.moveCategoryToAnotherParent("MNCTCFKala",category3.getId());
+        int countOfMainCats = main.getSubCategories().size();
+        Assert.assertEquals(3,countOfMainCats);
+
+        int countOfCat1Cats = category1.getSubCategories().size();
+        Assert.assertEquals(0,countOfCat1Cats);
+    }
+
+    @Test(expected = RepeatedNameInParentCategoryExeption.class)
+    public void moveCategoryToAnotherParentRenExcTest() throws Exception{
+       category3.setName("cloth");
+       categoryManager.moveCategoryToAnotherParent("MNCTCFKala",category3.getId());
+    }
+
+
 }
 
