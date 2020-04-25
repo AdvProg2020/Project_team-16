@@ -7,6 +7,5 @@ public enum  RequestType {
     CHANGE_PRODUCT,
     CREATE_PRODUCT,
     CREATE_OFF,
-    EDIT_OFF,
-    CREATE_COMMENT;
+    EDIT_OFF;
 }

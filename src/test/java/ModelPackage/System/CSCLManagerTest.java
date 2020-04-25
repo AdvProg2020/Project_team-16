@@ -109,13 +109,13 @@ public class CSCLManagerTest {
         String actualId = csclManager.getAllLogs().get(0).getLogId();
         Assert.assertEquals("12", actualId);
     }
-    /*@Test
+    @Test
     public void createSellLogTest() {
         csclManager.createSellLog(subCart, "Ali12", 12);
         csclManager.getAllLogs().get(0).setLogId("1");
         String actualId = csclManager.getAllLogs().get(0).getLogId();
         Assert.assertEquals("1", actualId);
-    }*/
+    }
     @Test
     public void createCommentTest() {
         csclManager.createComment(comment);
