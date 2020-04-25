@@ -56,14 +56,17 @@ public class AccountManager {
                 info[4],
                 info[5],
                 new Cart());
+
         String managerJson = new Gson().toJson(manager);
         try {
-            FileWriter fileWriter = new FileWriter(".../resources/users.user",true);
+            FileWriter fileWriter = new FileWriter("src/main/resources/users.user",true);
             fileWriter.write(managerJson);
+            fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        return manager;
     }
 
     private Customer createCustomer(String[] info){
