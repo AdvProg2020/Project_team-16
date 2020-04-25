@@ -1,7 +1,10 @@
 package ModelPackage.System;
 
 import ModelPackage.Users.*;
+import com.google.gson.Gson;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,13 +49,21 @@ public class AccountManager {
     }
 
     private Manager createManager(String[] info){
-        return new Manager(info[0],
+        Manager manager =  new Manager(info[0],
                 info[1],
                 info[2],
                 info[3],
                 info[4],
                 info[5],
                 new Cart());
+        String managerJson = new Gson().toJson(manager);
+        try {
+            FileWriter fileWriter = new FileWriter(".../resources/users.user",true);
+            fileWriter.write(managerJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private Customer createCustomer(String[] info){
