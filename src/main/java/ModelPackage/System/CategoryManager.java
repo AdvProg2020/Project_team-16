@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
-@Setter @Getter
 public class CategoryManager {
     private static CategoryManager categoryManager = new CategoryManager();
     private ArrayList<Category> allMainCategories;

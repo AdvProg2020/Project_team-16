@@ -4,10 +4,7 @@ import ModelPackage.Product.Category;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
-import mockit.Expectations;
-import mockit.Mock;
-import mockit.MockUp;
-import mockit.Mocked;
+import mockit.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -68,12 +65,32 @@ public class CategoryManagerTest {
         });
     }
 
-    /*@Test
-    public void addProductToCategoryTest() throws Exception{
+
+
+    @Test
+    public void addProductToCategoryTest(@Mocked ProductManager productManager)
+            throws Exception{
+       new Expectations(){{
+           productManager.checkIfThisProductExists("abc");
+           times = 1;
+       }};
         categoryManager.addProductToCategory("abc",category1.getId());
 
         int countOfProducts = category1.getAllProductInThis().size();
         Assert.assertEquals(1,countOfProducts);
-    }*/
+    }
+
+    @Test(expected = NoSuchACategoryException.class)
+    public void addProductToCategoryNoCatExTest()
+            throws Exception{
+        categoryManager.addProductToCategory("abc","bullshit");
+    }
+
+    @Test(expected = NoSuchAProductException.class)
+    public void addProductToCategoryNoPrExTest() throws Exception {
+        categoryManager.addProductToCategory("abc",category1.getId());
+    }
+
+
 }
 
