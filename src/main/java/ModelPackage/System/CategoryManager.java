@@ -4,10 +4,9 @@ import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CategoryManager {
     private static CategoryManager categoryManager = new CategoryManager();
@@ -83,6 +82,16 @@ public class CategoryManager {
         products = newCategory.getAllProductInThis();
         products.add(productId);
         newCategory.setAllProductInThis(products);
+
+        setNewFeaturesToProduct(productId,newCategory.getSpecialFeatures());
+    }
+
+    private void setNewFeaturesToProduct(String productId,ArrayList<String> newFeatures){
+        HashMap<String,String> features = new HashMap<>();
+        for (String feature : newFeatures) {
+            features.put(feature,"");
+        }
+        ProductManager.getInstance().findProductById(productId).setSpecialFeatures(features);
     }
 
     private void checkIfThisProductExistInThisCategory(String productId,Category category)
@@ -127,6 +136,33 @@ public class CategoryManager {
         currentParent.setSubCategories(subcategories);
     }
 
+    public void addFeatureToCategory(String categoryId,String newFeature)
+            throws NoSuchACategoryException, RepeatedFeatureException {
+        Category category = getCategoryById(categoryId);
+        checkIfThisFeatureExistInThisCategory(category,newFeature);
+        ArrayList<String> features = category.getSpecialFeatures();
+        features.add(newFeature);
+        category.setSpecialFeatures(features);
+        addNewFeatureToProducts(newFeature,category.getAllProductInThis());
+    }
+
+    private void checkIfThisFeatureExistInThisCategory(Category category, String feature)
+            throws RepeatedFeatureException {
+        for (String specialFeature : category.getSpecialFeatures()) {
+            if (specialFeature.equals(feature)) throw new RepeatedFeatureException(feature,category.getId());
+        }
+    }
+
+    void addNewFeatureToProducts(String newFeature,ArrayList<String> products){
+        for (String productId : products) {
+            Product product = ProductManager.getInstance().findProductById(productId);
+            HashMap<String,String> specialFeatures = product.getSpecialFeatures();
+            specialFeatures.put(newFeature,"");
+            product.setSpecialFeatures(specialFeatures);
+            /* TODO : Notify The Seller To Add New Feature */
+        }
+    }
+
     public void clear(){
         allCategories.clear();
         allMainCategories.clear();
@@ -145,4 +181,5 @@ public class CategoryManager {
         subCategories.add(cat);
         parent.setSubCategories(subCategories);
     }
+
 }

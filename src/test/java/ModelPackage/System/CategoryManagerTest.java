@@ -171,6 +171,12 @@ public class CategoryManagerTest {
        categoryManager.moveCategoryToAnotherParent("MNCTCFKala",category3.getId());
     }
 
+    @Test
+    public void checkIfThisFeatureExistInThisCategoryTest() throws Exception{
+        new MockUp<CategoryManager>(){
+            @Mock void addNewFeatureToProducts(String newFeature,ArrayList<String> products){}
+        };
 
+        categoryManager.addFeatureToCategory(category1.getId(),"AllO");
+    }
 }
-
