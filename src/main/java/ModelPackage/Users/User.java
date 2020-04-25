@@ -12,6 +12,7 @@ public class User {
     protected String email;
     protected String phoneNumber;
     protected Cart cart;
+    private boolean hasSignedIn;
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart) {
         this.username = username;
@@ -21,5 +22,6 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.cart = cart;
+        this.hasSignedIn = false;
     }
 }
