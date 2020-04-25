@@ -9,12 +9,12 @@ import org.junit.Test;
 
 public class AccountManagerTest {
 
-    User user = new User("a","a","a","a","a","a",new Cart());
     AccountManager accountManager = AccountManager.getInstance();
+    User user = new User("a","a","a","a","a","a",new Cart());
 
     @Test
     public void changeInfo() {
-        AccountManager.getUsers().add(user);
+        accountManager.getUsers().add(user);
         accountManager.changeInfo("a","password", "b");
         Assert.assertEquals("b",user.getPassword());
     }
@@ -23,16 +23,23 @@ public class AccountManagerTest {
     public void createAccount(){
         String[] info = {"a","a","a","a","a","a"};
         accountManager.createAccount(info,"manager");
-        User actual = AccountManager.getUsers().get(0);
+        User actual = accountManager.getUserByUsername("a");
         User expected = user;
         Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void login(){
-        AccountManager.getUsers().add(user);
+        accountManager.getUsers().add(user);
         boolean actual = accountManager.login("a","b");
         Assert.assertFalse(actual);
+    }
+
+    @Test
+    public void getUserByName(){
+        accountManager.getUsers().add(user);
+        User actualUser = accountManager.getUserByUsername("a");
+        Assert.assertEquals(user,actualUser);
     }
 
 

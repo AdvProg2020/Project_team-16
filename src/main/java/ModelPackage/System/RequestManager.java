@@ -15,6 +15,7 @@ import java.util.List;
 public class RequestManager {
     private List<Request> requests;
     private static RequestManager requestManager = null;
+    private AccountManager accountManager = AccountManager.getInstance();
 
     private RequestManager(){
         requests =  new ArrayList<>();
@@ -95,9 +96,7 @@ public class RequestManager {
 
     private void acceptSeller(Request request) {
         Seller seller = request.getSeller();
-        /*TODO :
-         *  1. save in database
-         *  2. load it into AccountManager */
+        accountManager.getUsers().add(seller);
     }
 
     public void decline(String requestId){

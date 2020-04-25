@@ -16,7 +16,7 @@ public class AccountManager {
         return accountManager;
     }
     private RequestManager requestManager = RequestManager.getInstance();
-    private CLCSManager clcsManager = CLCSManager.getInstance();
+    private CSCLManager csclManager = CSCLManager.getInstance();
 
     public void createAccount(String[] info, String type){
         User user = null;
@@ -37,8 +37,8 @@ public class AccountManager {
                 info[4],
                 info[5],
                 new Cart(),
-                clcsManager.getCompanyByName(info[6]);
-                Long.parseLong(info[7]);
+                csclManager.getCompanyByName(info[6]),
+                Long.parseLong(info[7]));
         String requestStr = String.format("%s has requested to create a seller with email %s", info[0], info[4]);
         requestManager.addRequest(new Request(info[0],RequestType.REGISTER_SELLER,requestStr,seller));
     }
@@ -65,8 +65,10 @@ public class AccountManager {
                 Long.parseLong(info[6]));
     }
 
-    public boolean login(String username,String password){
-        return isCorrectPassword(username, password);
+    public void login(String username,String password){
+        if (isCorrectPassword(username, password)){
+            getUserByUsername(username).isHasSignedIn() = true;
+        }
     }
 
     public void changeInfo(String username, String info, String newInfo){
@@ -86,7 +88,7 @@ public class AccountManager {
         return getUserByUsername(username).getPassword().equals(password);
     }
 
-    private User getUserByUsername(String username){
+    public User getUserByUsername(String username){
         for (User user : users) {
             if (user.getUsername().equals(username)){
                 return user;
@@ -104,7 +106,7 @@ public class AccountManager {
         return false;
     }
 
-    public static List<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 }

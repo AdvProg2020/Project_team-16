@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b6225fb-5746-46d8-b879-3483196f6af1" name="Default Changelist" comment="assign comment and score">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/System/RequestManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/Users/Request.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/Users/RequestType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/RequestManagerTest.java" afterDir="false" />
+    <list default="true" id="0b6225fb-5746-46d8-b879-3483196f6af1" name="Default Changelist" comment="Login method implemented">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/Log/DeliveryStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/System/CSCLManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ModelPackage/System/AccountManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/System/AccountManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ModelPackage/System/RequestManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/System/RequestManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ModelPackage/Users/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/Users/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ModelPackage/System/AccountManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/AccountManagerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ModelPackage/System/ProductManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/ProductManagerTest.java" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/target/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="CoverageViewManager">
-    <option name="myElementSize" value="220" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -36,104 +38,6 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="511">
-              <caret line="58" selection-start-line="58" selection-end-line="58" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/ModelPackage/System/ProductManagerTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="455">
-              <caret line="214" column="5" lean-forward="true" selection-start-line="214" selection-start-column="5" selection-end-line="214" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/System/ProductManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="137" column="5" lean-forward="true" selection-start-line="137" selection-start-column="5" selection-end-line="137" selection-end-column="5" />
-              <folding>
-                <element signature="method#getInstance#0;class#ProductManager#0" />
-                <element signature="method#addAmountOfStock#0;class#ProductManager#0" />
-                <element signature="method#findProductById#0;class#ProductManager#0" />
-                <element signature="method#findProductByName#0;class#ProductManager#0" />
-                <element signature="method#addView#0;class#ProductManager#0" />
-                <element signature="method#addBought#0;class#ProductManager#0" />
-                <element signature="method#assignAComment#0;class#ProductManager#0" />
-                <element signature="method#assignAScore#0;class#ProductManager#0" />
-                <element signature="method#showComments#0;class#ProductManager#0" />
-                <element signature="method#showScores#0;class#ProductManager#0" />
-                <element signature="method#doesThisProductExist#0;class#ProductManager#0" />
-                <element signature="method#isThisProductAvailable#0;class#ProductManager#0" />
-                <element signature="method#leastPriceOf#0;class#ProductManager#0" />
-                <element signature="method#deleteProduct#0;class#ProductManager#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Product/Comment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="29" column="125" selection-start-line="28" selection-start-column="8" selection-end-line="29" selection-end-column="125" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/System/RequestManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Users/Request.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="35" column="4" lean-forward="true" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Users/RequestType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/ModelPackage/System/RequestManagerTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -142,127 +46,33 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="UPDATE_TYPE" value="MERGE" />
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ProductManager" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/main/java/ModelPackage/Product/Comment.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ModelPackage/System/ProductManager.java" />
-        <option value="$PROJECT_DIR$/src/test/java/ModelPackage/System/ProductManagerTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ModelPackage/System/RequestManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ModelPackage/Users/RequestType.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ModelPackage/Users/Request.java" />
-      </list>
-    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
         <option name="importAutomatically" value="true" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="width" value="979" />
-    <option name="height" value="1038" />
-  </component>
+  <component name="ProjectId" id="1aiSOph7gHQSLDTXOWJcJfLU54q" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project_team-16" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project_team-16" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project_team-16" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project_team-16" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project_team-16" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="ModelPackage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project_team-16" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="ModelPackage" type="462c0819:PsiDirectoryNode" />
-              <item name="System" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project_team-16" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="ModelPackage" type="462c0819:PsiDirectoryNode" />
-              <item name="Users" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project_team-16" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project_team-16" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CFKala" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project_team-16" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="System" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-    </panes>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -278,21 +88,16 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="ModelPackage.System" />
+    </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProductManagerTest.doesThisProductExistTest">
-    <configuration name="ProductManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.AccountManagerTest.getUserByName">
+    <configuration name="AccountManagerTest.changeInfo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project_team-16" />
       <extension name="coverage">
         <pattern>
@@ -301,29 +106,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.ProductManagerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProductManagerTest.assignAScoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project_team-16" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ModelPackage.System.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.ProductManagerTest" />
-      <option name="METHOD_NAME" value="assignAScoreTest" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.AccountManagerTest" />
+      <option name="METHOD_NAME" value="changeInfo" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductManagerTest.doesThisProductExistTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AccountManagerTest.createAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project_team-16" />
       <extension name="coverage">
         <pattern>
@@ -332,14 +122,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.ProductManagerTest" />
-      <option name="METHOD_NAME" value="doesThisProductExistTest" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.AccountManagerTest" />
+      <option name="METHOD_NAME" value="createAccount" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductManagerTest.showCommentsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AccountManagerTest.getUserByName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project_team-16" />
       <extension name="coverage">
         <pattern>
@@ -348,14 +138,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.ProductManagerTest" />
-      <option name="METHOD_NAME" value="showCommentsTest" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.AccountManagerTest" />
+      <option name="METHOD_NAME" value="getUserByName" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductManagerTest.showScoresTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AccountManagerTest.login" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project_team-16" />
       <extension name="coverage">
         <pattern>
@@ -364,8 +154,24 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.ProductManagerTest" />
-      <option name="METHOD_NAME" value="showScoresTest" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.AccountManagerTest" />
+      <option name="METHOD_NAME" value="login" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AccountManagerTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project_team-16" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ModelPackage.System.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ModelPackage.System" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.AccountManagerTest" />
+      <option name="METHOD_NAME" value="test" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -373,16 +179,16 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProductManagerTest.doesThisProductExistTest" />
-        <item itemvalue="JUnit.ProductManagerTest.showScoresTest" />
-        <item itemvalue="JUnit.ProductManagerTest.showCommentsTest" />
-        <item itemvalue="JUnit.ProductManagerTest.assignAScoreTest" />
-        <item itemvalue="JUnit.ProductManagerTest" />
+        <item itemvalue="JUnit.AccountManagerTest.test" />
+        <item itemvalue="JUnit.AccountManagerTest.login" />
+        <item itemvalue="JUnit.AccountManagerTest.getUserByName" />
+        <item itemvalue="JUnit.AccountManagerTest.createAccount" />
+        <item itemvalue="JUnit.AccountManagerTest.changeInfo" />
       </list>
     </recent_temporary>
   </component>
   <component name="SvnConfiguration">
-    <configuration />
+    <configuration>C:\Users\arash\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -393,137 +199,152 @@
       <updated>1586335730199</updated>
       <workItem from="1586335734972" duration="1276000" />
       <workItem from="1586370496485" duration="639000" />
-      <workItem from="1587285025348" duration="956000" />
-      <workItem from="1587299431022" duration="1958000" />
-      <workItem from="1587375696492" duration="8615000" />
-      <workItem from="1587389811340" duration="2153000" />
+      <workItem from="1587216898356" duration="1477000" />
+      <workItem from="1587224833592" duration="2530000" />
+      <workItem from="1587284278312" duration="4036000" />
+      <workItem from="1587308667799" duration="4930000" />
+      <workItem from="1587370306663" duration="4464000" />
+      <workItem from="1587378159942" duration="3758000" />
+      <workItem from="1587393541118" duration="411000" />
+      <workItem from="1587484049938" duration="1344000" />
+      <workItem from="1587485757912" duration="3872000" />
+      <workItem from="1587833612211" duration="1850000" />
     </task>
-    <task id="LOCAL-00001" summary="addBoughtAmount and addView methods added in ProductManager">
-      <created>1587301091983</created>
+    <task id="LOCAL-00001" summary="User class created">
+      <created>1587193274754</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1587301091983</updated>
+      <updated>1587193274754</updated>
     </task>
-    <task id="LOCAL-00002" summary="assign comment and score">
-      <created>1587385173474</created>
+    <task id="LOCAL-00002" summary="Seller class created">
+      <created>1587193855394</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1587385173474</updated>
+      <updated>1587193855394</updated>
     </task>
-    <task id="LOCAL-00003" summary="show Comments in Product Manager">
-      <created>1587385977695</created>
+    <task id="LOCAL-00003" summary="Customer class created">
+      <created>1587194045285</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1587385977695</updated>
+      <updated>1587194045285</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Manager and the NotSignedIn class created">
+      <created>1587194228901</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1587194228901</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Off class created">
+      <created>1587195247803</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1587195247803</updated>
+    </task>
+    <task id="LOCAL-00006" summary="DiscountCode class created">
+      <created>1587195557577</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1587195557577</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Cart and SubCart class created">
+      <created>1587196051855</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1587196051855</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Some Fixes on Entities">
+      <created>1587196085066</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1587196085066</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Adding JMockit">
+      <created>1587217048470</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1587217048470</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Adding AccountManager class">
+      <created>1587309455461</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1587309455461</updated>
+    </task>
+    <task id="LOCAL-00011" summary="change info method implemented">
+      <created>1587309527312</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1587309527312</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Making changeInfo method better">
+      <created>1587314042523</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1587314042523</updated>
+    </task>
+    <task id="LOCAL-00013" summary="CreateAccount method implemented">
+      <created>1587372997038</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1587372997038</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Login method implemented">
+      <created>1587373029688</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1587373029688</updated>
+    </task>
+    <task id="LOCAL-00015" summary="CreateAccount method tested">
+      <created>1587374207200</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1587374207200</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Login method tested">
+      <created>1587374229384</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1587374229384</updated>
+    </task>
+    <task id="LOCAL-00017" summary="CreateAccount gets better">
+      <created>1587385079906</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1587385079906</updated>
+    </task>
+    <task id="LOCAL-00018" summary="AccountManagerTest and create account got better">
+      <created>1587393930770</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1587393930770</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Create seller got even better">
+      <created>1587487435762</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1587487435762</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
-  </component>
-  <component name="TestHistory">
-    <history-entry file="ProductManagerTest_addBoughtTest - 2020.04.20 at 14h 18m 26s.xml">
-      <configuration name="ProductManagerTest.addBoughtTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ProductManagerTest - 2020.04.20 at 14h 35m 55s.xml">
-      <configuration name="ProductManagerTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ProductManagerTest_assignACommentTest - 2020.04.20 at 16h 04m 11s.xml">
-      <configuration name="ProductManagerTest.assignACommentTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ProductManagerTest - 2020.04.20 at 16h 05m 38s.xml">
-      <configuration name="ProductManagerTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ProductManagerTest_assignAScoreTest - 2020.04.20 at 16h 20m 00s.xml">
-      <configuration name="ProductManagerTest.assignAScoreTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ProductManagerTest_assignAScoreTest - 2020.04.20 at 16h 24m 56s.xml">
-      <configuration name="ProductManagerTest.assignAScoreTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ProductManagerTest_assignAScoreTest - 2020.04.20 at 16h 33m 24s.xml">
-      <configuration name="ProductManagerTest.assignAScoreTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ProductManagerTest_showCommentsTest - 2020.04.20 at 16h 54m 43s.xml">
-      <configuration name="ProductManagerTest.showCommentsTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ProductManagerTest_showScoresTest - 2020.04.20 at 17h 06m 26s.xml">
-      <configuration name="ProductManagerTest.showScoresTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ProductManagerTest_doesThisProductExistTest - 2020.04.20 at 17h 13m 54s.xml">
-      <configuration name="ProductManagerTest.doesThisProductExistTest" configurationId="JUnit" />
-    </history-entry>
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13682000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21409395" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="0" weight="0.3286119" />
-      <window_info anchor="bottom" id="Message" order="1" />
-      <window_info anchor="bottom" id="Find" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="3" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="4" weight="0.3286119" />
-      <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="8" />
-      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Theme Preview" order="4" />
-      <window_info anchor="right" id="Maven" order="5" />
-      <window_info anchor="right" id="Capture Analysis" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Database" order="8" />
-      <window_info anchor="right" id="Coverage" order="9" side_tool="true" weight="0.3295302" />
-    </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25302014" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="0" weight="0.3286119" />
-      <window_info anchor="bottom" id="Message" order="1" />
-      <window_info anchor="bottom" id="Find" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="3" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="4" weight="0.3286119" />
-      <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="8" />
-      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Theme Preview" order="4" />
-      <window_info anchor="right" id="Maven" order="5" />
-      <window_info anchor="right" id="Capture Analysis" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Database" order="8" />
-      <window_info anchor="right" id="Coverage" order="9" side_tool="true" weight="0.3295302" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -545,12 +366,6 @@
           <value>
             <State>
               <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
@@ -569,13 +384,30 @@
                   </entry>
                 </map>
               </option>
-              <option name="COLUMN_ORDER">
-                <list>
-                  <option value="0" />
-                  <option value="1" />
-                  <option value="2" />
-                  <option value="3" />
-                </list>
+            </State>
+          </value>
+        </entry>
+        <entry key="2">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:C:/Users/arash/Desktop/Uniwork/Term 2/Advanced Programming/Project/Phase 1/CFKala/Project_team-16/src/main/java" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
               </option>
             </State>
           </value>
@@ -583,20 +415,7 @@
         <entry key="MAIN">
           <value>
             <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-              <option name="COLUMN_ORDER">
-                <list>
-                  <option value="0" />
-                  <option value="2" />
-                  <option value="1" />
-                  <option value="3" />
-                </list>
-              </option>
+              <option name="COLUMN_ORDER" />
             </State>
           </value>
         </entry>
@@ -605,284 +424,153 @@
     <option name="OPEN_TABS">
       <set>
         <option value="1" />
+        <option value="2" />
       </set>
-    </option>
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list />
-          </value>
-        </entry>
-        <entry key="User">
-          <value>
-            <list />
-          </value>
-        </entry>
-      </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="addBoughtAmount and addView methods added in ProductManager" />
-    <MESSAGE value="assign comment and score" />
-    <MESSAGE value="show Comments in Product Manager" />
-    <option name="LAST_COMMIT_MESSAGE" value="show Comments in Product Manager" />
+    <MESSAGE value="User class created" />
+    <MESSAGE value="Seller class created" />
+    <MESSAGE value="Customer class created" />
+    <MESSAGE value="Manager and the NotSignedIn class created" />
+    <MESSAGE value="Off class created" />
+    <MESSAGE value="DiscountCode class created" />
+    <MESSAGE value="Cart and SubCart class created" />
+    <MESSAGE value="Some Fixes on Entities" />
+    <MESSAGE value="Adding JMockit" />
+    <MESSAGE value="Adding AccountManager class" />
+    <MESSAGE value="change info method implemented" />
+    <MESSAGE value="Adding AccountManagerTest class&#10;Adding changeInfo test method" />
+    <MESSAGE value="Making changeInfo method better" />
+    <MESSAGE value="CreateAccount method implemented" />
+    <MESSAGE value="Login method implemented" />
+    <MESSAGE value="CreateAccount method tested" />
+    <MESSAGE value="Login method tested" />
+    <MESSAGE value="CreateAccount gets better" />
+    <MESSAGE value="AccountManagerTest and create account got better" />
+    <MESSAGE value="Create seller got even better" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create seller got even better" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="618" y="321" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" />
-    <state x="618" y="321" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.864@0.0.1536.864" />
-    <state x="286" y="358" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" />
-    <state x="286" y="358" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.864@0.0.1536.864" />
-    <state x="223" y="27" key="CommitChangelistDialog2" />
-    <state x="223" y="27" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" />
-    <state x="93" y="93" width="1350" height="678" key="DiffContextDialog" />
-    <state x="93" y="93" width="1350" height="678" key="DiffContextDialog/0.0.1536.864@0.0.1536.864" />
-    <state x="549" y="187" key="FileChooserDialogImpl" />
-    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" />
-    <state x="382" y="148" key="VCS.ChangeListViewerDialog" />
-    <state x="382" y="148" key="VCS.ChangeListViewerDialog/0.0.1536.864@0.0.1536.864" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" />
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.dvcs.ui.CompareBranchesDialog" />
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.dvcs.ui.CompareBranchesDialog/0.0.1536.864@0.0.1536.864" />
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" />
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1536.864@0.0.1536.864" />
-    <state x="97" y="36" width="1350" height="678" key="com.intellij.history.integration.ui.views.FileHistoryDialog" />
-    <state x="97" y="36" width="1350" height="678" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.864@0.0.1536.864" />
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" />
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.0.1536.864@0.0.1536.864" />
-    <state x="578" y="349" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" />
-    <state x="578" y="349" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864@0.0.1536.864" />
-  </component>
-  <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CFKala$ProductManagerTest.ic" NAME="ProductManagerTest Coverage Results" MODIFIED="1587382521222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Product/Product.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Log/Log.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Log/SellLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Log/PurchaseLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Product/Score.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Users/Manager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Users/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="22" column="25" lean-forward="true" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Users/Seller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/ModelPackage/System/ProductManagerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="214" column="5" lean-forward="true" selection-start-line="214" selection-start-column="5" selection-end-line="214" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="58" selection-start-line="58" selection-end-line="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/System/RequestManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Users/RequestType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/ModelPackage/System/RequestManagerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/System/ProductManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="137" column="5" lean-forward="true" selection-start-line="137" selection-start-column="5" selection-end-line="137" selection-end-column="5" />
-          <folding>
-            <element signature="method#getInstance#0;class#ProductManager#0" />
-            <element signature="method#addAmountOfStock#0;class#ProductManager#0" />
-            <element signature="method#findProductById#0;class#ProductManager#0" />
-            <element signature="method#findProductByName#0;class#ProductManager#0" />
-            <element signature="method#addView#0;class#ProductManager#0" />
-            <element signature="method#addBought#0;class#ProductManager#0" />
-            <element signature="method#assignAComment#0;class#ProductManager#0" />
-            <element signature="method#assignAScore#0;class#ProductManager#0" />
-            <element signature="method#showComments#0;class#ProductManager#0" />
-            <element signature="method#showScores#0;class#ProductManager#0" />
-            <element signature="method#doesThisProductExist#0;class#ProductManager#0" />
-            <element signature="method#isThisProductAvailable#0;class#ProductManager#0" />
-            <element signature="method#leastPriceOf#0;class#ProductManager#0" />
-            <element signature="method#deleteProduct#0;class#ProductManager#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Product/Comment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="29" column="125" selection-start-line="28" selection-start-column="8" selection-end-line="29" selection-end-column="125" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ModelPackage/Users/Request.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="35" column="4" lean-forward="true" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>13</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>Project_team-16</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.6" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>13</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
+    <state x="0" y="91" key="#Notifications" timestamp="1587217769864">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="0" y="91" key="#Notifications/0.0.1536.864@0.0.1536.864" timestamp="1587217769864" />
+    <state x="93" y="93" width="1350" height="678" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1587489599846">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="93" y="93" width="1350" height="678" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1536.864@0.0.1536.864" timestamp="1587489599846" />
+    <state x="574" y="148" key="#com.intellij.ide.util.MemberChooser" timestamp="1587486304631">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="574" y="148" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1587486304631" />
+    <state x="618" y="321" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1587190924791">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="618" y="321" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.864@0.0.1536.864" timestamp="1587190924791" />
+    <state x="286" y="358" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1587193865629">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="286" y="358" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.864@0.0.1536.864" timestamp="1587193865629" />
+    <state x="566" y="292" width="403" height="287" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1587485767729">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="566" y="292" width="403" height="287" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.864@0.0.1536.864" timestamp="1587485767729" />
+    <state x="516" y="279" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1587385153202">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="516" y="279" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.864@0.0.1536.864" timestamp="1587385153202" />
+    <state x="49" y="12" key="CommitChangelistDialog2" timestamp="1587487433737">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="49" y="12" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1587487433737" />
+    <state x="93" y="93" width="1350" height="678" key="DiffContextDialog" timestamp="1587314869859">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="93" y="93" width="1350" height="678" key="DiffContextDialog/0.0.1536.864@0.0.1536.864" timestamp="1587314869859" />
+    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1587226576325">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1587226576325" />
+    <state x="0" y="0" key="FileDocumentManager.FileCacheConflict" timestamp="1587833954550">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="0" y="0" key="FileDocumentManager.FileCacheConflict/0.0.1536.864@0.0.1536.864" timestamp="1587833954550" />
+    <state width="1493" height="222" key="GridCell.Tab.0.bottom" timestamp="1587489639627">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="222" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1587489639627" />
+    <state width="1493" height="222" key="GridCell.Tab.0.center" timestamp="1587489639627">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="222" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1587489639627" />
+    <state width="1493" height="222" key="GridCell.Tab.0.left" timestamp="1587489639627">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="222" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1587489639627" />
+    <state width="1493" height="222" key="GridCell.Tab.0.right" timestamp="1587489639627">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="222" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1587489639627" />
+    <state x="110" y="62" key="MergeDialog" timestamp="1587834305921">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="110" y="62" key="MergeDialog/0.0.1536.864@0.0.1536.864" timestamp="1587834305921" />
+    <state x="481" y="148" key="MultipleFileMergeDialog" timestamp="1587834321083">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="481" y="148" key="MultipleFileMergeDialog/0.0.1536.864@0.0.1536.864" timestamp="1587834321083" />
+    <state x="351" y="154" key="RollbackChangesDialog" timestamp="1587309982596">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="351" y="154" key="RollbackChangesDialog/0.0.1536.864@0.0.1536.864" timestamp="1587309982596" />
+    <state x="0" y="14" key="SettingsEditor" timestamp="1587308643883">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="0" y="14" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1587308643883" />
+    <state x="382" y="148" key="VCS.ChangeListViewerDialog" timestamp="1587190479910">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="382" y="148" key="VCS.ChangeListViewerDialog/0.0.1536.864@0.0.1536.864" timestamp="1587190479910" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1587378193755">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1587378193755" />
+    <state x="93" y="93" width="1350" height="678" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1587314869859">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="93" y="93" width="1350" height="678" key="com.intellij.dvcs.ui.CompareBranchesDialog/0.0.1536.864@0.0.1536.864" timestamp="1587314869859" />
+    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1587310392248">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1536.864@0.0.1536.864" timestamp="1587310392248" />
+    <state x="97" y="36" width="1350" height="678" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1587374305292">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="97" y="36" width="1350" height="678" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.864@0.0.1536.864" timestamp="1587374305292" />
+    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1587192644264">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.0.1536.864@0.0.1536.864" timestamp="1587192644264" />
+    <state x="88" y="256" key="com.intellij.ide.util.TipDialog" timestamp="1587308671255">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="88" y="256" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1587308671255" />
+    <state x="578" y="349" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587833847360">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="578" y="349" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864@0.0.1536.864" timestamp="1587833847360" />
+    <state x="382" y="145" key="git4idea.branch.GitSmartOperationDialog" timestamp="1587834240940">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="382" y="145" key="git4idea.branch.GitSmartOperationDialog/0.0.1536.864@0.0.1536.864" timestamp="1587834240940" />
+    <state x="387" y="224" key="git4idea.merge.GitPullDialog" timestamp="1587484721077">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="387" y="224" key="git4idea.merge.GitPullDialog/0.0.1536.864@0.0.1536.864" timestamp="1587484721077" />
+    <state x="54" y="185" width="672" height="678" key="search.everywhere.popup" timestamp="1587833965077">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="54" y="185" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1587833965077" />
   </component>
 </project>
