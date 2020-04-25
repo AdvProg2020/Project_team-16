@@ -7,9 +7,11 @@ import java.util.List;
 
 
 public class AccountManager {
-    private List<User> users = new ArrayList<>();
+    private List<User> users;
     private static AccountManager accountManager = null;
-    private AccountManager(){}
+    private AccountManager(){
+        this.users = new ArrayList<>();
+    }
     public static AccountManager getInstance(){
         if (accountManager == null)
             accountManager = new AccountManager();

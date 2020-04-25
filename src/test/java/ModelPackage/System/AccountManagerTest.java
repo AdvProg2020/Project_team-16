@@ -31,8 +31,9 @@ public class AccountManagerTest {
     @Test
     public void login(){
         accountManager.getUsers().add(user);
-        boolean actual = accountManager.login("a","b");
-        Assert.assertFalse(actual);
+        accountManager.login("a","a");
+        boolean actual = user.isHasSignedIn();
+        Assert.assertTrue(actual);
     }
 
     @Test
