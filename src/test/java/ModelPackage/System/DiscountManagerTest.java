@@ -34,5 +34,7 @@ public class DiscountManagerTest {
     public void getDiscountByCodeTest() {
         DiscountCode actual = discountManager.getDiscountByCode("Dis#12");
         Assert.assertEquals(discountCode, actual);
+        actual = discountManager.getDiscountByCode("Dis#10");
+        Assert.assertNull(actual);
     }
 }
