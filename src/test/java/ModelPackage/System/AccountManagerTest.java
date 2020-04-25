@@ -7,6 +7,10 @@ import mockit.Expectations;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class AccountManagerTest {
 
     AccountManager accountManager = AccountManager.getInstance();
@@ -20,12 +24,16 @@ public class AccountManagerTest {
     }
 
     @Test
-    public void createAccount(){
+    public void createAccount() throws IOException {
         String[] info = {"a","a","a","a","a","a"};
         accountManager.createAccount(info,"manager");
         User actual = accountManager.getUserByUsername("a");
         User expected = user;
-        Assert.assertEquals(expected,actual);
+        FileReader fileReader = new FileReader("src/main/resources/users.user");
+        Scanner scanner = new Scanner(fileReader);
+        Assert.assertEquals(scanner.nextLine(),"{\"username\":\"a\",\"password\":\"a\",\"firstName\":\"a\",\"lastName\":\"a\"," +
+                "\"email\":\"a\",\"phoneNumber\":\"a\",\"cart\":{\"subCarts\":[],\"totalPrice\":0},\"hasSignedIn\":false}");
+        fileReader.close();
     }
 
     @Test
@@ -50,6 +58,7 @@ public class AccountManagerTest {
         User actualUser = accountManager.getUserByUsername("a");
         Assert.assertEquals(user,actualUser);
     }
+
 
 
 }
