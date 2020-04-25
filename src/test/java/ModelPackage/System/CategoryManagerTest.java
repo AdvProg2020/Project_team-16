@@ -138,5 +138,14 @@ public class CategoryManagerTest {
         categoryManager.editProductCategory("456",category2.getId(),category1.getId());
     }
 
+    @Test
+    public void removeProductFromCategoryTest()
+            throws NoSuchACategoryException, NoSuchAProductInCategoryException {
+        categoryManager.removeProductFromCategory("123",category2.getId());
+        int countCat2Prs = category2.getAllProductInThis().size();
+        Assert.assertEquals(0,countCat2Prs);
+    }
+
+
 }
 
