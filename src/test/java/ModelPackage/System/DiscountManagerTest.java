@@ -22,7 +22,8 @@ public class DiscountManagerTest {
         HashMap<User, Integer> users = new HashMap<>();
         users.put(ali, 2);
         users.put(reza, 1);
-        discountCode = new DiscountCode("Dis#12", new Date(), new Date(2020, Calendar.MAY, 1), 10, 10, users);
+        discountCode = new DiscountCode(new Date(), new Date(2020, Calendar.MAY, 1), 10, 10, users);
+        discountCode.setCode("Dis#12");
         DiscountManager.getInstance().getDiscountCodes().add(discountCode);
     }
     @Test
