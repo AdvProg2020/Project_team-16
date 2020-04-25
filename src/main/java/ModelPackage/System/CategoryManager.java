@@ -3,6 +3,7 @@ package ModelPackage.System;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.category.*;
+import ModelPackage.System.exeption.product.NoSuchAProductException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,7 +51,8 @@ public class CategoryManager {
         }
     }
 
-    public void addProductToCategory(String productId,String categoryId) throws Exception{
+    public void addProductToCategory(String productId,String categoryId)
+            throws NoSuchACategoryException, NoSuchAProductException {
         Category toBeAddedTo = getCategoryById(categoryId);
         if (toBeAddedTo == null) throw new NoSuchACategoryException(categoryId);
         ProductManager.getInstance().checkIfThisProductExists(productId);
@@ -60,13 +62,41 @@ public class CategoryManager {
         toBeAddedTo.setAllProductInThis(productsIn);
     }
 
-    public ArrayList<String> getAllSpecialFeaturesFromCategory(String categeryId)
+    public ArrayList<String> getAllSpecialFeaturesFromCategory(String categoryId)
             throws NoSuchACategoryException{
-        Category category = getCategoryById(categeryId);
-        if (category == null) throw new NoSuchACategoryException(categeryId);
+        Category category = getCategoryById(categoryId);
+        if (category == null) throw new NoSuchACategoryException(categoryId);
         else{
             return category.getSpecialFeatures();
         }
+    }
+
+    public void editProductCategory(String productId,String oldCategoryId, String newCategoryId)
+            throws NoSuchACategoryException, NoSuchAProductException, NoSuchAProductInCategoryException {
+        Category oldCategory = getCategoryById(oldCategoryId);
+        if (oldCategory == null) throw new NoSuchACategoryException(oldCategoryId);
+
+        ProductManager.getInstance().checkIfThisProductExists(productId);
+        checkIfThisProductExistInThisCategory(productId,oldCategory);
+
+        ArrayList<String> products = oldCategory.getAllProductInThis();
+        products.remove(productId);
+        oldCategory.setAllProductInThis(products);
+
+        Category newCategory = getCategoryById(newCategoryId);
+        if (newCategory == null) throw new NoSuchACategoryException(newCategoryId);
+
+        products = newCategory.getAllProductInThis();
+        products.add(productId);
+        newCategory.setAllProductInThis(products);
+    }
+
+    private void checkIfThisProductExistInThisCategory(String productId,Category category)
+            throws NoSuchAProductInCategoryException {
+        for (String id : category.getAllProductInThis()) {
+            if (id.equals(productId))return;
+        }
+        throw new NoSuchAProductInCategoryException(productId,category.getId());
     }
 
     public void clear(){
