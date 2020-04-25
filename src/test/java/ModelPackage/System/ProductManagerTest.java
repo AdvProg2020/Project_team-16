@@ -217,7 +217,7 @@ public class ProductManagerTest {
     }
 
     @Test
-    public void deleteProductTest(){
+    public void deleteProductTest() throws Exception{
         productManager.deleteProduct(product.getProductId());
         boolean exist = productManager.doesThisProductExist(product.getProductId());
         Assert.assertFalse(exist);

@@ -163,6 +163,34 @@ public class CategoryManager {
         }
     }
 
+    public void removeCategory(String categoryId)
+            throws NoSuchACategoryException {
+        Category category = getCategoryById(categoryId);
+        removeCategory(category);
+    }
+
+    private void removeCategory(Category category)
+            throws NoSuchACategoryException {
+        ArrayList<Category> subCategories = category.getSubCategories();
+        if (!subCategories.isEmpty()){
+            for (Category subCategory : subCategories) {
+                removeCategory(subCategory);
+            }
+        }
+        removeAllProductsIn(category);
+        allCategories.remove(category);
+        Category parent = getCategoryById(category.getId());
+        ArrayList<Category> subcategories = parent.getSubCategories();
+        subCategories.remove(category);
+        parent.setSubCategories(subCategories);
+    }
+
+    private void removeAllProductsIn(Category category){
+        for (String product : category.getAllProductInThis()) {
+            ProductManager.getInstance().deleteProductCategoryOrder(product);
+        }
+    }
+
     public void clear(){
         allCategories.clear();
         allMainCategories.clear();

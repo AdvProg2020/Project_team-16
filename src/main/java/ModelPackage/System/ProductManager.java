@@ -4,6 +4,8 @@ import ModelPackage.Product.Comment;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.Product.Score;
+import ModelPackage.System.exeption.category.NoSuchACategoryException;
+import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.product.*;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
@@ -144,15 +146,19 @@ public class ProductManager {
         return leastPrice;
     }
 
-    public void deleteProduct(String productId){
+    public void deleteProduct(String productId)
+            throws NoSuchACategoryException, NoSuchAProductInCategoryException {
         Product product = findProductById(productId);
         allProducts.remove(product);
-        /* TODO : delete it from its Category */
-        /*
-        1.CategoryManager
-        2.GetCategoryObject
-        3.deleteProductFromCategory
-        */
+        CategoryManager.getInstance().removeProductFromCategory(productId,product.getCategoryId());
+
+        /* TODO : delete from database */
+    }
+
+    public void deleteProductCategoryOrder(String productId){
+        Product product = findProductById(productId);
+        allProducts.remove(product);
+        /* TODO : delete from database */
     }
 
     public void clear(){

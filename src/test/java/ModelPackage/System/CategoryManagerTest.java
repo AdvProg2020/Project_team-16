@@ -44,6 +44,8 @@ public class CategoryManagerTest {
         productCat2.add("123");
         category2.setAllProductInThis(productCat2);
 
+        category3.setAllProductInThis(new ArrayList<>());
+
         categoryManager.clear();
         categoryManager.add(main);
         categoryManager.add(category1);
@@ -186,4 +188,15 @@ public class CategoryManagerTest {
         categoryManager.addFeatureToCategory(category1.getId(),"art");
     }
 
+    @Test(expected = NoSuchACategoryException.class)
+    public void removeCategory() throws Exception{
+        new MockUp<ProductManager>(){
+          @Mock public void deleteProductCategoryOrder(String productId){};
+        };
+        categoryManager.removeCategory(category1.getId());
+        int countOfMainSubCats = main.getSubCategories().size();
+        Assert.assertEquals(1,countOfMainSubCats);
+
+        categoryManager.getCategoryById(category1.getId());
+    }
 }
