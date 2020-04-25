@@ -60,6 +60,15 @@ public class CategoryManager {
         toBeAddedTo.setAllProductInThis(productsIn);
     }
 
+    public ArrayList<String> getAllSpecialFeaturesFromCategory(String categeryId)
+            throws NoSuchACategoryException{
+        Category category = getCategoryById(categeryId);
+        if (category == null) throw new NoSuchACategoryException(categeryId);
+        else{
+            return category.getSpecialFeatures();
+        }
+    }
+
     public void clear(){
         allCategories.clear();
         allMainCategories.clear();

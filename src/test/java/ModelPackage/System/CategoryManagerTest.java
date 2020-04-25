@@ -8,6 +8,8 @@ import mockit.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class CategoryManagerTest {
     private CategoryManager categoryManager;
     private Category main;
@@ -25,6 +27,12 @@ public class CategoryManagerTest {
         categoryManager.addToBase(category2,main);
         category3 = new Category("men",category1.getId());
         categoryManager.addToBase(category3,category1);
+
+        ArrayList<String> features = new ArrayList<>();
+        features.add("art");
+        features.add("size");
+        features.add("color");
+        category1.setSpecialFeatures(features);
 
         categoryManager.clear();
         categoryManager.add(category1);
@@ -91,6 +99,21 @@ public class CategoryManagerTest {
         categoryManager.addProductToCategory("abc",category1.getId());
     }
 
+    @Test
+    public void getAllSpecialFeaturesFromCategoryTest() throws Exception{
+        ArrayList<String> expected = new ArrayList<>();
+        expected.add("art");
+        expected.add("size");
+        expected.add("color");
+
+        ArrayList<String> actual = categoryManager.getAllSpecialFeaturesFromCategory(category1.getId());
+        Assert.assertEquals(expected,actual);
+    }
+
+    @Test(expected = NoSuchACategoryException.class)
+    public void getAllSpecialFeaturesFromCategoryNoCatExcTest() throws Exception{
+        categoryManager.getAllSpecialFeaturesFromCategory("bullshit");
+    }
 
 }
 
