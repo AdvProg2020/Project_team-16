@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class RequestManagerTest {
     private RequestManager requestManager;
     private Request request;
-    private Request requestComment;
 
     {
         requestManager = RequestManager.getInstance();
@@ -25,12 +24,9 @@ public class RequestManagerTest {
                 "Awesome !",
                 CommentStatus.VERIFIED,
                 true);
-        requestComment = new Request("asghar", RequestType.CREATE_COMMENT,
-                "asdfgh", comment);
 
         requestManager.clear();
         requestManager.addRequest(request);
-        requestManager.addRequest(requestComment);
     }
 
     @Test
@@ -68,13 +64,6 @@ public class RequestManagerTest {
     }
 
     @Test
-    public void acceptCreateCommentTest() {
-        requestManager.accept(requestComment.getRequestId());
-        boolean successful = CSCLManager.getInstance().doesThisCommentExists(requestComment.getComment().getId());
-        Assert.assertTrue(successful);
-    }
-
-    @Test
     public void acceptEditProductTest(){
         Product existedProduct = new Product();
         ProductManager.getInstance().addProductToList(existedProduct);
@@ -87,19 +76,6 @@ public class RequestManagerTest {
         int actulView = ProductManager.getInstance().findProductById(existedProduct.getProductId()).getView();
 
         Assert.assertEquals(20,actulView);
-    }
-
-    @Test
-    public void acceptAssignCommentTest(){
-        Product product = new Product();
-        product.setAllComments(new ArrayList<>());
-        ProductManager.getInstance().addProductToList(product);
-        Comment comment = new Comment(product.getProductId(),"asdf","adf","asdfsad saf", CommentStatus.UNDER_VERIFICATION,true);
-        Request request1 = new Request("asghar",RequestType.ASSIGN_COMMENT,"adf",comment);
-        requestManager.addRequest(request1);
-        requestManager.accept(request1.getRequestId());
-
-        Assert.assertEquals(comment.getId(),product.getAllComments().get(0).getId());
     }
 
     @Test

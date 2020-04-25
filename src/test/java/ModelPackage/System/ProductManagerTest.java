@@ -1,4 +1,4 @@
-/*
+
 package ModelPackage.System;
 
 import ModelPackage.Product.*;
@@ -248,4 +248,3 @@ public class ProductManagerTest {
         Assert.assertEquals("Brazzers",company);
     }
 }
-*/

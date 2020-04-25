@@ -73,7 +73,7 @@ public class CSCLManager {
         String requestStr = String.format("%s has requested to create comment with title %s and text %s \n with id " +
                         "%s on product with id %s",
                 comment.getUserId(), comment.getTitle(), comment.getText(), comment.getId(), comment.getProductId());
-        Request request = new Request(comment.getUserId(), RequestType.CREATE_COMMENT, requestStr, comment);
+        Request request = new Request(comment.getUserId(), RequestType.ASSIGN_COMMENT, requestStr, comment);
         RequestManager.getInstance().addRequest(request);
     }
 
