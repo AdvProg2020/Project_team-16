@@ -37,6 +37,14 @@ public class AccountManagerTest {
     }
 
     @Test
+    public void logout(){
+        accountManager.getUsers().add(user);
+        accountManager.logout("a");
+        boolean actual = user.isHasSignedIn();
+        Assert.assertFalse(actual);
+    }
+
+    @Test
     public void getUserByName(){
         accountManager.getUsers().add(user);
         User actualUser = accountManager.getUserByUsername("a");
