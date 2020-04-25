@@ -8,7 +8,10 @@ import ModelPackage.Product.ProductStatus;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
+import com.google.gson.Gson;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +99,15 @@ public class RequestManager {
     private void acceptSeller(Request request) {
         Seller seller = request.getSeller();
         AccountManager.getInstance().getUsers().add(seller);
+
+        String sellerJson = new Gson().toJson(seller);
+        try {
+            FileWriter fileWriter = new FileWriter("src/main/resources/users.user",true);
+            fileWriter.write(sellerJson);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void decline(String requestId){
