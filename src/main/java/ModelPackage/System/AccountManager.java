@@ -67,7 +67,7 @@ public class AccountManager {
 
     public void login(String username,String password){
         if (isCorrectPassword(username, password)){
-            getUserByUsername(username).isHasSignedIn() = true;
+            getUserByUsername(username).setHasSignedIn(true);
         }
     }
 
@@ -82,7 +82,9 @@ public class AccountManager {
         }
     }
 
-    public void logout(String username){ }
+    public void logout(String username){
+        getUserByUsername(username).setHasSignedIn(false);
+    }
 
     private boolean isCorrectPassword(String username,String password){
         return getUserByUsername(username).getPassword().equals(password);
