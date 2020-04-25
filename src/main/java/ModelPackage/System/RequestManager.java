@@ -8,7 +8,10 @@ import ModelPackage.Product.ProductStatus;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
+import com.google.gson.Gson;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +52,7 @@ public class RequestManager {
             case ASSIGN_COMMENT:
                 acceptAssignComment(request);
                 break;
-            case REGIDTER_SELLER:
+            case REGISTER_SELLER:
                 acceptSeller(request);
                 break;
             case CREATE_COMMENT:
@@ -104,9 +107,16 @@ public class RequestManager {
 
     private void acceptSeller(Request request) {
         Seller seller = request.getSeller();
-        /*TODO :
-         *  1. save in database
-         *  2. load it into AccountManager */
+        AccountManager.getInstance().getUsers().add(seller);
+
+        String sellerJson = new Gson().toJson(seller);
+        try {
+            FileWriter fileWriter = new FileWriter("src/main/resources/users.user",true);
+            fileWriter.write(sellerJson);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void decline(String requestId){
@@ -117,11 +127,9 @@ public class RequestManager {
 
     public static RequestManager getInstance(){
         if(requestManager == null){
-            return requestManager = new RequestManager();
+            requestManager = new RequestManager();
         }
-        else {
-            return requestManager;
-        }
+        return requestManager;
     }
 
     public List<Request> getRequests() {
