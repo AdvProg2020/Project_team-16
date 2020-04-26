@@ -59,4 +59,18 @@ public class DiscountManagerTest {
         DiscountCode discountCode = discountManager.getDiscountByCode("Dis#12");
         Assert.assertNull(discountCode);
     }
+    @Test
+    public void editDiscountStartingDateTest() {
+        Date newDate = new Date(2020, Calendar.MARCH, 15);
+        discountManager.editDiscountStartingDate("Dis#13", newDate);
+        Date actual = discountManager.getDiscountByCode("Dis#13").getStartTime();
+        Assert.assertEquals(newDate, actual);
+    }
+    @Test
+    public void editDiscountEndingDateTest() {
+        Date newDate = new Date(2020, Calendar.MARCH, 5);
+        discountManager.editDiscountEndingDate("Dis#13", newDate);
+        Date actual = discountManager.getDiscountByCode("Dis#13").getEndTime();
+        Assert.assertEquals(newDate, actual);
+    }
 }

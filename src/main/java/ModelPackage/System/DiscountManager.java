@@ -41,4 +41,14 @@ public class DiscountManager {
         DiscountCode discountCode = getDiscountByCode(code);
         discountCodes.remove(discountCode);
     }
+
+    public void editDiscountStartingDate(String code, Date newStartingDate) {
+        DiscountCode discountCode = getDiscountByCode(code);
+        discountCode.setStartTime(newStartingDate);
+    }
+
+    public void editDiscountEndingDate(String code, Date newEndingDate) {
+        DiscountCode discountCode = getDiscountByCode(code);
+        discountCode.setEndTime(newEndingDate);
+    }
 }
