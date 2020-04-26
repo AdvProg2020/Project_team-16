@@ -53,4 +53,10 @@ public class DiscountManagerTest {
         successful = discountManager.isDiscountAvailable("Dis#12");
         Assert.assertTrue(successful);
     }
+    @Test
+    public void removeDiscountTest() {
+        discountManager.removeDiscount("Dis#12");
+        DiscountCode discountCode = discountManager.getDiscountByCode("Dis#12");
+        Assert.assertNull(discountCode);
+    }
 }

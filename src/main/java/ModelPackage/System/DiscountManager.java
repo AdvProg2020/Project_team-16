@@ -36,4 +36,9 @@ public class DiscountManager {
         Date endDate = discountCode.getEndTime();
         return !date.before(startDate) && !date.after(endDate);
     }
+
+    public void removeDiscount(String code) {
+        DiscountCode discountCode = getDiscountByCode(code);
+        discountCodes.remove(discountCode);
+    }
 }
