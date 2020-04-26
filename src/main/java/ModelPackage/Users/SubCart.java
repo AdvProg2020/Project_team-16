@@ -3,8 +3,7 @@ package ModelPackage.Users;
 import ModelPackage.Product.Product;
 import lombok.*;
 
-@Data
-@NoArgsConstructor
+@Data @NoArgsConstructor
 public class SubCart{
     private Product product;
     private String productId;

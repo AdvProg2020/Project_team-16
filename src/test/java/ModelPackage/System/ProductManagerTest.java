@@ -1,4 +1,4 @@
-/*
+
 package ModelPackage.System;
 
 import ModelPackage.Product.*;
@@ -40,7 +40,7 @@ public class ProductManagerTest {
         sellers.add(reza);
         sellers.add(saeed);
 
-        Category category = new Category("Cloth", "CT321654987", null);
+        Category category = new Category("Cloth", null);
 
         HashMap<String,String> publicFeatures = new HashMap<>();
         publicFeatures.put("Color","Red");
@@ -218,7 +218,7 @@ public class ProductManagerTest {
     }
 
     @Test
-    public void deleteProductTest(){
+    public void deleteProductTest() throws Exception{
         productManager.deleteProduct(product.getProductId());
         boolean exist = productManager.doesThisProductExist(product.getProductId());
         Assert.assertFalse(exist);
@@ -248,4 +248,3 @@ public class ProductManagerTest {
         Assert.assertEquals("Brazzers",company);
     }
 }
-*/

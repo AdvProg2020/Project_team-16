@@ -4,6 +4,7 @@ package ModelPackage.Product;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @Data
 public class Category {
@@ -14,12 +15,18 @@ public class Category {
     private String parentId;
     private ArrayList<String> allProductInThis;
 
-    public Category(String name, String id, String parentId) {
+    public Category(String name, String parentId) {
         this.name = name;
-        this.id = id;
+        this.id = idGenerator();
         this.parentId = parentId;
         this.specialFeatures = new ArrayList<String>();
         this.subCategories  = new ArrayList<Category>();
         this.allProductInThis = new ArrayList<String>();
+
+    }
+
+    private String idGenerator(){
+        Date date = new Date();
+        return String.format("CT%s%04d",date.toString().replaceAll("\\s","").replaceAll(":",""),(int)(Math.random()*9999+1));
     }
 }
