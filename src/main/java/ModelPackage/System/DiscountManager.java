@@ -82,4 +82,11 @@ public class DiscountManager {
     public DiscountCode showDiscountCode(String code) {
         return getDiscountByCode(code);
     }
+
+    public void createDiscountCode(Date startTime, Date endTime, int offPercentage, long maxDiscount) {
+        // TODO : check if startTime is before endTime
+        // TODO : check if offPercentage is smaller than 100
+        DiscountCode discountCode = new DiscountCode(startTime, endTime, offPercentage, maxDiscount);
+        discountCodes.add(discountCode);
+    }
 }

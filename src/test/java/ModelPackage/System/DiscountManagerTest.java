@@ -6,10 +6,7 @@ import ModelPackage.Users.User;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class DiscountManagerTest {
     private DiscountManager discountManager;
@@ -25,12 +22,15 @@ public class DiscountManagerTest {
         HashMap<User, Integer> users = new HashMap<>();
         users.put(ali, 2);
         users.put(reza, 1);
-        discountCode = new DiscountCode(new Date(), new Date(2020, Calendar.MAY, 1), 10, 10, users);
+        discountCode = new DiscountCode(new Date(), new Date(2020, Calendar.MAY, 1), 10, 10);
         discountCode.setCode("Dis#12");
-        discountCode1 = new DiscountCode(new Date(2020, Calendar.MARCH, 1), new Date(2020, Calendar.MARCH, 4), 10, 10, users);
+        discountCode.getUsers().putAll(users);
+        discountCode1 = new DiscountCode(new Date(2020, Calendar.MARCH, 1), new Date(2020, Calendar.MARCH, 4), 10, 10);
         discountCode1.setCode("Dis#13");
-        discountCode2 = new DiscountCode(new Date(2019, Calendar.MARCH, 3), new Date(2021, Calendar.MARCH, 1), 10, 10, users);
+        discountCode1.getUsers().putAll(users);
+        discountCode2 = new DiscountCode(new Date(2019, Calendar.MARCH, 3), new Date(2021, Calendar.MARCH, 1), 10, 10);
         discountCode2.setCode("Dis#14");
+        discountCode2.getUsers().putAll(users);
         discountManager.getDiscountCodes().add(discountCode);
         discountManager.getDiscountCodes().add(discountCode1);
         discountManager.getDiscountCodes().add(discountCode2);
@@ -119,5 +119,20 @@ public class DiscountManagerTest {
         DiscountCode expectedDiscountCode = discountManager.getDiscountCodes().get(discountManager.getDiscountCodes().size() - 1);
         DiscountCode actualDiscountCode = discountManager.showDiscountCode("Dis#14");
         Assert.assertEquals(expectedDiscountCode, actualDiscountCode);
+    }
+    @Test
+    public void createDiscountCode() {
+        Date startDate = new Date(2020, Calendar.FEBRUARY, 1);
+        Date endDate = new Date(2020, Calendar.JUNE, 2);
+        DiscountCode expectedDiscountCode = new DiscountCode(startDate, endDate, 12, 1000);
+        expectedDiscountCode.setCode("Dis@15");
+        discountManager.createDiscountCode(startDate, endDate, 12, 1000);
+        discountManager.getDiscountCodes().get(discountManager.getDiscountCodes().size() - 1).setCode("Dis@15");
+        DiscountCode actualDiscountCode = discountManager.getDiscountCodes().get(discountManager.getDiscountCodes().size() - 1);
+        int successful = Comparator.comparing(DiscountCode::getCode).
+                thenComparing(DiscountCode::getStartTime).thenComparing(DiscountCode::getEndTime).
+                thenComparing(DiscountCode::getOffPercentage).thenComparing(DiscountCode::getMaxDiscount)
+                .compare(expectedDiscountCode, actualDiscountCode);
+        Assert.assertEquals(0, successful);
     }
 }
