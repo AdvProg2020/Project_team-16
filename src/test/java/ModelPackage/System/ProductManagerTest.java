@@ -247,4 +247,15 @@ public class ProductManagerTest {
 
         Assert.assertEquals("Brazzers",company);
     }
+
+    @Test
+    public void allFeaturesOfTest(){
+        HashMap<String,String> features = new HashMap<>();
+        features.put("Color","Red");
+        features.put("Size","13*46*87");
+        features.put("size","XXL");
+        features.put("Material","Cotton");
+
+        Assert.assertEquals(features,productManager.allFeaturesOf(product.getProductId()));
+    }
 }
