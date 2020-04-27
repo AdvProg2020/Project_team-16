@@ -11,7 +11,6 @@ import java.util.List;
 
 
 public class AccountManager {
-    private List<User> users;
     private static AccountManager accountManager = null;
     private AccountManager(){
         this.users = new ArrayList<>();
@@ -21,6 +20,8 @@ public class AccountManager {
             accountManager = new AccountManager();
         return accountManager;
     }
+
+    private List<User> users;
     private RequestManager requestManager = RequestManager.getInstance();
     private CSCLManager csclManager = CSCLManager.getInstance();
 
@@ -60,13 +61,13 @@ public class AccountManager {
         );
 
         String managerJson = new Gson().toJson(manager);
-        try {
+        /*try {
             FileWriter fileWriter = new FileWriter("src/main/resources/users.user",true);
             fileWriter.write(managerJson);
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return manager;
     }
@@ -84,13 +85,13 @@ public class AccountManager {
         );
 
         String customerJson = new Gson().toJson(customer);
-        try {
+        /*try {
             FileWriter fileWriter = new FileWriter("src/main/resources/users.user",true);
             fileWriter.write(customerJson);
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return customer;
     }

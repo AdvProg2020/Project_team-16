@@ -15,6 +15,7 @@ public class Seller extends User {
     private List<String> productIds;
     private List<Off> offs;
     private List<SellLog> sellLogs;
+    private List<Message> messages;
 
     public Seller(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart, Company company, long balance) {
         super(username, password, firstName, lastName, email, phoneNumber, cart);
@@ -23,5 +24,6 @@ public class Seller extends User {
         this.offs = new ArrayList<Off>();
         this.productIds = new ArrayList<String>();
         this.sellLogs = new ArrayList<SellLog>();
+        this.messages = new ArrayList<>();
     }
 }
