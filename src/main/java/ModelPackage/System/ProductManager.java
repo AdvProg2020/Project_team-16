@@ -161,8 +161,7 @@ public class ProductManager {
         /* TODO : delete from database */
     }
 
-    public HashMap<String,String> allFeaturesOf(String productId){
-        Product product = findProductById(productId);
+    public HashMap<String,String> allFeaturesOf(Product product){
         HashMap<String,String> allFeatures = new HashMap<>(product.getPublicFeatures());
         allFeatures.putAll(product.getSpecialFeatures());
         return allFeatures;

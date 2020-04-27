@@ -256,6 +256,6 @@ public class ProductManagerTest {
         features.put("size","XXL");
         features.put("Material","Cotton");
 
-        Assert.assertEquals(features,productManager.allFeaturesOf(product.getProductId()));
+        Assert.assertEquals(features,productManager.allFeaturesOf(product));
     }
 }
