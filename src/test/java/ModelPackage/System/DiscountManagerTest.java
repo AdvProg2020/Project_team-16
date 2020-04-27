@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class DiscountManagerTest {
     private DiscountManager discountManager;
@@ -76,8 +77,8 @@ public class DiscountManagerTest {
     @Test
     public void editDiscountOffPercentage() {
         int newPercentage = 20;
-        discountManager.editDiscountOffPercentage("Dis#14", newPercentage);
-        int actual = discountManager.getDiscountByCode("Dis#14").getOffPercentage();
+        discountManager.editDiscountOffPercentage("Dis#13", newPercentage);
+        int actual = discountManager.getDiscountByCode("Dis#13").getOffPercentage();
         Assert.assertEquals(newPercentage, actual);
     }
     @Test
@@ -106,5 +107,17 @@ public class DiscountManagerTest {
         discountManager.removeUserFromDiscountCodeUsers("Dis#14", taghi);
         boolean successful = discountManager.getDiscountByCode("Dis#14").getUsers().containsKey(taghi);
         Assert.assertFalse(successful);
+    }
+    @Test
+    public void showAllDiscountCodes() {
+        List<DiscountCode> expectedAllDiscountCodes = discountManager.getDiscountCodes();
+        List<DiscountCode> actualAllDiscountCodes = discountManager.showAllDiscountCodes();
+        Assert.assertEquals(actualAllDiscountCodes, expectedAllDiscountCodes);
+    }
+    @Test
+    public void showDiscountCodeTest() {
+        DiscountCode expectedDiscountCode = discountManager.getDiscountCodes().get(discountManager.getDiscountCodes().size() - 1);
+        DiscountCode actualDiscountCode = discountManager.showDiscountCode("Dis#14");
+        Assert.assertEquals(expectedDiscountCode, actualDiscountCode);
     }
 }

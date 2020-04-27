@@ -74,4 +74,12 @@ public class DiscountManager {
         // TODO : check if user exists
         discountCode.getUsers().remove(user);
     }
+
+    public List<DiscountCode> showAllDiscountCodes() {
+        return getDiscountCodes();
+    }
+
+    public DiscountCode showDiscountCode(String code) {
+        return getDiscountByCode(code);
+    }
 }
