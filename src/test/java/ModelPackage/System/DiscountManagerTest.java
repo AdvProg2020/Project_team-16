@@ -3,6 +3,7 @@ package ModelPackage.System;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.System.exeption.discount.EndingTimeIsBeforeStartingTimeException;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
+import ModelPackage.System.exeption.discount.NotValidPercentageException;
 import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.User;
@@ -101,7 +102,7 @@ public class DiscountManagerTest {
     @Test
     public void editDiscountStartingDateTest() throws NoSuchADiscountCodeException,
             StartingDateIsAfterEndingDate {
-        Date newDate = new Date(2020, Calendar.MARCH, 15);
+        Date newDate = new Date(2010, Calendar.MARCH, 15);
         discountManager.editDiscountStartingDate("Dis#13", newDate);
         Date actual = discountManager.getDiscountByCode("Dis#13").getStartTime();
         Assert.assertEquals(newDate, actual);
@@ -123,11 +124,16 @@ public class DiscountManagerTest {
         discountManager.editDiscountEndingDate("Dis#14", new Date(2018, Calendar.FEBRUARY, 12));
     }
     @Test
-    public void editDiscountOffPercentage() throws NoSuchADiscountCodeException {
+    public void editDiscountOffPercentage()
+            throws NoSuchADiscountCodeException, NotValidPercentageException {
         int newPercentage = 20;
         discountManager.editDiscountOffPercentage("Dis#13", newPercentage);
         int actual = discountManager.getDiscountByCode("Dis#13").getOffPercentage();
         Assert.assertEquals(newPercentage, actual);
+    }
+    @Test(expected = NotValidPercentageException.class)
+    public void editDiscountOffPercentageNotValidExcTest() throws NotValidPercentageException, NoSuchADiscountCodeException {
+        discountManager.editDiscountOffPercentage("Dis#14", -12);
     }
     @Test
     public void editDiscountMaxDiscountTest() throws NoSuchADiscountCodeException {
