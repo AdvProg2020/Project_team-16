@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Off.DiscountCode;
+import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.User;
 import org.junit.Assert;
@@ -41,55 +42,53 @@ public class DiscountManagerTest {
         Assert.assertEquals(discountManager, test);
     }
     @Test
-    public void getDiscountByCodeTest() {
+    public void getDiscountByCodeTest() throws NoSuchADiscountCodeException {
         DiscountCode actual = discountManager.getDiscountByCode("Dis#12");
         Assert.assertEquals(discountCode, actual);
-        actual = discountManager.getDiscountByCode("Dis#10");
-        Assert.assertNull(actual);
     }
     @Test
-    public void isDiscountAvailableTest() {
+    public void isDiscountAvailableTest() throws NoSuchADiscountCodeException {
         boolean successful = discountManager.isDiscountAvailable("Dis#13");
         Assert.assertFalse(successful);
         successful = discountManager.isDiscountAvailable("Dis#12");
         Assert.assertTrue(successful);
     }
     @Test
-    public void removeDiscountTest() {
+    public void removeDiscountTest() throws NoSuchADiscountCodeException {
         discountManager.removeDiscount("Dis#12");
         DiscountCode discountCode = discountManager.getDiscountByCode("Dis#12");
         Assert.assertNull(discountCode);
     }
     @Test
-    public void editDiscountStartingDateTest() {
+    public void editDiscountStartingDateTest() throws NoSuchADiscountCodeException {
         Date newDate = new Date(2020, Calendar.MARCH, 15);
         discountManager.editDiscountStartingDate("Dis#13", newDate);
         Date actual = discountManager.getDiscountByCode("Dis#13").getStartTime();
         Assert.assertEquals(newDate, actual);
     }
     @Test
-    public void editDiscountEndingDateTest() {
+    public void editDiscountEndingDateTest() throws NoSuchADiscountCodeException {
         Date newDate = new Date(2020, Calendar.MARCH, 5);
         discountManager.editDiscountEndingDate("Dis#13", newDate);
         Date actual = discountManager.getDiscountByCode("Dis#13").getEndTime();
         Assert.assertEquals(newDate, actual);
     }
     @Test
-    public void editDiscountOffPercentage() {
+    public void editDiscountOffPercentage() throws NoSuchADiscountCodeException {
         int newPercentage = 20;
         discountManager.editDiscountOffPercentage("Dis#13", newPercentage);
         int actual = discountManager.getDiscountByCode("Dis#13").getOffPercentage();
         Assert.assertEquals(newPercentage, actual);
     }
     @Test
-    public void editDiscountMaxDiscountTest() {
+    public void editDiscountMaxDiscountTest() throws NoSuchADiscountCodeException {
         long newMaxDiscount = 1000;
         discountManager.editDiscountMaxDiscount("Dis#14", newMaxDiscount);
         long actual = discountManager.getDiscountByCode("Dis#14").getMaxDiscount();
         Assert.assertEquals(newMaxDiscount, actual);
     }
     @Test
-    public void addUserToDiscountCodeUsersTest() {
+    public void addUserToDiscountCodeUsersTest() throws NoSuchADiscountCodeException {
         User javad = new User("java", "12@1$", "javad",
                 "javadi", "javad@gmail.com", "0913345256", new Cart());
         discountManager.addUserToDiscountCodeUsers("Dis#13", javad, 4);
@@ -97,7 +96,7 @@ public class DiscountManagerTest {
         Assert.assertTrue(successful);
     }
     @Test
-    public void removeUserFromDiscountCodeUsersTest() {
+    public void removeUserFromDiscountCodeUsersTest() throws NoSuchADiscountCodeException {
         User taghi = new User("tagh", "12%$#", "Taghi",
                 "Taghavi", "taghi@gmail.com", "0912235433", new Cart());
         User naghi = new User("nagh", "12#2", "Naghi",
@@ -115,7 +114,7 @@ public class DiscountManagerTest {
         Assert.assertEquals(actualAllDiscountCodes, expectedAllDiscountCodes);
     }
     @Test
-    public void showDiscountCodeTest() {
+    public void showDiscountCodeTest() throws NoSuchADiscountCodeException {
         DiscountCode expectedDiscountCode = discountManager.getDiscountCodes().get(discountManager.getDiscountCodes().size() - 1);
         DiscountCode actualDiscountCode = discountManager.showDiscountCode("Dis#14");
         Assert.assertEquals(expectedDiscountCode, actualDiscountCode);
