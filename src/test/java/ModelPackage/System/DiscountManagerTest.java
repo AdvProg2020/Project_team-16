@@ -14,9 +14,10 @@ public class DiscountManagerTest {
     private DiscountCode discountCode;
     private DiscountCode discountCode1;
     private DiscountCode discountCode2;
+    private User ali;
     {
         discountManager = DiscountManager.getInstance();
-        User ali = new User("ali008", "124345", "Ali",
+        ali = new User("ali008", "124345", "Ali",
                 "Alavi", "Ali@gmail.com", "092000000", new Cart());
         User reza = new User("reza12", "125423", "Reza",
                 "Rezaei", "reza@gmail.com", "0913232343", new Cart());
@@ -86,6 +87,14 @@ public class DiscountManagerTest {
     @Test(expected = NoSuchADiscountCodeException.class)
     public void editDiscountMaxDiscountNotFoundExcTest() throws Exception{
         discountManager.editDiscountMaxDiscount("Dis#10", 210000000);
+    }
+    @Test(expected = NoSuchADiscountCodeException.class)
+    public void addUserToDiscountUsersNotFoundExcTest() throws Exception {
+        discountManager.addUserToDiscountCodeUsers("Dis#10", ali, 4);
+    }
+    @Test(expected = NoSuchADiscountCodeException.class)
+    public void removeUserFromDiscountUsersNotFoundExcTest() throws Exception {
+        discountManager.removeUserFromDiscountCodeUsers("Dis#10", ali);
     }
     @Test
     public void editDiscountStartingDateTest() throws NoSuchADiscountCodeException {
