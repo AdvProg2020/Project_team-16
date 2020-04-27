@@ -73,4 +73,11 @@ public class DiscountManagerTest {
         Date actual = discountManager.getDiscountByCode("Dis#13").getEndTime();
         Assert.assertEquals(newDate, actual);
     }
+    @Test
+    public void editDiscountOffPercentage() {
+        int newPercentage = 20;
+        discountManager.editDiscountOffPercentage("Dis#14", newPercentage);
+        int actual = discountManager.getDiscountByCode("Dis#14").getOffPercentage();
+        Assert.assertEquals(newPercentage, actual);
+    }
 }

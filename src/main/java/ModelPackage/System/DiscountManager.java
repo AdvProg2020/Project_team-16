@@ -51,4 +51,9 @@ public class DiscountManager {
         DiscountCode discountCode = getDiscountByCode(code);
         discountCode.setEndTime(newEndingDate);
     }
+
+    public void editDiscountOffPercentage(String code, int newPercentage) {
+        DiscountCode discountCode = getDiscountByCode(code);
+        discountCode.setOffPercentage(newPercentage);
+    }
 }
