@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Off.DiscountCode;
+import ModelPackage.Users.User;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -60,5 +61,17 @@ public class DiscountManager {
     public void editDiscountMaxDiscount(String code, long newMaxDiscount) {
         DiscountCode discountCode = getDiscountByCode(code);
         discountCode.setMaxDiscount(newMaxDiscount);
+    }
+
+    public void addUserToDiscountCodeUsers(String code, User newUser, int timesToUse) {
+        DiscountCode discountCode = getDiscountByCode(code);
+        // TODO : check if user exists
+        discountCode.getUsers().put(newUser, timesToUse);
+    }
+
+    public void removeUserFromDiscountCodeUsers(String code, User user) {
+        DiscountCode discountCode = getDiscountByCode(code);
+        // TODO : check if user exists
+        discountCode.getUsers().remove(user);
     }
 }

@@ -87,4 +87,24 @@ public class DiscountManagerTest {
         long actual = discountManager.getDiscountByCode("Dis#14").getMaxDiscount();
         Assert.assertEquals(newMaxDiscount, actual);
     }
+    @Test
+    public void addUserToDiscountCodeUsersTest() {
+        User javad = new User("java", "12@1$", "javad",
+                "javadi", "javad@gmail.com", "0913345256", new Cart());
+        discountManager.addUserToDiscountCodeUsers("Dis#13", javad, 4);
+        boolean successful = discountManager.getDiscountByCode("Dis#13").getUsers().containsKey(javad);
+        Assert.assertTrue(successful);
+    }
+    @Test
+    public void removeUserFromDiscountCodeUsersTest() {
+        User taghi = new User("tagh", "12%$#", "Taghi",
+                "Taghavi", "taghi@gmail.com", "0912235433", new Cart());
+        User naghi = new User("nagh", "12#2", "Naghi",
+                "Naghavi", "naghi@gmail.com", "0912874556", new Cart());
+        discountManager.getDiscountByCode("Dis#14").getUsers().put(taghi, 13);
+        discountManager.getDiscountByCode("Dis#14").getUsers().put(naghi, 3);
+        discountManager.removeUserFromDiscountCodeUsers("Dis#14", taghi);
+        boolean successful = discountManager.getDiscountByCode("Dis#14").getUsers().containsKey(taghi);
+        Assert.assertFalse(successful);
+    }
 }

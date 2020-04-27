@@ -23,6 +23,7 @@ public class DiscountCode {
         this.maxDiscount = maxDiscount;
         this.users = users;
         this.code = generateId();
+        this.users = new HashMap<>();
     }
     private static String generateId(){
         Date date = new Date();
