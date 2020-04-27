@@ -105,6 +105,10 @@ public class DiscountManagerTest {
         Date actual = discountManager.getDiscountByCode("Dis#13").getStartTime();
         Assert.assertEquals(newDate, actual);
     }
+    @Test(expected = StartingDateIsAfterEndingDate.class)
+    public void editDiscountStartingDateStartingAfterEndingTest() throws Exception{
+        discountManager.editDiscountStartingDate("Dis#12", new Date(2022, Calendar.FEBRUARY, 1));
+    }
     @Test
     public void editDiscountEndingDateTest() throws NoSuchADiscountCodeException {
         Date newDate = new Date(2020, Calendar.MARCH, 5);
