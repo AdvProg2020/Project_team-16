@@ -95,10 +95,19 @@ public class DiscountManager {
             throw new NegativeMaxDiscountException(newMaxDiscount);
     }
 
-    public void addUserToDiscountCodeUsers(String code, User newUser, int timesToUse) throws NoSuchADiscountCodeException {
+    public void addUserToDiscountCodeUsers(String code, User newUser, int timesToUse)
+            throws NoSuchADiscountCodeException, UserExistedInDiscountCodeException {
         DiscountCode discountCode = getDiscountByCode(code);
-        // TODO : check if user exists
+        checkIfUserExists(newUser, discountCode);
         discountCode.getUsers().put(newUser, timesToUse);
+    }
+
+    private void checkIfUserExists(User user, DiscountCode discountCode)
+            throws UserExistedInDiscountCodeException {
+        for (User user1 : discountCode.getUsers().keySet()) {
+            if (user.equals(user1))
+                throw new UserExistedInDiscountCodeException(user.getUsername());
+        }
     }
 
     public void removeUserFromDiscountCodeUsers(String code, User user) throws NoSuchADiscountCodeException {

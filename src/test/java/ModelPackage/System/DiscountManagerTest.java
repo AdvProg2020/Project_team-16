@@ -146,12 +146,17 @@ public class DiscountManagerTest {
         discountManager.editDiscountMaxDiscount("Dis#14", -1221);
     }
     @Test
-    public void addUserToDiscountCodeUsersTest() throws NoSuchADiscountCodeException {
+    public void addUserToDiscountCodeUsersTest()
+            throws NoSuchADiscountCodeException, UserExistedInDiscountCodeException {
         User javad = new User("java", "12@1$", "javad",
                 "javadi", "javad@gmail.com", "0913345256", new Cart());
         discountManager.addUserToDiscountCodeUsers("Dis#13", javad, 4);
         boolean successful = discountManager.getDiscountByCode("Dis#13").getUsers().containsKey(javad);
         Assert.assertTrue(successful);
+    }
+    @Test(expected = UserExistedInDiscountCodeException.class)
+    public void addUserToDiscountCodeExistedExcTest() throws Exception{
+        discountManager.addUserToDiscountCodeUsers("Dis#14", ali, 12);
     }
     @Test
     public void removeUserFromDiscountCodeUsersTest() throws NoSuchADiscountCodeException {
