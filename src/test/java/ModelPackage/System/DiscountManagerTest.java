@@ -2,6 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
+import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.User;
 import org.junit.Assert;
@@ -97,7 +98,8 @@ public class DiscountManagerTest {
         discountManager.removeUserFromDiscountCodeUsers("Dis#10", ali);
     }
     @Test
-    public void editDiscountStartingDateTest() throws NoSuchADiscountCodeException {
+    public void editDiscountStartingDateTest() throws NoSuchADiscountCodeException,
+            StartingDateIsAfterEndingDate {
         Date newDate = new Date(2020, Calendar.MARCH, 15);
         discountManager.editDiscountStartingDate("Dis#13", newDate);
         Date actual = discountManager.getDiscountByCode("Dis#13").getStartTime();

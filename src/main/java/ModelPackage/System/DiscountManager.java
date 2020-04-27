@@ -2,6 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
+import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
 import ModelPackage.Users.User;
 import lombok.Data;
 
@@ -44,9 +45,17 @@ public class DiscountManager {
         discountCodes.remove(discountCode);
     }
 
-    public void editDiscountStartingDate(String code, Date newStartingDate) throws NoSuchADiscountCodeException {
+    public void editDiscountStartingDate(String code, Date newStartingDate)
+            throws NoSuchADiscountCodeException, StartingDateIsAfterEndingDate {
         DiscountCode discountCode = getDiscountByCode(code);
+        checkIfNewStartingDateIsBeforeEndingDate(discountCode, newStartingDate);
         discountCode.setStartTime(newStartingDate);
+    }
+
+    private void checkIfNewStartingDateIsBeforeEndingDate(DiscountCode discountCode, Date newStartingDate)
+            throws StartingDateIsAfterEndingDate {
+        if (newStartingDate.after(discountCode.getEndTime()))
+            throw new StartingDateIsAfterEndingDate();
     }
 
     public void editDiscountEndingDate(String code, Date newEndingDate) throws NoSuchADiscountCodeException {
