@@ -156,6 +156,10 @@ public class DiscountManagerTest {
         DiscountCode actualDiscountCode = discountManager.showDiscountCode("Dis#14");
         Assert.assertEquals(expectedDiscountCode, actualDiscountCode);
     }
+    @Test(expected = NoSuchADiscountCodeException.class)
+    public void showDiscountCodeNotFoundExcTest() throws Exception{
+        discountManager.showDiscountCode("Dis#10");
+    }
     @Test
     public void createDiscountCode() {
         Date startDate = new Date(2020, Calendar.FEBRUARY, 1);
