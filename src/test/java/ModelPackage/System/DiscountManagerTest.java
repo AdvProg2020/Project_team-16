@@ -79,6 +79,14 @@ public class DiscountManagerTest {
     public void editDiscountEndingDateNotFoundExcTest() throws Exception {
         discountManager.editDiscountEndingDate("Dis#10", new Date(2020, Calendar.MARCH, 12));
     }
+    @Test(expected = NoSuchADiscountCodeException.class)
+    public void editDiscountOffPercentageNotFoundExcTest() throws Exception {
+        discountManager.editDiscountOffPercentage("Dis#10", 12);
+    }
+    @Test(expected = NoSuchADiscountCodeException.class)
+    public void editDiscountMaxDiscountNotFoundExcTest() throws Exception{
+        discountManager.editDiscountMaxDiscount("Dis#10", 210000000);
+    }
     @Test
     public void editDiscountStartingDateTest() throws NoSuchADiscountCodeException {
         Date newDate = new Date(2020, Calendar.MARCH, 15);
