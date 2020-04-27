@@ -1,10 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Off.DiscountCode;
-import ModelPackage.System.exeption.discount.EndingTimeIsBeforeStartingTimeException;
-import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
-import ModelPackage.System.exeption.discount.NotValidPercentageException;
-import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
+import ModelPackage.System.exeption.discount.*;
 import ModelPackage.Users.User;
 import lombok.Data;
 
@@ -85,9 +82,17 @@ public class DiscountManager {
             throw new NotValidPercentageException(newPercentage);
     }
 
-    public void editDiscountMaxDiscount(String code, long newMaxDiscount) throws NoSuchADiscountCodeException {
+    public void editDiscountMaxDiscount(String code, long newMaxDiscount)
+            throws NoSuchADiscountCodeException, NegativeMaxDiscountException {
         DiscountCode discountCode = getDiscountByCode(code);
+        checkIfMaxDiscountIsPositive(newMaxDiscount);
         discountCode.setMaxDiscount(newMaxDiscount);
+    }
+
+    private void checkIfMaxDiscountIsPositive(long newMaxDiscount)
+            throws NegativeMaxDiscountException {
+        if (newMaxDiscount < 0)
+            throw new NegativeMaxDiscountException(newMaxDiscount);
     }
 
     public void addUserToDiscountCodeUsers(String code, User newUser, int timesToUse) throws NoSuchADiscountCodeException {

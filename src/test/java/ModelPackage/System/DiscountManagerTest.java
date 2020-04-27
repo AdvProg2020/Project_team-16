@@ -1,10 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Off.DiscountCode;
-import ModelPackage.System.exeption.discount.EndingTimeIsBeforeStartingTimeException;
-import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
-import ModelPackage.System.exeption.discount.NotValidPercentageException;
-import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
+import ModelPackage.System.exeption.discount.*;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.User;
 import org.junit.Assert;
@@ -136,11 +133,17 @@ public class DiscountManagerTest {
         discountManager.editDiscountOffPercentage("Dis#14", -12);
     }
     @Test
-    public void editDiscountMaxDiscountTest() throws NoSuchADiscountCodeException {
+    public void editDiscountMaxDiscountTest()
+            throws NoSuchADiscountCodeException, NegativeMaxDiscountException {
         long newMaxDiscount = 1000;
         discountManager.editDiscountMaxDiscount("Dis#14", newMaxDiscount);
         long actual = discountManager.getDiscountByCode("Dis#14").getMaxDiscount();
         Assert.assertEquals(newMaxDiscount, actual);
+    }
+    @Test(expected = NegativeMaxDiscountException.class)
+    public void editDiscountMaxDiscountNegativeExcTest()
+            throws NegativeMaxDiscountException, NoSuchADiscountCodeException {
+        discountManager.editDiscountMaxDiscount("Dis#14", -1221);
     }
     @Test
     public void addUserToDiscountCodeUsersTest() throws NoSuchADiscountCodeException {
