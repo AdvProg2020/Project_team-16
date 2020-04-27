@@ -1,5 +1,6 @@
 package ModelPackage.System;
 
+import ModelPackage.System.exeption.account.WrongPasswordException;
 import ModelPackage.Users.*;
 import com.google.gson.Gson;
 
@@ -94,9 +95,11 @@ public class AccountManager {
         return customer;
     }
 
-    public void login(String username,String password){
+    public void login(String username,String password) throws WrongPasswordException {
         if (isCorrectPassword(username, password)){
             getUserByUsername(username).setHasSignedIn(true);
+        } else {
+            throw new WrongPasswordException(username);
         }
     }
 
