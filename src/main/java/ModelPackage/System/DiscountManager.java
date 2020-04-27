@@ -56,4 +56,9 @@ public class DiscountManager {
         DiscountCode discountCode = getDiscountByCode(code);
         discountCode.setOffPercentage(newPercentage);
     }
+
+    public void editDiscountMaxDiscount(String code, long newMaxDiscount) {
+        DiscountCode discountCode = getDiscountByCode(code);
+        discountCode.setMaxDiscount(newMaxDiscount);
+    }
 }

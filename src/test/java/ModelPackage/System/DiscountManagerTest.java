@@ -80,4 +80,11 @@ public class DiscountManagerTest {
         int actual = discountManager.getDiscountByCode("Dis#14").getOffPercentage();
         Assert.assertEquals(newPercentage, actual);
     }
+    @Test
+    public void editDiscountMaxDiscountTest() {
+        long newMaxDiscount = 1000;
+        discountManager.editDiscountMaxDiscount("Dis#14", newMaxDiscount);
+        long actual = discountManager.getDiscountByCode("Dis#14").getMaxDiscount();
+        Assert.assertEquals(newMaxDiscount, actual);
+    }
 }
