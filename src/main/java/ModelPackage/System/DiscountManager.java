@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Off.DiscountCode;
+import ModelPackage.System.exeption.discount.EndingTimeIsBeforeStartingTimeException;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
 import ModelPackage.Users.User;
@@ -58,9 +59,17 @@ public class DiscountManager {
             throw new StartingDateIsAfterEndingDate();
     }
 
-    public void editDiscountEndingDate(String code, Date newEndingDate) throws NoSuchADiscountCodeException {
+    public void editDiscountEndingDate(String code, Date newEndingDate)
+            throws NoSuchADiscountCodeException, EndingTimeIsBeforeStartingTimeException {
         DiscountCode discountCode = getDiscountByCode(code);
+        checkIfEndingDateIsBeforeStartingDate(discountCode, newEndingDate);
         discountCode.setEndTime(newEndingDate);
+    }
+
+    private void checkIfEndingDateIsBeforeStartingDate(DiscountCode discountCode, Date newEndingDate)
+            throws EndingTimeIsBeforeStartingTimeException {
+        if (newEndingDate.before(discountCode.getStartTime()))
+            throw new EndingTimeIsBeforeStartingTimeException();
     }
 
     public void editDiscountOffPercentage(String code, int newPercentage) throws NoSuchADiscountCodeException {
