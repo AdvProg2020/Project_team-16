@@ -46,6 +46,10 @@ public class DiscountManagerTest {
         DiscountCode actual = discountManager.getDiscountByCode("Dis#12");
         Assert.assertEquals(discountCode, actual);
     }
+    @Test(expected = NoSuchADiscountCodeException.class)
+    public void getDiscountByCodeNotFoundExcTest() throws Exception{
+        discountManager.getDiscountByCode("Dis#10");
+    }
     @Test
     public void isDiscountAvailableTest() throws NoSuchADiscountCodeException {
         boolean successful = discountManager.isDiscountAvailable("Dis#13");
