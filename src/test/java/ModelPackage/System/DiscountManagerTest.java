@@ -57,6 +57,10 @@ public class DiscountManagerTest {
         successful = discountManager.isDiscountAvailable("Dis#12");
         Assert.assertTrue(successful);
     }
+    @Test(expected = NoSuchADiscountCodeException.class)
+    public void isDiscountAvailableNotFoundExcTest() throws Exception{
+        discountManager.isDiscountAvailable("Dis#10");
+    }
     @Test
     public void removeDiscountTest() throws NoSuchADiscountCodeException {
         discountManager.removeDiscount("Dis#12");
