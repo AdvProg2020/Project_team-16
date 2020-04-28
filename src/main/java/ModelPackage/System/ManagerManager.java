@@ -4,12 +4,17 @@ import ModelPackage.Off.DiscountCode;
 import ModelPackage.Users.Manager;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
+import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class ManagerManager {
     private static ManagerManager managerManager = null;
-    private ManagerManager(){ }
+    private ManagerManager(){
+        this.managers = new ArrayList<>();
+    }
     public static ManagerManager getInstance(){
         if (managerManager == null)
             managerManager = new ManagerManager();
@@ -17,9 +22,13 @@ public class ManagerManager {
     }
 
     private List<Request> allRequests;
-    private Manager manager;
+    private List<Manager> managers;
 
-    public void createManagerProfile(){}
+    public void createManagerProfile(String[] info){
+        Manager manager = AccountManager.getInstance().createManager(info);
+        managers.add(manager);
+        AccountManager.getInstance().getUsers().add(manager);
+    }
 
     public void deleteUser(User user){}
 
@@ -29,13 +38,24 @@ public class ManagerManager {
 
     public void declineRequest(String requestId){}
 
-    public List<DiscountCode> viewDiscountCodes(){}
+    public void createDiscountCode(String[] info){}
 
-    public DiscountCode getDiscountByCode(String code){}
+    public List<DiscountCode> viewDiscountCodes(){
+        return null;
+    }
+
+    public DiscountCode getDiscountByCode(String code){
+        return null;
+    }
 
     public void editDiscountCode(DiscountCode discountCode){}
 
     public void removeDiscountCode(DiscountCode discountCode){}
+
+    public void createNewCategory(String[] info){}
+
+    public void editCategory(String[] info){}
+
 
 
 }
