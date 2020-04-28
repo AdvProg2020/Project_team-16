@@ -59,13 +59,16 @@ public class FilterManagerTest {
            times = 1;
         }};
 
-        HashMap<String,String> filters = new HashMap<String, String>();
+        HashMap<String,String> filters = new HashMap<>();
         filters.put("Color","Red");
+        product1.setLeastPrice(20);
+        product2.setLeastPrice(40);
 
-        ArrayList<Product> productsFound = FilterManager.updateFilterList("000",filters);
+        int[] priceRange = {15,30};
+
+        ArrayList<Product> productsFound = FilterManager.updateFilterList("000",filters,priceRange);
         ArrayList<Product> actual = new ArrayList<>();
         actual.add(product1);
-        actual.add(product2);
         Assert.assertEquals(actual,productsFound);
     }
 
@@ -95,6 +98,6 @@ public class FilterManagerTest {
         };
         HashMap<String,String> filters = new HashMap<String, String>();
         filters.put("Loo","adsf");
-        FilterManager.updateFilterList("000",filters);
+        FilterManager.updateFilterList("000",filters,new int[2]);
     }
 }

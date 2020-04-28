@@ -28,6 +28,7 @@ public class Product {
     private HashMap<String,Integer> prices;
     private int view;
     private int boughtAmount;
+    private int leastPrice;
 
     public Product(){
         this.productId = generateId();
