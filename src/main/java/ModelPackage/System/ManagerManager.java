@@ -23,14 +23,18 @@ public class ManagerManager {
 
     private List<Request> allRequests;
     private List<Manager> managers;
+    AccountManager accountManager = AccountManager.getInstance();
 
     public void createManagerProfile(String[] info){
-        Manager manager = AccountManager.getInstance().createManager(info);
+        Manager manager = accountManager.createManager(info);
         managers.add(manager);
-        AccountManager.getInstance().getUsers().add(manager);
+        accountManager.getUsers().add(manager);
     }
 
-    public void deleteUser(User user){}
+    public void deleteUser(String username){
+        User user = accountManager.getUserByUsername(username);
+        accountManager.getUsers().remove(user);
+    }
 
     public void viewRequestDetails(String requestId){}
 
