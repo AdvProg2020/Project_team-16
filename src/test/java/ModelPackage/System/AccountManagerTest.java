@@ -56,6 +56,13 @@ public class AccountManagerTest {
         Assert.assertEquals(expected,marmof.getPassword());
     }
 
+    @Test(expected = SameInfoException.class)
+    public void changeInfoSameInfo() throws SameInfoException {
+        String[] info = {"marmofayezi","password", "marmof.ir", "marmof.ir"};
+        accountManager.getUsers().add(marmof);
+        accountManager.changeInfo(info);
+    }
+
     @Test
     public void createAccount() throws IOException {
         String[] info = {"a","a","a","a","a","a"};
@@ -88,6 +95,11 @@ public class AccountManagerTest {
         accountManager.login("marmofayezi","marmof.ir");
         boolean actual = marmof.isHasSignedIn();
         Assert.assertTrue(actual);
+    }
+
+    @Test(expected = WrongPasswordException.class)
+    public void loginWithWrongPassword() throws WrongPasswordException {
+        accountManager.login("marmofayezi","marmof.com");
     }
 
     @Test
