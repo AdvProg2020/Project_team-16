@@ -13,28 +13,39 @@ import org.junit.Test;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AccountManagerTest {
 
     AccountManager accountManager = AccountManager.getInstance();
-    User marmof = new User("marmofayezi",
-            "marmof.ir",
-            "Mohamadreza",
-            "Mofayezi",
-            "marmof@gmail.com",
-            "09121232222",
-            new Cart()
-    );
-    Manager hatam = new Manager(
-            "hatam008",
-            "hatam008@kimi",
-            "Ali",
-            "Hatami",
-            "hatam008@yahoo.com",
-            "09121351223",
-            new Cart()
-    );
+    ArrayList<User> users = (ArrayList<User>) accountManager.getUsers();
+
+    User marmof;
+    Manager hatam;
+
+    {
+        marmof = new User("marmofayezi",
+                "marmof.ir",
+                "Mohamadreza",
+                "Mofayezi",
+                "marmof@gmail.com",
+                "09121232222",
+                new Cart()
+        );
+        hatam = new Manager(
+                "hatam008",
+                "hatam008@kimi",
+                "Ali",
+                "Hatami",
+                "hatam008@yahoo.com",
+                "09121351223",
+                new Cart()
+        );
+
+        users.add(marmof);
+        users.add(hatam);
+    }
 
     @Test
     public void changeInfo() throws SameInfoException {
@@ -74,24 +85,21 @@ public class AccountManagerTest {
 
     @Test
     public void login() throws WrongPasswordException {
-        accountManager.getUsers().add(marmof);
-        accountManager.login("a","a");
+        accountManager.login("marmofayezi","marmof.ir");
         boolean actual = marmof.isHasSignedIn();
         Assert.assertTrue(actual);
     }
 
     @Test
     public void logout(){
-        accountManager.getUsers().add(marmof);
-        accountManager.logout("a");
+        accountManager.logout("marmofayezi");
         boolean actual = marmof.isHasSignedIn();
         Assert.assertFalse(actual);
     }
 
     @Test
     public void getUserByName(){
-        accountManager.getUsers().add(marmof);
-        User actualUser = accountManager.getUserByUsername("a");
+        User actualUser = accountManager.getUserByUsername("marmofayezi");
         Assert.assertEquals(marmof,actualUser);
     }
 
