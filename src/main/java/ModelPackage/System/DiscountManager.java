@@ -110,10 +110,17 @@ public class DiscountManager {
         }
     }
 
-    public void removeUserFromDiscountCodeUsers(String code, User user) throws NoSuchADiscountCodeException {
+    public void removeUserFromDiscountCodeUsers(String code, User user)
+            throws NoSuchADiscountCodeException, UserNotExistedInDiscountCodeException {
         DiscountCode discountCode = getDiscountByCode(code);
-        // TODO : check if user exists
+        checkIfUserDoesNotExistInDiscount(user, discountCode);
         discountCode.getUsers().remove(user);
+    }
+
+    private void checkIfUserDoesNotExistInDiscount(User user, DiscountCode discountCode)
+            throws UserNotExistedInDiscountCodeException {
+        if (!discountCode.getUsers().keySet().contains(user))
+            throw new UserNotExistedInDiscountCodeException(user.getUsername());
     }
 
     public List<DiscountCode> showAllDiscountCodes() {

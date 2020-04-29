@@ -159,7 +159,8 @@ public class DiscountManagerTest {
         discountManager.addUserToDiscountCodeUsers("Dis#14", ali, 12);
     }
     @Test
-    public void removeUserFromDiscountCodeUsersTest() throws NoSuchADiscountCodeException {
+    public void removeUserFromDiscountCodeUsersTest()
+            throws NoSuchADiscountCodeException, UserNotExistedInDiscountCodeException {
         User taghi = new User("tagh", "12%$#", "Taghi",
                 "Taghavi", "taghi@gmail.com", "0912235433", new Cart());
         User naghi = new User("nagh", "12#2", "Naghi",
@@ -169,6 +170,12 @@ public class DiscountManagerTest {
         discountManager.removeUserFromDiscountCodeUsers("Dis#14", taghi);
         boolean successful = discountManager.getDiscountByCode("Dis#14").getUsers().containsKey(taghi);
         Assert.assertFalse(successful);
+    }
+    @Test(expected = UserNotExistedInDiscountCodeException.class)
+    public void removeUserFromDiscountCodeNotFoundExcTest() throws Exception{
+        User mohammad = new User("mohammad12", "12542233", "Mohammad",
+                "Mohammadi", "mohammad@gmail.com", "0913235465", new Cart());
+        discountManager.removeUserFromDiscountCodeUsers("Dis#14", mohammad);
     }
     @Test
     public void showAllDiscountCodes() {
