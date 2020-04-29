@@ -212,4 +212,8 @@ public class DiscountManagerTest {
         public void createDiscountCodeStartingAfterEndingExcTest() throws Exception{
         discountManager.createDiscountCode(new Date(2022, Calendar.MARCH, 1), new Date(), 12, 122220);
     }
+    @Test(expected = NotValidPercentageException.class)
+    public void createDiscountCodeInValidPercentageExcTest() throws Exception{
+        discountManager.createDiscountCode(new Date(), new Date(2022, Calendar.MARCH, 12), 200, 12);
+    }
 }
