@@ -58,16 +58,16 @@ public class DiscountManager {
     }
 
     public void editDiscountEndingDate(String code, Date newEndingDate)
-            throws NoSuchADiscountCodeException, EndingTimeIsBeforeStartingTimeException {
+            throws NoSuchADiscountCodeException, StartingDateIsAfterEndingDate {
         DiscountCode discountCode = getDiscountByCode(code);
-        checkIfEndingDateIsBeforeStartingDate(discountCode, newEndingDate);
+        checkIfStartingDateIsBeforeEndingDate(discountCode.getStartTime(), newEndingDate);
         discountCode.setEndTime(newEndingDate);
     }
 
-    private void checkIfEndingDateIsBeforeStartingDate(DiscountCode discountCode, Date newEndingDate)
-            throws EndingTimeIsBeforeStartingTimeException {
-        if (newEndingDate.before(discountCode.getStartTime()))
-            throw new EndingTimeIsBeforeStartingTimeException();
+    private void checkIfStartingDateIsBeforeEndingDate(Date startDate, Date newEndingDate)
+            throws StartingDateIsAfterEndingDate {
+        if (newEndingDate.before(startDate))
+            throw new StartingDateIsAfterEndingDate();
     }
 
     public void editDiscountOffPercentage(String code, int newPercentage)
@@ -131,9 +131,10 @@ public class DiscountManager {
         return getDiscountByCode(code);
     }
 
-    public void createDiscountCode(Date startTime, Date endTime, int offPercentage, long maxDiscount) {
-        // TODO : check if startTime is before endTime
-        // TODO : check if offPercentage is smaller than 100
+    public void createDiscountCode(Date startTime, Date endTime, int offPercentage, long maxDiscount)
+            throws NotValidPercentageException, StartingDateIsAfterEndingDate {
+        checkIfStartingDateIsBeforeEndingDate(startTime, endTime);
+        checkIfPercentageIsValid(offPercentage);
         DiscountCode discountCode = new DiscountCode(startTime, endTime, offPercentage, maxDiscount);
         discountCodes.add(discountCode);
     }

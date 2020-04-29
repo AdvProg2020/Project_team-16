@@ -110,13 +110,13 @@ public class DiscountManagerTest {
     }
     @Test
     public void editDiscountEndingDateTest()
-            throws NoSuchADiscountCodeException, EndingTimeIsBeforeStartingTimeException {
+            throws NoSuchADiscountCodeException, StartingDateIsAfterEndingDate {
         Date newDate = new Date(2020, Calendar.MARCH, 5);
         discountManager.editDiscountEndingDate("Dis#13", newDate);
         Date actual = discountManager.getDiscountByCode("Dis#13").getEndTime();
         Assert.assertEquals(newDate, actual);
     }
-    @Test(expected = EndingTimeIsBeforeStartingTimeException.class)
+    @Test(expected = StartingDateIsAfterEndingDate.class)
     public void editDiscountEndingDateBeforeStartingExcTest() throws Exception{
         discountManager.editDiscountEndingDate("Dis#14", new Date(2018, Calendar.FEBRUARY, 12));
     }
@@ -184,7 +184,7 @@ public class DiscountManagerTest {
         Assert.assertEquals(actualAllDiscountCodes, expectedAllDiscountCodes);
     }
     @Test
-    public void showDiscountCodeTest() throws NoSuchADiscountCodeException {
+    public void showDiscountCodeTest() throws Exception {
         DiscountCode expectedDiscountCode = discountManager.getDiscountCodes().get(discountManager.getDiscountCodes().size() - 1);
         DiscountCode actualDiscountCode = discountManager.showDiscountCode("Dis#14");
         Assert.assertEquals(expectedDiscountCode, actualDiscountCode);
@@ -194,7 +194,7 @@ public class DiscountManagerTest {
         discountManager.showDiscountCode("Dis#10");
     }
     @Test
-    public void createDiscountCode() {
+    public void createDiscountCode() throws Exception{
         Date startDate = new Date(2020, Calendar.FEBRUARY, 1);
         Date endDate = new Date(2020, Calendar.JUNE, 2);
         DiscountCode expectedDiscountCode = new DiscountCode(startDate, endDate, 12, 1000);
@@ -207,5 +207,9 @@ public class DiscountManagerTest {
                 thenComparing(DiscountCode::getOffPercentage).thenComparing(DiscountCode::getMaxDiscount)
                 .compare(expectedDiscountCode, actualDiscountCode);
         Assert.assertEquals(0, successful);
+    }
+    @Test(expected = StartingDateIsAfterEndingDate.class)
+        public void createDiscountCodeStartingAfterEndingExcTest() throws Exception{
+        discountManager.createDiscountCode(new Date(2022, Calendar.MARCH, 1), new Date(), 12, 122220);
     }
 }
