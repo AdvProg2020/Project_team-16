@@ -119,7 +119,7 @@ public class DiscountManager {
 
     private void checkIfUserDoesNotExistInDiscount(User user, DiscountCode discountCode)
             throws UserNotExistedInDiscountCodeException {
-        if (!discountCode.getUsers().keySet().contains(user))
+        if (!discountCode.getUsers().keySet().contains(user) || discountCode.getUsers().get(user) == 0)
             throw new UserNotExistedInDiscountCodeException(user.getUsername());
     }
 
@@ -137,5 +137,13 @@ public class DiscountManager {
         checkIfPercentageIsValid(offPercentage);
         DiscountCode discountCode = new DiscountCode(startTime, endTime, offPercentage, maxDiscount);
         discountCodes.add(discountCode);
+    }
+
+    public void useADiscount(User user, String code)
+            throws NoSuchADiscountCodeException, UserNotExistedInDiscountCodeException {
+        DiscountCode discountCode = getDiscountByCode(code);
+        checkIfUserDoesNotExistInDiscount(user, discountCode);
+        int old = discountCode.getUsers().get(user);
+        discountCode.getUsers().replace(user, --old);
     }
 }
