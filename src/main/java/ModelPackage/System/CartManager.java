@@ -1,5 +1,6 @@
 package ModelPackage.System;
 
+import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.SubCart;
 import lombok.Data;
@@ -23,5 +24,13 @@ public class CartManager {
     public void addProductToCart(Cart cart, String sellerId, String productId, int amount) {
         cart.getSubCarts().add(new SubCart(ProductManager.getInstance().findProductById(productId),
                 productId, sellerId, amount));
+    }
+
+    public SubCart getSubCartByProductId(Cart cart, String productId) throws NoSuchAProductInCart {
+        for (SubCart subCart : cart.getSubCarts()) {
+            if (subCart.getProductId().equals(productId))
+                return subCart;
+        }
+        throw new NoSuchAProductInCart(productId);
     }
 }
