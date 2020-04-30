@@ -1,5 +1,6 @@
 package ModelPackage.System;
 
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Manager;
 import ModelPackage.Users.User;
@@ -57,7 +58,7 @@ public class ManagerManagerTest {
     }
 
     @Test
-    public void deleteUser(){
+    public void deleteUser() throws UserNotAvailableException {
         managerManager.deleteUser("marmofayezi");
         ArrayList<User> expected = new ArrayList<>();
         ArrayList<User> actual = (ArrayList<User>) AccountManager.getInstance().getUsers();

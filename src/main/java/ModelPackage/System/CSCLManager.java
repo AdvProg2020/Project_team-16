@@ -6,6 +6,7 @@ import ModelPackage.Log.PurchaseLog;
 import ModelPackage.Log.SellLog;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.*;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.*;
 import lombok.Data;
 
@@ -92,7 +93,7 @@ public class CSCLManager {
         allScores.add(new Score(userId, productId, score));
     }
 
-    public void createSellLog(SubCart subCart, String buyerId, int discount) {
+    public void createSellLog(SubCart subCart, String buyerId, int discount) throws UserNotAvailableException {
         Product product = subCart.getProduct();
         int moneyGotten = 0;
         for (String id : product.getPrices().keySet()) {

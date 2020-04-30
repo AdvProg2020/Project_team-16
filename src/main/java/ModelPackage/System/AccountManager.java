@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.System.exeption.account.SameInfoException;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.account.WrongPasswordException;
 import ModelPackage.Users.*;
 import com.google.gson.Gson;
@@ -97,7 +98,7 @@ public class AccountManager {
         return customer;
     }
 
-    public void login(String username,String password) throws WrongPasswordException {
+    public void login(String username,String password) throws WrongPasswordException, UserNotAvailableException {
         if (isCorrectPassword(username, password)){
             getUserByUsername(username).setHasSignedIn(true);
         } else {
@@ -105,7 +106,7 @@ public class AccountManager {
         }
     }
 
-    public void changeInfo(String[] info) throws SameInfoException {
+    public void changeInfo(String[] info) throws SameInfoException, UserNotAvailableException {
         String username = info[0];
         String type = info[1];
         String previousInfo = info[2];
@@ -126,21 +127,21 @@ public class AccountManager {
         }
     }
 
-    public void logout(String username){
+    public void logout(String username) throws UserNotAvailableException {
         getUserByUsername(username).setHasSignedIn(false);
     }
 
-    private boolean isCorrectPassword(String username,String password){
+    private boolean isCorrectPassword(String username,String password) throws UserNotAvailableException {
         return getUserByUsername(username).getPassword().equals(password);
     }
 
-    public User getUserByUsername(String username){
+    public User getUserByUsername(String username) throws UserNotAvailableException {
         for (User user : users) {
             if (user.getUsername().equals(username)){
                 return user;
             }
         }
-        return null;
+        throw new UserNotAvailableException();
     }
 
     public boolean isUsernameAvailable(String username){

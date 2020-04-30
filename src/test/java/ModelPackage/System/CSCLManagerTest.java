@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Product.*;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -110,7 +111,7 @@ public class CSCLManagerTest {
         Assert.assertEquals("12", actualId);
     }
     @Test
-    public void createSellLogTest() {
+    public void createSellLogTest() throws UserNotAvailableException {
         csclManager.createSellLog(subCart, "Ali12", 12);
         csclManager.getAllLogs().get(0).setLogId("1");
         String actualId = csclManager.getAllLogs().get(0).getLogId();

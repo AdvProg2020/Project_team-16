@@ -1,5 +1,6 @@
 package ModelPackage.System;
 
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.Manager;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
@@ -30,7 +31,7 @@ public class ManagerManager {
         accountManager.getUsers().add(manager);
     }
 
-    public void deleteUser(String username){
+    public void deleteUser(String username) throws UserNotAvailableException {
         User user = accountManager.getUserByUsername(username);
         accountManager.getUsers().remove(user);
     }
