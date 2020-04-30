@@ -38,4 +38,9 @@ public class CartManager {
         SubCart subCart = getSubCartByProductId(cart, productId);
         cart.getSubCarts().remove(subCart);
     }
+
+    public void changeProductAmountInCart(Cart cart, String productId, int newAmount) throws NoSuchAProductInCart {
+        SubCart subCart = getSubCartByProductId(cart, productId);
+        subCart.setAmount(newAmount);
+    }
 }

@@ -20,6 +20,7 @@ public class CartManagerTest {
     private Customer customer;
     private Seller seller;
     private SubCart subCart;
+    private SubCart subCart2;
     private Cart cart;
     {
         cartManager = CartManager.getInstance();
@@ -33,14 +34,20 @@ public class CartManagerTest {
         sellers.add(seller);
         HashMap<String, Integer> stock = new HashMap<>();
         stock.put(seller.getUsername(), 3);
-        product = new Product("show", "Adidas", sellers, "12",
+        product = new Product("shoes", "Adidas", sellers, "12",
                 new HashMap<>(), new HashMap<>(), "high quality", stock,
                 new HashMap<>());
+        Product product2 = new Product("gloves", "Adidas", sellers, "13",
+                new HashMap<>(), new HashMap<>(), "low quality", stock,
+                new HashMap<>());
         product.setProductId("Pro#12");
+        product2.setProductId("Pro#13");
         ProductManager.getInstance().addProductToList(product);
         cart = new Cart();
         subCart = new SubCart(product, "Pro#12", "ali110", 2);
+        subCart2 = new SubCart(product2, "Pro#13", "ali110", 4);
         cart.getSubCarts().add(subCart);
+        cart.getSubCarts().add(subCart2);
     }
     @Test
     public void getInstanceTest() {
@@ -74,5 +81,15 @@ public class CartManagerTest {
     @Test(expected = NoSuchAProductInCart.class)
     public void deleteProductFromCartNotFoundExcTest() throws Exception{
         cartManager.deleteProductFromCart(cart, "Pro#10");
+    }
+    @Test
+    public void changeProductAmountInCartTest() throws Exception {
+        cartManager.changeProductAmountInCart(cart, "Pro#13", 5);
+        int actualAmount = cartManager.getSubCartByProductId(cart, "Pro#13").getAmount();
+        Assert.assertEquals(5, actualAmount);
+    }
+    @Test(expected = NoSuchAProductInCart.class)
+    public void changeProductAmountNotFoundExcTest() throws Exception{
+        cartManager.changeProductAmountInCart(cart, "Pro#14", 2);
     }
 }
