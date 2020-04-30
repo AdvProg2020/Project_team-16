@@ -7,9 +7,6 @@ import ModelPackage.Users.Cart;
 import ModelPackage.Users.SubCart;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 public class CartManager {
     private static CartManager cartManager = new CartManager();
