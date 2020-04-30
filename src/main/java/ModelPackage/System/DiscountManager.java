@@ -144,6 +144,6 @@ public class DiscountManager {
         DiscountCode discountCode = getDiscountByCode(code);
         checkIfUserDoesNotExistInDiscount(user, discountCode);
         int old = discountCode.getUsers().get(user);
-        discountCode.getUsers().replace(user, --old);
+        discountCode.getUsers().put(user, --old);
     }
 }

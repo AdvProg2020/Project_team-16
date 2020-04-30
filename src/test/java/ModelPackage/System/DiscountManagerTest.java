@@ -15,13 +15,15 @@ public class DiscountManagerTest {
     private DiscountCode discountCode1;
     private DiscountCode discountCode2;
     private User ali;
+    private User reza;
+    private HashMap<User, Integer> users;
     {
         discountManager = DiscountManager.getInstance();
         ali = new User("ali008", "124345", "Ali",
                 "Alavi", "Ali@gmail.com", "092000000", new Cart());
-        User reza = new User("reza12", "125423", "Reza",
+        reza = new User("reza12", "125423", "Reza",
                 "Rezaei", "reza@gmail.com", "0913232343", new Cart());
-        HashMap<User, Integer> users = new HashMap<>();
+        users = new HashMap<>();
         users.put(ali, 2);
         users.put(reza, 1);
         discountCode = new DiscountCode(new Date(), new Date(2020, Calendar.MAY, 1), 10, 10);
@@ -215,5 +217,26 @@ public class DiscountManagerTest {
     @Test(expected = NotValidPercentageException.class)
     public void createDiscountCodeInValidPercentageExcTest() throws Exception{
         discountManager.createDiscountCode(new Date(), new Date(2022, Calendar.MARCH, 12), 200, 12);
+    }
+    @Test
+    public void useADiscountTest() throws Exception{
+        discountManager.useADiscount(ali, "Dis#12");
+        int actual = discountManager.getDiscountByCode("Dis#12").getUsers().get(ali);
+        Assert.assertEquals(1, actual);
+    }
+    @Test(expected = UserNotExistedInDiscountCodeException.class)
+    public void useADiscountCodeUserNotHaveChoiceExcTest() throws Exception{
+        discountManager.useADiscount(reza, "Dis#13");
+        discountManager.useADiscount(reza, "Dis#13");
+    }
+    @Test(expected = NoSuchADiscountCodeException.class)
+    public void useADiscountNotFoundExcTest() throws Exception{
+        discountManager.useADiscount(ali, "Dis#10");
+    }
+    @Test(expected = UserNotExistedInDiscountCodeException.class)
+    public void useADiscountCodeNotFoundUserExcTest() throws Exception{
+        User mohammad = new User("mohammad12", "12542233", "Mohammad",
+                "Mohammadi", "mohammad@gmail.com", "0913235465", new Cart());
+        discountManager.useADiscount(mohammad, "Dis#12");
     }
 }
