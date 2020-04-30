@@ -13,6 +13,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class CartManagerTest {
@@ -38,9 +40,11 @@ public class CartManagerTest {
         product = new Product("shoes", "Adidas", sellers, "12",
                 new HashMap<>(), new HashMap<>(), "high quality", stock,
                 new HashMap<>());
+        product.setDateAdded(new Date(2018, Calendar.MARCH, 1));
         Product product2 = new Product("gloves", "Adidas", sellers, "13",
                 new HashMap<>(), new HashMap<>(), "low quality", stock,
                 new HashMap<>());
+        product2.setDateAdded(new Date(2018, Calendar.MARCH, 1));
         product.setProductId("Pro#12");
         product2.setProductId("Pro#13");
         ProductManager.getInstance().addProductToList(product);
