@@ -4,6 +4,7 @@ import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotPositiveAmountProductException;
+import ModelPackage.System.exeption.cart.ProductExistedInCart;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
 import ModelPackage.Users.Seller;
@@ -58,17 +59,13 @@ public class CartManagerTest {
     public void addProductToCartTest() throws Exception{
         cartManager.addProductToCart(customer.getCart(), seller.getUsername(),
                 product.getProductId(), 2);
-        Assert.assertEquals(customer.getCart().getSubCarts().get(customer.getCart().getSubCarts().size() - 1).toString(),
-                "SubCart(product=Product(productId=Pro#12, " +
-                "productStatus=UNDER_CREATION, name=shoes, dateAdded=Fri May 01 01:51:37" +
-                " IRDT 2020, company=Adidas, allSellers=[User(username=ali110, " +
-                "password=12435, firstName=Ali, lastName=Alavi, email=Ali@gmail.com, " +
-                "phoneNumber=0913235445, cart=Cart(subCarts=[], totalPrice=0, " +
-                "discountCode=), hasSignedIn=false)], category=null, categoryId=12, " +
-                "publicFeatures={}, specialFeatures={}, description=high quality, " +
-                "allScores=[], totalScore=0.0, allComments=[], stock={ali110=3}," +
-                " prices={}, view=0, boughtAmount=0, leastPrice=0), productId=Pro#12," +
-                " sellerId=ali110, amount=2)");
+        Assert.assertEquals(customer.getCart().getSubCarts().get(customer.getCart().getSubCarts().size() - 1),
+                subCart);
+    }
+    @Test(expected = ProductExistedInCart.class)
+    public void addProductToCartExistedExcTest() throws Exception{
+        cartManager.addProductToCart(customer.getCart(), "ali110", "Pro#12", 1);
+        cartManager.addProductToCart(customer.getCart(), "ali110", "Pro#12", 2);
     }
     @Test
     public void getSubCartByProductIdTest() throws Exception{
