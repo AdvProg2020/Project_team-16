@@ -161,6 +161,12 @@ public class ProductManager {
         /* TODO : delete from database */
     }
 
+    public HashMap<String,String> allFeaturesOf(Product product){
+        HashMap<String,String> allFeatures = new HashMap<>(product.getPublicFeatures());
+        allFeatures.putAll(product.getSpecialFeatures());
+        return allFeatures;
+    }
+
     public void clear(){
         allProducts.clear();
     }

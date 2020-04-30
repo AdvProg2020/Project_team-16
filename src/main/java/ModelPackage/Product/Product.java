@@ -28,10 +28,13 @@ public class Product {
     private HashMap<String,Integer> prices;
     private int view;
     private int boughtAmount;
+    private int leastPrice;
 
     public Product(){
         this.productId = generateId();
     }
+
+    public Product(String id){this.productId = id;}
 
     public Product(String name, String company, ArrayList<Seller> allSellers, String categoryId, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, HashMap<String, Integer> stock, HashMap<String, Integer> prices) {
         this.name = name;

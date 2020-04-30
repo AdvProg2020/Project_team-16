@@ -13,6 +13,7 @@ public class CategoryManager {
     private static CategoryManager categoryManager = new CategoryManager();
     private ArrayList<Category> allMainCategories;
     private ArrayList<Category> allCategories;
+    private static ArrayList<String> publicFeatures;
 
     private CategoryManager(){
         allMainCategories  = new ArrayList<>();
@@ -221,7 +222,12 @@ public class CategoryManager {
         return products;
     }
 
+
     /* TODO : Get Categories in Another Category */
+
+    public static ArrayList<String> getPublicFeatures() {
+        return publicFeatures;
+    }
 
     public void clear(){
         allCategories.clear();
