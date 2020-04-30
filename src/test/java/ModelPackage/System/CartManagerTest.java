@@ -1,6 +1,5 @@
 package ModelPackage.System;
 
-import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
@@ -66,5 +65,14 @@ public class CartManagerTest {
     @Test(expected = NoSuchAProductInCart.class)
     public void getSubCartByProductIdNotFoundExcTest() throws Exception{
         cartManager.getSubCartByProductId(cart, "Pro#10");
+    }
+    @Test(expected = NoSuchAProductInCart.class)
+    public void deleteProductFromCartTest() throws NoSuchAProductInCart {
+        cartManager.deleteProductFromCart(cart, "Pro#12");
+        cartManager.getSubCartByProductId(cart, "Pro#12");
+    }
+    @Test(expected = NoSuchAProductInCart.class)
+    public void deleteProductFromCartNotFoundExcTest() throws Exception{
+        cartManager.deleteProductFromCart(cart, "Pro#10");
     }
 }

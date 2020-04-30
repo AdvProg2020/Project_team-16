@@ -33,4 +33,9 @@ public class CartManager {
         }
         throw new NoSuchAProductInCart(productId);
     }
+
+    public void deleteProductFromCart(Cart cart, String productId) throws NoSuchAProductInCart {
+        SubCart subCart = getSubCartByProductId(cart, productId);
+        cart.getSubCarts().remove(subCart);
+    }
 }
