@@ -12,7 +12,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 
 public class CartManagerTest {
@@ -55,15 +54,22 @@ public class CartManagerTest {
         CartManager test = CartManager.getInstance();
         Assert.assertEquals(cartManager, test);
     }
-    /*@Test
+    @Test
     public void addProductToCartTest() {
         cartManager.addProductToCart(customer.getCart(), seller.getUsername(),
                 product.getProductId(), 2);
-        SubCart subCart = new SubCart(product, product.getProductId(), seller.getUsername(), 2)
-        int b = Comparator.comparing(SubCart :: getProduct).thenComparing(SubCart :: getSellerId).
-                thenComparing(SubCart :: getProductId).thenComparing(SubCart :: getAmount).
-                compare(customer.getCart().getSubCarts().get(customer.getCart().getSubCarts().size() - 1), subCart);
-    }*/
+        Assert.assertEquals(customer.getCart().getSubCarts().get(customer.getCart().getSubCarts().size() - 1).toString(),
+                "SubCart(product=Product(productId=Pro#12, " +
+                "productStatus=UNDER_CREATION, name=shoes, dateAdded=Fri May 01 01:51:37" +
+                " IRDT 2020, company=Adidas, allSellers=[User(username=ali110, " +
+                "password=12435, firstName=Ali, lastName=Alavi, email=Ali@gmail.com, " +
+                "phoneNumber=0913235445, cart=Cart(subCarts=[], totalPrice=0, " +
+                "discountCode=), hasSignedIn=false)], category=null, categoryId=12, " +
+                "publicFeatures={}, specialFeatures={}, description=high quality, " +
+                "allScores=[], totalScore=0.0, allComments=[], stock={ali110=3}," +
+                " prices={}, view=0, boughtAmount=0, leastPrice=0), productId=Pro#12," +
+                " sellerId=ali110, amount=2)");
+    }
     @Test
     public void getSubCartByProductIdTest() throws Exception{
         SubCart actualSubCart = cartManager.getSubCartByProductId(cart, "Pro#12");

@@ -11,16 +11,13 @@ import java.util.List;
 
 @Data
 public class CartManager {
-    private List<Cart> allCarts;
     private static CartManager cartManager = new CartManager();
 
     public static CartManager getInstance() {
         return cartManager;
     }
 
-    private CartManager() {
-        this.allCarts = new ArrayList<>();
-    }
+    private CartManager() {}
 
     public void addProductToCart(Cart cart, String sellerId, String productId, int amount) {
         cart.getSubCarts().add(new SubCart(ProductManager.getInstance().findProductById(productId),
