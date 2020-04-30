@@ -2,6 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotPositiveAmountProductException;
+import ModelPackage.System.exeption.cart.ProductExistedInCart;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.SubCart;
 import lombok.Data;
@@ -19,9 +20,17 @@ public class CartManager {
 
     private CartManager() {}
 
-    public void addProductToCart(Cart cart, String sellerId, String productId, int amount) {
+    public void addProductToCart(Cart cart, String sellerId, String productId, int amount) throws Exception {
+        checkIfProductExists(cart, productId, sellerId);
         cart.getSubCarts().add(new SubCart(ProductManager.getInstance().findProductById(productId),
                 productId, sellerId, amount));
+    }
+
+    private void checkIfProductExists(Cart cart, String productId, String sellerId) throws Exception{
+        for (SubCart subCart : cart.getSubCarts()) {
+            if (subCart.getSellerId().equals(sellerId) && subCart.getProductId().equals(productId))
+                throw new ProductExistedInCart(productId, sellerId);
+        }
     }
 
     public SubCart getSubCartByProductId(Cart cart, String productId, String sellerId) throws NoSuchAProductInCart {
@@ -29,7 +38,7 @@ public class CartManager {
             if (subCart.getProductId().equals(productId) && subCart.getSellerId().equals(sellerId))
                 return subCart;
         }
-        throw new NoSuchAProductInCart(productId);
+        throw new NoSuchAProductInCart(productId, sellerId);
     }
 
     public void deleteProductFromCart(Cart cart, String productId, String sellerId) throws NoSuchAProductInCart {

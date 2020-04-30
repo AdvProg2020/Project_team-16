@@ -55,7 +55,7 @@ public class CartManagerTest {
         Assert.assertEquals(cartManager, test);
     }
     @Test
-    public void addProductToCartTest() {
+    public void addProductToCartTest() throws Exception{
         cartManager.addProductToCart(customer.getCart(), seller.getUsername(),
                 product.getProductId(), 2);
         Assert.assertEquals(customer.getCart().getSubCarts().get(customer.getCart().getSubCarts().size() - 1).toString(),
