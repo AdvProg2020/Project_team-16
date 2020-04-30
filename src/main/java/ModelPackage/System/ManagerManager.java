@@ -1,6 +1,5 @@
 package ModelPackage.System;
 
-import ModelPackage.Off.DiscountCode;
 import ModelPackage.Users.Manager;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
@@ -35,31 +34,6 @@ public class ManagerManager {
         User user = accountManager.getUserByUsername(username);
         accountManager.getUsers().remove(user);
     }
-
-    public void viewRequestDetails(String requestId){}
-
-    public void acceptRequest(String requestId){}
-
-    public void declineRequest(String requestId){}
-
-    public void createDiscountCode(String[] info){}
-
-    public List<DiscountCode> viewDiscountCodes(){
-        return null;
-    }
-
-    public DiscountCode getDiscountByCode(String code){
-        return null;
-    }
-
-    public void editDiscountCode(DiscountCode discountCode){}
-
-    public void removeDiscountCode(DiscountCode discountCode){}
-
-    public void createNewCategory(String[] info){}
-
-    public void editCategory(String[] info){}
-
 
 
 }
