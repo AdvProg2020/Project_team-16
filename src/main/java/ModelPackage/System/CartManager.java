@@ -24,22 +24,22 @@ public class CartManager {
                 productId, sellerId, amount));
     }
 
-    public SubCart getSubCartByProductId(Cart cart, String productId) throws NoSuchAProductInCart {
+    public SubCart getSubCartByProductId(Cart cart, String productId, String sellerId) throws NoSuchAProductInCart {
         for (SubCart subCart : cart.getSubCarts()) {
-            if (subCart.getProductId().equals(productId))
+            if (subCart.getProductId().equals(productId) && subCart.getSellerId().equals(sellerId))
                 return subCart;
         }
         throw new NoSuchAProductInCart(productId);
     }
 
-    public void deleteProductFromCart(Cart cart, String productId) throws NoSuchAProductInCart {
-        SubCart subCart = getSubCartByProductId(cart, productId);
+    public void deleteProductFromCart(Cart cart, String productId, String sellerId) throws NoSuchAProductInCart {
+        SubCart subCart = getSubCartByProductId(cart, productId, sellerId);
         cart.getSubCarts().remove(subCart);
     }
 
-    public void changeProductAmountInCart(Cart cart, String productId, int newAmount)
+    public void changeProductAmountInCart(Cart cart, String productId, String sellerId, int newAmount)
             throws Exception {
-        SubCart subCart = getSubCartByProductId(cart, productId);
+        SubCart subCart = getSubCartByProductId(cart, productId, sellerId);
         checkIfAmountIsPositive(newAmount);
         subCart.setAmount(newAmount);
     }

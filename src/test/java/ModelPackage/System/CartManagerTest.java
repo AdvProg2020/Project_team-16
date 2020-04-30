@@ -72,35 +72,35 @@ public class CartManagerTest {
     }
     @Test
     public void getSubCartByProductIdTest() throws Exception{
-        SubCart actualSubCart = cartManager.getSubCartByProductId(cart, "Pro#12");
+        SubCart actualSubCart = cartManager.getSubCartByProductId(cart, "Pro#12", "ali110");
         SubCart expectedSubCart = subCart;
         Assert.assertEquals(expectedSubCart, actualSubCart);
     }
     @Test(expected = NoSuchAProductInCart.class)
     public void getSubCartByProductIdNotFoundExcTest() throws Exception{
-        cartManager.getSubCartByProductId(cart, "Pro#10");
+        cartManager.getSubCartByProductId(cart, "Pro#10", "ali110");
     }
     @Test(expected = NoSuchAProductInCart.class)
     public void deleteProductFromCartTest() throws NoSuchAProductInCart {
-        cartManager.deleteProductFromCart(cart, "Pro#12");
-        cartManager.getSubCartByProductId(cart, "Pro#12");
+        cartManager.deleteProductFromCart(cart, "Pro#12", "ali110");
+        cartManager.getSubCartByProductId(cart, "Pro#12", "ali110");
     }
     @Test(expected = NoSuchAProductInCart.class)
     public void deleteProductFromCartNotFoundExcTest() throws Exception{
-        cartManager.deleteProductFromCart(cart, "Pro#10");
+        cartManager.deleteProductFromCart(cart, "Pro#10", "ali110");
     }
     @Test
     public void changeProductAmountInCartTest() throws Exception {
-        cartManager.changeProductAmountInCart(cart, "Pro#13", 5);
-        int actualAmount = cartManager.getSubCartByProductId(cart, "Pro#13").getAmount();
+        cartManager.changeProductAmountInCart(cart, "Pro#13", "ali110", 5);
+        int actualAmount = cartManager.getSubCartByProductId(cart, "Pro#13", "ali110").getAmount();
         Assert.assertEquals(5, actualAmount);
     }
     @Test(expected = NoSuchAProductInCart.class)
     public void changeProductAmountNotFoundExcTest() throws Exception{
-        cartManager.changeProductAmountInCart(cart, "Pro#14", 2);
+        cartManager.changeProductAmountInCart(cart, "Pro#14", "ali110", 2);
     }
     @Test(expected = NotPositiveAmountProductException.class)
     public void changeProductAmountNotPositiveAmountExcTest() throws Exception{
-        cartManager.changeProductAmountInCart(cart, "Pro#13", -1);
+        cartManager.changeProductAmountInCart(cart, "Pro#13", "ali110", -1);
     }
 }
