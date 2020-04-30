@@ -20,7 +20,6 @@ public class CSCLManager {
     private ArrayList<Comment> allComments;
     private ArrayList<Score> allScores;
     private ArrayList<Log> allLogs;
-    private AccountManager accountManager = AccountManager.getInstance();
 
     private CSCLManager() {
         this.allCompanies = new ArrayList<>();
@@ -102,7 +101,7 @@ public class CSCLManager {
                 break;
             }
         }
-        allLogs.add(new SellLog(product, moneyGotten, discount, accountManager.getUserByUsername(buyerId),
+        allLogs.add(new SellLog(product, moneyGotten, discount, AccountManager.getInstance().getUserByUsername(buyerId),
                 new Date(), DeliveryStatus.DEPENDING));
     }
 

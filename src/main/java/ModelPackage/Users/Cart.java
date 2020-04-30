@@ -10,8 +10,10 @@ import java.util.List;
 public class Cart {
     private List<SubCart> subCarts;
     private long totalPrice;
+    private String discountCode;
 
     public Cart() {
         subCarts = new ArrayList<>();
+        discountCode = "";
     }
 }
