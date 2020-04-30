@@ -3,6 +3,7 @@ package ModelPackage.System;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
+import ModelPackage.System.exeption.cart.NotPositiveAmountProductException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
 import ModelPackage.Users.Seller;
@@ -91,5 +92,9 @@ public class CartManagerTest {
     @Test(expected = NoSuchAProductInCart.class)
     public void changeProductAmountNotFoundExcTest() throws Exception{
         cartManager.changeProductAmountInCart(cart, "Pro#14", 2);
+    }
+    @Test(expected = NotPositiveAmountProductException.class)
+    public void changeProductAmountNotPositiveAmountExcTest() throws Exception{
+        cartManager.changeProductAmountInCart(cart, "Pro#13", -1);
     }
 }

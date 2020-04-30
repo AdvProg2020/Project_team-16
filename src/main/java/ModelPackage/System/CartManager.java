@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
+import ModelPackage.System.exeption.cart.NotPositiveAmountProductException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.SubCart;
 import lombok.Data;
@@ -39,8 +40,15 @@ public class CartManager {
         cart.getSubCarts().remove(subCart);
     }
 
-    public void changeProductAmountInCart(Cart cart, String productId, int newAmount) throws NoSuchAProductInCart {
+    public void changeProductAmountInCart(Cart cart, String productId, int newAmount)
+            throws Exception {
         SubCart subCart = getSubCartByProductId(cart, productId);
+        checkIfAmountIsPositive(newAmount);
         subCart.setAmount(newAmount);
+    }
+
+    private void checkIfAmountIsPositive(int newAmount) throws Exception{
+        if (newAmount <= 0)
+            throw new NotPositiveAmountProductException(newAmount);
     }
 }
