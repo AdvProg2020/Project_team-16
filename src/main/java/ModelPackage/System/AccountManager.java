@@ -1,5 +1,6 @@
 package ModelPackage.System;
 
+import ModelPackage.System.exeption.account.SameInfoException;
 import ModelPackage.System.exeption.account.WrongPasswordException;
 import ModelPackage.Users.*;
 import com.google.gson.Gson;
@@ -50,7 +51,7 @@ public class AccountManager {
         requestManager.addRequest(new Request(info[0],RequestType.REGISTER_SELLER,requestStr,seller));
     }
 
-    private Manager createManager(String[] info){
+    public Manager createManager(String[] info){
         Manager manager =  new Manager(info[0],
                 info[1],
                 info[2],
@@ -104,9 +105,19 @@ public class AccountManager {
         }
     }
 
-    public void changeInfo(String username, String info, String newInfo){
+    public void changeInfo(String[] info) throws SameInfoException {
+        String username = info[0];
+        String type = info[1];
+        String previousInfo = info[2];
+        String newInfo = info[3];
+
+        if (previousInfo.equals(newInfo)){
+            throw new  SameInfoException(type);
+        }
+
         User user = getUserByUsername(username);
-        switch (info){
+
+        switch (type){
             case "password" : user.setPassword(newInfo); break;
             case "firstName" : user.setFirstName(newInfo); break;
             case "lastName" : user.setLastName(newInfo); break;
