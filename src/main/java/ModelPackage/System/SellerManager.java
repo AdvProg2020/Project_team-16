@@ -47,6 +47,12 @@ public class SellerManager {
         return products;
     }
 
+    public List<Seller> viewSellersOfProduct (String productId){
+        Product product = productManager.findProductById(productId);
+
+        return product.getAllSellers();
+    }
+
 
 
 
