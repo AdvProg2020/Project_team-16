@@ -30,13 +30,14 @@ public class SortManager {
                 break;
             case VIEW:
                 sortByView(list);
-                return list;
+                break;
             case PRICE:
                 break;
             case BOUGHTAMOUNT:
+                sortByBoughtAmount(list);
                 break;
         }
-        return null;
+        return list;
     }
 
     private void sortByName(ArrayList<Product> products) {
@@ -53,6 +54,15 @@ public class SortManager {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {
                 return secondProduct.getView() - firstProduct.getView();
+            }
+        });
+    }
+
+    private void sortByBoughtAmount(ArrayList<Product> products) {
+        products.sort(new Comparator<Product>() {
+            @Override
+            public int compare(Product firstProduct, Product secondProduct) {
+                return secondProduct.getBoughtAmount() - firstProduct.getBoughtAmount();
             }
         });
     }
