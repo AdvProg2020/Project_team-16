@@ -62,6 +62,9 @@ public class SellerManagerTest {
         products.add(dullForKimmi);
         products.add(skirtForKimmi);
 
+        dullForKimmi.setAllSellers(new ArrayList<>());
+        dullForKimmi.getAllSellers().add(marmof);
+
         dullSellLog = new SellLog(
                 dullForKimmi,
                 100000,
@@ -145,6 +148,19 @@ public class SellerManagerTest {
         Assert.assertArrayEquals(products.toArray(),actualProducts.toArray());
     }
 
+    @Test
+    public void viewSellersOfProduct(){
+        new MockUp<ProductManager>(){
+            @Mock
+            public Product findProductById(String id){
+                return dullForKimmi;
+            }
+        };
+
+        List<Seller> actualSellers = sellerManager.viewSellersOfProduct(dullForKimmi.getProductId());
+
+        Assert.assertArrayEquals(dullForKimmi.getAllSellers().toArray(),actualSellers.toArray());
+    }
 
 
 
