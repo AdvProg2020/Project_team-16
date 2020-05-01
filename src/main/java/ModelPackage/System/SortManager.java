@@ -4,6 +4,7 @@ import ModelPackage.Product.Product;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 @Data
 public class SortManager {
@@ -19,10 +20,12 @@ public class SortManager {
     }
 
     public ArrayList<Product> sort(ArrayList<Product> toSortList, SortType sortType) {
+        list = toSortList;
         switch (sortType) {
             // TODO : call needed methods
             case NAME:
-                break;
+                sortByName(list);
+                return list;
             case TIME:
                 break;
             case VIEW:
@@ -32,6 +35,15 @@ public class SortManager {
             case BOUGHTAMOUNT:
                 break;
         }
-        return list;
+        return null;
+    }
+
+    private void sortByName(ArrayList<Product> products) {
+        products.sort(new Comparator<Product>() {
+            @Override
+            public int compare(Product firstProduct, Product secondProduct) {
+                return firstProduct.getName().compareTo(secondProduct.getName());
+            }
+        });
     }
 }
