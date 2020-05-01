@@ -21,14 +21,20 @@ public class SortManagerTest {
         product = new Product("Shoes", "Adidas", new ArrayList<>(),
                 "12", new HashMap<>(), new HashMap<>(), "High quality",
                 new HashMap<>(), new HashMap<>());
+        product.setView(2);
+        product.setProductId("0");
         toSortProduct.add(product);
         product1 = new Product("Gloves", "Puma", new ArrayList<>(),
                 "13", new HashMap<>(), new HashMap<>(), "Best Seller",
                 new HashMap<>(), new HashMap<>());
+        product1.setView(1);
+        product1.setProductId("1");
         toSortProduct.add(product1);
         product2 = new Product("Hammer", "Agriculture Company", new ArrayList<>(),
                 "20", new HashMap<>(), new HashMap<>(), "hard",
                 new HashMap<>(), new HashMap<>());
+        product2.setProductId("2");
+        product2.setView(5);
         toSortProduct.add(product2);
     }
     @Test
@@ -43,6 +49,15 @@ public class SortManagerTest {
         expectedSortedProducts.add(product1);
         expectedSortedProducts.add(product2);
         expectedSortedProducts.add(product);
+        Assert.assertEquals(expectedSortedProducts, list);
+    }
+    @Test
+    public void sortByViewTest() {
+        ArrayList<Product> expectedSortedProducts = new ArrayList<>();
+        list = sortManager.sort(toSortProduct, SortType.VIEW);
+        expectedSortedProducts.add(product2);
+        expectedSortedProducts.add(product);
+        expectedSortedProducts.add(product1);
         Assert.assertEquals(expectedSortedProducts, list);
     }
 }

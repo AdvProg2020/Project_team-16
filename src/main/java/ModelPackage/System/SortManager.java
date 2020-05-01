@@ -25,11 +25,12 @@ public class SortManager {
             // TODO : call needed methods
             case NAME:
                 sortByName(list);
-                return list;
+                break;
             case TIME:
                 break;
             case VIEW:
-                break;
+                sortByView(list);
+                return list;
             case PRICE:
                 break;
             case BOUGHTAMOUNT:
@@ -43,6 +44,15 @@ public class SortManager {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {
                 return firstProduct.getName().compareTo(secondProduct.getName());
+            }
+        });
+    }
+
+    private void sortByView(ArrayList<Product> products) {
+        products.sort(new Comparator<Product>() {
+            @Override
+            public int compare(Product firstProduct, Product secondProduct) {
+                return secondProduct.getView() - firstProduct.getView();
             }
         });
     }
