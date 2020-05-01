@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class SortManagerTest {
@@ -24,6 +26,7 @@ public class SortManagerTest {
         product.setView(2);
         product.setProductId("0");
         product.setBoughtAmount(1);
+        product.setDateAdded(new Date(2018, Calendar.FEBRUARY, 4));
         toSortProduct.add(product);
         product1 = new Product("Gloves", "Puma", new ArrayList<>(),
                 "13", new HashMap<>(), new HashMap<>(), "Best Seller",
@@ -31,6 +34,7 @@ public class SortManagerTest {
         product1.setView(1);
         product1.setProductId("1");
         product1.setBoughtAmount(3);
+        product1.setDateAdded(new Date(2020, Calendar.JANUARY, 1));
         toSortProduct.add(product1);
         product2 = new Product("Hammer", "Agriculture Company", new ArrayList<>(),
                 "20", new HashMap<>(), new HashMap<>(), "hard",
@@ -38,6 +42,7 @@ public class SortManagerTest {
         product2.setProductId("2");
         product2.setView(5);
         product2.setBoughtAmount(5);
+        product2.setDateAdded(new Date(2017, Calendar.JULY, 18));
         toSortProduct.add(product2);
     }
     @Test
@@ -70,6 +75,15 @@ public class SortManagerTest {
         expectedSortedProducts.add(product2);
         expectedSortedProducts.add(product1);
         expectedSortedProducts.add(product);
+        Assert.assertEquals(expectedSortedProducts, list);
+    }
+    @Test
+    public void sortByTimeTest() {
+        ArrayList<Product> expectedSortedProducts = new ArrayList<>();
+        list = sortManager.sort(toSortProduct, SortType.TIME);
+        expectedSortedProducts.add(product1);
+        expectedSortedProducts.add(product);
+        expectedSortedProducts.add(product2);
         Assert.assertEquals(expectedSortedProducts, list);
     }
 }

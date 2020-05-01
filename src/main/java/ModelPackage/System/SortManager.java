@@ -27,6 +27,7 @@ public class SortManager {
                 sortByName(list);
                 break;
             case TIME:
+                sortByTime(list);
                 break;
             case VIEW:
                 sortByView(list);
@@ -63,6 +64,15 @@ public class SortManager {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {
                 return secondProduct.getBoughtAmount() - firstProduct.getBoughtAmount();
+            }
+        });
+    }
+
+    private void sortByTime(ArrayList<Product> products) {
+        products.sort(new Comparator<Product>() {
+            @Override
+            public int compare(Product firstProduct, Product secondProduct) {
+                return secondProduct.getDateAdded().compareTo(firstProduct.getDateAdded());
             }
         });
     }
