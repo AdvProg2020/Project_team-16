@@ -31,7 +31,7 @@ public class ManagerManager {
         accountManager.getUsers().add(manager);
     }
 
-    public void deleteUser(String username) throws UserNotAvailableException {
+    public void deleteUser(String username) {
         User user = accountManager.getUserByUsername(username);
         accountManager.getUsers().remove(user);
     }

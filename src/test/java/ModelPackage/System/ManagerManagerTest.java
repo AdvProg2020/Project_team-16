@@ -58,7 +58,7 @@ public class ManagerManagerTest {
     }
 
     @Test
-    public void deleteUser() throws UserNotAvailableException {
+    public void deleteUser() {
         managerManager.deleteUser("marmofayezi");
         ArrayList<User> expected = new ArrayList<>();
         ArrayList<User> actual = (ArrayList<User>) AccountManager.getInstance().getUsers();

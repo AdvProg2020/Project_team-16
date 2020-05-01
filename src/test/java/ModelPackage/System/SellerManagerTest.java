@@ -38,7 +38,7 @@ public class SellerManagerTest {
 
 
     @Test
-    public void viewCompanyInformation() throws UserNotAvailableException {
+    public void viewCompanyInformation() {
         new MockUp<AccountManager>(){
             @Mock
             User getUserByUsername(String username){

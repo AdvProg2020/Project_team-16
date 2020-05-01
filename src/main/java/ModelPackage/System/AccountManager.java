@@ -98,7 +98,7 @@ public class AccountManager {
         return customer;
     }
 
-    public void login(String username,String password) throws WrongPasswordException, UserNotAvailableException {
+    public void login(String username,String password) throws WrongPasswordException {
         if (isCorrectPassword(username, password)){
             getUserByUsername(username).setHasSignedIn(true);
         } else {
@@ -106,7 +106,7 @@ public class AccountManager {
         }
     }
 
-    public void changeInfo(String[] info) throws SameInfoException, UserNotAvailableException {
+    public void changeInfo(String[] info) throws SameInfoException {
         String username = info[0];
         String type = info[1];
         String previousInfo = info[2];
@@ -127,15 +127,15 @@ public class AccountManager {
         }
     }
 
-    public void logout(String username) throws UserNotAvailableException {
+    public void logout(String username) {
         getUserByUsername(username).setHasSignedIn(false);
     }
 
-    private boolean isCorrectPassword(String username,String password) throws UserNotAvailableException {
+    private boolean isCorrectPassword(String username,String password) {
         return getUserByUsername(username).getPassword().equals(password);
     }
 
-    public User getUserByUsername(String username) throws UserNotAvailableException {
+    public User getUserByUsername(String username) {
         for (User user : users) {
             if (user.getUsername().equals(username)){
                 return user;

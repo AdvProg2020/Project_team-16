@@ -1,6 +1,6 @@
 package ModelPackage.System.exeption.account;
 
-public class UserNotAvailableException extends Exception {
+public class UserNotAvailableException extends RuntimeException {
     public UserNotAvailableException() {
         super("User with this username is not available.");
     }

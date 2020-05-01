@@ -93,7 +93,7 @@ public class CSCLManager {
         allScores.add(new Score(userId, productId, score));
     }
 
-    public void createSellLog(SubCart subCart, String buyerId, int discount) throws UserNotAvailableException {
+    public void createSellLog(SubCart subCart, String buyerId, int discount) {
         Product product = subCart.getProduct();
         int moneyGotten = 0;
         for (String id : product.getPrices().keySet()) {

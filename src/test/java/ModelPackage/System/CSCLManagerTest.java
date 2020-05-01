@@ -111,7 +111,7 @@ public class CSCLManagerTest {
         Assert.assertEquals("12", actualId);
     }
     @Test
-    public void createSellLogTest() throws UserNotAvailableException {
+    public void createSellLogTest() {
         csclManager.createSellLog(subCart, "Ali12", 12);
         csclManager.getAllLogs().get(0).setLogId("1");
         String actualId = csclManager.getAllLogs().get(0).getLogId();

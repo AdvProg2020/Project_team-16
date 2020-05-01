@@ -1,7 +1,6 @@
 package ModelPackage.System;
 
 import ModelPackage.System.exeption.account.SameInfoException;
-import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.account.WrongPasswordException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Manager;
@@ -46,7 +45,7 @@ public class AccountManagerTest {
     }
 
     @Test
-    public void changeInfo() throws SameInfoException, UserNotAvailableException {
+    public void changeInfo() throws SameInfoException {
         String[] info = {"marmofayezi","password", "marmof.ir", "marmof.com"};
         accountManager.getUsers().add(marmof);
         accountManager.changeInfo(info);
@@ -55,14 +54,14 @@ public class AccountManagerTest {
     }
 
     @Test(expected = SameInfoException.class)
-    public void changeInfoSameInfo() throws SameInfoException, UserNotAvailableException {
+    public void changeInfoSameInfo() throws SameInfoException {
         String[] info = {"marmofayezi","password", "marmof.ir", "marmof.ir"};
         accountManager.getUsers().add(marmof);
         accountManager.changeInfo(info);
     }
 
     @Test
-    public void createAccount() throws IOException, UserNotAvailableException {
+    public void createAccount() throws IOException {
         String[] info = {"a","a","a","a","a","a"};
         accountManager.createAccount(info,"manager");
         User actual = accountManager.getUserByUsername("a");
@@ -89,26 +88,26 @@ public class AccountManagerTest {
     }
 
     @Test
-    public void login() throws WrongPasswordException, UserNotAvailableException {
+    public void login() throws WrongPasswordException {
         accountManager.login("marmofayezi","marmof.ir");
         boolean actual = marmof.isHasSignedIn();
         Assert.assertTrue(actual);
     }
 
     @Test(expected = WrongPasswordException.class)
-    public void loginWithWrongPassword() throws WrongPasswordException, UserNotAvailableException {
+    public void loginWithWrongPassword() throws WrongPasswordException {
         accountManager.login("marmofayezi","marmof.com");
     }
 
     @Test
-    public void logout() throws UserNotAvailableException {
+    public void logout() {
         accountManager.logout("marmofayezi");
         boolean actual = marmof.isHasSignedIn();
         Assert.assertFalse(actual);
     }
 
     @Test
-    public void getUserByUsername() throws UserNotAvailableException {
+    public void getUserByUsername() {
         User actualUser = accountManager.getUserByUsername("marmofayezi");
         Assert.assertEquals(marmof,actualUser);
     }
