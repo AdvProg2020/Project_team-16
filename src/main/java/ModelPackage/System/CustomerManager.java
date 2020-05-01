@@ -2,8 +2,10 @@ package ModelPackage.System;
 
 
 import ModelPackage.Log.PurchaseLog;
+import ModelPackage.Off.DiscountCode;
 import ModelPackage.Users.Customer;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CustomerManager {
@@ -22,5 +24,10 @@ public class CustomerManager {
     public List<PurchaseLog> viewOrders(String username){
         Customer customer = (Customer) accountManager.getUserByUsername(username);
         return customer.getPurchaseLogs();
+    }
+
+    public HashMap<DiscountCode,Integer> viewDiscountCodes(String username){
+        Customer customer = (Customer) accountManager.getUserByUsername(username);
+        return customer.getDiscountCodes();
     }
 }
