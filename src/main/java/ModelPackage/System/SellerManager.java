@@ -2,6 +2,7 @@ package ModelPackage.System;
 
 
 import ModelPackage.Log.SellLog;
+import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.Users.Seller;
@@ -20,6 +21,7 @@ public class SellerManager {
 
     AccountManager accountManager = AccountManager.getInstance();
     ProductManager productManager = ProductManager.getInstance();
+    CategoryManager categoryManager = CategoryManager.getInstance();
     CSCLManager csclManager = CSCLManager.getInstance();
 
 
@@ -53,6 +55,9 @@ public class SellerManager {
         return product.getAllSellers();
     }
 
+    public List<Category> viewAllCategories(){
+        return categoryManager.getAllCategories();
+    }
 
 
 

@@ -5,10 +5,12 @@ import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.PrintModels.CategoryPM;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@Data
 public class CategoryManager {
     private static CategoryManager categoryManager = new CategoryManager();
     private ArrayList<Category> allMainCategories;
