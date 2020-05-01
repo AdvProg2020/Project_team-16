@@ -2,6 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.Log.DeliveryStatus;
 import ModelPackage.Log.SellLog;
+import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.Users.Cart;
@@ -28,6 +29,7 @@ public class SellerManagerTest {
     List<SellLog> sellLogs;
     List<String> productIds;
     List<Product> products;
+    Category category;
 
     {
         adidas = new Company("Adidas","115", "Clothing",new ArrayList<>());
@@ -93,6 +95,8 @@ public class SellerManagerTest {
         productIds.add(skirtForKimmi.getProductId());
 
         marmof.setProductIds(productIds);
+
+        category = new Category("stuffForKimmi",null);
 
     }
 
@@ -162,6 +166,22 @@ public class SellerManagerTest {
         Assert.assertArrayEquals(dullForKimmi.getAllSellers().toArray(),actualSellers.toArray());
     }
 
+    @Test
+    public void viewAllCategories(){
+        List<Category> categories = new ArrayList<>();
+        new MockUp<CategoryManager>(){
+            @Mock
+            public List<Category> getAllCategories(){
+                categories.add(category);
+                return categories;
+            }
+        };
+
+        List<Category> actualCategories = sellerManager.viewAllCategories();
+
+        Assert.assertArrayEquals(categories.toArray(),actualCategories.toArray());
+
+    }
 
 
 }
