@@ -43,6 +43,7 @@ public class SortManagerTest {
         product.setBoughtAmount(1);
         product.setLeastPrice(120);
         product.setDateAdded(new Date(2018, Calendar.FEBRUARY, 4));
+        product.setTotalScore(4.3);
         toSortProduct.add(product);
 
 
@@ -58,6 +59,7 @@ public class SortManagerTest {
         product1.setBoughtAmount(3);
         product1.setDateAdded(new Date(2020, Calendar.JANUARY, 1));
         product1.setLeastPrice(1000);
+        product1.setTotalScore(1.12);
         toSortProduct.add(product1);
 
 
@@ -72,6 +74,7 @@ public class SortManagerTest {
         product2.setBoughtAmount(5);
         product2.setDateAdded(new Date(2017, Calendar.JULY, 18));
         product2.setLeastPrice(10);
+        product2.setTotalScore(3.59);
         toSortProduct.add(product2);
     }
     @Test
@@ -130,6 +133,15 @@ public class SortManagerTest {
         list = sortManager.sort(toSortProduct, SortType.LESS_PRICE);
         expectedSortedProducts.add(product2);
         expectedSortedProducts.add(product);
+        expectedSortedProducts.add(product1);
+        Assert.assertEquals(expectedSortedProducts, list);
+    }
+    @Test
+    public void sortByScoreTest() {
+        ArrayList<Product> expectedSortedProducts = new ArrayList<>();
+        list = sortManager.sort(toSortProduct, SortType.SCORE);
+        expectedSortedProducts.add(product);
+        expectedSortedProducts.add(product2);
         expectedSortedProducts.add(product1);
         Assert.assertEquals(expectedSortedProducts, list);
     }

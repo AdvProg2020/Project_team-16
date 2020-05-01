@@ -7,4 +7,5 @@ public enum SortType {
     LESS_PRICE,
     BOUGHTAMOUNT,
     TIME,
+    SCORE,
 }

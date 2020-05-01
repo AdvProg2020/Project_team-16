@@ -40,6 +40,9 @@ public class SortManager {
             case BOUGHTAMOUNT:
                 sortByBoughtAmount(list);
                 break;
+            case SCORE:
+                sortByScore(list);
+                break;
         }
         return list;
     }
@@ -94,6 +97,16 @@ public class SortManager {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {
                 return firstProduct.getLeastPrice() - secondProduct.getLeastPrice();
+            }
+        });
+    }
+
+    private void sortByScore(ArrayList<Product> products) {
+        products.sort(new Comparator<Product>() {
+            @Override
+            public int compare(Product firstProduct, Product secondProduct) {
+                return Double.toString(secondProduct.getTotalScore()).
+                        compareTo(Double.toString(firstProduct.getLeastPrice()));
             }
         });
     }
