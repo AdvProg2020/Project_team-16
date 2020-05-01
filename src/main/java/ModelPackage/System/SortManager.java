@@ -17,4 +17,21 @@ public class SortManager {
     private SortManager() {
         this.list = new ArrayList<>();
     }
+
+    public ArrayList<Product> sort(ArrayList<Product> toSortList, SortType sortType) {
+        switch (sortType) {
+            // TODO : call needed methods
+            case NAME:
+                break;
+            case TIME:
+                break;
+            case VIEW:
+                break;
+            case PRICE:
+                break;
+            case BOUGHTAMOUNT:
+                break;
+        }
+        return list;
+    }
 }
