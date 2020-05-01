@@ -32,7 +32,8 @@ public class SortManager {
             case VIEW:
                 sortByView(list);
                 break;
-            case PRICE:
+            case MORE_PRICE:
+                sortByMorePrice(list);
                 break;
             case BOUGHTAMOUNT:
                 sortByBoughtAmount(list);
@@ -73,6 +74,15 @@ public class SortManager {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {
                 return secondProduct.getDateAdded().compareTo(firstProduct.getDateAdded());
+            }
+        });
+    }
+
+    private void sortByMorePrice(ArrayList<Product> products) {
+        products.sort(new Comparator<Product>() {
+            @Override
+            public int compare(Product firstProduct, Product secondProduct) {
+                return secondProduct.getLeastPrice() - firstProduct.getLeastPrice();
             }
         });
     }
