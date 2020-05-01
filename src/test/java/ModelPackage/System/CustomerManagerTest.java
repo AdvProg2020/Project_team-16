@@ -2,6 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.Log.DeliveryStatus;
 import ModelPackage.Log.PurchaseLog;
+import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.Users.Cart;
@@ -13,10 +14,7 @@ import mockit.MockUp;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class CustomerManagerTest {
     CustomerManager customerManager;
@@ -26,6 +24,8 @@ public class CustomerManagerTest {
     Seller marmof;
     Company adidas;
     List<PurchaseLog> purchaseLogs;
+    DiscountCode discountCode;
+    HashMap<DiscountCode,Integer> discountCodes;
 
     {
         customerManager = CustomerManager.getInstance();
@@ -70,6 +70,13 @@ public class CustomerManagerTest {
         purchaseLogs.add(dullForKimmiLog);
 
         hatam.setPurchaseLogs(purchaseLogs);
+
+        discountCode = new DiscountCode(new Date(), new Date(2020, Calendar.MAY, 1), 10, 10);
+
+        discountCodes = new HashMap<>();
+        discountCodes.put(discountCode,10);
+
+        hatam.setDiscountCodes(discountCodes);
     }
 
     @Test
@@ -86,6 +93,19 @@ public class CustomerManagerTest {
         Assert.assertArrayEquals(purchaseLogs.toArray(),actualPurchaseLog.toArray());
     }
 
+    @Test
+    public void viewDisCodes(){
+        new MockUp<AccountManager>(){
+            @Mock
+            User getUserByUsername(String username){
+                return hatam;
+            }
+        };
+
+        HashMap<DiscountCode,Integer> actualDiscodes = customerManager.viewDiscountCodes("hatam008");
+
+        Assert.assertArrayEquals(discountCodes.keySet().toArray(),actualDiscodes.keySet().toArray());
+    }
 
 
 }
