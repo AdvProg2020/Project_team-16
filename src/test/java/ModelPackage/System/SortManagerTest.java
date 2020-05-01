@@ -30,7 +30,7 @@ public class SortManagerTest {
                 new Company("Puma", "021123", "Sports"), 2);
 
 
-        
+
         HashMap<String, Integer> prices = new HashMap<>();
         prices.put(seller.getUsername(), 100000);
         prices.put(seller1.getUsername(), 120);
@@ -116,12 +116,21 @@ public class SortManagerTest {
         Assert.assertEquals(expectedSortedProducts, list);
     }
     @Test
-    public void sortByPriceTest() {
+    public void sortByMorePriceTest() {
         ArrayList<Product> expectedSortedProducts = new ArrayList<>();
         list = sortManager.sort(toSortProduct, SortType.MORE_PRICE);
         expectedSortedProducts.add(product1);
         expectedSortedProducts.add(product);
         expectedSortedProducts.add(product2);
+        Assert.assertEquals(expectedSortedProducts, list);
+    }
+    @Test
+    public void sortByLessPriceTest() {
+        ArrayList<Product> expectedSortedProducts = new ArrayList<>();
+        list = sortManager.sort(toSortProduct, SortType.LESS_PRICE);
+        expectedSortedProducts.add(product2);
+        expectedSortedProducts.add(product);
+        expectedSortedProducts.add(product1);
         Assert.assertEquals(expectedSortedProducts, list);
     }
 }
