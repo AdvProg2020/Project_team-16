@@ -103,8 +103,11 @@ public class SellerManagerTest {
             }
         };
 
-        Assert.assertArrayEquals(sellLogs.toArray(),marmof.getSellLogs().toArray());
+        List<SellLog> actualSellLogs = sellerManager.viewSalesHistory("marmofayezi");
+
+        Assert.assertArrayEquals(sellLogs.toArray(),actualSellLogs.toArray());
     }
+
 
 
 
