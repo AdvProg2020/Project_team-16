@@ -26,6 +26,8 @@ public class SellerManagerTest {
     Product dullForKimmi;
     Product skirtForKimmi;
     List<SellLog> sellLogs;
+    List<String> productIds;
+    List<Product> products;
 
     {
         adidas = new Company("Adidas","115", "Clothing",new ArrayList<>());
@@ -56,6 +58,10 @@ public class SellerManagerTest {
         dullForKimmi = new Product();
         skirtForKimmi = new Product();
 
+        products = new ArrayList<>();
+        products.add(dullForKimmi);
+        products.add(skirtForKimmi);
+
         dullSellLog = new SellLog(
                 dullForKimmi,
                 100000,
@@ -78,6 +84,13 @@ public class SellerManagerTest {
         sellLogs.add(skirtSellLog);
 
         marmof.setSellLogs(sellLogs);
+
+        productIds = new ArrayList<>();
+        productIds.add(dullForKimmi.getProductId());
+        productIds.add(skirtForKimmi.getProductId());
+
+        marmof.setProductIds(productIds);
+
     }
 
 
@@ -106,6 +119,30 @@ public class SellerManagerTest {
         List<SellLog> actualSellLogs = sellerManager.viewSalesHistory("marmofayezi");
 
         Assert.assertArrayEquals(sellLogs.toArray(),actualSellLogs.toArray());
+    }
+
+    @Test
+    public void viewProducts(){
+        new MockUp<AccountManager>(){
+            @Mock
+            User getUserByUsername(String username){
+                return marmof;
+            }
+        };
+        new MockUp<ProductManager>(){
+            @Mock
+            public Product findProductById(String id){
+                if (id.equals(dullForKimmi.getProductId())){
+                    return dullForKimmi;
+                } else {
+                    return skirtForKimmi;
+                }
+            }
+        };
+
+        List<Product> actualProducts = sellerManager.viewProducts("marmofayezi");
+
+        Assert.assertArrayEquals(products.toArray(),actualProducts.toArray());
     }
 
 
