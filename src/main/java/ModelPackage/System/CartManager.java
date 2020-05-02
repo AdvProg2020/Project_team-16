@@ -1,6 +1,8 @@
 package ModelPackage.System;
 
+import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
+import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.cart.NotPositiveAmountProductException;
 import ModelPackage.System.exeption.cart.ProductExistedInCart;
 import ModelPackage.Users.Cart;
@@ -21,6 +23,14 @@ public class CartManager {
         checkIfProductExists(cart, productId, sellerId);
         cart.getSubCarts().add(new SubCart(ProductManager.getInstance().findProductById(productId),
                 productId, sellerId, amount));
+    }
+
+    private void checkIfThereIsEnoughAmountOfProduct(String productId, String sellerId, int amount)
+    throws Exception {
+        Product product = ProductManager.getInstance().findProductById(productId);
+        if (product.getStock().get(sellerId) < amount) {
+            throw new NotEnoughAmountOfProductException(product.getStock().get(sellerId));
+        }
     }
 
     private void checkIfProductExists(Cart cart, String productId, String sellerId) throws Exception{
