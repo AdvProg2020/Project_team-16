@@ -20,7 +20,8 @@ public class CartManager {
     private CartManager() {}
 
     public void addProductToCart(Cart cart, String sellerId, String productId, int amount) throws Exception {
-        checkIfProductExists(cart, productId, sellerId);
+        checkIfProductExistsInCart(cart, productId, sellerId);
+        checkIfThereIsEnoughAmountOfProduct(productId, sellerId, amount);
         cart.getSubCarts().add(new SubCart(ProductManager.getInstance().findProductById(productId),
                 productId, sellerId, amount));
     }
@@ -33,7 +34,7 @@ public class CartManager {
         }
     }
 
-    private void checkIfProductExists(Cart cart, String productId, String sellerId) throws Exception{
+    private void checkIfProductExistsInCart(Cart cart, String productId, String sellerId) throws Exception{
         for (SubCart subCart : cart.getSubCarts()) {
             if (subCart.getSellerId().equals(sellerId) && subCart.getProductId().equals(productId))
                 throw new ProductExistedInCart(productId, sellerId);
@@ -56,6 +57,7 @@ public class CartManager {
     public void changeProductAmountInCart(Cart cart, String productId, String sellerId, int newAmount)
             throws Exception {
         SubCart subCart = getSubCartByProductId(cart, productId, sellerId);
+        checkIfThereIsEnoughAmountOfProduct(productId, sellerId, newAmount);
         checkIfAmountIsPositive(newAmount);
         subCart.setAmount(newAmount);
     }

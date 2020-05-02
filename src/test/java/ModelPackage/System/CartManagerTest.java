@@ -3,6 +3,7 @@ package ModelPackage.System;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
+import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.cart.NotPositiveAmountProductException;
 import ModelPackage.System.exeption.cart.ProductExistedInCart;
 import ModelPackage.Users.Cart;
@@ -48,6 +49,7 @@ public class CartManagerTest {
         product.setProductId("Pro#12");
         product2.setProductId("Pro#13");
         ProductManager.getInstance().addProductToList(product);
+        ProductManager.getInstance().addProductToList(product2);
         cart = new Cart();
         subCart = new SubCart(product, "Pro#12", "ali110", 2);
         subCart2 = new SubCart(product2, "Pro#13", "ali110", 4);
@@ -71,6 +73,10 @@ public class CartManagerTest {
         cartManager.addProductToCart(customer.getCart(), "ali110", "Pro#12", 1);
         cartManager.addProductToCart(customer.getCart(), "ali110", "Pro#12", 2);
     }
+    @Test(expected = NotEnoughAmountOfProductException.class)
+    public void addProductToCartNotEnoughAmountExcTest() throws Exception{
+        cartManager.addProductToCart(customer.getCart(), "ali110", "Pro#12", 5);
+    }
     @Test
     public void getSubCartByProductIdTest() throws Exception{
         SubCart actualSubCart = cartManager.getSubCartByProductId(cart, "Pro#12", "ali110");
@@ -92,9 +98,9 @@ public class CartManagerTest {
     }
     @Test
     public void changeProductAmountInCartTest() throws Exception {
-        cartManager.changeProductAmountInCart(cart, "Pro#13", "ali110", 5);
+        cartManager.changeProductAmountInCart(cart, "Pro#13", "ali110", 2);
         int actualAmount = cartManager.getSubCartByProductId(cart, "Pro#13", "ali110").getAmount();
-        Assert.assertEquals(5, actualAmount);
+        Assert.assertEquals(2, actualAmount);
     }
     @Test(expected = NoSuchAProductInCart.class)
     public void changeProductAmountNotFoundExcTest() throws Exception{
@@ -103,5 +109,9 @@ public class CartManagerTest {
     @Test(expected = NotPositiveAmountProductException.class)
     public void changeProductAmountNotPositiveAmountExcTest() throws Exception{
         cartManager.changeProductAmountInCart(cart, "Pro#13", "ali110", -1);
+    }
+    @Test(expected = NotEnoughAmountOfProductException.class)
+    public void changeProductAmountInCartNotEnoughExcTest() throws Exception{
+        cartManager.changeProductAmountInCart(cart, "Pro#13", "ali110", 5);
     }
 }
