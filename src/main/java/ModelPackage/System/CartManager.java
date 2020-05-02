@@ -24,6 +24,15 @@ public class CartManager {
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, amount);
         cart.getSubCarts().add(new SubCart(ProductManager.getInstance().findProductById(productId),
                 productId, sellerId, amount));
+        cart.setTotalPrice(calculateTotalPrice(cart));
+    }
+
+    private long calculateTotalPrice(Cart cart) {
+        long total = 0;
+        for (SubCart subCart : cart.getSubCarts()) {
+            total += subCart.getAmount() * subCart.getProduct().getPrices().get(subCart.getSellerId());
+        }
+        return total;
     }
 
     private void checkIfThereIsEnoughAmountOfProduct(String productId, String sellerId, int amount)
@@ -60,6 +69,7 @@ public class CartManager {
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, newAmount);
         checkIfAmountIsPositive(newAmount);
         subCart.setAmount(newAmount);
+        cart.setTotalPrice(calculateTotalPrice(cart));
     }
 
     private void checkIfAmountIsPositive(int newAmount) throws Exception{
