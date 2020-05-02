@@ -71,7 +71,7 @@ public class ProductManagerTest {
         prices.put("reza120",22000);
         prices.put("see120",21500);
 
-        product = new Product("Shirt","Adidas",sellers,category.getId(),publicFeatures,specialFeatures,
+        product = new Product("Shirt","Adidas",sellers,category.getCategoryId(),publicFeatures,specialFeatures,
                 "bulshit",stock,prices);
         product.setAllComments(comments);
         product.setAllScores(scores);
@@ -82,7 +82,7 @@ public class ProductManagerTest {
         product.setProductStatus(ProductStatus.VERIFIED);
 
 
-        product2 = new Product("Shirt XXL","Adidas",new ArrayList<>(sellers),category.getId(),new HashMap<>(publicFeatures),new HashMap<>(specialFeatures),
+        product2 = new Product("Shirt XXL","Adidas",new ArrayList<>(sellers),category.getCategoryId(),new HashMap<>(publicFeatures),new HashMap<>(specialFeatures),
                 "Bull",new HashMap<>(stock),new HashMap<>(prices));
         product2.setAllComments(comments);
         product2.setAllScores(scores);

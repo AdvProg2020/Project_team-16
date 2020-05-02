@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.System.AccountManager;
+import ModelPackage.System.exeption.account.WrongPasswordException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.User;
 import mockit.Expectations;
@@ -37,7 +38,7 @@ public class AccountManagerTest {
     }
 
     @Test
-    public void login(){
+    public void login() throws WrongPasswordException {
         accountManager.getUsers().add(user);
         accountManager.login("a","a");
         boolean actual = user.isHasSignedIn();

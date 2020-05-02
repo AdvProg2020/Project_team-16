@@ -27,7 +27,7 @@ public class CategoryManager {
     public Category getCategoryById(String categoryId)
             throws NoSuchACategoryException {
         for (Category category : allCategories) {
-            if (category.getId().equals(categoryId)) return category;
+            if (category.getCategoryId().equals(categoryId)) return category;
         }
         throw new NoSuchACategoryException(categoryId);
     }
@@ -45,7 +45,7 @@ public class CategoryManager {
 
     private void checkIfThisNameIsValidForThisParent(String name,Category parent)
             throws RepeatedNameInParentCategoryExeption {
-        ArrayList<Category> subCategories = parent.getSubCategories();
+        ArrayList<Category> subCategories = (ArrayList<Category>) parent.getSubCategories();
         for (Category category : subCategories) {
             if (category.getName().equals(name))
                 throw new RepeatedNameInParentCategoryExeption(name);
@@ -57,7 +57,7 @@ public class CategoryManager {
         Category toBeAddedTo = getCategoryById(categoryId);
         ProductManager.getInstance().checkIfThisProductExists(productId);
 
-        ArrayList<String> productsIn = toBeAddedTo.getAllProductInThis();
+        ArrayList<String> productsIn = (ArrayList<String>) toBeAddedTo.getAllProductInThis();
         productsIn.add(productId);
         toBeAddedTo.setAllProductInThis(productsIn);
     }
@@ -87,17 +87,17 @@ public class CategoryManager {
         ProductManager.getInstance().checkIfThisProductExists(productId);
         checkIfThisProductExistInThisCategory(productId,oldCategory);
 
-        ArrayList<String> products = oldCategory.getAllProductInThis();
+        ArrayList<String> products = (ArrayList<String>) oldCategory.getAllProductInThis();
         products.remove(productId);
         oldCategory.setAllProductInThis(products);
 
         Category newCategory = getCategoryById(newCategoryId);
 
-        products = newCategory.getAllProductInThis();
+        products = (ArrayList<String>) newCategory.getAllProductInThis();
         products.add(productId);
         newCategory.setAllProductInThis(products);
 
-        setNewFeaturesToProduct(productId,newCategory.getSpecialFeatures());
+        setNewFeaturesToProduct(productId,(ArrayList<String>) newCategory.getSpecialFeatures());
     }
 
     private void setNewFeaturesToProduct(String productId,ArrayList<String> newFeatures){
@@ -113,14 +113,14 @@ public class CategoryManager {
         for (String id : category.getAllProductInThis()) {
             if (id.equals(productId))return;
         }
-        throw new NoSuchAProductInCategoryException(productId,category.getId());
+        throw new NoSuchAProductInCategoryException(productId,category.getCategoryId());
     }
 
     public void removeProductFromCategory(String productId,String categoryId)
             throws NoSuchACategoryException, NoSuchAProductInCategoryException {
         Category category = getCategoryById(categoryId);
         checkIfThisProductExistInThisCategory(productId,category);
-        ArrayList<String> products = category.getAllProductInThis();
+        ArrayList<String> products = (ArrayList<String>) category.getAllProductInThis();
         products.remove(productId);
         category.setAllProductInThis(products);
     }
@@ -139,13 +139,13 @@ public class CategoryManager {
         Category currentParent = getCategoryById(category.getParentId());
         Category  newParent = getCategoryById(newParentId);
         checkIfThisNameIsValidForThisParent(category.getName(),newParent);
-        category.setParentId(newParent.getId());
+        category.setParentId(newParent.getCategoryId());
 
-        ArrayList<Category> subcategories = newParent.getSubCategories();
+        ArrayList<Category> subcategories = (ArrayList<Category>) newParent.getSubCategories();
         subcategories.add(category);
         newParent.setSubCategories(subcategories);
 
-        subcategories = currentParent.getSubCategories();
+        subcategories = (ArrayList<Category>) currentParent.getSubCategories();
         subcategories.remove(category);
         currentParent.setSubCategories(subcategories);
     }
@@ -154,23 +154,23 @@ public class CategoryManager {
             throws NoSuchACategoryException, RepeatedFeatureException {
         Category category = getCategoryById(categoryId);
         checkIfThisFeatureExistInThisCategory(category,newFeature);
-        ArrayList<String> features = category.getSpecialFeatures();
+        ArrayList<String> features = (ArrayList<String>) category.getSpecialFeatures();
         features.add(newFeature);
         category.setSpecialFeatures(features);
-        addNewFeatureToProducts(newFeature,category.getAllProductInThis());
+        addNewFeatureToProducts(newFeature,(ArrayList<String>) category.getAllProductInThis());
     }
 
     private void checkIfThisFeatureExistInThisCategory(Category category, String feature)
             throws RepeatedFeatureException {
         for (String specialFeature : category.getSpecialFeatures()) {
-            if (specialFeature.equals(feature)) throw new RepeatedFeatureException(feature,category.getId());
+            if (specialFeature.equals(feature)) throw new RepeatedFeatureException(feature,category.getCategoryId());
         }
     }
 
     void addNewFeatureToProducts(String newFeature,ArrayList<String> products){
         for (String productId : products) {
             Product product = ProductManager.getInstance().findProductById(productId);
-            HashMap<String,String> specialFeatures = product.getSpecialFeatures();
+            HashMap<String,String> specialFeatures = (HashMap<String, String>) product.getSpecialFeatures();
             specialFeatures.put(newFeature,"");
             product.setSpecialFeatures(specialFeatures);
             /* TODO : Notify The Seller To Add New Feature */
@@ -185,7 +185,7 @@ public class CategoryManager {
 
     private void removeCategory(Category category)
             throws NoSuchACategoryException {
-        ArrayList<Category> subCategories = category.getSubCategories();
+        ArrayList<Category> subCategories = (ArrayList<Category>) category.getSubCategories();
         if (!subCategories.isEmpty()){
             for (Category subCategory : subCategories) {
                 removeCategory(subCategory);
@@ -193,10 +193,10 @@ public class CategoryManager {
         }
         removeAllProductsIn(category);
         allCategories.remove(category);
-        Category parent = getCategoryById(category.getId());
-        ArrayList<Category> subcategories = parent.getSubCategories();
+        Category parent = getCategoryById(category.getCategoryId());
+        ArrayList<Category> subcategories = (ArrayList<Category>) parent.getSubCategories();
         subCategories.remove(category);
-        parent.setSubCategories(subCategories);
+        parent.setSubCategories(subcategories);
     }
 
     private void removeAllProductsIn(Category category){
@@ -213,7 +213,7 @@ public class CategoryManager {
 
     private ArrayList<String> getAllProductsInThisCategory(Category category){
         ArrayList<String> products = new ArrayList<>(category.getAllProductInThis());
-        ArrayList<Category> subcategories = category.getSubCategories();
+        ArrayList<Category> subcategories = (ArrayList<Category>) category.getSubCategories();
         if (!subcategories.isEmpty()){
             for (Category subcategory : subcategories) {
                 products.addAll(getAllProductsInThisCategory(subcategory));
@@ -243,7 +243,7 @@ public class CategoryManager {
     }
 
     public void addToBase(Category cat,Category parent){
-        ArrayList<Category> subCategories = parent.getSubCategories();
+        ArrayList<Category> subCategories = (ArrayList<Category>) parent.getSubCategories();
         subCategories.add(cat);
         parent.setSubCategories(subCategories);
     }

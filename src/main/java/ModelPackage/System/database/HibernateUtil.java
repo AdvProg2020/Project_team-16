@@ -1,5 +1,6 @@
 package ModelPackage.System.database;
 
+import ModelPackage.Product.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -10,6 +11,11 @@ public class HibernateUtil {
     {
         try {
             return new Configuration().configure("hibernate.cfg.xml")
+                    .addAnnotatedClass(Product.class)
+                    .addAnnotatedClass(Comment.class)
+                    .addAnnotatedClass(Score.class)
+                    .addAnnotatedClass(Category.class)
+                    .addAnnotatedClass(Company.class)
                     .buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);

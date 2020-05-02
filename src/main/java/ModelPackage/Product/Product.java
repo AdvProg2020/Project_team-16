@@ -4,30 +4,84 @@ import ModelPackage.Users.Seller;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import javax.persistence.*;
+import java.util.*;
 
 @Data @AllArgsConstructor
+@Entity
+@Table(name = "t_product")
 public class Product {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "ID")
+    private int id;
+
+    @Column(name = "PRODUCT_String_ID")
     private String productId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PRODUCT_STATUS")
     private ProductStatus productStatus;
+
+    @Column(name = "NAME")
     private String name;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DATE_ADDED")
     private Date dateAdded;
+
+    @ManyToOne
+    private Company companyClass;
+    @Transient
     private String company;
-    private ArrayList<Seller> allSellers;
+    @Transient
+    private List<Seller> allSellers;
+
+    @ManyToOne
     private Category category;
+
+    @Column(name = "CAT_ID")
     private String categoryId;
-    private HashMap<String,String> publicFeatures;
-    private HashMap<String,String> specialFeatures;
+
+    @ElementCollection
+        @JoinTable(name = "t_product_public_feature")
+        @MapKeyColumn(name = "feature")
+    private Map<String,String> publicFeatures;
+
+    @ElementCollection
+        @JoinTable(name = "t_product_special_feature")
+        @MapKeyColumn(name = "feature")
+    private Map<String,String> specialFeatures;
+
+    @Column(name = "DESCRIPTION")
     private String description;
-    private ArrayList<Score> allScores;
+
+    @ElementCollection(targetClass = Score.class)
+        @OneToMany
+    private List<Score> allScores;
+
+    @Column(name = "TOTAL_SCORE")
     private double totalScore;
-    private ArrayList<Comment> allComments;
-    private HashMap<String,Integer> stock;
-    private HashMap<String,Integer> prices;
+
+    @ElementCollection(targetClass = Comment.class)
+        @OneToMany
+    private List<Comment> allComments;
+
+    @ElementCollection
+        @JoinTable(name = "t_product_stock")
+        @MapKeyColumn(name = "STOCK")
+    private Map<String,Integer> stock;
+
+    @ElementCollection
+        @JoinTable(name = "t_product_prices")
+        @MapKeyColumn(name = "PRICE")
+    private Map<String,Integer> prices;
+
+    @Column(name = "VIEW")
     private int view;
+
+    @Column(name = "BOUGHT_AMOUNT")
     private int boughtAmount;
+
+    @Column(name = "LEAST_PRICE")
     private int leastPrice;
 
     public Product(){
@@ -41,7 +95,6 @@ public class Product {
         this.company = company;
         this.allSellers = allSellers;
         this.categoryId = categoryId;
-        /* TODO : find category and set */
         this.publicFeatures = publicFeatures;
         this.specialFeatures = specialFeatures;
         this.description = description;

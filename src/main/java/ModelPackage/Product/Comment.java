@@ -1,19 +1,41 @@
 package ModelPackage.Product;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Data @NoArgsConstructor
+@Entity
+@Table(name = "t_comment")
 public class Comment {
-    private String id;
+    @Id @GeneratedValue
+    private int id;
+
+    @Column(name = "COMMENT_ID")
+    private String idComment;
+
+    @Column(name = "PRODUCT_STRING_ID")
     private String productId;
+
+    @ManyToOne()
+    private Product product;
+
+    @Column(name = "USER_ID")
     private String userId;
+
+    @Column(name = "TITLE")
     private String title;
+
+    @Column(name = "TEXT")
     private String text;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
     private CommentStatus status;
+
+    @Column(name = "BOUGHT_THIS_PRODUCT")
     private boolean boughtThisProduct;
 
     public Comment(String productId, String userId, String title, String text, CommentStatus status, boolean boughtThisProduct) {
@@ -23,7 +45,7 @@ public class Comment {
         this.text = text;
         this.status = status;
         this.boughtThisProduct = boughtThisProduct;
-        this.id = generateId();
+        this.idComment = generateId();
     }
 
     private static String generateId(){

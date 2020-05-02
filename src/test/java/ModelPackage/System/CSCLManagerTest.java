@@ -121,12 +121,12 @@ public class CSCLManagerTest {
         csclManager.createComment(comment);
         Request request = RequestManager.getInstance().getRequests().get(0);
         RequestManager.getInstance().accept(request.getRequestId());
-        boolean successful = csclManager.doesThisCommentExists(comment.getId());
+        boolean successful = csclManager.doesThisCommentExists(comment.getIdComment());
         Assert.assertTrue(successful);
     }
     @Test
     public void doesThisCommentExistTest() {
-        comment1.setId("PRCOM1");
+        comment1.setIdComment("PRCOM1");
         boolean actual = csclManager.doesThisCommentExists("PRCOM1");
         Assert.assertTrue(actual);
         actual = csclManager.doesThisCommentExists("PRCOM2");
