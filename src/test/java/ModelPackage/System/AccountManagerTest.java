@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.System.exeption.account.SameInfoException;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.account.WrongPasswordException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Manager;
@@ -109,6 +110,11 @@ public class AccountManagerTest {
     public void getUserByUsername() {
         User actualUser = accountManager.getUserByUsername("marmofayezi");
         Assert.assertEquals(marmof,actualUser);
+    }
+
+    @Test(expected = UserNotAvailableException.class)
+    public void getUserByUsername_UserNotFound(){
+        User actualUser = accountManager.getUserByUsername("arash");
     }
 
     @Test
