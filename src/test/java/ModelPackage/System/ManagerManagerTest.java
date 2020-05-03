@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ManagerManagerTest {
-    ManagerManager managerManager;
-    List<Manager> managers;
-    Manager hatam;
-    User marmof;
+    private ManagerManager managerManager;
+    private List<Manager> managers;
+    private Manager hatam;
+    private User marmof;
 
     {
         managerManager = ManagerManager.getInstance();
