@@ -24,6 +24,7 @@ public class CustomerManager {
 
     AccountManager accountManager = AccountManager.getInstance();
     CartManager cartManager = CartManager.getInstance();
+    SellerManager sellerManager = SellerManager.getInstance();
 
     public List<PurchaseLog> viewOrders(String username){
         Customer customer = (Customer) accountManager.getUserByUsername(username);
@@ -36,15 +37,16 @@ public class CustomerManager {
     }
 
     public void purchase(String username, CustomerInformation customerInformation, DiscountCode discountCode){
-        purchaseForCustomer(username, customerInformation, discountCode);
+        Customer customer = (Customer) accountManager.getUserByUsername(username);
 
-        // add money to seller
+        purchaseForCustomer(customer, customerInformation, discountCode);
+
+        sellerManager.getMoneyFromSale(customer.getCart());
+
         // create log
     }
 
-    public void purchaseForCustomer(String username, CustomerInformation customerInformation, DiscountCode discountCode) {
-        Customer customer = (Customer) accountManager.getUserByUsername(username);
-
+    public void purchaseForCustomer(Customer customer, CustomerInformation customerInformation, DiscountCode discountCode) {
         long totalPrice = getTotalPrice(discountCode, customer);
 
         long difference = totalPrice - customer.getBalance();
