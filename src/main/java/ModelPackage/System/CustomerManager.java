@@ -23,8 +23,8 @@ public class CustomerManager {
     }
 
     AccountManager accountManager = AccountManager.getInstance();
-    CartManager cartManager = CartManager.getInstance();
     SellerManager sellerManager = SellerManager.getInstance();
+    CSCLManager csclManager = CSCLManager.getInstance();
 
     public List<PurchaseLog> viewOrders(String username){
         Customer customer = (Customer) accountManager.getUserByUsername(username);
@@ -43,7 +43,11 @@ public class CustomerManager {
 
         sellerManager.getMoneyFromSale(customer.getCart());
 
-        // create log
+        if (discountCode != null) {
+            csclManager.createPurchaseLog(customer.getCart(), discountCode.getOffPercentage());
+        } else {
+            csclManager.createPurchaseLog(customer.getCart(), 0);
+        }
     }
 
     public void purchaseForCustomer(Customer customer, CustomerInformation customerInformation, DiscountCode discountCode) {
