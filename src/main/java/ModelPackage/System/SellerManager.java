@@ -67,11 +67,15 @@ public class SellerManager {
         long price;
         for (SubCart subCart : cart.getSubCarts()) {
             seller = (Seller) accountManager.getUserByUsername(subCart.getSellerId());
-            price = subCart.getProduct().getLeastPrice();
+            price = getPriceFromProduct(subCart.getProduct(), subCart.getSellerId());
             seller.setBalance(seller.getBalance() + price * subCart.getAmount());
         }
     }
 
+    public long getPriceFromProduct(Product product, String sellerId){
+        HashMap<String, Integer> prices = product.getPrices();
+        return prices.get(sellerId);
+    }
 
     // view off
 
