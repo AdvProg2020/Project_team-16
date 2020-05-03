@@ -7,6 +7,7 @@ import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Seller;
+import ModelPackage.Users.SubCart;
 import ModelPackage.Users.User;
 import mockit.Mock;
 import mockit.MockUp;
@@ -18,18 +19,21 @@ import java.util.Date;
 import java.util.List;
 
 public class SellerManagerTest {
-    SellerManager sellerManager;
-    Seller marmof;
-    User hatam;
-    Company adidas;
-    SellLog dullSellLog;
-    SellLog skirtSellLog;
-    Product dullForKimmi;
-    Product skirtForKimmi;
-    List<SellLog> sellLogs;
-    List<String> productIds;
-    List<Product> products;
-    Category category;
+    private SellerManager sellerManager;
+    private Seller marmof;
+    private User hatam;
+    private Company adidas;
+    private SellLog dullSellLog;
+    private SellLog skirtSellLog;
+    private Product dullForKimmi;
+    private Product skirtForKimmi;
+    private List<SellLog> sellLogs;
+    private List<String> productIds;
+    private List<Product> products;
+    private Category category;
+    private Cart cart;
+    private SubCart dull;
+    private SubCart skirt;
 
     {
         adidas = new Company("Adidas","115", "Clothing",new ArrayList<>());
@@ -45,7 +49,7 @@ public class SellerManagerTest {
                 "+1 992 1122",
                 new Cart(),
                 adidas,
-                10000000
+                0
         );
         hatam = new User(
                 "hatam008",
@@ -97,6 +101,12 @@ public class SellerManagerTest {
         marmof.setProductIds(productIds);
 
         category = new Category("stuffForKimmi",null);
+
+        cart = new Cart();
+        dull = new SubCart(dullForKimmi,dullForKimmi.getProductId(),marmof.getUsername(),5);
+        skirt = new SubCart(skirtForKimmi,skirtForKimmi.getProductId(),marmof.getUsername(),3);
+        cart.getSubCarts().add(dull);
+        cart.getSubCarts().add(skirt);
 
     }
 
@@ -181,6 +191,25 @@ public class SellerManagerTest {
 
         Assert.assertArrayEquals(categories.toArray(),actualCategories.toArray());
 
+    }
+
+    @Test
+    public void getMoneyFromSale(){
+        new MockUp<AccountManager>(){
+            @Mock
+            User getUserByUsername(String username){
+                return marmof;
+            }
+        };
+        new MockUp<SellerManager>(){
+            @Mock
+            public long getPriceFromProduct(Product product, String sellerId){
+                return 100000;
+            }
+        };
+
+        sellerManager.getMoneyFromSale(cart);
+        Assert.assertEquals(800000,marmof.getBalance());
     }
 
 
