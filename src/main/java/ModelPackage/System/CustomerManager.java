@@ -36,6 +36,13 @@ public class CustomerManager {
     }
 
     public void purchase(String username, CustomerInformation customerInformation, DiscountCode discountCode){
+        purchaseForCustomer(username, customerInformation, discountCode);
+
+        // add money to seller
+        // create log
+    }
+
+    public void purchaseForCustomer(String username, CustomerInformation customerInformation, DiscountCode discountCode) {
         Customer customer = (Customer) accountManager.getUserByUsername(username);
 
         long totalPrice = getTotalPrice(discountCode, customer);
@@ -46,9 +53,6 @@ public class CustomerManager {
 
         customer.setBalance(customer.getBalance() - totalPrice);
         customer.getCustomerInformation().add(customerInformation);
-
-        // add money to seller
-        // create log
     }
 
     public long getTotalPrice(DiscountCode discountCode, Customer customer) {
