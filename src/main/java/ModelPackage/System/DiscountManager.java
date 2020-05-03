@@ -2,6 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.System.exeption.discount.*;
+import ModelPackage.Users.Customer;
 import ModelPackage.Users.User;
 import lombok.Data;
 
@@ -144,6 +145,9 @@ public class DiscountManager {
         DiscountCode discountCode = getDiscountByCode(code);
         checkIfUserDoesNotExistInDiscount(user, discountCode);
         int old = discountCode.getUsers().get(user);
-        discountCode.getUsers().put(user, --old);
+        discountCode.getUsers().put(user, old-1);
+
+        Customer customer = (Customer) user;
+        customer.getDiscountCodes().replace(discountCode, old-1);
     }
 }
