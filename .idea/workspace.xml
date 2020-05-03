@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c17c5eee-9a4b-4f18-8024-5b0d7b846a25" name="Default Changelist" comment="view discodes test accomplished">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ModelPackage/System/CustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/System/CustomerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ModelPackage/System/AccountManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/AccountManagerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ModelPackage/System/CustomerManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/CustomerManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ModelPackage/System/ManagerManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/ManagerManagerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ModelPackage/System/SellerManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/SellerManagerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,23 +81,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="JUnit.CartManagerTest">
-    <configuration name="CSCLManagerTest.createCommentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project_team-16" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ModelPackage.System.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CSCLManagerTest" />
-      <option name="METHOD_NAME" value="createCommentTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.SellerManagerTest.getPriceFromProduct">
     <configuration name="CartManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project_team-16" />
       <extension name="coverage">
@@ -112,21 +92,6 @@
       </extension>
       <option name="PACKAGE_NAME" value="ModelPackage.System" />
       <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CartManagerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CategoryManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project_team-16" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ModelPackage.System.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CategoryManagerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -164,13 +129,45 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SellerManagerTest.getMoneyFromSale" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project_team-16" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ModelPackage.System.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ModelPackage.System" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.SellerManagerTest" />
+      <option name="METHOD_NAME" value="getMoneyFromSale" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SellerManagerTest.getPriceFromProduct" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project_team-16" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ModelPackage.System.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ModelPackage.System" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.SellerManagerTest" />
+      <option name="METHOD_NAME" value="getPriceFromProduct" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.SellerManagerTest.getPriceFromProduct" />
+        <item itemvalue="JUnit.SellerManagerTest.getMoneyFromSale" />
         <item itemvalue="JUnit.CartManagerTest" />
         <item itemvalue="JUnit.CategoryManagerTest.editProductCategoryNoPrInCtExcTest" />
         <item itemvalue="JUnit.CategoryManagerTest.addProductToCategoryTest" />
-        <item itemvalue="JUnit.CategoryManagerTest" />
-        <item itemvalue="JUnit.CSCLManagerTest.createCommentTest" />
       </list>
     </recent_temporary>
   </component>
@@ -192,7 +189,7 @@
       <workItem from="1588312973025" duration="7642000" />
       <workItem from="1588338921409" duration="4112000" />
       <workItem from="1588345431215" duration="1426000" />
-      <workItem from="1588485315698" duration="14587000" />
+      <workItem from="1588485315698" duration="15299000" />
     </task>
     <task id="LOCAL-00001" summary="Adding new exception and updating the login method">
       <created>1587994456208</created>
@@ -516,7 +513,28 @@
       <option name="project" value="LOCAL" />
       <updated>1588517921667</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="change in access modifiers">
+      <created>1588518395298</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1588518395298</updated>
+    </task>
+    <task id="LOCAL-00048" summary="change in access modifiers">
+      <created>1588518429195</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1588518429195</updated>
+    </task>
+    <task id="LOCAL-00049" summary="get money from sale test accomplished">
+      <created>1588518861161</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1588518861161</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -576,8 +594,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="view products test implemented" />
-    <MESSAGE value="view sellers of a product" />
     <MESSAGE value="sellers of a product test done" />
     <MESSAGE value="get all categories by seller" />
     <MESSAGE value="get all categories by seller test" />
@@ -601,7 +617,9 @@
     <MESSAGE value="create seller test done" />
     <MESSAGE value="get money after selling product implemented" />
     <MESSAGE value="get money edited" />
-    <option name="LAST_COMMIT_MESSAGE" value="get money edited" />
+    <MESSAGE value="change in access modifiers" />
+    <MESSAGE value="get money from sale test accomplished" />
+    <option name="LAST_COMMIT_MESSAGE" value="get money from sale test accomplished" />
   </component>
   <component name="WindowStateProjectService">
     <state x="93" y="93" width="1350" height="678" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1588324899715">
@@ -624,10 +642,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="499" y="179" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1588259160769" />
-    <state x="191" y="30" key="CommitChangelistDialog2" timestamp="1588517921080">
+    <state x="191" y="30" key="CommitChangelistDialog2" timestamp="1588518860536">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="191" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1588517921080" />
+    <state x="191" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1588518860536" />
     <state x="93" y="93" width="1350" height="678" key="DiffContextDialog" timestamp="1587192992116">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -636,22 +654,22 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1588081461274" />
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1588516749393">
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1588519080102">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1588516749393" />
-    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1588516749393">
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1588519080102" />
+    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1588519080102">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1588516749393" />
-    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1588516749393">
+    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1588519080102" />
+    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1588519080102">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1588516749393" />
-    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1588516749393">
+    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1588519080102" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1588519080102">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1588516749393" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1588519080102" />
     <state width="1493" height="277" key="GridCell.Tab.1.bottom" timestamp="1588327645974">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -807,6 +825,9 @@
       <FILTER>ModelPackage.System.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/CFKala$ProductManagerTest.ic" NAME="ProductManagerTest Coverage Results" MODIFIED="1588516502356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$SellerManagerTest_getMoneyFromSale.ic" NAME="SellerManagerTest.getMoneyFromSale Coverage Results" MODIFIED="1588518734295" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>ModelPackage.System.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_createAccount.ic" NAME="AccountManagerTest.createAccount Coverage Results" MODIFIED="1588514305155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

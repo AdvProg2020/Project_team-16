@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class SellerManagerTest {
@@ -62,6 +63,12 @@ public class SellerManagerTest {
         );
 
         dullForKimmi = new Product();
+
+        HashMap<String, Integer> prices = new HashMap<>();
+        prices.put(marmof.getUsername(), 10000);
+        prices.put("asghar", 20000);
+        dullForKimmi.setPrices(prices);
+
         skirtForKimmi = new Product();
 
         products = new ArrayList<>();
@@ -210,6 +217,13 @@ public class SellerManagerTest {
 
         sellerManager.getMoneyFromSale(cart);
         Assert.assertEquals(800000,marmof.getBalance());
+    }
+
+    @Test
+    public void getPriceFromProduct(){
+        long actual = sellerManager.getPriceFromProduct(dullForKimmi,marmof.getUsername());
+
+        Assert.assertEquals(10000,actual);
     }
 
 

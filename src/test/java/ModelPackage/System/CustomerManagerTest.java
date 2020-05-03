@@ -17,15 +17,15 @@ import org.junit.Test;
 import java.util.*;
 
 public class CustomerManagerTest {
-    CustomerManager customerManager;
-    Customer hatam;
-    PurchaseLog dullForKimmiLog;
-    Product dullForKimmi;
-    Seller marmof;
-    Company adidas;
-    List<PurchaseLog> purchaseLogs;
-    DiscountCode discountCode;
-    HashMap<DiscountCode,Integer> discountCodes;
+    private CustomerManager customerManager;
+    private Customer hatam;
+    private PurchaseLog dullForKimmiLog;
+    private Product dullForKimmi;
+    private Seller marmof;
+    private Company adidas;
+    private List<PurchaseLog> purchaseLogs;
+    private DiscountCode discountCode;
+    private HashMap<DiscountCode,Integer> discountCodes;
 
     {
         customerManager = CustomerManager.getInstance();
