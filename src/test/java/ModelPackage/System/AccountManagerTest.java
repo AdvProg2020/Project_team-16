@@ -7,7 +7,6 @@ import ModelPackage.Users.Manager;
 import ModelPackage.Users.User;
 import org.junit.Assert;
 import org.junit.Test;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class AccountManagerTest {
@@ -58,16 +57,17 @@ public class AccountManagerTest {
     }
 
     @Test
-    public void createAccount() throws IOException {
+    public void createAccount_Customer() {
         String[] info = {
                 "marmofayezi",
                 "marmof.ir",
                 "Mohamadreza",
                 "Mofayezi",
                 "marmof@gmail.com",
-                "09121232222"
+                "09121232222",
+                "1000000"
         };
-        accountManager.createAccount(info,"manager");
+        accountManager.createAccount(info,"customer");
         User actual = accountManager.getUserByUsername("marmofayezi");
         User expected = marmof;
     }
@@ -109,6 +109,12 @@ public class AccountManagerTest {
     public void getUserByUsername() {
         User actualUser = accountManager.getUserByUsername("marmofayezi");
         Assert.assertEquals(marmof,actualUser);
+    }
+
+    @Test
+    public void isUsernameAvailable(){
+        boolean actual = accountManager.isUsernameAvailable("marmofayezi");
+        Assert.assertTrue(actual);
     }
 
 
