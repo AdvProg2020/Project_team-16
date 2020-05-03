@@ -75,7 +75,7 @@ public class AccountManager {
     }
 
     private Customer createCustomer(String[] info){
-        Customer customer = new Customer(
+        return new Customer(
                 info[0],
                 info[1],
                 info[2],
@@ -85,17 +85,6 @@ public class AccountManager {
                 new Cart(),
                 Long.parseLong(info[6])
         );
-
-        String customerJson = new Gson().toJson(customer);
-        /*try {
-            FileWriter fileWriter = new FileWriter("src/main/resources/users.user",true);
-            fileWriter.write(customerJson);
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        return customer;
     }
 
     public void login(String username,String password) throws WrongPasswordException {
