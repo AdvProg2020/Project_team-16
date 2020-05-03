@@ -38,6 +38,20 @@ public class CustomerManager {
     public void purchase(String username, CustomerInformation customerInformation, DiscountCode discountCode){
         Customer customer = (Customer) accountManager.getUserByUsername(username);
 
+        long totalPrice = getTotalPrice(discountCode, customer);
+
+        long difference = totalPrice - customer.getBalance();
+
+        checkIfCustomerHasEnoughMoney(difference);
+
+        customer.setBalance(customer.getBalance() - totalPrice);
+        customer.getCustomerInformation().add(customerInformation);
+
+        // add money to seller
+        // create log
+    }
+
+    public long getTotalPrice(DiscountCode discountCode, Customer customer) {
         Cart cart = customer.getCart();
         long totalPrice;
 
@@ -51,16 +65,7 @@ public class CustomerManager {
         } else {
             totalPrice = cart.getTotalPrice();
         }
-
-        long difference = totalPrice - customer.getBalance();
-
-        checkIfCustomerHasEnoughMoney(difference);
-
-        customer.setBalance(customer.getBalance() - totalPrice);
-        customer.getCustomerInformation().add(customerInformation);
-
-        // add money to seller
-        // create log
+        return totalPrice;
     }
 
     public void checkIfCustomerHasEnoughMoney(long difference){
