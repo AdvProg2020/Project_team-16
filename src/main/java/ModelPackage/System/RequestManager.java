@@ -62,6 +62,9 @@ public class RequestManager {
         Product product = request.getProduct();
         product.setProductStatus(ProductStatus.VERIFIED);
         ProductManager.getInstance().addProductToList(product);
+
+        Seller seller = request.getSeller();
+        seller.getProductIds().add(product.getProductId());
     }
 
     private void acceptEditProduct(Request request){

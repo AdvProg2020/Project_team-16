@@ -13,6 +13,11 @@ public abstract class Log {
     public Log(Date date, DeliveryStatus deliveryStatus) {
         this.date = date;
         this.deliveryStatus = deliveryStatus;
+        this.logId = generateId();
+    }
+    private String generateId(){
+        Date date = new Date();
+        return String.format("Log%s%04d",date.toString().replaceAll("\\s","").replaceAll(":",""),(int)(Math.random()*9999+1));
     }
 }
 
