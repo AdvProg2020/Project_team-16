@@ -5,9 +5,12 @@ import ModelPackage.Log.SellLog;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
+import ModelPackage.Users.Cart;
 import ModelPackage.Users.Seller;
+import ModelPackage.Users.SubCart;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SellerManager {
@@ -59,6 +62,22 @@ public class SellerManager {
         return categoryManager.getAllCategories();
     }
 
+    public void getMoneyFromSale(Cart cart){
+        Seller seller;
+        long price;
+        for (SubCart subCart : cart.getSubCarts()) {
+            seller = (Seller) accountManager.getUserByUsername(subCart.getSellerId());
+            price = subCart.getProduct().getLeastPrice();
+            seller.setBalance(seller.getBalance() + price * subCart.getAmount());
+        }
+    }
+
+
+    // view off
+
+    // add off
+
+    // edit off
 
 
 }
