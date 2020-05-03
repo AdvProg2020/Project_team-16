@@ -13,12 +13,14 @@ import java.util.List;
 public class Customer extends User {
     private long balance;
     private List<PurchaseLog> purchaseLogs;
-    HashMap<DiscountCode,Integer> discountCodes;
+    private HashMap<DiscountCode,Integer> discountCodes;
+    private List<CustomerInformation> customerInformation ;
 
     public Customer(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart, long balance) {
         super(username, password, firstName, lastName, email, phoneNumber, cart);
         this.balance = balance;
         this.purchaseLogs = new ArrayList<PurchaseLog>();
         this.discountCodes = new HashMap<DiscountCode, Integer>();
+        this.customerInformation = new ArrayList<>();
     }
 }
