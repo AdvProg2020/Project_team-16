@@ -53,7 +53,7 @@ public class AccountManager {
     }
 
     public Manager createManager(String[] info){
-        Manager manager =  new Manager(info[0],
+        return new Manager(info[0],
                 info[1],
                 info[2],
                 info[3],
@@ -61,17 +61,6 @@ public class AccountManager {
                 info[5],
                 new Cart()
         );
-
-        String managerJson = new Gson().toJson(manager);
-        /*try {
-            FileWriter fileWriter = new FileWriter("src/main/resources/users.user",true);
-            fileWriter.write(managerJson);
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        return manager;
     }
 
     private Customer createCustomer(String[] info){
