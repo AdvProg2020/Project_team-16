@@ -7,11 +7,8 @@ import ModelPackage.Users.Manager;
 import ModelPackage.Users.User;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class AccountManagerTest {
 
@@ -62,15 +59,17 @@ public class AccountManagerTest {
 
     @Test
     public void createAccount() throws IOException {
-        String[] info = {"a","a","a","a","a","a"};
+        String[] info = {
+                "marmofayezi",
+                "marmof.ir",
+                "Mohamadreza",
+                "Mofayezi",
+                "marmof@gmail.com",
+                "09121232222"
+        };
         accountManager.createAccount(info,"manager");
-        User actual = accountManager.getUserByUsername("a");
+        User actual = accountManager.getUserByUsername("marmofayezi");
         User expected = marmof;
-        FileReader fileReader = new FileReader("src/main/resources/users.user");
-        Scanner scanner = new Scanner(fileReader);
-        Assert.assertEquals(scanner.nextLine(),"{\"username\":\"a\",\"password\":\"a\",\"firstName\":\"a\",\"lastName\":\"a\"," +
-                "\"email\":\"a\",\"phoneNumber\":\"a\",\"cart\":{\"subCarts\":[],\"totalPrice\":0},\"hasSignedIn\":false}");
-        fileReader.close();
     }
 
     @Test
