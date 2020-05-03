@@ -1,11 +1,14 @@
 package ModelPackage.System;
 
+import ModelPackage.Product.Company;
 import ModelPackage.System.exeption.account.SameInfoException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.account.WrongPasswordException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Manager;
+import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
+import mockit.MockUp;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -17,6 +20,8 @@ public class AccountManagerTest {
 
     User marmof;
     Manager hatam;
+    Seller sapa;
+    Company adidas;
 
     {
         marmof = new User("marmofayezi",
@@ -35,6 +40,20 @@ public class AccountManagerTest {
                 "hatam008@yahoo.com",
                 "09121351223",
                 new Cart()
+        );
+
+        adidas = new Company("Adidas","115", "Clothing",new ArrayList<>());
+
+        sapa = new Seller(
+                "marmofayezi",
+                "marmof.ir",
+                "Cyrus",
+                "Statham",
+                "marmof@gmail.com",
+                "+1 992 1122",
+                new Cart(),
+                adidas,
+                10000000
         );
 
         users.add(marmof);
@@ -71,6 +90,25 @@ public class AccountManagerTest {
         accountManager.createAccount(info,"customer");
         User actual = accountManager.getUserByUsername("marmofayezi");
         User expected = marmof;
+    }
+
+    @Test public void createAccount_Seller(){
+        String[] info = {
+                "marmofayezi",
+                "marmof.ir",
+                "Mohamadreza",
+                "Mofayezi",
+                "marmof@gmail.com",
+                "09121232222",
+                "adidas",
+                "1000000"
+        };
+        new MockUp<CSCLManager>(){
+            public Company getCompanyByName(String companyName) {
+                return adidas;
+            }
+        };
+        accountManager.createAccount(info, "seller");
     }
 
     @Test
