@@ -15,13 +15,13 @@ import java.util.ArrayList;
 
 public class AccountManagerTest {
 
-    AccountManager accountManager = AccountManager.getInstance();
-    ArrayList<User> users = (ArrayList<User>) accountManager.getUsers();
+    private AccountManager accountManager = AccountManager.getInstance();
+    private ArrayList<User> users = (ArrayList<User>) accountManager.getUsers();
 
-    User marmof;
-    Manager hatam;
-    Seller sapa;
-    Company adidas;
+    private User marmof;
+    private Manager hatam;
+    private Seller sapa;
+    private Company adidas;
 
     {
         marmof = new User("marmofayezi",

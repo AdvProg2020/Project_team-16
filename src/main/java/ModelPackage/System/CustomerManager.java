@@ -58,6 +58,9 @@ public class CustomerManager {
 
         customer.setBalance(customer.getBalance() - totalPrice);
         customer.getCustomerInformation().add(customerInformation);
+
+        // add money to seller
+        // create log
     }
 
     public void checkIfCustomerHasEnoughMoney(long difference){

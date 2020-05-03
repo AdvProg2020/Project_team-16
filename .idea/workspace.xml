@@ -2,15 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c17c5eee-9a4b-4f18-8024-5b0d7b846a25" name="Default Changelist" comment="view discodes test accomplished">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/System/exeption/account/NotEnoughMoneyException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ModelPackage/System/CustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/System/CustomerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ModelPackage/System/AccountManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/AccountManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ModelPackage/System/CustomerManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/CustomerManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ModelPackage/System/ManagerManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/ManagerManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ModelPackage/System/SellerManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ModelPackage/System/SellerManagerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="129" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -79,8 +85,8 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="JUnit.CustomerManagerTest.viewDisCodes">
-    <configuration name="AccountManagerTest.IsUsernameAvailable_NotAvailable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.CartManagerTest">
+    <configuration name="CSCLManagerTest.createCommentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project_team-16" />
       <extension name="coverage">
         <pattern>
@@ -89,46 +95,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.AccountManagerTest" />
-      <option name="METHOD_NAME" value="IsUsernameAvailable_NotAvailable" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CSCLManagerTest" />
+      <option name="METHOD_NAME" value="createCommentTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AccountManagerTest.login" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project_team-16" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Models.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Models" />
-      <option name="MAIN_CLASS_NAME" value="Models.AccountManagerTest" />
-      <option name="METHOD_NAME" value="login" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AccountManagerTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project_team-16" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Models.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Models" />
-      <option name="MAIN_CLASS_NAME" value="Models.AccountManagerTest" />
-      <option name="METHOD_NAME" value="test" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CustomerManagerTest.viewDisCodes" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CartManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project_team-16" />
       <extension name="coverage">
         <pattern>
@@ -137,14 +111,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CustomerManagerTest" />
-      <option name="METHOD_NAME" value="viewDisCodes" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CartManagerTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CustomerManagerTest.viewOrders" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CategoryManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Project_team-16" />
       <extension name="coverage">
         <pattern>
@@ -153,8 +126,39 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CustomerManagerTest" />
-      <option name="METHOD_NAME" value="viewOrders" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CategoryManagerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CategoryManagerTest.addProductToCategoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project_team-16" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ModelPackage.System.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ModelPackage.System" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CategoryManagerTest" />
+      <option name="METHOD_NAME" value="addProductToCategoryTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CategoryManagerTest.editProductCategoryNoPrInCtExcTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project_team-16" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ModelPackage.System.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ModelPackage.System" />
+      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.CategoryManagerTest" />
+      <option name="METHOD_NAME" value="editProductCategoryNoPrInCtExcTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -162,11 +166,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CustomerManagerTest.viewOrders" />
-        <item itemvalue="JUnit.CustomerManagerTest.viewDisCodes" />
-        <item itemvalue="JUnit.AccountManagerTest.test" />
-        <item itemvalue="JUnit.AccountManagerTest.login" />
-        <item itemvalue="JUnit.AccountManagerTest.IsUsernameAvailable_NotAvailable" />
+        <item itemvalue="JUnit.CartManagerTest" />
+        <item itemvalue="JUnit.CategoryManagerTest.editProductCategoryNoPrInCtExcTest" />
+        <item itemvalue="JUnit.CategoryManagerTest.addProductToCategoryTest" />
+        <item itemvalue="JUnit.CategoryManagerTest" />
+        <item itemvalue="JUnit.CSCLManagerTest.createCommentTest" />
       </list>
     </recent_temporary>
   </component>
@@ -188,7 +192,7 @@
       <workItem from="1588312973025" duration="7642000" />
       <workItem from="1588338921409" duration="4112000" />
       <workItem from="1588345431215" duration="1426000" />
-      <workItem from="1588485315698" duration="6315000" />
+      <workItem from="1588485315698" duration="14587000" />
     </task>
     <task id="LOCAL-00001" summary="Adding new exception and updating the login method">
       <created>1587994456208</created>
@@ -442,7 +446,77 @@
       <option name="project" value="LOCAL" />
       <updated>1588496202214</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="adding NotEnoughMoneyException">
+      <created>1588502134603</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1588502134603</updated>
+    </task>
+    <task id="LOCAL-00038" summary="purchase method done">
+      <created>1588502161338</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1588502161338</updated>
+    </task>
+    <task id="LOCAL-00039" summary="change in create customer">
+      <created>1588513582670</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1588513582670</updated>
+    </task>
+    <task id="LOCAL-00040" summary="change in create manager">
+      <created>1588513616389</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1588513616389</updated>
+    </task>
+    <task id="LOCAL-00041" summary="change in create account test">
+      <created>1588514173011</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1588514173011</updated>
+    </task>
+    <task id="LOCAL-00042" summary="username available test added">
+      <created>1588514947631</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1588514947631</updated>
+    </task>
+    <task id="LOCAL-00043" summary="get user not found test added">
+      <created>1588515308134</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1588515308134</updated>
+    </task>
+    <task id="LOCAL-00044" summary="create seller test done">
+      <created>1588516227968</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1588516227968</updated>
+    </task>
+    <task id="LOCAL-00045" summary="get money after selling product implemented">
+      <created>1588517896494</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1588517896494</updated>
+    </task>
+    <task id="LOCAL-00046" summary="get money edited">
+      <created>1588517921667</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1588517921667</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -502,16 +576,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ManagerManager completed" />
-    <MESSAGE value="Adding UserNotAvailableException" />
-    <MESSAGE value="SellerManager and SellerManagerTest initialized" />
-    <MESSAGE value="View company info added" />
-    <MESSAGE value="Company info test implemented" />
-    <MESSAGE value="Change in UserNotAvailableException" />
-    <MESSAGE value="view sales history added" />
-    <MESSAGE value="view sales history test implemented" />
-    <MESSAGE value="Change in view selllog test" />
-    <MESSAGE value="view products added" />
     <MESSAGE value="view products test implemented" />
     <MESSAGE value="view sellers of a product" />
     <MESSAGE value="sellers of a product test done" />
@@ -527,7 +591,17 @@
     <MESSAGE value="change in DiscountManager 'updating the customer's discount list'" />
     <MESSAGE value="CustomerInformation class implemented" />
     <MESSAGE value="Customer class updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="Customer class updated" />
+    <MESSAGE value="adding NotEnoughMoneyException" />
+    <MESSAGE value="purchase method done" />
+    <MESSAGE value="change in create customer" />
+    <MESSAGE value="change in create manager" />
+    <MESSAGE value="change in create account test" />
+    <MESSAGE value="username available test added" />
+    <MESSAGE value="get user not found test added" />
+    <MESSAGE value="create seller test done" />
+    <MESSAGE value="get money after selling product implemented" />
+    <MESSAGE value="get money edited" />
+    <option name="LAST_COMMIT_MESSAGE" value="get money edited" />
   </component>
   <component name="WindowStateProjectService">
     <state x="93" y="93" width="1350" height="678" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1588324899715">
@@ -550,10 +624,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="499" y="179" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1588259160769" />
-    <state x="191" y="30" key="CommitChangelistDialog2" timestamp="1588496200869">
+    <state x="191" y="30" key="CommitChangelistDialog2" timestamp="1588517921080">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="191" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1588496200869" />
+    <state x="191" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1588517921080" />
     <state x="93" y="93" width="1350" height="678" key="DiffContextDialog" timestamp="1587192992116">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -562,22 +636,22 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1588081461274" />
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1588343036827">
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1588516749393">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1588343036827" />
-    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1588343036827">
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1588516749393" />
+    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1588516749393">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1588343036827" />
-    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1588343036827">
+    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1588516749393" />
+    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1588516749393">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1588343036827" />
-    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1588343036827">
+    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1588516749393" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1588516749393">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1588343036827" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1588516749393" />
     <state width="1493" height="277" key="GridCell.Tab.1.bottom" timestamp="1588327645974">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -614,10 +688,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="382" y="148" key="VCS.ChangeListViewerDialog/0.0.1536.864@0.0.1536.864" timestamp="1587190479910" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1588339300668">
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1588514958800">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1588339300668" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1588514958800" />
     <state x="93" y="93" width="1350" height="678" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1587192992116">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -658,5 +732,103 @@
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_createAccount_Seller.ic" NAME="AccountManagerTest.createAccount_Seller Coverage Results" MODIFIED="1588516135822" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$SortManagerTest.ic" NAME="SortManagerTest Coverage Results" MODIFIED="1588516453522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$RequestManagerTest_acceptCreateProductTest.ic" NAME="RequestManagerTest.acceptCreateProductTest Coverage Results" MODIFIED="1588516486695" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$DiscountManagerTest_getDiscountByCodeTest.ic" NAME="DiscountManagerTest.getDiscountByCodeTest Coverage Results" MODIFIED="1588516572929" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$DiscountManagerTest_removeDiscountTest.ic" NAME="DiscountManagerTest.removeDiscountTest Coverage Results" MODIFIED="1588516580575" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$CategoryManagerTest_addProductToCategoryTest.ic" NAME="CategoryManagerTest.addProductToCategoryTest Coverage Results" MODIFIED="1588516665909" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$SellerManagerTest.ic" NAME="SellerManagerTest Coverage Results" MODIFIED="1588516391263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_login.ic" NAME="AccountManagerTest.login Coverage Results" MODIFIED="1588514524318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_getUserByUsername_UserNotFound.ic" NAME="AccountManagerTest.getUserByUsername_UserNotFound Coverage Results" MODIFIED="1588515257131" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$RequestManagerTest.ic" NAME="RequestManagerTest Coverage Results" MODIFIED="1588516476323" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_createAccount_Customer.ic" NAME="AccountManagerTest.createAccount_Customer Coverage Results" MODIFIED="1588514363956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$CSCLManagerTest_createCommentTest.ic" NAME="CSCLManagerTest.createCommentTest Coverage Results" MODIFIED="1588516642935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$DiscountManagerTest_useADiscountTest.ic" NAME="DiscountManagerTest.useADiscountTest Coverage Results" MODIFIED="1588516592275" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$FilterManagerTest.ic" NAME="FilterManagerTest Coverage Results" MODIFIED="1588516553048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$ProductManagerTest_editProductTest.ic" NAME="ProductManagerTest.editProductTest Coverage Results" MODIFIED="1588516512178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$CategoryManagerTest_editProductCategoryNoPrInCtExcTest.ic" NAME="CategoryManagerTest.editProductCategoryNoPrInCtExcTest Coverage Results" MODIFIED="1588516675912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$ManagerManagerTest.ic" NAME="ManagerManagerTest Coverage Results" MODIFIED="1588516530458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_getUserByUsername.ic" NAME="AccountManagerTest.getUserByUsername Coverage Results" MODIFIED="1588514552494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_login_UserNotFound.ic" NAME="AccountManagerTest.login_UserNotFound Coverage Results" MODIFIED="1588515427303" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$ProductManagerTest_createProductTest.ic" NAME="ProductManagerTest.createProductTest Coverage Results" MODIFIED="1588516519167" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_loginWithWrongPassword.ic" NAME="AccountManagerTest.loginWithWrongPassword Coverage Results" MODIFIED="1588514537781" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$ManagerManagerTest_deleteUser.ic" NAME="ManagerManagerTest.deleteUser Coverage Results" MODIFIED="1588516539177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$DiscountManagerTest.ic" NAME="DiscountManagerTest Coverage Results" MODIFIED="1588516563291" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$DiscountManagerTest_useADiscountCodeUserNotHaveChoiceExcTest.ic" NAME="DiscountManagerTest.useADiscountCodeUserNotHaveChoiceExcTest Coverage Results" MODIFIED="1588516598414" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$ProductManagerTest.ic" NAME="ProductManagerTest Coverage Results" MODIFIED="1588516502356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_createAccount.ic" NAME="AccountManagerTest.createAccount Coverage Results" MODIFIED="1588514305155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$CustomerManagerTest.ic" NAME="CustomerManagerTest Coverage Results" MODIFIED="1588513036755" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest.ic" NAME="AccountManagerTest Coverage Results" MODIFIED="1588514402646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_isUsernameAvailable.ic" NAME="AccountManagerTest.isUsernameAvailable Coverage Results" MODIFIED="1588514894558" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$CategoryManagerTest.ic" NAME="CategoryManagerTest Coverage Results" MODIFIED="1588516652221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$CartManagerTest.ic" NAME="CartManagerTest Coverage Results" MODIFIED="1588516688915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/CFKala$CSCLManagerTest.ic" NAME="CSCLManagerTest Coverage Results" MODIFIED="1588516633250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ModelPackage.System.*</FILTER>
+    </SUITE>
   </component>
 </project>
