@@ -5,21 +5,42 @@ import ModelPackage.Product.Comment;
 import ModelPackage.Product.Product;
 import lombok.Data;
 
-import java.util.Date;
+import javax.persistence.*;
 
-@Data
+@Data @Entity
+@Table(name = "t_request")
 public class Request {
-    String usernameHasRequested;
-    String requestId;
+    @Id @GeneratedValue
+    private int requestId;
+
+    @OneToOne
+        @JoinColumn(name = "USER_HAS_REQUESTED")
+    User userHasRequested;
+
+    @Enumerated(EnumType.STRING)
     RequestType requestType;
+
+    @Column(name = "REQUEST")
     String request;
+
+    @OneToOne
+        @JoinColumn(name = "OFF")
     Off off;
+
+    @OneToOne
+        @JoinColumn(name = "PRODUCT")
     Product product;
+
+    @OneToOne
+        @JoinColumn(name = "COMMENT")
     Comment comment;
+
+    @OneToOne
+        @JoinColumn(name = "SELLER")
     Seller seller;
 
-    public Request(String usernameHasRequested, RequestType requestType, String request,Object toChange) {
-        this.usernameHasRequested = usernameHasRequested;
+    public Request(User usernameHasRequested, RequestType requestType, String request,Object toChange) {
+        this.userHasRequested = usernameHasRequested;
         this.requestType = requestType;
         this.request = request;
 
@@ -39,12 +60,5 @@ public class Request {
                 seller = (Seller) toChange;
                 break;
         }
-
-        this.requestId = generateId();
-    }
-
-    private String generateId(){
-        Date date = new Date();
-        return String.format("REQ%s%04d",date.toString().replaceAll("\\s","".replaceAll(":","")),(int)(Math.random()*9999+1));
     }
 }

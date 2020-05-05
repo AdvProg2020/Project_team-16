@@ -35,9 +35,6 @@ public class Category {
     @Column(name = "PARENT__ID")
     private String parentId;
 
-    @ElementCollection
-    private List<String> allProductInThis;
-
     @ElementCollection(targetClass = Product.class)
         @OneToMany
     private List<Product> allProducts;
@@ -48,7 +45,6 @@ public class Category {
         this.parentId = parentId;
         this.specialFeatures = new ArrayList<String>();
         this.subCategories  = new ArrayList<Category>();
-        this.allProductInThis = new ArrayList<String>();
         this.allProducts = new ArrayList<>();
     }
 

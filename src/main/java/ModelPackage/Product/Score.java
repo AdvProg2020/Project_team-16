@@ -11,12 +11,13 @@ import javax.persistence.*;
 public class Score {
     @Id @GeneratedValue
     private int id;
+
     @Column(name = "USER_ID")
     private String userId;
+
     @Column(name = "PRODUCT_STRING_ID")
     private String productId;
-    @ManyToOne
-    private Product product;
+
     @Column(name = "SCORE")
     private int score;
 

@@ -1,19 +1,32 @@
 package ModelPackage.Log;
 
+import ModelPackage.Maps.SoldProductSellerMap;
+import ModelPackage.Product.SoldProduct;
+import ModelPackage.Users.Seller;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Setter @Getter
+@Entity
+@Table(name = "t_purchase_log")
 public class PurchaseLog extends Log {
-    private HashMap<String,String> productsAndItsSellers;
-    private int pricePaid;
-    private int discount;
-    //private HashMap<String,String> sellers;
+    @ElementCollection(targetClass = SoldProductSellerMap.class)
+        @OneToMany
+        @JoinColumn(name = "PRODUCTS")
+    private List<SoldProductSellerMap> productsAndItsSellers;
 
-    public PurchaseLog(Date date, DeliveryStatus deliveryStatus, HashMap<String, String> productsAndItsSellers, int pricePaid, int discount) {
+    @Column(name = "PRICE_PAID")
+    private int pricePaid;
+
+    @Column(name = "DISCOUNT")
+    private int discount;
+
+    public PurchaseLog(Date date, DeliveryStatus deliveryStatus, List<SoldProductSellerMap> productsAndItsSellers, int pricePaid, int discount) {
         super(date, deliveryStatus);
         this.productsAndItsSellers = productsAndItsSellers;
         this.pricePaid = pricePaid;

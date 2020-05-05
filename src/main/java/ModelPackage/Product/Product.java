@@ -1,5 +1,6 @@
 package ModelPackage.Product;
 
+import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Users.Seller;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,8 +31,10 @@ public class Product {
 
     @ManyToOne
     private Company companyClass;
+
     @Transient
     private String company;
+
     @Transient
     private List<Seller> allSellers;
 
@@ -66,14 +69,14 @@ public class Product {
     private List<Comment> allComments;
 
     @ElementCollection
-        @JoinTable(name = "t_product_stock")
-        @MapKeyColumn(name = "STOCK")
-    private Map<String,Integer> stock;
+        @OneToMany(targetEntity = SellerIntegerMap.class)
+        @JoinColumn(name = "t_product_stock")
+    private List<SellerIntegerMap> stock;
 
     @ElementCollection
+        @OneToMany(targetEntity = SellerIntegerMap.class)
         @JoinTable(name = "t_product_prices")
-        @MapKeyColumn(name = "PRICE")
-    private Map<String,Integer> prices;
+    private List<SellerIntegerMap> prices;
 
     @Column(name = "VIEW")
     private int view;
@@ -90,7 +93,7 @@ public class Product {
 
     public Product(String id){this.productId = id;}
 
-    public Product(String name, String company, ArrayList<Seller> allSellers, String categoryId, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, HashMap<String, Integer> stock, HashMap<String, Integer> prices) {
+    public Product(String name, String company, ArrayList<Seller> allSellers, String categoryId, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, List<SellerIntegerMap> stock, List<SellerIntegerMap> prices) {
         this.name = name;
         this.company = company;
         this.allSellers = allSellers;
@@ -125,8 +128,8 @@ public class Product {
         this.allScores = new ArrayList<>(product.allScores);
         this.totalScore =product.totalScore;
         this.allComments = new ArrayList<>(product.allComments);
-        this.stock = new HashMap<>(product.stock);
-        this.prices = new HashMap<>(product.prices);
+        this.stock = new ArrayList<>(product.stock);
+        this.prices = new ArrayList<>(product.prices);
         this.view = product.view;
         this.boughtAmount = product.boughtAmount;
     }

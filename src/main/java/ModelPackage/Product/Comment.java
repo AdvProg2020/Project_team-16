@@ -13,16 +13,7 @@ public class Comment {
     @Id @GeneratedValue
     private int id;
 
-    @Column(name = "COMMENT_ID")
-    private String idComment;
-
-    @Column(name = "PRODUCT_STRING_ID")
-    private String productId;
-
-    @ManyToOne()
-    private Product product;
-
-    @Column(name = "USER_ID")
+    @Column(name = "USER")
     private String userId;
 
     @Column(name = "TITLE")
@@ -38,18 +29,11 @@ public class Comment {
     @Column(name = "BOUGHT_THIS_PRODUCT")
     private boolean boughtThisProduct;
 
-    public Comment(String productId, String userId, String title, String text, CommentStatus status, boolean boughtThisProduct) {
-        this.productId = productId;
+    public Comment(String userId, String title, String text, CommentStatus status, boolean boughtThisProduct) {
         this.userId = userId;
         this.title = title;
         this.text = text;
         this.status = status;
         this.boughtThisProduct = boughtThisProduct;
-        this.idComment = generateId();
-    }
-
-    private static String generateId(){
-        Date date = new Date();
-        return String.format("CM%s%04d",date.toString().replaceAll("\\s","").replaceAll(":",""),(int)(Math.random()*9999+1));
     }
 }
