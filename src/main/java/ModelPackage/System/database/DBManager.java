@@ -31,6 +31,13 @@ public class DBManager {
         session.getTransaction().commit();
     }
 
+    public static void delete(Object object){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.remove(object);
+        session.getTransaction().commit();
+    }
+
     public static void InitialLoad(){
         Session session = HibernateUtil.getSessionFactory().openSession();
         ProductManager.getInstance().setAllProducts((ArrayList<Product>)loadAllData(Product.class,session));
