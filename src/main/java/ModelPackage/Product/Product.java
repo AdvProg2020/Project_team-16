@@ -1,33 +1,90 @@
 package ModelPackage.Product;
 
+import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Users.Seller;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import javax.persistence.*;
+import java.util.*;
 
 @Data @AllArgsConstructor
+@Entity
+@Table(name = "t_product")
 public class Product {
+    @Setter(AccessLevel.NONE)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "ID")
+    private int id;
+
+    @Column(name = "PRODUCT_String_ID")
     private String productId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PRODUCT_STATUS")
     private ProductStatus productStatus;
+
+    @Column(name = "NAME")
     private String name;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DATE_ADDED")
     private Date dateAdded;
+
+    @ManyToOne
+    private Company companyClass;
+
+    @Transient
     private String company;
-    private ArrayList<Seller> allSellers;
+
+    @Transient
+    private List<Seller> allSellers;
+
+    @ManyToOne
     private Category category;
+
+    @Column(name = "CAT_ID")
     private String categoryId;
-    private HashMap<String,String> publicFeatures;
-    private HashMap<String,String> specialFeatures;
+
+    @ElementCollection
+        @JoinTable(name = "t_product_public_feature")
+        @MapKeyColumn(name = "feature")
+    private Map<String,String> publicFeatures;
+
+    @ElementCollection
+        @JoinTable(name = "t_product_special_feature")
+        @MapKeyColumn(name = "feature")
+    private Map<String,String> specialFeatures;
+
+    @Column(name = "DESCRIPTION")
     private String description;
-    private ArrayList<Score> allScores;
+
+    @ElementCollection(targetClass = Score.class)
+        @OneToMany
+    private List<Score> allScores;
+
+    @Column(name = "TOTAL_SCORE")
     private double totalScore;
-    private ArrayList<Comment> allComments;
-    private HashMap<String,Integer> stock;
-    private HashMap<String,Integer> prices;
+
+    @ElementCollection(targetClass = Comment.class)
+        @OneToMany
+    private List<Comment> allComments;
+
+    @ElementCollection
+        @OneToMany(targetEntity = SellerIntegerMap.class)
+        @JoinColumn(name = "t_product_stock")
+    private List<SellerIntegerMap> stock;
+
+    @ElementCollection
+        @OneToMany(targetEntity = SellerIntegerMap.class)
+        @JoinTable(name = "t_product_prices")
+    private List<SellerIntegerMap> prices;
+
+    @Column(name = "VIEW")
     private int view;
+
+    @Column(name = "BOUGHT_AMOUNT")
     private int boughtAmount;
+
+    @Column(name = "LEAST_PRICE")
     private int leastPrice;
 
     public Product(){
@@ -36,12 +93,11 @@ public class Product {
 
     public Product(String id){this.productId = id;}
 
-    public Product(String name, String company, ArrayList<Seller> allSellers, String categoryId, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, HashMap<String, Integer> stock, HashMap<String, Integer> prices) {
+    public Product(String name, String company, ArrayList<Seller> allSellers, String categoryId, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, List<SellerIntegerMap> stock, List<SellerIntegerMap> prices) {
         this.name = name;
         this.company = company;
         this.allSellers = allSellers;
         this.categoryId = categoryId;
-        /* TODO : find category and set */
         this.publicFeatures = publicFeatures;
         this.specialFeatures = specialFeatures;
         this.description = description;
@@ -72,8 +128,8 @@ public class Product {
         this.allScores = new ArrayList<>(product.allScores);
         this.totalScore =product.totalScore;
         this.allComments = new ArrayList<>(product.allComments);
-        this.stock = new HashMap<>(product.stock);
-        this.prices = new HashMap<>(product.prices);
+        this.stock = new ArrayList<>(product.stock);
+        this.prices = new ArrayList<>(product.prices);
         this.view = product.view;
         this.boughtAmount = product.boughtAmount;
     }

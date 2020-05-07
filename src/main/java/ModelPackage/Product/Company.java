@@ -1,15 +1,33 @@
 package ModelPackage.Product;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
+@Entity
+@Table(name = "t_company")
 public class Company {
+    @Setter(AccessLevel.NONE)
+    @Id @GeneratedValue
+    private int id;
+
+    @Column(name = "NAME_OF_COMPANY")
     private String name;
+
+    @Column(name = "PHONE")
     private String phone;
+
+    @Column(name = "TypeOfProduct")
     private String group;
-    private ArrayList<Product> productsIn;
+
+    @ElementCollection(targetClass = Product.class)
+        @OneToMany
+    private List<Product> productsIn;
 
     public Company(String name, String phone, String group) {
         this.name = name;

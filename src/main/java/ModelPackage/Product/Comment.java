@@ -1,33 +1,41 @@
 package ModelPackage.Product;
 
-import lombok.Builder;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Date;
+import javax.persistence.*;
 
 @Data @NoArgsConstructor
+@Entity
+@Table(name = "t_comment")
 public class Comment {
-    private String id;
-    private String productId;
+    @Setter(AccessLevel.NONE)
+    @Id @GeneratedValue
+    private int id;
+
+    @Column(name = "USER")
     private String userId;
+
+    @Column(name = "TITLE")
     private String title;
+
+    @Column(name = "TEXT")
     private String text;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
     private CommentStatus status;
+
+    @Column(name = "BOUGHT_THIS_PRODUCT")
     private boolean boughtThisProduct;
 
-    public Comment(String productId, String userId, String title, String text, CommentStatus status, boolean boughtThisProduct) {
-        this.productId = productId;
+    public Comment(String userId, String title, String text, CommentStatus status, boolean boughtThisProduct) {
         this.userId = userId;
         this.title = title;
         this.text = text;
         this.status = status;
         this.boughtThisProduct = boughtThisProduct;
-        this.id = generateId();
-    }
-
-    private static String generateId(){
-        Date date = new Date();
-        return String.format("CM%s%04d",date.toString().replaceAll("\\s","").replaceAll(":",""),(int)(Math.random()*9999+1));
     }
 }

@@ -22,12 +22,12 @@ public class CategoryManagerTest {
     {
         categoryManager = CategoryManager.getInstance();
         main = new Category("Main",null);
-        main.setId("MNCTCFKala");
-        category1 = new Category("cloth",main.getId());
+        main.setCategoryId("MNCTCFKala");
+        category1 = new Category("cloth",main.getCategoryId());
         categoryManager.addToBase(category1,main);
-        category2 = new Category("mobile",main.getId());
+        category2 = new Category("mobile",main.getCategoryId());
         categoryManager.addToBase(category2,main);
-        category3 = new Category("men",category1.getId());
+        category3 = new Category("men",category1.getCategoryId());
         categoryManager.addToBase(category3,category1);
 
         ArrayList<String> features = new ArrayList<>();
@@ -65,7 +65,7 @@ public class CategoryManagerTest {
     @Test
     public void createCategoryTest()
             throws RepeatedNameInParentCategoryExeption, NoSuchACategoryException {
-        categoryManager.createCategory("women",category1.getId());
+        categoryManager.createCategory("women",category1.getCategoryId());
         int countOfSubCats = category1.getSubCategories().size();
         Assert.assertEquals(2,countOfSubCats);
     }
@@ -73,7 +73,7 @@ public class CategoryManagerTest {
     @Test
     public void createCategoryRepNameExcTest(){
         Assert.assertThrows(RepeatedNameInParentCategoryExeption.class,() -> {
-            categoryManager.createCategory("men",category1.getId());
+            categoryManager.createCategory("men",category1.getCategoryId());
         });
     }
 
@@ -91,7 +91,7 @@ public class CategoryManagerTest {
            productManager.checkIfThisProductExists("abc");
            times = 1;
        }};
-        categoryManager.addProductToCategory("abc",category1.getId());
+        categoryManager.addProductToCategory("abc",category1.getCategoryId());
 
         int countOfProducts = category1.getAllProductInThis().size();
         Assert.assertEquals(1,countOfProducts);
@@ -104,13 +104,13 @@ public class CategoryManagerTest {
 
     @Test(expected = NoSuchAProductException.class)
     public void addProductToCategoryNoPrExTest() throws Exception {
-        categoryManager.addProductToCategory("abc",category1.getId());
+        categoryManager.addProductToCategory("abc",category1.getCategoryId());
     }
 
     @Test
     public void getAllSpecialFeaturesTest() throws Exception{
         Assert.assertEquals(category1.getSpecialFeatures(),
-                categoryManager.getAllSpecialFeaturesFromCategory(category3.getId()));
+                categoryManager.getAllSpecialFeaturesFromCategory(category3.getCategoryId()));
     }
 
     @Test(expected = NoSuchACategoryException.class)
@@ -124,7 +124,7 @@ public class CategoryManagerTest {
             productManager.checkIfThisProductExists("123");
             times = 1;
         }};
-        categoryManager.editProductCategory("123",category2.getId(),category1.getId());
+        categoryManager.editProductCategory("123",category2.getCategoryId(),category1.getCategoryId());
 
         int actualCountOfProductInCat1 = category1.getAllProductInThis().size();
         Assert.assertEquals(2,actualCountOfProductInCat1);
@@ -132,31 +132,31 @@ public class CategoryManagerTest {
 
     @Test(expected = NoSuchAProductInCategoryException.class)
     public void editProductCategoryNoPrInCtExcTest() throws Exception{
-        categoryManager.editProductCategory("456",category2.getId(),category1.getId());
+        categoryManager.editProductCategory("456",category2.getCategoryId(),category1.getCategoryId());
     }
 
     @Test
     public void removeProductFromCategoryTest() throws Exception {
-        categoryManager.removeProductFromCategory("123",category2.getId());
+        categoryManager.removeProductFromCategory("123",category2.getCategoryId());
         int countCat2Prs = category2.getAllProductInThis().size();
         Assert.assertEquals(0,countCat2Prs);
     }
 
     @Test
     public void editNameTest() throws Exception{
-        categoryManager.editName("women",category1.getId());
+        categoryManager.editName("women",category1.getCategoryId());
         String actulaName = category1.getName();
         Assert.assertEquals("women",actulaName);
     }
 
     @Test(expected = RepeatedNameInParentCategoryExeption.class)
     public void editNameRenExcTest() throws Exception {
-        categoryManager.editName("mobile",category1.getId());
+        categoryManager.editName("mobile",category1.getCategoryId());
     }
 
     @Test
     public void moveCategoryToAnotherParentTest() throws Exception{
-        categoryManager.moveCategoryToAnotherParent("MNCTCFKala",category3.getId());
+        categoryManager.moveCategoryToAnotherParent("MNCTCFKala",category3.getCategoryId());
         int countOfMainCats = main.getSubCategories().size();
         Assert.assertEquals(3,countOfMainCats);
 
@@ -167,7 +167,7 @@ public class CategoryManagerTest {
     @Test(expected = RepeatedNameInParentCategoryExeption.class)
     public void moveCategoryToAnotherParentRenExcTest() throws Exception{
        category3.setName("cloth");
-       categoryManager.moveCategoryToAnotherParent("MNCTCFKala",category3.getId());
+       categoryManager.moveCategoryToAnotherParent("MNCTCFKala",category3.getCategoryId());
     }
 
     @Test
@@ -176,12 +176,12 @@ public class CategoryManagerTest {
             @Mock void addNewFeatureToProducts(String newFeature,ArrayList<String> products){}
         };
 
-        categoryManager.addFeatureToCategory(category1.getId(),"AllO");
+        categoryManager.addFeatureToCategory(category1.getCategoryId(),"AllO");
     }
 
     @Test(expected = RepeatedFeatureException.class)
     public void checkIfThisFeatureExistInThisCategoryReFeatureExcTest() throws Exception{
-        categoryManager.addFeatureToCategory(category1.getId(),"art");
+        categoryManager.addFeatureToCategory(category1.getCategoryId(),"art");
     }
 
     @Test(expected = NoSuchACategoryException.class)
@@ -189,16 +189,16 @@ public class CategoryManagerTest {
         new MockUp<ProductManager>(){
           @Mock public void deleteProductCategoryOrder(String productId){};
         };
-        categoryManager.removeCategory(category1.getId());
+        categoryManager.removeCategory(category1.getCategoryId());
         int countOfMainSubCats = main.getSubCategories().size();
         Assert.assertEquals(1,countOfMainSubCats);
 
-        categoryManager.getCategoryById(category1.getId());
+        categoryManager.getCategoryById(category1.getCategoryId());
     }
 
     @Test
     public void getAllProductsInThisCategoryTest() throws Exception{
-        ArrayList<String> actulaProducts = categoryManager.getAllProductsInThisCategory(main.getId());
+        ArrayList<String> actulaProducts = categoryManager.getAllProductsInThisCategory(main.getCategoryId());
         ArrayList<String> expectedProducts = new ArrayList<>();
         expectedProducts.add("654");
         expectedProducts.add("123");
