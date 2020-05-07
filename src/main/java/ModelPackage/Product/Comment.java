@@ -1,15 +1,17 @@
 package ModelPackage.Product;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Data @NoArgsConstructor
 @Entity
 @Table(name = "t_comment")
 public class Comment {
+    @Setter(AccessLevel.NONE)
     @Id @GeneratedValue
     private int id;
 

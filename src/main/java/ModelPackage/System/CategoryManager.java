@@ -5,6 +5,7 @@ import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.PrintModels.CategoryPM;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 public class CategoryManager {
     private static CategoryManager categoryManager = new CategoryManager();
     private ArrayList<Category> allMainCategories;
+    @Setter
     private ArrayList<Category> allCategories;
     private static ArrayList<String> publicFeatures;
 

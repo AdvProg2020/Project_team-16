@@ -2,8 +2,7 @@ package ModelPackage.Product;
 
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Users.Seller;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.*;
@@ -12,6 +11,7 @@ import java.util.*;
 @Entity
 @Table(name = "t_product")
 public class Product {
+    @Setter(AccessLevel.NONE)
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "ID")
     private int id;
 

@@ -1,7 +1,10 @@
 package ModelPackage.Maps;
 
 import ModelPackage.Users.Seller;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -9,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "t_map")
 public class SellerIntegerMap{
+    @Setter(AccessLevel.NONE)
     @Id @GeneratedValue
     private int id;
 

@@ -1,7 +1,10 @@
 package ModelPackage.Product;
 
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "t_category")
 public class Category {
+    @Setter(AccessLevel.NONE)
     @Id @GeneratedValue
     private int id;
 

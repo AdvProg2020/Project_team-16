@@ -10,6 +10,7 @@ import java.util.List;
 @Data @Entity
 @Table(name = "t_cart")
 public class Cart {
+    @Setter(AccessLevel.NONE)
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 

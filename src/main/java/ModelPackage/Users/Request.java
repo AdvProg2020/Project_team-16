@@ -3,13 +3,16 @@ package ModelPackage.Users;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.Product;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Data @Entity
 @Table(name = "t_request")
 public class Request {
+    @Setter(AccessLevel.NONE)
     @Id @GeneratedValue
     private int requestId;
 

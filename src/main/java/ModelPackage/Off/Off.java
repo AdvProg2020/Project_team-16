@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "t_off")
 public class Off {
+    @Setter(AccessLevel.NONE)
     @Id @GeneratedValue(strategy = GenerationType.TABLE)
     private int offId;
 

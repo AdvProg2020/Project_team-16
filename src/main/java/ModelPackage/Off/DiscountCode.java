@@ -17,6 +17,7 @@ import java.util.Map;
 @Entity
 @Table(name = "t_discount_code")
 public class DiscountCode {
+    @Setter(AccessLevel.NONE)
     @Id @GeneratedValue
     private int id;
 

@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "t_sub_carts")
 public class SubCart{
+    @Setter(AccessLevel.NONE)
     @Id @GeneratedValue
     private int id;
 
