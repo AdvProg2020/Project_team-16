@@ -49,7 +49,7 @@ public class SellerManager {
         return products;
     }
 
-    public List<Seller> viewSellersOfProduct (String productId){
+    public List<Seller> viewSellersOfProduct (int productId){
         Product product = productManager.findProductById(productId);
 
         return product.getAllSellers();

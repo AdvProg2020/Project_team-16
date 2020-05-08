@@ -41,7 +41,7 @@ public class ProductManager {
         String requestStr = String.format("%s has requested to create Product \"%s\" with id %s",sellerId,product.getName(),product.getId());
         Seller seller = DBManager.load(Seller.class,sellerId);
         Request request = new Request(seller, RequestType.CREATE_PRODUCT,requestStr,product);
-        RequestManager.getInstance().addRequest(request);
+        //RequestManager.getInstance().addRequest(request);
     }
 
     public void editProduct(Product edited,String editor) throws NoSuchAProductException {
@@ -50,7 +50,7 @@ public class ProductManager {
         product.setProductStatus(ProductStatus.UNDER_EDIT);
         Seller seller = DBManager.load(Seller.class,editor);
         Request request = new Request(seller,RequestType.CHANGE_PRODUCT,requestStr,edited);
-        RequestManager.getInstance().addRequest(request);
+        //RequestManager.getInstance().addRequest(request);
     }
 
     public void addAmountOfStock(int productId, String sellerId,int amount){
@@ -159,7 +159,7 @@ public class ProductManager {
             throws NoSuchACategoryException, NoSuchAProductInCategoryException, NoSuchAProductException {
         Product product = findProductById(productId);
         allProducts.remove(product);
-        CategoryManager.getInstance().removeProductFromCategory(productId,product.getCategoryId());
+        //CategoryManager.getInstance().removeProductFromCategory(productId,product.getCategoryId());
 
         DBManager.delete(product);
     }

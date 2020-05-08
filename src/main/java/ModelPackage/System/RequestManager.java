@@ -5,6 +5,7 @@ import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
@@ -25,7 +26,7 @@ public class RequestManager {
 
     public void addRequest(Request request){
         requests.add(request);
-        /* TODO : Add in database */
+        DBManager.save(request);
     }
 
     public Request findRequestById(String id){
@@ -68,7 +69,7 @@ public class RequestManager {
         Product product = request.getProduct();
         product.setProductStatus(ProductStatus.VERIFIED);
         ProductManager productManager = ProductManager.getInstance();
-        Product toChange = productManager.findProductById(product.getProductId());
+        Product toChange = productManager.findProductById(product.getId());
         ArrayList<Product> products = productManager.getAllProducts();
         products.set(products.indexOf(toChange),product);
         productManager.setAllProducts(products);
@@ -93,7 +94,7 @@ public class RequestManager {
     private void acceptAssignComment(Request request){
         Comment comment = request.getComment();
         comment.setStatus(CommentStatus.VERIFIED);
-        ProductManager.getInstance().assignAComment(comment.getProductId(),comment);
+        ProductManager.getInstance().assignAComment(comment.getId(),comment);
     }
 
     private void acceptSeller(Request request) {

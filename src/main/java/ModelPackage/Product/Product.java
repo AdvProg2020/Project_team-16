@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.bridge.builtin.EnumBridge;
 
 import javax.persistence.*;
 import java.util.*;
@@ -16,12 +17,12 @@ import java.util.*;
 @Indexed
 public class Product {
     @Setter(AccessLevel.NONE)
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "ID")
+    @Id @GeneratedValue @Column(name = "ID")
     private int id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "PRODUCT_STATUS")
-    @Field(bridge = @FieldBridge(impl = ProductStatus.class))
+    @Field(bridge = @FieldBridge(impl = EnumBridge.class))
     private ProductStatus productStatus;
 
     @Column(name = "NAME")
@@ -130,5 +131,9 @@ public class Product {
         this.prices = new ArrayList<>(product.prices);
         this.view = product.view;
         this.boughtAmount = product.boughtAmount;
+    }
+
+    public Product() {
+
     }
 }

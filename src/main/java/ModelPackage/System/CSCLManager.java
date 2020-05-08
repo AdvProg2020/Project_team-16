@@ -61,18 +61,18 @@ public class CSCLManager {
         getCompanyByName(companyName).setGroup(newGroup);
     }
 
-    public void addProductToCompany(String productId, String companyName) {
+    public void addProductToCompany(int productId, String companyName) {
         getCompanyByName(companyName).getProductsIn().add(ProductManager.getInstance().findProductById(productId));
     }
 
-    public void removeProductFromCompany(String productId, String companyName) {
+    public void removeProductFromCompany(int productId, String companyName) {
         getCompanyByName(companyName).getProductsIn().remove(ProductManager.getInstance().findProductById(productId));
     }
 
     public void createComment(Comment comment) {
         String requestStr = String.format("%s has requested to create comment with title %s and text %s \n with id " +
                         "%s on product with id %s",
-                comment.getUserId(), comment.getTitle(), comment.getText(), comment.getId(), comment.getProductId());
+                comment.getUserId(), comment.getTitle(), comment.getText(), comment.getId(), comment.getId());
         Request request = new Request(comment.getUserId(), RequestType.ASSIGN_COMMENT, requestStr, comment);
         RequestManager.getInstance().addRequest(request);
     }
@@ -89,7 +89,7 @@ public class CSCLManager {
         return false;
     }
 
-    public void createScore(String userId, String productId, int score) {
+    public void createScore(String userId, int productId, int score) {
         allScores.add(new Score(userId, productId, score));
     }
 
@@ -109,7 +109,7 @@ public class CSCLManager {
     public void createPurchaseLog(Cart cart, int discount) {
         HashMap<String, String> productsAndTheirSellers = new HashMap<>();
         for (SubCart subCart : cart.getSubCarts()) {
-            productsAndTheirSellers.put(subCart.getProductId(), subCart.getSellerId());
+            productsAndTheirSellers.put(subCart.getId(), subCart.getSellerId());
         }
         int pricePaid =(int)(cart.getTotalPrice() - (double)discount / 100 * cart.getTotalPrice());
         allLogs.add(new PurchaseLog(new Date(), DeliveryStatus.DEPENDING, productsAndTheirSellers, pricePaid, discount));
