@@ -19,9 +19,6 @@ public class Product {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "ID")
     private int id;
 
-    @Column(name = "PRODUCT_String_ID")
-    private String productId;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "PRODUCT_STATUS")
     @Field(bridge = @FieldBridge(impl = ProductStatus.class))
@@ -93,11 +90,7 @@ public class Product {
     @Column(name = "LEAST_PRICE")
     private int leastPrice;
 
-    public Product(){
-        this.productId = generateId();
-    }
-
-    public Product(String id){this.productId = id;}
+    public Product(int id){this.id = id;}
 
     public Product(String name, String company, ArrayList<Seller> allSellers, String categoryId, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, List<SellerIntegerMap> stock, List<SellerIntegerMap> prices) {
         this.name = name;
@@ -116,11 +109,10 @@ public class Product {
         this.view = 0;
         this.boughtAmount = 0;
         this.totalScore = 0;
-        this.productId = generateId();
     }
 
     public Product(Product product){
-        this.productId = product.productId;
+        this.id = product.id;
         this.productStatus = product.productStatus;
         this.name = product.name;
         this.dateAdded = product.dateAdded;
@@ -138,10 +130,5 @@ public class Product {
         this.prices = new ArrayList<>(product.prices);
         this.view = product.view;
         this.boughtAmount = product.boughtAmount;
-    }
-
-    private String generateId(){
-        Date date = new Date();
-        return String.format("PR%s%04d",date.toString().replaceAll("\\s","").replaceAll(":",""),(int)(Math.random()*9999+1));
     }
 }

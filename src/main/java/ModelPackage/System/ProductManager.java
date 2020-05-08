@@ -38,15 +38,15 @@ public class ProductManager {
 
     public void createProduct(Product product,String sellerId){
         DBManager.save(product);
-        String requestStr = String.format("%s has requested to create Product \"%s\" with id %s",sellerId,product.getName(),product.getProductId());
+        String requestStr = String.format("%s has requested to create Product \"%s\" with id %s",sellerId,product.getName(),product.getId());
         Seller seller = DBManager.load(Seller.class,sellerId);
         Request request = new Request(seller, RequestType.CREATE_PRODUCT,requestStr,product);
         RequestManager.getInstance().addRequest(request);
     }
 
     public void editProduct(Product edited,String editor) throws NoSuchAProductException {
-        String requestStr = String.format("%s has requested to edit Product \"%s\" with id %s",edited,edited.getName(),edited.getProductId());
-        Product product = findProductById(edited.getProductId());
+        String requestStr = String.format("%s has requested to edit Product \"%s\" with id %s",edited,edited.getName(),edited.getId());
+        Product product = findProductById(edited.getId());
         product.setProductStatus(ProductStatus.UNDER_EDIT);
         Seller seller = DBManager.load(Seller.class,editor);
         Request request = new Request(seller,RequestType.CHANGE_PRODUCT,requestStr,edited);
@@ -65,10 +65,10 @@ public class ProductManager {
         DBManager.save(product);
     }
 
-    public Product findProductById(String id) throws NoSuchAProductException {
+    public Product findProductById(int id) throws NoSuchAProductException {
         Product product = DBManager.load(Product.class,id);
         if (product == null) {
-            throw new NoSuchAProductException(id);
+            throw new NoSuchAProductException(Integer.toString(id));
         }
         return product;
     }
@@ -87,24 +87,24 @@ public class ProductManager {
         allProducts.add(product);
     }
 
-    public void addView(String productId) throws NoSuchAProductException {
+    public void addView(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         product.setView(product.getView()+1);
     }
 
-    public void addBought(String productId) throws NoSuchAProductException {
+    public void addBought(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         product.setBoughtAmount(product.getBoughtAmount()+1);
     }
 
-    public void assignAComment(String productId, Comment comment) throws NoSuchAProductException {
+    public void assignAComment(int productId, Comment comment) throws NoSuchAProductException {
         Product product = findProductById(productId);
         ArrayList<Comment> comments = (ArrayList<Comment>) product.getAllComments();
         comments.add(comment);
         product.setAllComments(comments);
     }
 
-    public void assignAScore(String productId, Score score) throws NoSuchAProductException {
+    public void assignAScore(int productId, Score score) throws NoSuchAProductException {
         Product product = findProductById(productId);
         ArrayList<Score> scores = (ArrayList<Score>) product.getAllScores();
         int amount = scores.size();
@@ -113,7 +113,7 @@ public class ProductManager {
         product.setTotalScore((product.getTotalScore()*amount + score.getScore())/(amount+1));
     }
 
-    public Comment[] showComments(String productId) throws NoSuchAProductException {
+    public Comment[] showComments(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         ArrayList<Comment> comments = (ArrayList<Comment>) product.getAllComments();
         Comment[] toReturn = new Comment[comments.size()];
@@ -121,7 +121,7 @@ public class ProductManager {
         return toReturn;
     }
 
-    public Score[] showScores(String productId) throws NoSuchAProductException {
+    public Score[] showScores(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         ArrayList<Score> scores = (ArrayList<Score>)product.getAllScores();
         Score[] toReturn = new Score[scores.size()];
@@ -129,23 +129,23 @@ public class ProductManager {
         return toReturn;
     }
 
-    public boolean doesThisProductExist(String productId) throws NoSuchAProductException {
+    public boolean doesThisProductExist(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         return (product != null);
     }
 
-    public void checkIfThisProductExists(String productId) throws NoSuchAProductException{
+    public void checkIfThisProductExists(int productId) throws NoSuchAProductException{
         Product product = findProductById(productId);
-        if (product == null) throw new NoSuchAProductException(productId);
+        if (product == null) throw new NoSuchAProductException(Integer.toString(productId));
     }
 
-    public boolean isThisProductAvailable(String id) throws NoSuchAProductException {
+    public boolean isThisProductAvailable(int id) throws NoSuchAProductException {
         Product product = findProductById(id);
         ProductStatus productStatus = product.getProductStatus();
         return productStatus == ProductStatus.VERIFIED;
     }
 
-    public int leastPriceOf(String productId) throws NoSuchAProductException {
+    public int leastPriceOf(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         HashMap<String,Integer> prices = (HashMap<String, Integer>) product.getPrices();
         int leastPrice = 2147483647;
@@ -155,7 +155,7 @@ public class ProductManager {
         return leastPrice;
     }
 
-    public void deleteProduct(String productId)
+    public void deleteProduct(int productId)
             throws NoSuchACategoryException, NoSuchAProductInCategoryException, NoSuchAProductException {
         Product product = findProductById(productId);
         allProducts.remove(product);
@@ -164,7 +164,7 @@ public class ProductManager {
         DBManager.delete(product);
     }
 
-    public void deleteProductCategoryOrder(String productId) throws NoSuchAProductException {
+    public void deleteProductCategoryOrder(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         allProducts.remove(product);
         DBManager.delete(product);
@@ -176,7 +176,7 @@ public class ProductManager {
         return allFeatures;
     }
 
-    public void addASellerToProduct(String productId,Seller seller,int amount,int price)
+    public void addASellerToProduct(int productId,Seller seller,int amount,int price)
             throws NoSuchAProductException, AlreadyASeller {
         Product product = findProductById(productId);
         List<Seller> sellers = product.getAllSellers();
