@@ -1,26 +1,36 @@
 package ModelPackage.Users;
 
 import ModelPackage.Log.PurchaseLog;
+import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Off.DiscountCode;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Data
 @Setter @Getter
+@Entity @Table(name = "t_customer")
 public class Customer extends User {
+    @Column(name = "BALANCE")
     private long balance;
+
+    @ElementCollection(targetClass = PurchaseLog.class)
+        @OneToMany
+        @JoinColumn(name = "PURCHASE_LOGS")
     private List<PurchaseLog> purchaseLogs;
-    private HashMap<DiscountCode,Integer> discountCodes;
-    private List<CustomerInformation> customerInformation ;
+
+    @ElementCollection
+            @OneToMany
+            @JoinColumn(name = "CODE")
+    private List<DiscountcodeIntegerMap> discountCodes;
 
     public Customer(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart, long balance) {
         super(username, password, firstName, lastName, email, phoneNumber, cart);
         this.balance = balance;
         this.purchaseLogs = new ArrayList<PurchaseLog>();
-        this.discountCodes = new HashMap<DiscountCode, Integer>();
-        this.customerInformation = new ArrayList<>();
+        this.discountCodes = new ArrayList<>();
     }
 }
