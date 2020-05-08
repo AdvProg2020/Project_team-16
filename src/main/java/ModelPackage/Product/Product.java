@@ -3,6 +3,9 @@ package ModelPackage.Product;
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Users.Seller;
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import java.util.*;
@@ -10,6 +13,7 @@ import java.util.*;
 @Data @AllArgsConstructor
 @Entity
 @Table(name = "t_product")
+@Indexed
 public class Product {
     @Setter(AccessLevel.NONE)
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "ID")
@@ -20,9 +24,11 @@ public class Product {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "PRODUCT_STATUS")
+    @Field(bridge = @FieldBridge(impl = ProductStatus.class))
     private ProductStatus productStatus;
 
     @Column(name = "NAME")
+    @Field
     private String name;
 
     @Temporal(TemporalType.DATE)

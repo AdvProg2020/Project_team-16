@@ -21,4 +21,17 @@ public class SellerIntegerMap{
     private Seller seller;
     @Column(name = "INTEGER_VALUE")
     private Integer integer;
+
+    public boolean thisIsTheMapKey(String sellerId){
+        return seller.getUsername().equals(sellerId);
+    }
+
+    public SellerIntegerMap(){
+
+    }
+
+    public SellerIntegerMap(Seller seller, Integer integer) {
+        this.seller = seller;
+        this.integer = integer;
+    }
 }

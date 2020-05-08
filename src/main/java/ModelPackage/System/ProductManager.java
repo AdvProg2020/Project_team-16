@@ -1,9 +1,11 @@
 package ModelPackage.System;
 
+import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.Product.Score;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.product.*;
@@ -35,33 +37,40 @@ public class ProductManager {
     }
 
     public void createProduct(Product product,String sellerId){
+        DBManager.save(product);
         String requestStr = String.format("%s has requested to create Product \"%s\" with id %s",sellerId,product.getName(),product.getProductId());
-        Request request = new Request(sellerId, RequestType.CREATE_PRODUCT,requestStr,product);
+        Seller seller = DBManager.load(Seller.class,sellerId);
+        Request request = new Request(seller, RequestType.CREATE_PRODUCT,requestStr,product);
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void editProduct(Product edited,String editor){
+    public void editProduct(Product edited,String editor) throws NoSuchAProductException {
         String requestStr = String.format("%s has requested to edit Product \"%s\" with id %s",edited,edited.getName(),edited.getProductId());
         Product product = findProductById(edited.getProductId());
         product.setProductStatus(ProductStatus.UNDER_EDIT);
-        Request request = new Request(editor,RequestType.CHANGE_PRODUCT,requestStr,edited);
+        Seller seller = DBManager.load(Seller.class,editor);
+        Request request = new Request(seller,RequestType.CHANGE_PRODUCT,requestStr,edited);
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void addAmountOfStock(String productId, String sellerId,int amount){
-        /* TODO : Add Exception of Negative Stock */
-        Product product = findProductById(productId);
-        HashMap<String, Integer> stock = (HashMap<String, Integer>) product.getStock();
-        stock.replace(sellerId, stock.get(sellerId) + amount);
-        product.setStock(stock);
+    public void addAmountOfStock(int productId, String sellerId,int amount){
+        Product product = DBManager.load(Product.class,productId);
+        List<SellerIntegerMap> list = product.getStock();
+        for (SellerIntegerMap map : list) {
+            if(map.thisIsTheMapKey(sellerId)){
+                map.setInteger(map.getInteger()+amount);
+                break;
+            }
+        }
+        DBManager.save(product);
     }
 
-    public Product findProductById(String id){
-        /* TODO : NULL POINTER EXCEPTION */
-        for (Product product : allProducts) {
-            if(product.getProductId().equals(id)) return product;
+    public Product findProductById(String id) throws NoSuchAProductException {
+        Product product = DBManager.load(Product.class,id);
+        if (product == null) {
+            throw new NoSuchAProductException(id);
         }
-        return null;
+        return product;
     }
 
     public Product[] findProductByName(String name){
@@ -78,24 +87,24 @@ public class ProductManager {
         allProducts.add(product);
     }
 
-    public void addView(String productId){
+    public void addView(String productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         product.setView(product.getView()+1);
     }
 
-    public void addBought(String productId){
+    public void addBought(String productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         product.setBoughtAmount(product.getBoughtAmount()+1);
     }
 
-    public void assignAComment(String productId, Comment comment){
+    public void assignAComment(String productId, Comment comment) throws NoSuchAProductException {
         Product product = findProductById(productId);
         ArrayList<Comment> comments = (ArrayList<Comment>) product.getAllComments();
         comments.add(comment);
         product.setAllComments(comments);
     }
 
-    public void assignAScore(String productId, Score score){
+    public void assignAScore(String productId, Score score) throws NoSuchAProductException {
         Product product = findProductById(productId);
         ArrayList<Score> scores = (ArrayList<Score>) product.getAllScores();
         int amount = scores.size();
@@ -104,7 +113,7 @@ public class ProductManager {
         product.setTotalScore((product.getTotalScore()*amount + score.getScore())/(amount+1));
     }
 
-    public Comment[] showComments(String productId){
+    public Comment[] showComments(String productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         ArrayList<Comment> comments = (ArrayList<Comment>) product.getAllComments();
         Comment[] toReturn = new Comment[comments.size()];
@@ -112,7 +121,7 @@ public class ProductManager {
         return toReturn;
     }
 
-    public Score[] showScores(String productId){
+    public Score[] showScores(String productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         ArrayList<Score> scores = (ArrayList<Score>)product.getAllScores();
         Score[] toReturn = new Score[scores.size()];
@@ -120,7 +129,7 @@ public class ProductManager {
         return toReturn;
     }
 
-    public boolean doesThisProductExist(String productId){
+    public boolean doesThisProductExist(String productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         return (product != null);
     }
@@ -130,13 +139,13 @@ public class ProductManager {
         if (product == null) throw new NoSuchAProductException(productId);
     }
 
-    public boolean isThisProductAvailable(String id){
+    public boolean isThisProductAvailable(String id) throws NoSuchAProductException {
         Product product = findProductById(id);
         ProductStatus productStatus = product.getProductStatus();
         return productStatus == ProductStatus.VERIFIED;
     }
 
-    public int leastPriceOf(String productId){
+    public int leastPriceOf(String productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         HashMap<String,Integer> prices = (HashMap<String, Integer>) product.getPrices();
         int leastPrice = 2147483647;
@@ -147,24 +156,54 @@ public class ProductManager {
     }
 
     public void deleteProduct(String productId)
-            throws NoSuchACategoryException, NoSuchAProductInCategoryException {
+            throws NoSuchACategoryException, NoSuchAProductInCategoryException, NoSuchAProductException {
         Product product = findProductById(productId);
         allProducts.remove(product);
         CategoryManager.getInstance().removeProductFromCategory(productId,product.getCategoryId());
 
-        /* TODO : delete from database */
+        DBManager.delete(product);
     }
 
-    public void deleteProductCategoryOrder(String productId){
+    public void deleteProductCategoryOrder(String productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         allProducts.remove(product);
-        /* TODO : delete from database */
+        DBManager.delete(product);
     }
 
     public HashMap<String,String> allFeaturesOf(Product product){
         HashMap<String,String> allFeatures = new HashMap<>(product.getPublicFeatures());
         allFeatures.putAll(product.getSpecialFeatures());
         return allFeatures;
+    }
+
+    public void addASellerToProduct(String productId,Seller seller,int amount,int price)
+            throws NoSuchAProductException, AlreadyASeller {
+        Product product = findProductById(productId);
+        List<Seller> sellers = product.getAllSellers();
+        if (!sellers.contains(seller)){
+            sellers.add(seller);
+            addAmountToProductForNewSeller(seller,product,amount);
+            addPriceToProductForNewSeller(seller,product,price);
+        }
+        else{
+            throw new AlreadyASeller(seller.getUsername());
+        }
+    }
+
+    private void addAmountToProductForNewSeller(Seller seller,Product product,int amount){
+        SellerIntegerMap newStock = new SellerIntegerMap(seller,amount);
+        DBManager.save(newStock);
+        List<SellerIntegerMap> stocks = product.getStock();
+        stocks.add(newStock);
+        product.setStock(stocks);
+    }
+
+    private void addPriceToProductForNewSeller(Seller seller,Product product,int price){
+        SellerIntegerMap newPrice = new SellerIntegerMap(seller,price);
+        DBManager.save(newPrice);
+        List<SellerIntegerMap> prices = product.getPrices();
+        prices.add(newPrice);
+        product.setStock(prices);
     }
 
     public void clear(){
