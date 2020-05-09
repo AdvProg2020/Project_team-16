@@ -26,15 +26,7 @@ public class ManagerManager {
     AccountManager accountManager = AccountManager.getInstance();
 
     public void createManagerProfile(String[] info){
-        Manager manager = new Manager(
-                info[0],
-                info[1],
-                info[2],
-                info[3],
-                info[4],
-                info[5],
-                new Cart()
-        );
+        Manager manager = accountManager.createManager(info);
         DBManager.save(manager);
     }
 

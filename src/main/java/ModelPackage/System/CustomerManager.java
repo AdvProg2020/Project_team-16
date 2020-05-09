@@ -10,7 +10,6 @@ import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
 import ModelPackage.Users.CustomerInformation;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class CustomerManager {

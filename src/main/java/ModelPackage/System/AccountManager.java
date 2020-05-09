@@ -1,5 +1,7 @@
 package ModelPackage.System;
 
+import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.SecondManagerByUserException;
 import ModelPackage.System.exeption.account.SameInfoException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.account.WrongPasswordException;
@@ -15,7 +17,7 @@ import java.util.List;
 public class AccountManager {
     private static AccountManager accountManager = null;
     private AccountManager(){
-        this.users = new ArrayList<>();
+
     }
     public static AccountManager getInstance(){
         if (accountManager == null)
@@ -23,7 +25,6 @@ public class AccountManager {
         return accountManager;
     }
 
-    private List<User> users;
     private RequestManager requestManager = RequestManager.getInstance();
     private CSCLManager csclManager = CSCLManager.getInstance();
 
@@ -34,7 +35,7 @@ public class AccountManager {
             case "manager" : user = createManager(info); break;
             case  "customer" : user = createCustomer(info); break;
         }
-        users.add(user);
+        DBManager.save(user);
     }
 
     private void createSeller(String[] info){
@@ -131,7 +132,9 @@ public class AccountManager {
         return false;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public void checkIfIsFirstManager(){
+        if (/* TODO : search in database */) {
+            throw new SecondManagerByUserException();
+        }
     }
 }
