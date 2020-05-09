@@ -15,12 +15,13 @@ public class Cart {
     private int id;
 
     @ElementCollection(targetClass = SubCart.class)
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
         @Column(name = "SUB_CARTS")
     private List<SubCart> subCarts;
 
     @Column(name = "TOTAL_PRICE")
     private long totalPrice;
+
     private String discountCode;
 
     public Cart() {

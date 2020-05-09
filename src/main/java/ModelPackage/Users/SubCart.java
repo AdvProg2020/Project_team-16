@@ -13,21 +13,21 @@ public class SubCart{
     @Id @GeneratedValue
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "PRODUCT")
     private Product product;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "SELLER")
     private Seller seller;
 
     @Column(name = "AMOUNT")
     private int amount;
 
-    public SubCart(Product product, String productId, String sellerId, int amount) {
+    public SubCart(Product product, int productId, Seller seller, int amount) {
         this.product = product;
-        this.productId = productId;
-        this.sellerId = sellerId;
+        this.id = productId;
+        this.seller = seller;
         this.amount = amount;
     }
 }

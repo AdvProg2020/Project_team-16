@@ -24,7 +24,7 @@ public class FilterManager {
     private static ArrayList<Product> matchProductsToFilters(ArrayList<String> products,HashMap<String,String> filters,int[] priceRange){
         ArrayList<Product> filteredProducts = new ArrayList<>();
         ProductManager productManager = ProductManager.getInstance();
-        for (String productId : products) {
+        for (int productId : products) {
             Product product = productManager.findProductById(productId);
             if (thisProductMatchesFilters(productManager.allFeaturesOf(product),filters)
                     && thisProductIsInPriceRange(priceRange[0],priceRange[1],product.getLeastPrice()))

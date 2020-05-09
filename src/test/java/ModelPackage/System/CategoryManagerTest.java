@@ -187,7 +187,7 @@ public class CategoryManagerTest {
     @Test(expected = NoSuchACategoryException.class)
     public void removeCategory() throws Exception{
         new MockUp<ProductManager>(){
-          @Mock public void deleteProductCategoryOrder(String productId){};
+          @Mock public void deleteProductCategoryOrder(int productId){};
         };
         categoryManager.removeCategory(category1.getCategoryId());
         int countOfMainSubCats = main.getSubCategories().size();

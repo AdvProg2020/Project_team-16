@@ -20,12 +20,12 @@ public class Score {
     private String userId;
 
     @Column(name = "PRODUCT_STRING_ID")
-    private String productId;
+    private int productId;
 
     @Column(name = "SCORE")
     private int score;
 
-    public Score(String userId, String productId, int score) {
+    public Score(String userId, int productId, int score) {
         this.userId = userId;
         this.productId = productId;
         this.score = score;
