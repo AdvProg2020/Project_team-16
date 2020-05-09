@@ -18,8 +18,8 @@ public class Customer extends User {
     private long balance;
 
     @ElementCollection(targetClass = CustomerInformation.class)
-    @OneToMany
-    @JoinColumn(name = "CUSTOMER_INFO")
+        @OneToMany
+        @JoinColumn(name = "CUSTOMER_INFO")
     private List<CustomerInformation> customerInformation;
 
     @ElementCollection(targetClass = PurchaseLog.class)
