@@ -1,6 +1,8 @@
 package ModelPackage.System;
 
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
+import ModelPackage.Users.Cart;
 import ModelPackage.Users.Manager;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
@@ -13,7 +15,7 @@ import java.util.List;
 public class ManagerManager {
     private static ManagerManager managerManager = null;
     private ManagerManager(){
-        this.managers = new ArrayList<>();
+
     }
     public static ManagerManager getInstance(){
         if (managerManager == null)
@@ -21,19 +23,24 @@ public class ManagerManager {
         return managerManager;
     }
 
-    private List<Request> allRequests;
-    private List<Manager> managers;
     AccountManager accountManager = AccountManager.getInstance();
 
     public void createManagerProfile(String[] info){
-        Manager manager = accountManager.createManager(info);
-        managers.add(manager);
-        accountManager.getUsers().add(manager);
+        Manager manager = new Manager(
+                info[0],
+                info[1],
+                info[2],
+                info[3],
+                info[4],
+                info[5],
+                new Cart()
+        );
+        DBManager.save(manager);
     }
 
     public void deleteUser(String username) {
-        User user = accountManager.getUserByUsername(username);
-        accountManager.getUsers().remove(user);
+        User user = DBManager.load(User.class, username);
+        DBManager.delete(user);
     }
 
 
