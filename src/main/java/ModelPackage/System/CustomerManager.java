@@ -2,7 +2,9 @@ package ModelPackage.System;
 
 
 import ModelPackage.Log.PurchaseLog;
+import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Off.DiscountCode;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.NotEnoughMoneyException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
@@ -27,17 +29,17 @@ public class CustomerManager {
     CSCLManager csclManager = CSCLManager.getInstance();
 
     public List<PurchaseLog> viewOrders(String username){
-        Customer customer = (Customer) accountManager.getUserByUsername(username);
+        Customer customer = DBManager.load(Customer.class, username);
         return customer.getPurchaseLogs();
     }
 
-    public HashMap<DiscountCode,Integer> viewDiscountCodes(String username){
-        Customer customer = (Customer) accountManager.getUserByUsername(username);
+    public List<DiscountcodeIntegerMap> viewDiscountCodes(String username){
+        Customer customer = DBManager.load(Customer.class, username);
         return customer.getDiscountCodes();
     }
 
     public void purchase(String username, CustomerInformation customerInformation, DiscountCode discountCode){
-        Customer customer = (Customer) accountManager.getUserByUsername(username);
+        Customer customer = DBManager.load(Customer.class, username);
 
         purchaseForCustomer(customer, customerInformation, discountCode);
 

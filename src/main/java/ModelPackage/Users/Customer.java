@@ -17,6 +17,11 @@ public class Customer extends User {
     @Column(name = "BALANCE")
     private long balance;
 
+    @ElementCollection(targetClass = CustomerInformation.class)
+    @OneToMany
+    @JoinColumn(name = "CUSTOMER_INFO")
+    private List<CustomerInformation> customerInformation;
+
     @ElementCollection(targetClass = PurchaseLog.class)
         @OneToMany
         @JoinColumn(name = "PURCHASE_LOGS")
