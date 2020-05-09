@@ -54,7 +54,7 @@ public class CategoryManager {
         }
     }
 
-    public void addProductToCategory(String productId,String categoryId)
+    public void addProductToCategory(int productId,String categoryId)
             throws NoSuchACategoryException, NoSuchAProductException {
         Category toBeAddedTo = getCategoryById(categoryId);
         ProductManager.getInstance().checkIfThisProductExists(productId);
@@ -82,7 +82,7 @@ public class CategoryManager {
         return features;
     }
 
-    public void editProductCategory(String productId,String oldCategoryId, String newCategoryId)
+    public void editProductCategory(int productId,String oldCategoryId, String newCategoryId)
             throws NoSuchACategoryException, NoSuchAProductException, NoSuchAProductInCategoryException {
         Category oldCategory = getCategoryById(oldCategoryId);
 
@@ -102,7 +102,7 @@ public class CategoryManager {
         setNewFeaturesToProduct(productId,newCategory.getSpecialFeatures());
     }
 
-    private void setNewFeaturesToProduct(String productId,ArrayList<String> newFeatures){
+    private void setNewFeaturesToProduct(int productId,ArrayList<String> newFeatures){
         HashMap<String,String> features = new HashMap<>();
         for (String feature : newFeatures) {
             features.put(feature,"");
@@ -110,7 +110,7 @@ public class CategoryManager {
         ProductManager.getInstance().findProductById(productId).setSpecialFeatures(features);
     }
 
-    private void checkIfThisProductExistInThisCategory(String productId,Category category)
+    private void checkIfThisProductExistInThisCategory(int productId,Category category)
             throws NoSuchAProductInCategoryException {
         for (String id : category.getAllProductInThis()) {
             if (id.equals(productId))return;
@@ -118,7 +118,7 @@ public class CategoryManager {
         throw new NoSuchAProductInCategoryException(productId,category.getId());
     }
 
-    public void removeProductFromCategory(String productId,String categoryId)
+    public void removeProductFromCategory(int productId,String categoryId)
             throws NoSuchACategoryException, NoSuchAProductInCategoryException {
         Category category = getCategoryById(categoryId);
         checkIfThisProductExistInThisCategory(productId,category);
@@ -170,7 +170,7 @@ public class CategoryManager {
     }
 
     void addNewFeatureToProducts(String newFeature,ArrayList<String> products){
-        for (String productId : products) {
+        for (int productId : products) {
             Product product = ProductManager.getInstance().findProductById(productId);
             HashMap<String,String> specialFeatures = product.getSpecialFeatures();
             specialFeatures.put(newFeature,"");

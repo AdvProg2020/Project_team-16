@@ -27,7 +27,7 @@ public class User {
     @Column(name = "PHONE_NUMBER")
     protected String phoneNumber;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "CART")
     protected Cart cart;
 

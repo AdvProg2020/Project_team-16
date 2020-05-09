@@ -59,7 +59,7 @@ public class RequestManagerTest {
     @Test
     public void acceptCreateProductTest(){
         requestManager.accept(request.getRequestId());
-        boolean successful = ProductManager.getInstance().doesThisProductExist(request.getProduct().getProductId());
+        boolean successful = ProductManager.getInstance().doesThisProductExist(request.getProduct().getId());
         Assert.assertTrue(successful);
     }
 
@@ -68,12 +68,12 @@ public class RequestManagerTest {
         Product existedProduct = new Product();
         ProductManager.getInstance().addProductToList(existedProduct);
         Product changed = new Product();
-        changed.setProductId(existedProduct.getProductId());
+        changed.setProductId(existedProduct.getId());
         changed.setView(20);
         Request editRequest = new Request("asghar",RequestType.CHANGE_PRODUCT,"asdf",changed);
         requestManager.addRequest(editRequest);
         requestManager.accept(editRequest.getRequestId());
-        int actulView = ProductManager.getInstance().findProductById(existedProduct.getProductId()).getView();
+        int actulView = ProductManager.getInstance().findProductById(existedProduct.getId()).getView();
 
         Assert.assertEquals(20,actulView);
     }

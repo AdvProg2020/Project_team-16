@@ -2,7 +2,7 @@ package ModelPackage.System.database;
 
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
-import ModelPackage.System.CategoryManager;
+//import ModelPackage.System.CategoryManager;
 import ModelPackage.System.ProductManager;
 import org.hibernate.Session;
 
@@ -41,7 +41,7 @@ public class DBManager {
     public static void InitialLoad(){
         Session session = HibernateUtil.getSessionFactory().openSession();
         ProductManager.getInstance().setAllProducts((ArrayList<Product>)loadAllData(Product.class,session));
-        CategoryManager.getInstance().setAllCategories((ArrayList<Category>)loadAllData(Category.class,session));
+        //CategoryManager.getInstance().setAllCategories((ArrayList<Category>)loadAllData(Category.class,session));
     }
 
     private static <T> List<T> loadAllData(Class<T> type, Session session) {

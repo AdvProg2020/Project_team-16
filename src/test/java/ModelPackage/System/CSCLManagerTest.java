@@ -84,7 +84,7 @@ public class CSCLManagerTest {
     @Test
     public void addProductToCompanyTest() {
         csclManager.addProductToCompany("12", "Adidas");
-        String actualId = adidas.getProductsIn().get(0).getProductId();
+        String actualId = adidas.getProductsIn().get(0).getId();
         Assert.assertEquals("12", actualId);
     }
     @Test

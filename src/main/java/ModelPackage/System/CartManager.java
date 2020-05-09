@@ -19,7 +19,7 @@ public class CartManager {
 
     private CartManager() {}
 
-    public void addProductToCart(Cart cart, String sellerId, String productId, int amount) throws Exception {
+    public void addProductToCart(Cart cart, String sellerId, int productId, int amount) throws Exception {
         checkIfProductExistsInCart(cart, productId, sellerId);
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, amount);
         cart.getSubCarts().add(new SubCart(ProductManager.getInstance().findProductById(productId),
@@ -35,7 +35,7 @@ public class CartManager {
         return total;
     }
 
-    private void checkIfThereIsEnoughAmountOfProduct(String productId, String sellerId, int amount)
+    private void checkIfThereIsEnoughAmountOfProduct(int productId, String sellerId, int amount)
     throws Exception {
         Product product = ProductManager.getInstance().findProductById(productId);
         if (product.getStock().get(sellerId) < amount) {
@@ -43,27 +43,27 @@ public class CartManager {
         }
     }
 
-    private void checkIfProductExistsInCart(Cart cart, String productId, String sellerId) throws Exception{
+    private void checkIfProductExistsInCart(Cart cart, int productId, String sellerId) throws Exception{
         for (SubCart subCart : cart.getSubCarts()) {
-            if (subCart.getSellerId().equals(sellerId) && subCart.getProductId().equals(productId))
+            if (subCart.getSellerId().equals(sellerId) && subCart.getId().equals(productId))
                 throw new ProductExistedInCart(productId, sellerId);
         }
     }
 
-    public SubCart getSubCartByProductId(Cart cart, String productId, String sellerId) throws NoSuchAProductInCart {
+    public SubCart getSubCartByProductId(Cart cart, int productId, String sellerId) throws NoSuchAProductInCart {
         for (SubCart subCart : cart.getSubCarts()) {
-            if (subCart.getProductId().equals(productId) && subCart.getSellerId().equals(sellerId))
+            if (subCart.getId().equals(productId) && subCart.getSellerId().equals(sellerId))
                 return subCart;
         }
         throw new NoSuchAProductInCart(productId, sellerId);
     }
 
-    public void deleteProductFromCart(Cart cart, String productId, String sellerId) throws NoSuchAProductInCart {
+    public void deleteProductFromCart(Cart cart, int productId, String sellerId) throws NoSuchAProductInCart {
         SubCart subCart = getSubCartByProductId(cart, productId, sellerId);
         cart.getSubCarts().remove(subCart);
     }
 
-    public void changeProductAmountInCart(Cart cart, String productId, String sellerId, int newAmount)
+    public void changeProductAmountInCart(Cart cart, int productId, String sellerId, int newAmount)
             throws Exception {
         SubCart subCart = getSubCartByProductId(cart, productId, sellerId);
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, newAmount);

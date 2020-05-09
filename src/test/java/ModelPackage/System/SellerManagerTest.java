@@ -91,8 +91,8 @@ public class SellerManagerTest {
         marmof.setSellLogs(sellLogs);
 
         productIds = new ArrayList<>();
-        productIds.add(dullForKimmi.getProductId());
-        productIds.add(skirtForKimmi.getProductId());
+        productIds.add(dullForKimmi.getId());
+        productIds.add(skirtForKimmi.getId());
 
         marmof.setProductIds(productIds);
 
@@ -139,7 +139,7 @@ public class SellerManagerTest {
         new MockUp<ProductManager>(){
             @Mock
             public Product findProductById(String id){
-                if (id.equals(dullForKimmi.getProductId())){
+                if (id.equals(dullForKimmi.getId())){
                     return dullForKimmi;
                 } else {
                     return skirtForKimmi;
@@ -161,7 +161,7 @@ public class SellerManagerTest {
             }
         };
 
-        List<Seller> actualSellers = sellerManager.viewSellersOfProduct(dullForKimmi.getProductId());
+        List<Seller> actualSellers = sellerManager.viewSellersOfProduct(dullForKimmi.getId());
 
         Assert.assertArrayEquals(dullForKimmi.getAllSellers().toArray(),actualSellers.toArray());
     }
