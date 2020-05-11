@@ -45,4 +45,10 @@ public class Seller extends User {
         this.sellLogs = new ArrayList<SellLog>();
         this.messages = new ArrayList<>();
     }
+    public Seller(){
+        this.offs = new ArrayList<Off>();
+        this.products = new ArrayList<>();
+        this.sellLogs = new ArrayList<SellLog>();
+        this.messages = new ArrayList<>();
+    }
 }

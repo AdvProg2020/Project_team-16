@@ -44,4 +44,7 @@ public class User {
         this.cart = cart;
         this.hasSignedIn = false;
     }
+    public User(){
+
+    }
 }

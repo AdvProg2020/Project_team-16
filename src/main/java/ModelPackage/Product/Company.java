@@ -42,4 +42,8 @@ public class Company {
         this.group = group;
         this.productsIn = productsIn;
     }
+
+    public Company(){
+
+    }
 }

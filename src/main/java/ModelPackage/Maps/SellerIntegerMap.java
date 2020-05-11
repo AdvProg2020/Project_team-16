@@ -16,7 +16,7 @@ public class SellerIntegerMap{
     @Id @GeneratedValue
     private int id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "SELLER")
     private Seller seller;
     @Column(name = "INTEGER_VALUE")
@@ -26,9 +26,7 @@ public class SellerIntegerMap{
         return seller.getUsername().equals(sellerId);
     }
 
-    public SellerIntegerMap(){
-
-    }
+    public SellerIntegerMap(){}
 
     public SellerIntegerMap(Seller seller, Integer integer) {
         this.seller = seller;

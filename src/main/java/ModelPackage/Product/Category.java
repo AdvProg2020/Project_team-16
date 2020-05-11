@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,7 +32,8 @@ public class Category {
     private List<String> specialFeatures;
 
     @ElementCollection(targetClass = Category.class)
-        @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+        @OneToMany(cascade = CascadeType.ALL)
     private List<Category> subCategories;
 
     @ManyToOne
@@ -40,13 +43,14 @@ public class Category {
     private String parentId;
 
     @ElementCollection(targetClass = Product.class)
-        @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+        @OneToMany(cascade = CascadeType.ALL)
     private List<Product> allProducts;
 
-    public Category(String name, String parentId) {
+    public Category(String name, Category parent) {
         this.name = name;
         this.categoryId = idGenerator();
-        this.parentId = parentId;
+        this.parent = parent;
         this.specialFeatures = new ArrayList<String>();
         this.subCategories  = new ArrayList<Category>();
         this.allProducts = new ArrayList<>();

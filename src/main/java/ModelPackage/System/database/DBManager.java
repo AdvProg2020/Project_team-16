@@ -21,6 +21,7 @@ public class DBManager {
 
          }
          session.getTransaction().commit();
+         session.close();
          return object;
     }
 
@@ -29,6 +30,7 @@ public class DBManager {
         session.beginTransaction();
         session.saveOrUpdate(object);
         session.getTransaction().commit();
+        session.close();
     }
 
     public static void delete(Object object){
@@ -36,12 +38,14 @@ public class DBManager {
         session.beginTransaction();
         session.remove(object);
         session.getTransaction().commit();
+        session.close();
     }
 
     public static void InitialLoad(){
         Session session = HibernateUtil.getSessionFactory().openSession();
         ProductManager.getInstance().setAllProducts((ArrayList<Product>)loadAllData(Product.class,session));
         //CategoryManager.getInstance().setAllCategories((ArrayList<Category>)loadAllData(Category.class,session));
+        session.close();
     }
 
     private static <T> List<T> loadAllData(Class<T> type, Session session) {

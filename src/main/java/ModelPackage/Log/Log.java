@@ -23,7 +23,6 @@ public abstract class Log {
     public Log(Date date, DeliveryStatus deliveryStatus) {
         this.date = date;
         this.deliveryStatus = deliveryStatus;
-        this.logId = generateId();
     }
     private String generateId(){
         Date date = new Date();

@@ -44,6 +44,8 @@ public class HibernateUtil {
                     .addAnnotatedClass(SellerIntegerMap.class)
                     .addAnnotatedClass(SoldProductSellerMap.class)
                     .addAnnotatedClass(DiscountcodeIntegerMap.class)
+                    .addAnnotatedClass(CustomerInformation.class)
+                    .addAnnotatedClass(CustomerInformation.class)
                     .buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);

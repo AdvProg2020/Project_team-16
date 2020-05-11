@@ -3,6 +3,8 @@ package ModelPackage.Product;
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Users.Seller;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
@@ -39,7 +41,8 @@ public class Product {
     @Transient
     private String company;
 
-    @Transient
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.ALL,targetEntity = Seller.class)
     private List<Seller> allSellers;
 
     @ManyToOne
@@ -62,23 +65,25 @@ public class Product {
     private String description;
 
     @ElementCollection(targetClass = Score.class)
-        @OneToMany
+        @OneToMany(cascade = CascadeType.ALL)
     private List<Score> allScores;
 
     @Column(name = "TOTAL_SCORE")
     private double totalScore;
 
     @ElementCollection(targetClass = Comment.class)
-        @OneToMany
+        @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> allComments;
 
     @ElementCollection
-        @OneToMany(targetEntity = SellerIntegerMap.class)
-        @JoinColumn(name = "t_product_stock")
+    @LazyCollection(LazyCollectionOption.FALSE)
+        @OneToMany(targetEntity = SellerIntegerMap.class,cascade = CascadeType.ALL)
+        @JoinTable(name = "t_product_stock")
     private List<SellerIntegerMap> stock;
 
     @ElementCollection
-        @OneToMany(targetEntity = SellerIntegerMap.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+        @OneToMany(targetEntity = SellerIntegerMap.class,cascade = CascadeType.ALL)
         @JoinTable(name = "t_product_prices")
     private List<SellerIntegerMap> prices;
 

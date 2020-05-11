@@ -147,9 +147,10 @@ public class ProductManager {
 
     public int leastPriceOf(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
-        HashMap<String,Integer> prices = (HashMap<String, Integer>) product.getPrices();
+        List<SellerIntegerMap> prices = product.getPrices();
         int leastPrice = 2147483647;
-        for (Integer value : prices.values()) {
+        for (SellerIntegerMap map : prices) {
+            int value = map.getInteger();
             if(leastPrice > value) leastPrice = value;
         }
         return leastPrice;
@@ -159,14 +160,12 @@ public class ProductManager {
             throws NoSuchACategoryException, NoSuchAProductInCategoryException, NoSuchAProductException {
         Product product = findProductById(productId);
         allProducts.remove(product);
-        //CategoryManager.getInstance().removeProductFromCategory(productId,product.getCategoryId());
+        CategoryManager.getInstance().removeProductFromCategory(productId,product.getId());
 
         DBManager.delete(product);
     }
 
-    public void deleteProductCategoryOrder(int productId) throws NoSuchAProductException {
-        Product product = findProductById(productId);
-        allProducts.remove(product);
+    public void deleteProductCategoryOrder(Product product){
         DBManager.delete(product);
     }
 

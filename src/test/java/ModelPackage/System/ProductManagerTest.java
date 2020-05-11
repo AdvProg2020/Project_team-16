@@ -4,14 +4,13 @@ package ModelPackage.System;
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
-import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.Seller;
-import org.hibernate.Session;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.persistence.Temporal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,7 +28,7 @@ public class ProductManagerTest {
         productManager = ProductManager.getInstance();
     }
 
-   // @Test
+    @Test
     public void createDatabase(){
         company = new Company("Adidas","115", "Clothing",new ArrayList<>());
 
@@ -118,7 +117,7 @@ public class ProductManagerTest {
         DBManager.save(product2);
     }
 
-    /*@Test
+    @Test
     public void getInstanceTest(){
         ProductManager test = ProductManager.getInstance();
         Assert.assertEquals(test,productManager);
@@ -126,21 +125,23 @@ public class ProductManagerTest {
 
     @Test
     public void addAmountOfStockTest(){
-        productManager.addAmountOfStock(product.getId(),"reza120",8);
-        int expected = 20;
-        int actual = product.getStock().get("reza120");
+        productManager.addAmountOfStock(14,"reza120",1);
+        int expected = 13;
+        product = DBManager.load(Product.class,14);
+        int actual = product.getStock().get(1).getInteger();
         Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void addAmountOfStockNegativeNumTest(){
-        productManager.addAmountOfStock(product.getId(),"reza120",-8);
-        int expected = 4;
-        int actual = product.getStock().get("reza120");
+        productManager.addAmountOfStock(14,"reza120",-8);
+        int expected = 5;
+        product = DBManager.load(Product.class,14);
+        int actual = product.getStock().get(1).getInteger();
         Assert.assertEquals(expected,actual);
     }
 
-    @Test
+    /*@Test
     public void FindProductByIdTest(){
         Product found = productManager.findProductById("PR20200405332158465");
         Assert.assertEquals(product,found);

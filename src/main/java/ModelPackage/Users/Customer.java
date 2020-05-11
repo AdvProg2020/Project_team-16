@@ -18,18 +18,18 @@ public class Customer extends User {
     private long balance;
 
     @ElementCollection(targetClass = CustomerInformation.class)
-        @OneToMany
-        @JoinColumn(name = "CUSTOMER_INFO")
+        @OneToMany(cascade = CascadeType.ALL)
+        @JoinTable(name = "t_customer_info_map")
     private List<CustomerInformation> customerInformation;
 
     @ElementCollection(targetClass = PurchaseLog.class)
-        @OneToMany
-        @JoinColumn(name = "PURCHASE_LOGS")
+        @OneToMany(cascade = CascadeType.ALL)
+        @JoinTable(name = "t_customer_purchase_map")
     private List<PurchaseLog> purchaseLogs;
 
     @ElementCollection
-            @OneToMany
-            @JoinColumn(name = "CODE")
+            @OneToMany(cascade = CascadeType.ALL)
+            @JoinTable(name = "t_customer_discount_map")
     private List<DiscountcodeIntegerMap> discountCodes;
 
     public Customer(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart, long balance) {

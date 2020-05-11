@@ -6,8 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Builder
-@Embeddable
+@Entity
 @Table(name = "t_customerInfo")
 public class CustomerInformation {
     @Id
