@@ -103,7 +103,7 @@ public class SortManagerTest {
     @Test
     public void sortByBoughtAmountTest() {
         ArrayList<Product> expectedSortedProducts = new ArrayList<>();
-        list = sortManager.sort(toSortProduct, SortType.BOUGHTAMOUNT);
+        list = sortManager.sort(toSortProduct, SortType.BOUGHT_AMOUNT);
         expectedSortedProducts.add(product2);
         expectedSortedProducts.add(product1);
         expectedSortedProducts.add(product);

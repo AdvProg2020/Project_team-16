@@ -37,7 +37,7 @@ public class SortManager {
             case LESS_PRICE:
                 sortByLessPrice(list);
                 break;
-            case BOUGHTAMOUNT:
+            case BOUGHT_AMOUNT:
                 sortByBoughtAmount(list);
                 break;
             case SCORE:
