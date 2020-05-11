@@ -6,6 +6,9 @@ import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.product.AlreadyASeller;
+import ModelPackage.System.exeption.product.NoSuchAProductException;
+import ModelPackage.System.exeption.request.NoSuchARequestException;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
@@ -25,18 +28,18 @@ public class RequestManager {
     }
 
     public void addRequest(Request request){
-        requests.add(request);
         DBManager.save(request);
     }
 
-    public Request findRequestById(String id){
-        for (Request request : requests) {
-            if(request.getRequestId().equals(id))return request;
-        }
-        return null;
+    public Request findRequestById(int id)
+            throws NoSuchARequestException {
+        Request request = DBManager.load(Request.class,id);
+        if (request == null) throw new NoSuchARequestException(id);
+        else return request;
     }
 
-    public void accept(String requestId){
+    public void accept(int requestId)
+            throws NoSuchARequestException, AlreadyASeller, NoSuchAProductException {
         Request request = findRequestById(requestId);
         RequestType type = request.getRequestType();
         switch (type){
@@ -59,23 +62,25 @@ public class RequestManager {
         }
     }
 
-    private void acceptCreateProduct(Request request){
+    private void acceptCreateProduct(Request request) throws AlreadyASeller{
         Product product = request.getProduct();
         product.setProductStatus(ProductStatus.VERIFIED);
-        ProductManager.getInstance().addProductToList(product);
 
         Seller seller = request.getSeller();
-        seller.getProductIds().add(product.getProductId());
+        seller.getProducts().add(product);
+        ProductManager.getInstance().addASellerToProduct(product,seller);
+        DBManager.save(seller);
+        DBManager.delete(request);
     }
 
-    private void acceptEditProduct(Request request){
+    private void acceptEditProduct(Request request) throws NoSuchAProductException {
         Product product = request.getProduct();
+        product.setId(request.getIdOfRequestedItem());
         product.setProductStatus(ProductStatus.VERIFIED);
-        ProductManager productManager = ProductManager.getInstance();
-        Product toChange = productManager.findProductById(product.getId());
-        ArrayList<Product> products = productManager.getAllProducts();
-        products.set(products.indexOf(toChange),product);
-        productManager.setAllProducts(products);
+        Product productToRemove = ProductManager.getInstance().findProductById(request.getIdOfRequestedItem());
+        DBManager.save(product);
+        DBManager.delete(productToRemove);
+        DBManager.delete(request);
     }
 
     private void acceptCreateOff(Request request){
@@ -94,15 +99,16 @@ public class RequestManager {
         offs.set(offs.indexOf(offf),off);
     }
 
-    private void acceptAssignComment(Request request){
+    private void acceptAssignComment(Request request) throws NoSuchAProductException {
         Comment comment = request.getComment();
         comment.setStatus(CommentStatus.VERIFIED);
         ProductManager.getInstance().assignAComment(comment.getId(),comment);
     }
 
+    /*TODO*/
     private void acceptSeller(Request request) {
         Seller seller = request.getSeller();
-        AccountManager.getInstance().getUsers().add(seller);
+        /*AccountManager.getInstance().getUsers().add(seller);*/
 
         String sellerJson = new Gson().toJson(seller);
         try {
@@ -114,10 +120,10 @@ public class RequestManager {
         }
     }
 
-    public void decline(String requestId){
+    public void decline(int requestId) throws NoSuchARequestException {
         Request request = findRequestById(requestId);
-        /* TODO : remove from database */
-        requests.remove(request);
+        /* TODO : DELETE Extra Data from DB */
+        DBManager.delete(request);
     }
 
     public static RequestManager getInstance(){

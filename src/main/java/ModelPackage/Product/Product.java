@@ -18,7 +18,6 @@ import java.util.*;
 @Table(name = "t_product")
 @Indexed
 public class Product {
-    @Setter(AccessLevel.NONE)
     @Id @GeneratedValue @Column(name = "ID")
     private int id;
 

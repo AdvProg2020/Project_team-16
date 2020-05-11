@@ -26,21 +26,24 @@ public class Request {
     @Column(name = "REQUEST")
     String request;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "OFF")
     Off off;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "PRODUCT")
     Product product;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "COMMENT")
     Comment comment;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "SELLER")
     Seller seller;
+
+    @Column
+    private int idOfRequestedItem;
 
     public Request(User usernameHasRequested, RequestType requestType, String request,Object toChange) {
         this.userHasRequested = usernameHasRequested;

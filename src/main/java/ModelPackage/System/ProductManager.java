@@ -41,7 +41,7 @@ public class ProductManager {
         String requestStr = String.format("%s has requested to create Product \"%s\" with id %s",sellerId,product.getName(),product.getId());
         Seller seller = DBManager.load(Seller.class,sellerId);
         Request request = new Request(seller, RequestType.CREATE_PRODUCT,requestStr,product);
-        //RequestManager.getInstance().addRequest(request);
+        RequestManager.getInstance().addRequest(request);
     }
 
     public void editProduct(Product edited,String editor) throws NoSuchAProductException {
@@ -50,7 +50,7 @@ public class ProductManager {
         product.setProductStatus(ProductStatus.UNDER_EDIT);
         Seller seller = DBManager.load(Seller.class,editor);
         Request request = new Request(seller,RequestType.CHANGE_PRODUCT,requestStr,edited);
-        //RequestManager.getInstance().addRequest(request);
+        RequestManager.getInstance().addRequest(request);
     }
 
     public void addAmountOfStock(int productId, String sellerId,int amount){
@@ -83,18 +83,16 @@ public class ProductManager {
         return toReturn;
     }
 
-    public void addProductToList(Product product){
-        allProducts.add(product);
-    }
-
     public void addView(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         product.setView(product.getView()+1);
+        DBManager.save(product);
     }
 
     public void addBought(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         product.setBoughtAmount(product.getBoughtAmount()+1);
+        DBManager.save(product);
     }
 
     public void assignAComment(int productId, Comment comment) throws NoSuchAProductException {
@@ -102,6 +100,7 @@ public class ProductManager {
         ArrayList<Comment> comments = (ArrayList<Comment>) product.getAllComments();
         comments.add(comment);
         product.setAllComments(comments);
+        DBManager.save(product);
     }
 
     public void assignAScore(int productId, Score score) throws NoSuchAProductException {
@@ -111,6 +110,7 @@ public class ProductManager {
         scores.add(score);
         product.setAllScores(scores);
         product.setTotalScore((product.getTotalScore()*amount + score.getScore())/(amount+1));
+        DBManager.save(product);
     }
 
     public Comment[] showComments(int productId) throws NoSuchAProductException {
@@ -175,9 +175,8 @@ public class ProductManager {
         return allFeatures;
     }
 
-    public void addASellerToProduct(int productId,Seller seller,int amount,int price)
+    public void addASellerToProduct(Product product,Seller seller,int amount,int price)
             throws NoSuchAProductException, AlreadyASeller {
-        Product product = findProductById(productId);
         List<Seller> sellers = product.getAllSellers();
         if (!sellers.contains(seller)){
             sellers.add(seller);
@@ -187,6 +186,15 @@ public class ProductManager {
         else{
             throw new AlreadyASeller(seller.getUsername());
         }
+    }
+
+    public void addASellerToProduct(Product product,Seller seller)
+            throws  AlreadyASeller {
+        List<Seller> sellers = product.getAllSellers();
+        if (sellers.contains(seller)){
+            throw new AlreadyASeller(seller.getUsername());
+        }
+        DBManager.save(product);
     }
 
     private void addAmountToProductForNewSeller(Seller seller,Product product,int amount){
