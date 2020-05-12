@@ -6,11 +6,11 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
-@Builder
 @Entity
 @Table(name = "t_off")
 public class Off {
@@ -38,10 +38,9 @@ public class Off {
 
     @Column(name = "OFF_PERCENTAGE")
     private int offPercentage;
+
+    public Off(){
+        products = new ArrayList<>();
+    }
 }
 
-enum OffStatus{
-    CREATION,
-    EDIT,
-    ACCEPTED
-}

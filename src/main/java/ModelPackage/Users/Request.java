@@ -1,6 +1,7 @@
 package ModelPackage.Users;
 
 import ModelPackage.Off.Off;
+import ModelPackage.Off.OffChangeAttributes;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.Product;
 import lombok.AccessLevel;
@@ -26,7 +27,7 @@ public class Request {
 
     @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "OFF")
-    Off off;
+    OffChangeAttributes off;
 
     @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "PRODUCT")
@@ -51,8 +52,8 @@ public class Request {
         String className = toChange.getClass().getName();
 
         switch (className) {
-            case "ModelPackage.Off.Off":
-                off = (Off) toChange;
+            case "ModelPackage.Off.OffChangeAttributes":
+                off = (OffChangeAttributes) toChange;
                 break;
             case "ModelPackage.Product.Comment":
                 comment = (Comment) toChange;

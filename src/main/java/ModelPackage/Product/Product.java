@@ -95,6 +95,8 @@ public class Product {
     @Column(name = "LEAST_PRICE")
     private int leastPrice;
 
+    private boolean isOnOff = false;
+
     public Product(int id){this.id = id;}
 
     public Product(String name, String company, ArrayList<Seller> allSellers, String categoryId, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, List<SellerIntegerMap> stock, List<SellerIntegerMap> prices) {
