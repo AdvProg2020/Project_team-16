@@ -5,6 +5,7 @@ import ModelPackage.Log.SellLog;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.SubCart;
@@ -26,7 +27,6 @@ public class SellerManager {
     ProductManager productManager = ProductManager.getInstance();
     CategoryManager categoryManager = CategoryManager.getInstance();
     CSCLManager csclManager = CSCLManager.getInstance();
-
 
     public Company viewCompanyInformation(String username) {
         Seller seller = (Seller) accountManager.getUserByUsername(username);
@@ -75,6 +75,11 @@ public class SellerManager {
     public long getPriceFromProduct(Product product, String sellerId){
         HashMap<String, Integer> prices = product.getPrices();
         return prices.get(sellerId);
+    }
+
+    public void addASellLog(SellLog sellLog,Seller seller){
+        seller.getSellLogs().add(sellLog);
+        DBManager.save(seller);
     }
 
     // view off

@@ -28,6 +28,9 @@ public class Comment {
     @Column(name = "STATUS")
     private CommentStatus status;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Product product;
+
     @Column(name = "BOUGHT_THIS_PRODUCT")
     private boolean boughtThisProduct;
 

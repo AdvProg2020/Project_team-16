@@ -40,7 +40,7 @@ public class ProductManager {
         DBManager.save(product);
         String requestStr = String.format("%s has requested to create Product \"%s\" with id %s",sellerId,product.getName(),product.getId());
         Seller seller = DBManager.load(Seller.class,sellerId);
-        Request request = new Request(seller, RequestType.CREATE_PRODUCT,requestStr,product);
+        Request request = new Request(seller.getUsername(), RequestType.CREATE_PRODUCT,requestStr,product);
         RequestManager.getInstance().addRequest(request);
     }
 
@@ -49,7 +49,7 @@ public class ProductManager {
         Product product = findProductById(edited.getId());
         product.setProductStatus(ProductStatus.UNDER_EDIT);
         Seller seller = DBManager.load(Seller.class,editor);
-        Request request = new Request(seller,RequestType.CHANGE_PRODUCT,requestStr,edited);
+        Request request = new Request(seller.getUsername(),RequestType.CHANGE_PRODUCT,requestStr,edited);
         RequestManager.getInstance().addRequest(request);
     }
 
@@ -159,9 +159,8 @@ public class ProductManager {
     public void deleteProduct(int productId)
             throws NoSuchACategoryException, NoSuchAProductInCategoryException, NoSuchAProductException {
         Product product = findProductById(productId);
-        allProducts.remove(product);
         CategoryManager.getInstance().removeProductFromCategory(productId,product.getId());
-
+        CSCLManager.getInstance().removeProductFromCompany(product);
         DBManager.delete(product);
     }
 

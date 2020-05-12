@@ -3,6 +3,8 @@ package ModelPackage.Product;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,7 +28,8 @@ public class Company {
     private String group;
 
     @ElementCollection(targetClass = Product.class)
-        @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+        @OneToMany(cascade = CascadeType.ALL)
     private List<Product> productsIn;
 
     public Company(String name, String phone, String group) {

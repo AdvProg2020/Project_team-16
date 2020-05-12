@@ -1,117 +1,139 @@
 package ModelPackage.System;
 
 import ModelPackage.Log.DeliveryStatus;
-import ModelPackage.Log.Log;
 import ModelPackage.Log.PurchaseLog;
 import ModelPackage.Log.SellLog;
-import ModelPackage.Off.DiscountCode;
+import ModelPackage.Maps.SellerIntegerMap;
+import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Product.*;
-import ModelPackage.System.exeption.account.UserNotAvailableException;
+import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
+import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Data
 public class CSCLManager {
     private static CSCLManager csclManager = new CSCLManager();
-    private ArrayList<Company> allCompanies;
-    private ArrayList<Comment> allComments;
-    private ArrayList<Score> allScores;
-    private ArrayList<Log> allLogs;
 
-    private CSCLManager() {
-        this.allCompanies = new ArrayList<>();
-        this.allLogs = new ArrayList<>();
-        this.allScores = new ArrayList<>();
-        this.allComments = new ArrayList<>();
-    }
+    private CSCLManager() {}
 
     public static CSCLManager getInstance() {
         return csclManager;
     }
 
     public void createCompany(Company newCompany) {
-        allCompanies.add(newCompany);
+        DBManager.save(newCompany);
     }
 
-    public Company getCompanyByName(String companyName) {
-        for (Company company : allCompanies) {
-            if (companyName.equals(company.getName()))
-                return company;
-        }
-        return null;
+    public Company getCompanyById(int id)
+            throws NoSuchACompanyException {
+        Company company = DBManager.load(Company.class,id);
+        if (company == null) throw new NoSuchACompanyException(id);
+        else return company;
     }
 
-    public boolean doesCompanyExist(String companyName) {
-        for (Company company : allCompanies) {
-            if (companyName.equals(company.getName()))
-                return true;
-        }
-        return false;
+    public void editCompanyName(int id, String newName)
+            throws NoSuchACompanyException {
+        Company company = getCompanyById(id);
+        company.setName(newName);
+        DBManager.save(company);
     }
 
-    public void editCompanyName(String formerName, String newName) {
-        getCompanyByName(formerName).setName(newName);
+    public void editCompanyGroup(int id, String newGroup)
+            throws NoSuchACompanyException {
+        Company company = getCompanyById(id);
+        company.setGroup(newGroup);
+        DBManager.save(company);
     }
 
-    public void editCompanyGroup(String companyName, String newGroup) {
-        getCompanyByName(companyName).setGroup(newGroup);
+    public void addProductToCompany(int productId,int companyId)
+            throws NoSuchACompanyException, NoSuchAProductException {
+        Company company = getCompanyById(companyId);
+        Product product = ProductManager.getInstance().findProductById(productId);
+        company.getProductsIn().add(product);
+        product.setCompanyClass(company);
+        DBManager.save(product);
+        DBManager.save(company);
     }
 
-    public void addProductToCompany(int productId, String companyName) {
-        getCompanyByName(companyName).getProductsIn().add(ProductManager.getInstance().findProductById(productId));
+    public void removeProductFromCompany(int productId,int companyId)
+            throws NoSuchACompanyException, NoSuchAProductException {
+        Company company = getCompanyById(companyId);
+        company.getProductsIn().remove(ProductManager.getInstance().findProductById(productId));
+        DBManager.save(company);
     }
 
-    public void removeProductFromCompany(int productId, String companyName) {
-        getCompanyByName(companyName).getProductsIn().remove(ProductManager.getInstance().findProductById(productId));
+    public void removeProductFromCompany(Product product){
+        Company company = product.getCompanyClass();
+        company.getProductsIn().remove(product);
+        DBManager.save(company);
     }
 
     public void createComment(Comment comment) {
-        String requestStr = String.format("%s has requested to create comment with title %s and text %s \n with id " +
-                        "%s on product with id %s",
-                comment.getUserId(), comment.getTitle(), comment.getText(), comment.getId(), comment.getId());
+        String requestStr = String.format("User (%s) has requested to assign a comment on product (%d) :\n" +
+                "Title : %s\n" +
+                "Text : %s",comment.getUserId(),comment.getProduct().getId(),comment.getTitle(),comment.getText());
         Request request = new Request(comment.getUserId(), RequestType.ASSIGN_COMMENT, requestStr, comment);
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void addCommentToList(Comment comment) {
-        allComments.add(comment);
+    public boolean doesThisCommentExists(int commentId) {
+        Comment comment = DBManager.load(Comment.class,commentId);
+        return comment != null;
     }
 
-    public boolean doesThisCommentExists(String commentId) {
-        for (Comment comment : allComments) {
-            if (commentId.equals(comment.getId()))
-                return true;
-        }
-        return false;
-    }
-
-    public void createScore(String userId, int productId, int score) {
-        allScores.add(new Score(userId, productId, score));
+    public void createScore(String userId, int productId, int score)
+            throws NoSuchAProductException {
+        Score SCORE = new Score(userId,productId,score);
+        ProductManager.getInstance().assignAScore(productId,SCORE);
     }
 
     public void createSellLog(SubCart subCart, String buyerId, int discount) {
         Product product = subCart.getProduct();
-        int moneyGotten = 0;
-        for (String id : product.getPrices().keySet()) {
-            if (id.equals(subCart.getSellerId())) {
-                moneyGotten = product.getPrices().get(id) * subCart.getAmount();
+        int moneyGotten = findPrice(subCart);
+        User user = DBManager.load(User.class,buyerId);
+        SoldProduct soldProduct = new SoldProduct();
+        soldProduct.setSourceId(product.getId());
+        soldProduct.setSoldPrice(moneyGotten);
+        SellLog log = new SellLog(soldProduct,moneyGotten,discount,user,new Date(),DeliveryStatus.DEPENDING);
+        DBManager.save(soldProduct);
+        SellerManager.getInstance().addASellLog(log,subCart.getSeller());
+    }
+
+    public void createPurchaseLog(Cart cart, int discount,Customer customer) {
+        List<SoldProductSellerMap> map = new ArrayList<>();
+        int pricePaid = 0;
+        for (SubCart subCart : cart.getSubCarts()) {
+            SoldProduct soldProduct = new SoldProduct();
+            soldProduct.setSourceId(subCart.getProduct().getId());
+            int price = findPrice(subCart);
+            soldProduct.setSoldPrice(price);
+            pricePaid += price;
+            SoldProductSellerMap toAdd = new SoldProductSellerMap();
+            toAdd.setSeller(subCart.getSeller());
+            toAdd.setSoldProduct(soldProduct);
+            map.add(toAdd);
+        }
+        PurchaseLog log = new PurchaseLog(new Date(),DeliveryStatus.DEPENDING,map,pricePaid,discount);
+        DBManager.save(log);
+        CustomerManager.getInstance().addPrurchaseLog(log,customer);
+    }
+
+    private int findPrice(SubCart subCart){
+        int price = 0;
+        String sellerId = subCart.getSeller().getUsername();
+        for (SellerIntegerMap map : subCart.getProduct().getPrices()) {
+            if (map.thisIsTheMapKey(sellerId)) {
+                price = map.getInteger();
                 break;
             }
         }
-        allLogs.add(new SellLog(product, moneyGotten, discount, AccountManager.getInstance().getUserByUsername(buyerId),
-                new Date(), DeliveryStatus.DEPENDING));
-    }
-
-    public void createPurchaseLog(Cart cart, int discount) {
-        HashMap<String, String> productsAndTheirSellers = new HashMap<>();
-        for (SubCart subCart : cart.getSubCarts()) {
-            productsAndTheirSellers.put(subCart.getId(), subCart.getSellerId());
-        }
-        int pricePaid =(int)(cart.getTotalPrice() - (double)discount / 100 * cart.getTotalPrice());
-        allLogs.add(new PurchaseLog(new Date(), DeliveryStatus.DEPENDING, productsAndTheirSellers, pricePaid, discount));
+        return price;
     }
 }

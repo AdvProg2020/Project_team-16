@@ -1,17 +1,11 @@
 package ModelPackage.System;
 
 import ModelPackage.System.database.DBManager;
-import ModelPackage.System.exeption.SecondManagerByUserException;
 import ModelPackage.System.exeption.account.SameInfoException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.account.WrongPasswordException;
+import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
 import ModelPackage.Users.*;
-import com.google.gson.Gson;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class AccountManager {
@@ -28,7 +22,7 @@ public class AccountManager {
     private RequestManager requestManager = RequestManager.getInstance();
     private CSCLManager csclManager = CSCLManager.getInstance();
 
-    public void createAccount(String[] info, String type){
+    public void createAccount(String[] info, String type) throws NoSuchACompanyException {
         User user = null;
         switch (type){
             case "seller" : createSeller(info); break;
@@ -38,7 +32,7 @@ public class AccountManager {
         DBManager.save(user);
     }
 
-    private void createSeller(String[] info){
+    private void createSeller(String[] info) throws NoSuchACompanyException {
         Seller seller = new Seller(
                 info[0],
                 info[1],
@@ -47,7 +41,7 @@ public class AccountManager {
                 info[4],
                 info[5],
                 new Cart(),
-                csclManager.getCompanyByName(info[6]),
+                csclManager.getCompanyById(Integer.parseInt(info[6])),
                 Long.parseLong(info[7]));
         String requestStr = String.format("%s has requested to create a seller with email %s", info[0], info[4]);
         requestManager.addRequest(new Request(info[0],RequestType.REGISTER_SELLER,requestStr,seller));
@@ -115,12 +109,10 @@ public class AccountManager {
     }
 
     public User getUserByUsername(String username) {
-        for (User user : users) {
-            if (user.getUsername().equals(username)){
-                return user;
-            }
-        }
-        throw new UserNotAvailableException();
+        User user = DBManager.load(User.class,username);
+        if (user == null)
+            throw new UserNotAvailableException();
+        return user;
     }
 
     public boolean isUsernameAvailable(String username){

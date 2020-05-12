@@ -32,8 +32,8 @@ public class ManagerManager {
 
     public void deleteUser(String username) {
         User user = DBManager.load(User.class, username);
+        /*TODO : deleting user from products if a seller */
+        /* TODO : deleting every log */
         DBManager.delete(user);
     }
-
-
 }

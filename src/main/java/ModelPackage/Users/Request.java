@@ -16,9 +16,7 @@ public class Request {
     @Id @GeneratedValue
     private int requestId;
 
-    @OneToOne
-        @JoinColumn(name = "USER_HAS_REQUESTED")
-    User userHasRequested;
+    private String userHasRequested;
 
     @Enumerated(EnumType.STRING)
     RequestType requestType;
@@ -45,7 +43,7 @@ public class Request {
     @Column
     private int idOfRequestedItem;
 
-    public Request(User usernameHasRequested, RequestType requestType, String request,Object toChange) {
+    public Request(String usernameHasRequested, RequestType requestType, String request,Object toChange) {
         this.userHasRequested = usernameHasRequested;
         this.requestType = requestType;
         this.request = request;

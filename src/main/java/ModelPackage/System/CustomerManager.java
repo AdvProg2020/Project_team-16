@@ -84,4 +84,9 @@ public class CustomerManager {
             throw new NotEnoughMoneyException(difference);
         }
     }
+
+    public void addPrurchaseLog(PurchaseLog log,Customer customer){
+        customer.getPurchaseLogs().add(log);
+        DBManager.save(customer);
+    }
 }
