@@ -3,7 +3,6 @@ package ModelPackage.Maps;
 import ModelPackage.Off.DiscountCode;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -15,7 +14,7 @@ public class DiscountcodeIntegerMap {
     @Id@GeneratedValue
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "CODE")
     private DiscountCode discountCode;
 

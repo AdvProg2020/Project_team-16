@@ -16,7 +16,7 @@ public class SellerIntegerMap{
     @Id @GeneratedValue
     private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "SELLER")
     private Seller seller;
     @Column(name = "INTEGER_VALUE")

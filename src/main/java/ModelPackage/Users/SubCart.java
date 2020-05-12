@@ -24,9 +24,8 @@ public class SubCart{
     @Column(name = "AMOUNT")
     private int amount;
 
-    public SubCart(Product product, int productId, Seller seller, int amount) {
+    public SubCart(Product product, Seller seller, int amount) {
         this.product = product;
-        this.id = productId;
         this.seller = seller;
         this.amount = amount;
     }

@@ -29,7 +29,7 @@ public class DiscountCode {
 
     private long maxDiscount;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "USERS")
     private List<UserIntegerMap> users;
 

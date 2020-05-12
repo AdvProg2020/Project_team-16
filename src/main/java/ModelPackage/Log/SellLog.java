@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @Table(name = "t_sell_log")
 public class SellLog extends Log {
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "PRODUCT")
     private SoldProduct product;
 

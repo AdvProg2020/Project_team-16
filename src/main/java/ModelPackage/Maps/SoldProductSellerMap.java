@@ -17,11 +17,11 @@ public class SoldProductSellerMap {
     @Id @GeneratedValue
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name =  "SOLD_PRODUCT")
     private SoldProduct soldProduct;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "SELLER")
     private Seller seller;
 }

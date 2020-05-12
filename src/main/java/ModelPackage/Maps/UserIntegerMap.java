@@ -15,7 +15,7 @@ public class UserIntegerMap {
     @Id @GeneratedValue
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER")
     private User user;
 
