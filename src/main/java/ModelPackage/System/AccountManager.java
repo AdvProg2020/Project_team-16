@@ -116,17 +116,8 @@ public class AccountManager {
     }
 
     public boolean isUsernameAvailable(String username){
-        for (User user : users) {
-            if (user.getUsername().equals(username)){
-                return true;
-            }
-        }
-        return false;
+        User user = DBManager.load(User.class,username);
+        return user != null;
     }
 
-    public void checkIfIsFirstManager(){
-        if (/* TODO : search in database */) {
-            throw new SecondManagerByUserException();
-        }
-    }
 }

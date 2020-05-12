@@ -1,15 +1,11 @@
 package ModelPackage.System.database;
 
-import ModelPackage.Product.Category;
-import ModelPackage.Product.Product;
-//import ModelPackage.System.CategoryManager;
-import ModelPackage.System.ProductManager;
+import ModelPackage.Users.Manager;
 import org.hibernate.Session;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DBManager {
@@ -41,17 +37,17 @@ public class DBManager {
         session.close();
     }
 
-    public static void InitialLoad(){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        ProductManager.getInstance().setAllProducts((ArrayList<Product>)loadAllData(Product.class,session));
-        //CategoryManager.getInstance().setAllCategories((ArrayList<Category>)loadAllData(Category.class,session));
-        session.close();
-    }
 
-    private static <T> List<T> loadAllData(Class<T> type, Session session) {
+    private static <T> List<T> loadAllData(Class<T> type) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> criteria = builder.createQuery(type);
         criteria.from(type);
         return session.createQuery(criteria).getResultList();
+    }
+
+    public boolean checkIfIsTheFirstManager(){
+        List<Manager> list = loadAllData(Manager.class);
+        return !list.isEmpty();
     }
 }
