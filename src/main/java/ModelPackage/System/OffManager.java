@@ -104,5 +104,8 @@ public class OffManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-
+    public void delteOff(int id) throws NoSuchAOffException {
+        Off off = findOffById(id);
+        DBManager.delete(off);
+    }
 }
