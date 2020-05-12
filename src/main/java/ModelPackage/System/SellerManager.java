@@ -2,16 +2,14 @@ package ModelPackage.System;
 
 
 import ModelPackage.Log.SellLog;
-import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.SubCart;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class SellerManager {
@@ -23,10 +21,8 @@ public class SellerManager {
         return sellerManager;
     }
 
-    AccountManager accountManager = AccountManager.getInstance();
-    ProductManager productManager = ProductManager.getInstance();
-    CategoryManager categoryManager = CategoryManager.getInstance();
-    CSCLManager csclManager = CSCLManager.getInstance();
+    private AccountManager accountManager = AccountManager.getInstance();
+    private ProductManager productManager = ProductManager.getInstance();
 
     public Company viewCompanyInformation(String username) {
         Seller seller = (Seller) accountManager.getUserByUsername(username);
@@ -40,53 +36,27 @@ public class SellerManager {
 
     public List<Product> viewProducts(String username){
         Seller seller = (Seller) accountManager.getUserByUsername(username);
-
-        ArrayList<String> productIds = (ArrayList<String>) seller.getProductIds();
-        ArrayList<Product> products = new ArrayList<>();
-
-        for (String id : productIds) {
-            Product product = productManager.findProductById(id);
-            products.add(product);
-        }
-
-        return products;
+        return seller.getProducts();
     }
 
-    public List<Seller> viewSellersOfProduct (int productId){
+    public List<Seller> viewSellersOfProduct (int productId)
+            throws NoSuchAProductException {
         Product product = productManager.findProductById(productId);
-
         return product.getAllSellers();
-    }
-
-    public List<Category> viewAllCategories(){
-        return categoryManager.getAllCategories();
     }
 
     public void getMoneyFromSale(Cart cart){
         Seller seller;
         long price;
         for (SubCart subCart : cart.getSubCarts()) {
-            seller = (Seller) accountManager.getUserByUsername(subCart.getSellerId());
-            price = getPriceFromProduct(subCart.getProduct(), subCart.getSellerId());
+            seller = subCart.getSeller();
+            price = CSCLManager.getInstance().findPrice(subCart);
             seller.setBalance(seller.getBalance() + price * subCart.getAmount());
         }
-    }
-
-    public long getPriceFromProduct(Product product, String sellerId){
-        HashMap<String, Integer> prices = product.getPrices();
-        return prices.get(sellerId);
     }
 
     public void addASellLog(SellLog sellLog,Seller seller){
         seller.getSellLogs().add(sellLog);
         DBManager.save(seller);
     }
-
-    // view off
-
-    // add off
-
-    // edit off
-
-
 }

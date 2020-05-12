@@ -114,7 +114,7 @@ public class CSCLManager {
             soldProduct.setSourceId(subCart.getProduct().getId());
             int price = findPrice(subCart);
             soldProduct.setSoldPrice(price);
-            pricePaid += price;
+            pricePaid += price*subCart.getAmount();
             SoldProductSellerMap toAdd = new SoldProductSellerMap();
             toAdd.setSeller(subCart.getSeller());
             toAdd.setSoldProduct(soldProduct);
@@ -125,7 +125,7 @@ public class CSCLManager {
         CustomerManager.getInstance().addPrurchaseLog(log,customer);
     }
 
-    private int findPrice(SubCart subCart){
+    int findPrice(SubCart subCart){
         int price = 0;
         String sellerId = subCart.getSeller().getUsername();
         for (SellerIntegerMap map : subCart.getProduct().getPrices()) {
