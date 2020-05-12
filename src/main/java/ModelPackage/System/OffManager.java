@@ -66,5 +66,43 @@ public class OffManager {
         RequestManager.getInstance().addRequest(request);
     }
 
+    public void EditPercentageOfOff(User editor, int id, int percentage)
+            throws NoSuchAOffException {
+        findOffById(id);
+        OffChangeAttributes edit = new OffChangeAttributes();
+        edit.setPercentage(percentage);
+        edit.setTarget(id);
+        DBManager.save(edit);
+        String strRequest = String.format("%s requested to change percentage of off (%d) to %d",editor.getUsername(),id,percentage);
+        Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
+        RequestManager.getInstance().addRequest(request);
+    }
+
+    public void AddProductToOff(User editor, int id, int newProduct)
+            throws NoSuchAOffException, NoSuchAProductException {
+        findOffById(id);
+        ProductManager.getInstance().findProductById(id);
+        OffChangeAttributes edit = new OffChangeAttributes();
+        edit.setProductIdToAdd(newProduct);
+        edit.setTarget(id);
+        DBManager.save(edit);
+        String strRequest = String.format("%s requested to add product (%d) to off (%d)",editor.getUsername(),newProduct,id);
+        Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
+        RequestManager.getInstance().addRequest(request);
+    }
+
+    public void deleteProductFromOff(User editor, int id, int toDelete)
+            throws NoSuchAOffException, NoSuchAProductException {
+        findOffById(id);
+        ProductManager.getInstance().findProductById(id);
+        OffChangeAttributes edit = new OffChangeAttributes();
+        edit.setTarget(id);
+        edit.setProductIdToRemove(toDelete);
+        DBManager.save(edit);
+        String strRequest = String.format("%s requested to add product (%d) to off (%d)",editor.getUsername(),toDelete,id);
+        Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
+        RequestManager.getInstance().addRequest(request);
+    }
+
 
 }
