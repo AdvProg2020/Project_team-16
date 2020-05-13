@@ -24,7 +24,7 @@ public abstract class Menu {
         this.show();
         Scan scan = Scan.getInstance();
         while (true){
-            String command = scan.getLine();
+            String command = scan.getLine().trim();
             try {
                 executeValidCommand(command);
             } catch (InvalidCommandException e) {
@@ -97,4 +97,11 @@ public abstract class Menu {
     }
 
     abstract void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu;
+
+    void goToSubMenu(String submenu){
+        Data data = Data.getInstance();
+        Menu next = this.subMenus.get(submenu);
+        data.addMenuToHistory(next);
+        next.execute();
+    }
 }

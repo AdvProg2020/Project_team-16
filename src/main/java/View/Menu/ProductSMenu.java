@@ -34,17 +34,7 @@ public class ProductSMenu extends Menu{
     }
 
     @Override
-    protected void goToMenuIfAvailable(String menuName) throws NotSignedInYetException {
-        try {
-            super.goToMenuIfAvailable(menuName);
-        } catch (NotSignedInYetException e) {
-           throw new NotSignedInYetException();
-        } catch (NotAnAvailableMenu ee) {
-
-        }
-    }
-
-    private void goToSubMenusIfAvailable(String menuName){
+    void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu {
 
     }
 }

@@ -12,7 +12,9 @@ public class CommandProcessor {
 
     }
 
+    public static void createDiscountCode(String command){
 
+    }
 
 
 

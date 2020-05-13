@@ -1,5 +1,9 @@
 package View.Menu;
 
+import View.CommandProcessor;
+import View.exceptions.InvalidCommandException;
+import View.exceptions.NotAnAvailableMenu;
+
 import java.util.HashMap;
 
 public class ManagerMenu extends Menu {
@@ -21,5 +25,37 @@ public class ManagerMenu extends Menu {
 
         this.setSubMenus(subMenus);
         ManagerMenu.managerMenu = this;
+    }
+
+    @Override
+    void helpPrinter() {
+        /*TODO*/
+    }
+
+    @Override
+    void executeValidCommand(String command) throws InvalidCommandException {
+        if (command.trim().equalsIgnoreCase("create discount code")){
+            CommandProcessor.createDiscountCode(command);
+        }
+        else throw new InvalidCommandException();
+    }
+
+    @Override
+    void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu {
+        if (menuName.equalsIgnoreCase("view personal info")){
+            goToSubMenu("Personal Info Menu");
+        }else if (menuName.equalsIgnoreCase("manage users")){
+            goToSubMenu("Manage Users Menu");
+        }else if (menuName.equalsIgnoreCase("manage all products")){
+            goToSubMenu("Product Menu");
+        }else if (menuName.equalsIgnoreCase("view discount codes")){
+            goToSubMenu("Discount Code Menu");
+        }else if (menuName.equalsIgnoreCase("manage requests")){
+            goToSubMenu("Request Menu");
+        }else if (menuName.equalsIgnoreCase("manage categories")){
+            goToSubMenu("Category Menu");
+        }else {
+            throw new NotAnAvailableMenu();
+        }
     }
 }
