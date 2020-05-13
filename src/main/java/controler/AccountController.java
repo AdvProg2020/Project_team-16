@@ -39,4 +39,8 @@ public class AccountController {
 
         accountManager.changeInfo((String[]) info.toArray());
     }
+
+    public void logout(){
+        accountManager.logout(loggedInUser);
+    }
 }

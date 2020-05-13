@@ -140,8 +140,8 @@ public class AccountManager {
         user.setPassword(newInfo);
     }
 
-    public void logout(String username) {
-        getUserByUsername(username).setHasSignedIn(false);
+    public void logout(User user) {
+        user.setHasSignedIn(false);
     }
 
     private boolean isCorrectPassword(String username,String password) {
