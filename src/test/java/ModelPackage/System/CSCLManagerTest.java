@@ -1,7 +1,6 @@
 package ModelPackage.System;
 
 import ModelPackage.Product.*;
-import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -50,14 +49,14 @@ public class CSCLManagerTest {
     @Test
     public void getCompanyByNameTest() {
         String name = "Adidas";
-        Company actualCompany = csclManager.getCompanyByName(name);
+        Company actualCompany = csclManager.getCompanyById(name);
         Company expectedCompany = adidas;
         Assert.assertEquals(actualCompany, expectedCompany);
     }
     @Test
     public void  getCompanyByNameNotFoundTest() {
         String name = "Pish";
-        Company actualCompany = csclManager.getCompanyByName(name);
+        Company actualCompany = csclManager.getCompanyById(name);
         Assert.assertNull(actualCompany);
     }
     @Test
