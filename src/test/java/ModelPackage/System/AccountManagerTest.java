@@ -63,7 +63,6 @@ public class AccountManagerTest {
     @Test
     public void changeInfo() throws SameInfoException {
         String[] info = {"marmofayezi","password", "marmof.ir", "marmof.com"};
-        accountManager.getUsers().add(marmof);
         accountManager.changeInfo(info);
         String expected = "marmof.com";
         Assert.assertEquals(expected,marmof.getPassword());

@@ -79,25 +79,65 @@ public class AccountManager {
         }
     }
 
-    public void changeInfo(String[] info) throws SameInfoException {
+    public void changeInfo(String[] info) {
         String username = info[0];
         String type = info[1];
-        String previousInfo = info[2];
-        String newInfo = info[3];
-
-        if (previousInfo.equals(newInfo)){
-            throw new  SameInfoException(type);
-        }
+        String newInfo = info[2];
 
         User user = getUserByUsername(username);
 
         switch (type){
-            case "password" : user.setPassword(newInfo); break;
-            case "firstName" : user.setFirstName(newInfo); break;
-            case "lastName" : user.setLastName(newInfo); break;
-            case "email" : user.setEmail(newInfo); break;
-            case "phoneNumber" : user.setPhoneNumber(newInfo); break;
+            case "password" :
+                changePass(newInfo, user);
+                break;
+            case "firstName" :
+                changeFName(newInfo, user);
+                break;
+            case "lastName" :
+                changeLName(newInfo, user);
+                break;
+            case "email" :
+                changeEmail(newInfo, user);
+                break;
+            case "phoneNumber" :
+                changePhone(newInfo, user);
+                break;
         }
+    }
+
+    private void changePhone(String newInfo, User user) {
+        if (user.getPhoneNumber().equals(newInfo)){
+            throw new SameInfoException("Phone Number");
+        }
+        user.setPhoneNumber(newInfo);
+    }
+
+    private void changeEmail(String newInfo, User user) {
+        if (user.getEmail().equals(newInfo)){
+            throw new SameInfoException("Email");
+        }
+        user.setEmail(newInfo);
+    }
+
+    private void changeLName(String newInfo, User user) {
+        if (user.getLastName().equals(newInfo)){
+            throw new SameInfoException("Last Name");
+        }
+        user.setLastName(newInfo);
+    }
+
+    private void changeFName(String newInfo, User user) {
+        if (user.getFirstName().equals(newInfo)){
+            throw new SameInfoException("First Name");
+        }
+        user.setFirstName(newInfo);
+    }
+
+    private void changePass(String newInfo, User user) {
+        if (user.getPassword().equals(newInfo)){
+            throw new SameInfoException("Password");
+        }
+        user.setPassword(newInfo);
     }
 
     public void logout(String username) {
