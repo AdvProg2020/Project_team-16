@@ -44,4 +44,8 @@ public class Data {
         specialFeatures = new ArrayList<>();
         activeFilters = new HashMap<>();
     }
+
+    public void logout(){
+
+    }
 }

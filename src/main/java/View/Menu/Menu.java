@@ -26,7 +26,7 @@ public abstract class Menu {
         while (true){
             String command = scan.getLine();
             try {
-                processCommand(command);
+                executeValidCommand(command);
             } catch (InvalidCommandException e) {
                 try {
                     goToMenuIfAvailable(command);
@@ -49,8 +49,7 @@ public abstract class Menu {
         Data data = Data.getInstance();
         if (menuName.equalsIgnoreCase("help")) this.helpPrinter();
         else if(menuName.equalsIgnoreCase("login")
-                ||menuName.equalsIgnoreCase("create account")
-                ||menuName.equalsIgnoreCase("logout")) {
+                ||menuName.equalsIgnoreCase("create account")) {
             data.addMenuToHistory(AccountMenu.getInstance());
             AccountMenu.getInstance().execute();
         }else if (menuName.equalsIgnoreCase("main menu")){
@@ -66,14 +65,17 @@ public abstract class Menu {
             previous.execute();
         }else if (menuName.equalsIgnoreCase("exit")){
             System.exit(1);
-        }else{
+        }else if (menuName.equalsIgnoreCase("logout")){
+            data.logout();
+            this.execute();
+        } else{
             throw new NotAnAvailableMenu();
         }
     }
 
     abstract void helpPrinter();
 
-    abstract void processCommand(String command) throws InvalidCommandException;
+    abstract void executeValidCommand(String command) throws InvalidCommandException;
 
     private static void mainMenuExecutor(Data data) throws NotSignedInYetException {
         switch (data.getRole()){
