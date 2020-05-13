@@ -1,5 +1,6 @@
 package View.Menu;
 
+import View.exceptions.InvalidCommandException;
 import View.exceptions.NotAnAvailableMenu;
 import View.exceptions.NotSignedInYetException;
 
@@ -22,5 +23,8 @@ public class AccountMenu extends Menu {
 
     }
 
+    @Override
+    void processCommand(String command) throws InvalidCommandException {
 
+    }
 }

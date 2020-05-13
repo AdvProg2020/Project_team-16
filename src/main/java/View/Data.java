@@ -15,8 +15,8 @@ public class Data {
     }
 
     private String username;
-    private String categoryInId;
-    private String productSeeingInId;
+    private int categoryInId;
+    private int productSeeingInId;
     private String role;
     private Queue<Menu> menuHistory;
 

@@ -2,6 +2,8 @@ package View.Menu;
 
 import View.Data;
 import View.Printer;
+import View.Scan;
+import View.exceptions.InvalidCommandException;
 import View.exceptions.NotAnAvailableMenu;
 import View.exceptions.NotSignedInYetException;
 
@@ -20,7 +22,22 @@ public abstract class Menu {
 
     public void execute(){
         this.show();
-
+        Scan scan = Scan.getInstance();
+        while (true){
+            String command = scan.getLine();
+            try {
+                processCommand(command);
+            } catch (InvalidCommandException e) {
+                try {
+                    goToMenuIfAvailable(command);
+                    break;
+                } catch (NotAnAvailableMenu notAnAvailableMenu) {
+                    Printer.printMessage("Invalid Command! Enter a valid one : ");
+                } catch (NotSignedInYetException ex) {
+                    Printer.printMessage(ex.getMessage());
+                }
+            }
+        }
     }
 
     private void show(){
@@ -55,6 +72,8 @@ public abstract class Menu {
     }
 
     abstract void helpPrinter();
+
+    abstract void processCommand(String command) throws InvalidCommandException;
 
     private static void mainMenuExecutor(Data data) throws NotSignedInYetException {
         switch (data.getRole()){

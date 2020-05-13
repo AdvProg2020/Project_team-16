@@ -10,4 +10,8 @@ public class Printer {
         System.out.print(name);
         System.out.println("+----------------------------------------+");
     }
+
+    public static void printMessage(String message){
+        System.out.println(message);
+    }
 }
