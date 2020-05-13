@@ -16,6 +16,22 @@ public class CommandProcessor {
 
     }
 
+    public static void viewDiscountCode(String command){
+
+    }
+
+    public static void editDiscountCode(String command){
+
+    }
+
+    public static void removeDiscountCode(String command){
+
+    }
+
+    public static void viewDiscountCodes(){
+
+    }
+
     public static void addCategory(String command){
 
     }
