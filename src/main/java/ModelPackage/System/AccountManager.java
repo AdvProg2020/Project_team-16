@@ -71,7 +71,7 @@ public class AccountManager {
         );
     }
 
-    public void login(String username,String password) throws WrongPasswordException {
+    public void login(String username,String password) {
         if (isCorrectPassword(username, password)){
             getUserByUsername(username).setHasSignedIn(true);
         } else {
