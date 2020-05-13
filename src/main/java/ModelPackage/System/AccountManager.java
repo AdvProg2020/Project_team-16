@@ -22,7 +22,7 @@ public class AccountManager {
     private RequestManager requestManager = RequestManager.getInstance();
     private CSCLManager csclManager = CSCLManager.getInstance();
 
-    public void createAccount(String[] info, String type) throws NoSuchACompanyException {
+    public void createAccount(String[] info, String type) {
         User user = null;
         switch (type){
             case "seller" : createSeller(info); break;
@@ -32,7 +32,7 @@ public class AccountManager {
         DBManager.save(user);
     }
 
-    private void createSeller(String[] info) throws NoSuchACompanyException {
+    private void createSeller(String[] info) {
         Seller seller = new Seller(
                 info[0],
                 info[1],
