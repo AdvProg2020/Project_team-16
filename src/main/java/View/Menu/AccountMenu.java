@@ -3,7 +3,6 @@ package View.Menu;
 import View.CommandProcessor;
 import View.exceptions.InvalidCommandException;
 import View.exceptions.NotAnAvailableMenu;
-import View.exceptions.NotSignedInYetException;
 
 
 public class AccountMenu extends Menu {
@@ -14,10 +13,6 @@ public class AccountMenu extends Menu {
     }
     public static AccountMenu getInstance() {
         return accountMenu;
-    }
-
-    public void goToMenuIfAvailable(String input) throws NotAnAvailableMenu, NotSignedInYetException {
-        super.goToMenuIfAvailable(input);
     }
 
     @Override
@@ -34,5 +29,10 @@ public class AccountMenu extends Menu {
         }else{
             throw new InvalidCommandException();
         }
+    }
+
+    @Override
+    void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu {
+        throw new NotAnAvailableMenu();
     }
 }

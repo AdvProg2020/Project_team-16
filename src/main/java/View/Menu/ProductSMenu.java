@@ -1,5 +1,9 @@
 package View.Menu;
 
+import View.exceptions.InvalidCommandException;
+import View.exceptions.NotAnAvailableMenu;
+import View.exceptions.NotSignedInYetException;
+
 import java.util.HashMap;
 
 public class ProductSMenu extends Menu{
@@ -9,7 +13,7 @@ public class ProductSMenu extends Menu{
         return productSMenu;
     }
 
-    public ProductSMenu(Menu parent) {
+    ProductSMenu(Menu parent) {
         super("Products Menu",parent);
         HashMap<String,Menu> subMenus = new HashMap<String, Menu>();
         subMenus.put("Sort Menu",new SortMenu(this));
@@ -17,5 +21,30 @@ public class ProductSMenu extends Menu{
 
         this.setSubMenus(subMenus);
         productSMenu = this;
+    }
+
+    @Override
+    void helpPrinter() {
+        /* TODO */
+    }
+
+    @Override
+    void executeValidCommand(String command) throws InvalidCommandException {
+
+    }
+
+    @Override
+    protected void goToMenuIfAvailable(String menuName) throws NotSignedInYetException {
+        try {
+            super.goToMenuIfAvailable(menuName);
+        } catch (NotSignedInYetException e) {
+           throw new NotSignedInYetException();
+        } catch (NotAnAvailableMenu ee) {
+
+        }
+    }
+
+    private void goToSubMenusIfAvailable(String menuName){
+
     }
 }

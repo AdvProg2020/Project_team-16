@@ -69,7 +69,7 @@ public abstract class Menu {
             data.logout();
             this.execute();
         } else{
-            throw new NotAnAvailableMenu();
+            goToSubMenusIfAvailable(menuName);
         }
     }
 
@@ -95,4 +95,6 @@ public abstract class Menu {
                 throw new NotSignedInYetException();
         }
     }
+
+    abstract void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu;
 }
