@@ -16,7 +16,17 @@ public class CommandProcessor {
 
     }
 
+    public static void addCategory(String command){
 
+    }
+
+    public static void editCategory(String command){
+
+    }
+
+    public static void removeCategory(String command){
+
+    }
 
 
 
