@@ -44,7 +44,13 @@ public class CommandProcessor {
 
     }
 
+    public static void removeProduct(String command){
 
+    }
+
+    public static void showAllRequests(){
+
+    }
 
     protected static Matcher getMatcher(String input, String regex){
         Pattern pattern = Pattern.compile(regex);
