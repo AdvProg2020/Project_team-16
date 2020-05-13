@@ -20,11 +20,3 @@ public class Data {
     private HashMap<String,String> activeFilters;
     private boolean isOnOffMode;
 }
-
-enum SortType{
-    BY_NAME,
-    BY_VIEW,
-    BY_PRICE,
-    BY_BOUGHT_AMOUNT,
-    BT_TIME;
-}
