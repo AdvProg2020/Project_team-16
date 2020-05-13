@@ -3,6 +3,11 @@ package View.Menu;
 import java.util.HashMap;
 
 public class OFFSMenu extends Menu {
+    private static OFFSMenu offsMenu;
+
+    public static OFFSMenu getInstance() {
+        return offsMenu;
+    }
     public OFFSMenu(Menu parent){
         super("Offs Menu",parent);
         HashMap<String,Menu> subMenus = new HashMap<String, Menu>();
@@ -10,5 +15,6 @@ public class OFFSMenu extends Menu {
         subMenus.put("Filter Menu" ,new FilterMenu(this));
 
         this.setSubMenus(subMenus);
+        offsMenu = this;
     }
 }

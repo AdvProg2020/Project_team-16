@@ -1,8 +1,16 @@
 package View.Menu;
 
+import View.exceptions.NotAnAvailableMenu;
+
 import java.util.HashMap;
 
 public class CustomerMenu extends Menu {
+    private static CustomerMenu customerMenu;
+
+    public static CustomerMenu getInstance() {
+        return customerMenu;
+    }
+
     public CustomerMenu( Menu parent) {
         super("Customer Menu", parent);
         HashMap<String,Menu> subMenus = new HashMap<String, Menu>();
@@ -12,5 +20,16 @@ public class CustomerMenu extends Menu {
         subMenus.put("Order Menu",new OrderMenu(this));
 
         this.setSubMenus(subMenus);
+        CustomerMenu.customerMenu = this;
+    }
+
+    @Override
+    void helpPrinter() {
+
+    }
+
+    @Override
+    protected void goToMenuIfAvailable(String menuName) throws NotAnAvailableMenu {
+        super.goToMenuIfAvailable(menuName);
     }
 }

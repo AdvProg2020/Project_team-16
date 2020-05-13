@@ -4,10 +4,16 @@ import View.Menu.Menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Queue;
 
 @lombok.Data
 public class Data {
+    private static Data data;
+    public static Data getInstance() {
+        return data;
+    }
+
     private String username;
     private String categoryInId;
     private String productSeeingInId;
@@ -30,5 +36,12 @@ public class Data {
 
     public Menu dropLastMenu(){
         return menuHistory.poll();
+    }
+
+    private Data(){
+        menuHistory = new LinkedList<>();
+        publicFeatures = new ArrayList<>();
+        specialFeatures = new ArrayList<>();
+        activeFilters = new HashMap<>();
     }
 }

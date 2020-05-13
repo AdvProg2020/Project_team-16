@@ -3,6 +3,12 @@ package View.Menu;
 import java.util.HashMap;
 
 public class ManagerMenu extends Menu {
+    private static ManagerMenu managerMenu;
+
+    public static ManagerMenu getInstance() {
+        return managerMenu;
+    }
+
     public ManagerMenu(Menu parent) {
         super("Manager Menu", parent);
         HashMap<String,Menu> subMenus = new HashMap<String, Menu>();
@@ -14,5 +20,6 @@ public class ManagerMenu extends Menu {
         subMenus.put("Category Menu" ,new ManagerCategoryManager(this));
 
         this.setSubMenus(subMenus);
+        ManagerMenu.managerMenu = this;
     }
 }
