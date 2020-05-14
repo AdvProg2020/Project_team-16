@@ -2,8 +2,10 @@ package controler;
 
 import ModelPackage.Log.SellLog;
 import ModelPackage.Product.Company;
+import ModelPackage.Product.Product;
 import ModelPackage.Users.Seller;
 import View.PrintModels.CompanyPM;
+import View.PrintModels.MiniProductPM;
 import View.PrintModels.SellLogPM;
 
 import java.util.*;
@@ -19,8 +21,11 @@ public class SellerContoller extends Controller{
         List<SellLog> sellLogs = sellerManager.viewSalesHistory(sellerUserName);
         ArrayList<SellLogPM> sellLogPMs = new ArrayList<>();
         for (SellLog sellLog : sellLogs) {
-            sellLogPMs.add(new SellLogPM(sellLog.getProduct().getId(), sellLog.getMoneyGotten(),
-                    sellLog.getDiscount(), sellLog.getBuyer().getUsername(), sellLog.getDeliveryStatus()))
+            sellLogPMs.add(new SellLogPM(sellLog.getProduct().getId(),
+                    sellLog.getMoneyGotten(),
+                    sellLog.getDiscount(),
+                    sellLog.getBuyer().getUsername(),
+                    sellLog.getDeliveryStatus()));
         }
         return sellLogPMs;
     }
@@ -28,6 +33,21 @@ public class SellerContoller extends Controller{
     public long viewBalance(String sellerUserName) {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
         return seller.getBalance();
+    }
+
+    public List<MiniProductPM> manageProducts(String sellerUserName) {
+         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
+         List<Product> sellerProducts = seller.getProducts();
+         ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
+        for (Product sellerProduct : sellerProducts) {
+            miniProductPMs.add(new MiniProductPM(sellerProduct.getName(),
+                    sellerProduct.getId(),
+                    sellerProduct.getPrices(),
+                    sellerProduct.getCompany(),
+                    sellerProduct.getTotalScore(),
+                    sellerProduct.getDescription()));
+        }
+        return miniProductPMs;
     }
 
 }
