@@ -38,16 +38,11 @@ public class DBManager {
     }
 
 
-    private static <T> List<T> loadAllData(Class<T> type) {
+    public static <T> List<T> loadAllData(Class<T> type) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> criteria = builder.createQuery(type);
         criteria.from(type);
         return session.createQuery(criteria).getResultList();
-    }
-
-    public boolean checkIfIsTheFirstManager(){
-        List<Manager> list = loadAllData(Manager.class);
-        return !list.isEmpty();
     }
 }

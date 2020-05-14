@@ -22,7 +22,7 @@ public class AccountManager {
     private RequestManager requestManager = RequestManager.getInstance();
     private CSCLManager csclManager = CSCLManager.getInstance();
 
-    public void createAccount(String[] info, String type) throws NoSuchACompanyException {
+    public void createAccount(String[] info, String type) {
         User user = null;
         switch (type){
             case "seller" : createSeller(info); break;
@@ -32,7 +32,7 @@ public class AccountManager {
         DBManager.save(user);
     }
 
-    private void createSeller(String[] info) throws NoSuchACompanyException {
+    private void createSeller(String[] info) {
         Seller seller = new Seller(
                 info[0],
                 info[1],
@@ -71,37 +71,81 @@ public class AccountManager {
         );
     }
 
-    public void login(String username,String password) throws WrongPasswordException {
+    public String login(String username,String password) {
+        User user = getUserByUsername(username);
+
         if (isCorrectPassword(username, password)){
-            getUserByUsername(username).setHasSignedIn(true);
+            user.setHasSignedIn(true);
         } else {
             throw new WrongPasswordException(username);
         }
+
+        return user.getClass().toString().split(" ")[1];
     }
 
-    public void changeInfo(String[] info) throws SameInfoException {
+    public void changeInfo(String[] info) {
         String username = info[0];
         String type = info[1];
-        String previousInfo = info[2];
-        String newInfo = info[3];
-
-        if (previousInfo.equals(newInfo)){
-            throw new  SameInfoException(type);
-        }
+        String newInfo = info[2];
 
         User user = getUserByUsername(username);
 
         switch (type){
-            case "password" : user.setPassword(newInfo); break;
-            case "firstName" : user.setFirstName(newInfo); break;
-            case "lastName" : user.setLastName(newInfo); break;
-            case "email" : user.setEmail(newInfo); break;
-            case "phoneNumber" : user.setPhoneNumber(newInfo); break;
+            case "password" :
+                changePass(newInfo, user);
+                break;
+            case "firstName" :
+                changeFName(newInfo, user);
+                break;
+            case "lastName" :
+                changeLName(newInfo, user);
+                break;
+            case "email" :
+                changeEmail(newInfo, user);
+                break;
+            case "phoneNumber" :
+                changePhone(newInfo, user);
+                break;
         }
     }
 
-    public void logout(String username) {
-        getUserByUsername(username).setHasSignedIn(false);
+    private void changePhone(String newInfo, User user) {
+        if (user.getPhoneNumber().equals(newInfo)){
+            throw new SameInfoException("Phone Number");
+        }
+        user.setPhoneNumber(newInfo);
+    }
+
+    private void changeEmail(String newInfo, User user) {
+        if (user.getEmail().equals(newInfo)){
+            throw new SameInfoException("Email");
+        }
+        user.setEmail(newInfo);
+    }
+
+    private void changeLName(String newInfo, User user) {
+        if (user.getLastName().equals(newInfo)){
+            throw new SameInfoException("Last Name");
+        }
+        user.setLastName(newInfo);
+    }
+
+    private void changeFName(String newInfo, User user) {
+        if (user.getFirstName().equals(newInfo)){
+            throw new SameInfoException("First Name");
+        }
+        user.setFirstName(newInfo);
+    }
+
+    private void changePass(String newInfo, User user) {
+        if (user.getPassword().equals(newInfo)){
+            throw new SameInfoException("Password");
+        }
+        user.setPassword(newInfo);
+    }
+
+    public void logout(User user) {
+        user.setHasSignedIn(false);
     }
 
     private boolean isCorrectPassword(String username,String password) {

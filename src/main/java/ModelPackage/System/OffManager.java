@@ -36,7 +36,7 @@ public class OffManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-    Off findOffById(int id) throws NoSuchAOffException {
+    public Off findOffById(int id) throws NoSuchAOffException {
         Off off = DBManager.load(Off.class,id);
         if (off == null) throw new NoSuchAOffException(id);
         return off;
