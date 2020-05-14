@@ -6,6 +6,7 @@ import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
+import ModelPackage.System.exeption.off.NoSuchAOffException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import View.PrintModels.*;
@@ -71,6 +72,16 @@ public class SellerContoller extends Controller{
                     off.getOffPercentage()));
         }
         return offPMs;
+    }
+
+    public OffPM viewOff(int offId) throws NoSuchAOffException {
+        Off off = offManager.findOffById(offId);
+        return new OffPM(off.getOffId(),
+                addProductIdsToOffPM(off),
+                off.getSeller().getUsername(),
+                off.getStartTime(),
+                off.getEndTime(),
+                off.getOffPercentage());
     }
 
     private ArrayList<Integer> addProductIdsToOffPM(Off off) {
