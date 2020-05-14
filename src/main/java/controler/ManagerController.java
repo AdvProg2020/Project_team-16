@@ -57,7 +57,7 @@ public class ManagerController extends Controller {
     }
 
     public List<MiniProductPM> manageProducts(){
-        ArrayList<Product> products = productManager.getAllProducts();
+        List<Product> products = DBManager.loadAllData(Product.class);
         ArrayList<MiniProductPM> miniProductPMS = new ArrayList<>();
 
         for (Product product : products) {
