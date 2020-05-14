@@ -3,8 +3,10 @@ package controler;
 import ModelPackage.Log.SellLog;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
+import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import View.PrintModels.CompanyPM;
+import View.PrintModels.FullProductPM;
 import View.PrintModels.MiniProductPM;
 import View.PrintModels.SellLogPM;
 
@@ -40,14 +42,24 @@ public class SellerContoller extends Controller{
          List<Product> sellerProducts = seller.getProducts();
          ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
         for (Product sellerProduct : sellerProducts) {
-            miniProductPMs.add(new MiniProductPM(sellerProduct.getName(),
-                    sellerProduct.getId(),
-                    sellerProduct.getPrices(),
-                    sellerProduct.getCompany(),
-                    sellerProduct.getTotalScore(),
-                    sellerProduct.getDescription()));
+            miniProductPMs.add(createMiniProductPM(sellerProduct));
         }
         return miniProductPMs;
+    }
+
+    public FullProductPM viewProduct(int productId) throws NoSuchAProductException {
+         Product product = productManager.findProductById(productId);
+        return new FullProductPM(createMiniProductPM(product),
+                product.getSpecialFeatures());
+    }
+
+    private MiniProductPM createMiniProductPM(Product product) {
+         return new MiniProductPM(product.getName(),
+                 product.getId(),
+                 product.getPrices(),
+                 product.getCompany(),
+                 product.getTotalScore(),
+                 product.getDescription());
     }
 
 }
