@@ -128,7 +128,27 @@ public class ManagerController extends Controller {
         );
     }
 
-    public void editDiscountCode(){
+    public void editDiscountCode(String code, String whatToEdit, String newInfo) throws NoSuchADiscountCodeException,
+            ParseException, StartingDateIsAfterEndingDate {
 
+        switch (whatToEdit){
+            case "starting date" : editDiscountStartingDate(code, newInfo); break;
+            case "ending date" : editDiscountEndingDate(code, newInfo); break;
+
+        }
+    }
+
+    private void editDiscountStartingDate(String code, String newDate) throws ParseException,
+            StartingDateIsAfterEndingDate, NoSuchADiscountCodeException {
+        Date startTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(newDate);
+
+        discountManager.editDiscountStartingDate(code, startTime);
+    }
+
+    private void editDiscountEndingDate(String code, String newDate) throws ParseException,
+            StartingDateIsAfterEndingDate, NoSuchADiscountCodeException {
+        Date endTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(newDate);
+
+        discountManager.editDiscountStartingDate(code, endTime);
     }
 }
