@@ -248,7 +248,7 @@ public class CommandProcessor {
     
     }
 
-    public static void sellectSeller(){
+    public static void selectSeller(String command){
 
     }
 
