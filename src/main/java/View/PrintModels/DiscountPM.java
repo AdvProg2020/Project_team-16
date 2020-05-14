@@ -2,17 +2,17 @@ package View.PrintModels;
 
 import lombok.Data;
 
-import java.sql.Time;
+import java.util.Date;
 
 @Data
 public abstract class DiscountPM {
     private String discountCode;
-    private Time startTime;
-    private Time endTime;
+    private Date startTime;
+    private Date endTime;
     private int offPercentage;
-    private int maxOfPriceDiscounted;
+    private long maxOfPriceDiscounted;
 
-    public DiscountPM(String discountCode, Time startTime, Time endTime, int offPercentage, int maxOfPriceDiscounted) {
+    public DiscountPM(String discountCode, Date startTime, Date endTime, int offPercentage, long maxOfPriceDiscounted) {
         this.discountCode = discountCode;
         this.startTime = startTime;
         this.endTime = endTime;
