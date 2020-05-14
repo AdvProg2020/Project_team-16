@@ -151,7 +151,9 @@ public class AccountManager {
         user.setPassword(newInfo);
     }
 
-    public void logout(User user) {
+    public void logout(String username) {
+        User user = getUserByUsername(username);
+        checkIfUserHasLoggedIn(user);
         user.setHasSignedIn(false);
     }
 

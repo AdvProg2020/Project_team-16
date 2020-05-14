@@ -46,6 +46,6 @@ public class AccountController extends Controller {
     }
 
     public void logout(String username){
-        accountManager.logout(accountManager.getUserByUsername(username));
+        accountManager.logout(username);
     }
 }

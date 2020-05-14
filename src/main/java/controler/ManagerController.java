@@ -7,6 +7,7 @@ import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
+import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
 import View.PrintModels.*;
 
@@ -169,5 +170,25 @@ public class ManagerController extends Controller {
 
     public void removeDiscountCode(String code) throws NoSuchADiscountCodeException {
         discountManager.removeDiscount(code);
+    }
+
+    public List<RequestPM> manageRequests(){
+        List<Request> requests = DBManager.loadAllData(Request.class);
+        ArrayList<RequestPM> requestPMS = new ArrayList<>();
+
+        for (Request request : requests) {
+            requestPMS.add(createRequestPM(request));
+        }
+
+        return requestPMS;
+    }
+
+    private RequestPM createRequestPM(Request request){
+        return new RequestPM(
+                request.getUserHasRequested(),
+                request.getRequestId(),
+                request.getRequestType().toString(),
+                request.getRequest()
+        );
     }
 }
