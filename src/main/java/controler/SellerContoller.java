@@ -10,6 +10,7 @@ import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
+import ModelPackage.Users.User;
 import View.PrintModels.*;
 
 import java.text.ParseException;
@@ -96,6 +97,13 @@ public class SellerContoller extends Controller{
         dates[1] = endTime;
         int offPercentage = Integer.parseInt(data[2]);
         offManager.createOff(seller, dates, offPercentage);
+    }
+
+    public UserFullPM viewSellerPersonalInfo(String sellerUserName) {
+        User user = accountManager.getUserByUsername(sellerUserName);
+        return new UserFullPM(user.getUsername(), user.getFirstName(),
+                user.getLastName(), user.getEmail(),
+                user.getPhoneNumber(), "seller");
     }
 
     private ArrayList<Integer> addProductIdsToOffPM(Off off) {
