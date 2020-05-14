@@ -49,7 +49,7 @@ public class SellerContoller extends Controller{
     public FullProductPM viewProduct(int productId) throws NoSuchAProductException {
          Product product = productManager.findProductById(productId);
         return new FullProductPM(createMiniProductPM(product),
-                product.getSpecialFeatures());
+                mergeProductFeatures(product));
     }
 
     private MiniProductPM createMiniProductPM(Product product) {
@@ -59,6 +59,13 @@ public class SellerContoller extends Controller{
                  product.getCompany(),
                  product.getTotalScore(),
                  product.getDescription());
+    }
+
+    private Map<String, String> mergeProductFeatures(Product product) {
+         Map <String, String> features = new HashMap<>();
+         features.putAll(product.getPublicFeatures());
+         features.putAll(product.getSpecialFeatures());
+         return features;
     }
 
     public void removeProduct(int productId) throws NoSuchACategoryException,
