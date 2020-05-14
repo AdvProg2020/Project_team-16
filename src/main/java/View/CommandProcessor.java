@@ -187,6 +187,14 @@ public class CommandProcessor {
     public static void showCart(){
 
     }
+    
+    public static void showProductsInProductMenu(){
+    
+    }
+
+    public static void updateFilters(){
+
+    }
 
     private static Matcher getMatcher(String input, String regex){
         Pattern pattern = Pattern.compile(regex);
