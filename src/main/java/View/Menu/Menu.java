@@ -22,6 +22,7 @@ public abstract class Menu {
 
     public void execute(){
         this.show();
+        this.additionalPrints();
         Scan scan = Scan.getInstance();
         while (true){
             String command = scan.getLine().trim();
@@ -104,4 +105,6 @@ public abstract class Menu {
         data.addMenuToHistory(next);
         next.execute();
     }
+
+    abstract void additionalPrints();
 }

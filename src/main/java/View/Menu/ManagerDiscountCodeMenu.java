@@ -10,9 +10,8 @@ public class ManagerDiscountCodeMenu extends Menu {
     }
 
     @Override
-    public void execute() {
+    void additionalPrints() {
         CommandProcessor.viewDiscountCodes();
-        super.execute();
     }
 
     @Override

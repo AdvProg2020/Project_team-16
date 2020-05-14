@@ -58,4 +58,9 @@ public class SellerMenu extends Menu {
             throw new NotAnAvailableMenu();
         }
     }
+
+    @Override
+    void additionalPrints() {
+
+    }
 }

@@ -58,4 +58,9 @@ public class ManagerMenu extends Menu {
             throw new NotAnAvailableMenu();
         }
     }
+
+    @Override
+    void additionalPrints() {
+
+    }
 }

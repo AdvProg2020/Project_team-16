@@ -31,4 +31,9 @@ public class ManagerCategoryManager extends Menu {
     void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu {
         throw new NotAnAvailableMenu();
     }
+
+    @Override
+    void additionalPrints() {
+
+    }
 }

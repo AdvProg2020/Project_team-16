@@ -10,9 +10,8 @@ public class SellerProductMenu extends Menu{
     }
 
     @Override
-    public void execute() {
+    void additionalPrints() {
         CommandProcessor.viewAllProductSeller();
-        super.execute();
     }
 
     @Override
@@ -28,6 +27,8 @@ public class SellerProductMenu extends Menu{
             CommandProcessor.editProduct(command);
         }else if (command.startsWith("view buyers")){
             CommandProcessor.viewBuyersOfThisProduct(command);
+        }else if (command.startsWith("delete")) {
+            CommandProcessor.deleteProduct(command);
         }else {
             throw new InvalidCommandException();
         }

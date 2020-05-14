@@ -10,6 +10,11 @@ public class ManagerProductMenu extends Menu {
     }
 
     @Override
+    void additionalPrints() {
+
+    }
+
+    @Override
     void helpPrinter() {
         /*TODO*/
     }

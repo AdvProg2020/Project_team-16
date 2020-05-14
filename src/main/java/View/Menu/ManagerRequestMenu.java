@@ -10,9 +10,8 @@ public class ManagerRequestMenu extends Menu {
     }
 
     @Override
-    public void execute() {
+    void additionalPrints() {
         CommandProcessor.viewAllRequests();
-        super.execute();
     }
 
     @Override

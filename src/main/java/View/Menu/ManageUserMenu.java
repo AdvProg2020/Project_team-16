@@ -10,12 +10,6 @@ public class ManageUserMenu extends Menu {
     }
 
     @Override
-    public void execute() {
-        CommandProcessor.viewAllUsers();
-        super.execute();
-    }
-
-    @Override
     void helpPrinter() {
         /*TODO*/
     }
@@ -36,5 +30,10 @@ public class ManageUserMenu extends Menu {
     @Override
     void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu {
         throw new NotAnAvailableMenu();
+    }
+
+    @Override
+    void additionalPrints() {
+        CommandProcessor.viewAllUsers();
     }
 }
