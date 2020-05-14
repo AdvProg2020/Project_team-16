@@ -256,7 +256,9 @@ public class CommandProcessor {
 
     }
 
+    public static void showAllOffs(){
 
+    }
 
     private static Matcher getMatcher(String input, String regex){
         Pattern pattern = Pattern.compile(regex);

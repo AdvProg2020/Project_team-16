@@ -1,5 +1,6 @@
 package View.Menu;
 
+import View.CommandProcessor;
 import View.exceptions.InvalidCommandException;
 import View.exceptions.NotAnAvailableMenu;
 
@@ -29,16 +30,26 @@ public class OFFSMenu extends Menu {
 
     @Override
     void executeValidCommand(String command) throws InvalidCommandException {
-
+        if (command.startsWith("show product")){
+            CommandProcessor.viewProduct(command);
+        }else {
+            throw new InvalidCommandException();
+        }
     }
 
     @Override
     void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu {
-
+        if (menuName.equalsIgnoreCase("sorting")){
+            goToSubMenu("Sort Menu");
+        }else if (menuName.equalsIgnoreCase("filtering")){
+            goToSubMenu("Filter Menu");
+        }else {
+            throw new NotAnAvailableMenu();
+        }
     }
 
     @Override
     void additionalPrints() {
-
+        CommandProcessor.showAllOffs();
     }
 }
