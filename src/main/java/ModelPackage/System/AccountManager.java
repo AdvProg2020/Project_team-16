@@ -71,11 +71,21 @@ public class AccountManager {
         );
     }
 
-    public void login(String username,String password) {
+    public String login(String username,String password) {
+        User user = getUserByUsername(username);
+
         if (isCorrectPassword(username, password)){
-            getUserByUsername(username).setHasSignedIn(true);
+            user.setHasSignedIn(true);
         } else {
             throw new WrongPasswordException(username);
+        }
+
+        if (user.getClass().equals(Customer.class)){
+            return "customer";
+        } else if (user.getClass().equals(Seller.class)){
+            return "seller";
+        } else {
+            return "manager";
         }
     }
 

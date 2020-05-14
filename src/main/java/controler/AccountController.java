@@ -4,7 +4,6 @@ import ModelPackage.System.AccountManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.User;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +21,10 @@ public class AccountController {
         accountManager.createAccount(info, type);
     }
 
-    public void login(String username, String password) {
-        accountManager.login(username, password);
+    public String login(String username, String password) {
+        String type = accountManager.login(username, password);
         loggedInUser = accountManager.getUserByUsername(username);
+        return type;
     }
 
     public User viewPersonalInfo(){
