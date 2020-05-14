@@ -6,6 +6,7 @@ import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
+import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.AlreadyASeller;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
@@ -229,6 +230,18 @@ public class ManagerController extends Controller {
                 category.getName(),
                 category.getId()
         );
+    }
+
+    public void editCategory(int id){
+        /*TODO: edit*/
+    }
+
+    public void addCategory(String name, int parentId) throws RepeatedNameInParentCategoryExeption, NoSuchACategoryException {
+        categoryManager.createCategory(name, parentId);
+    }
+
+    public void removeCategory(int id) throws NoSuchACategoryException {
+        categoryManager.removeCategory(id);
     }
 
 
