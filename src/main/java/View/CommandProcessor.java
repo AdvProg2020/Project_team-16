@@ -80,6 +80,14 @@ public class CommandProcessor {
 
     }
 
+    public static void viewPersonalInfo(){
+
+    }
+
+    public static void editPersonalInfo(String command){
+
+    }
+
     
 
     private static Matcher getMatcher(String input, String regex){
