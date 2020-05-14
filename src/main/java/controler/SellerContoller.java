@@ -14,4 +14,15 @@ public class SellerContoller extends Controller{
          return new CompanyPM(company.getName(), company.getGroup(), company.getPhone());
      }
 
+    public SellLogPM[] viewSalesHistory(String sellerUserName) {
+        List<SellLog> sellLogs = sellerManager.viewSalesHistory(sellerUserName);
+        SellLogPM[] sellLogPMs = new SellLogPM[sellLogs.size()];
+        for (int i = 0; i < sellLogPMs.length; i++) {
+            sellLogPMs[i] = new SellLogPM(sellLogs.get(i).getProduct().getId(),
+                    sellLogs.get(i).getMoneyGotten(), sellLogs.get(i).getDiscount(),
+                    sellLogs.get(i).getBuyer().getUsername(), sellLogs.get(i).getDeliveryStatus());
+        }
+        return sellLogPMs;
+    }
+
 }
