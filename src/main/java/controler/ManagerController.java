@@ -10,9 +10,7 @@ import ModelPackage.System.exeption.discount.NotValidPercentageException;
 import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.User;
-import View.PrintModels.MiniProductPM;
-import View.PrintModels.UserFullPM;
-import View.PrintModels.UserMiniPM;
+import View.PrintModels.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -96,12 +94,38 @@ public class ManagerController extends Controller {
         discountManager.createDiscountCode(startTime, endTime, offPercentage, maxDiscount);
     }
 
-    public List<DiscountCode> viewDiscountCodes(){
-        return DBManager.loadAllData(DiscountCode.class);
+    public List<DiscountMiniPM> viewDiscountCodes(){
+        List<DiscountCode> discountCodes = DBManager.loadAllData(DiscountCode.class);
+        ArrayList<DiscountMiniPM> disCodeManagerPMS = new ArrayList<>();
+
+        for (DiscountCode discountCode : discountCodes) {
+            disCodeManagerPMS.add(createDiscountCodePM(discountCode));
+        }
+
+        return disCodeManagerPMS;
     }
 
-    public DiscountCode viewDiscountCode(String code) throws NoSuchADiscountCodeException {
-        return discountManager.showDiscountCode(code);
+    private DiscountMiniPM createDiscountCodePM(DiscountCode discountCode){
+        return new DiscountMiniPM(
+                discountCode.getCode(),
+                discountCode.getOffPercentage()
+        );
+    }
+
+    public DisCodeManagerPM viewDiscountCode(String code) throws NoSuchADiscountCodeException {
+        DiscountCode discountCode = discountManager.showDiscountCode(code);
+        return createDiscountCodeManagerPM(discountCode);
+    }
+
+    private DisCodeManagerPM createDiscountCodeManagerPM(DiscountCode discountCode){
+        return new DisCodeManagerPM(
+                discountCode.getCode(),
+                discountCode.getStartTime(),
+                discountCode.getEndTime(),
+                discountCode.getOffPercentage(),
+                discountCode.getMaxDiscount(),
+                discountCode.getUsers()
+        );
     }
 
     public void editDiscountCode(){
