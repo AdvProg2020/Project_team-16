@@ -1,5 +1,8 @@
 package View.Menu;
 
+import View.exceptions.InvalidCommandException;
+import View.exceptions.NotAnAvailableMenu;
+
 import java.util.HashMap;
 
 public class OFFSMenu extends Menu {
@@ -8,6 +11,7 @@ public class OFFSMenu extends Menu {
     public static OFFSMenu getInstance() {
         return offsMenu;
     }
+
     public OFFSMenu(Menu parent){
         super("Offs Menu",parent);
         HashMap<String,Menu> subMenus = new HashMap<String, Menu>();
@@ -16,5 +20,20 @@ public class OFFSMenu extends Menu {
 
         this.setSubMenus(subMenus);
         offsMenu = this;
+    }
+
+    @Override
+    void helpPrinter() {
+        /*TODO*/
+    }
+
+    @Override
+    void executeValidCommand(String command) throws InvalidCommandException {
+
+    }
+
+    @Override
+    void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu {
+
     }
 }

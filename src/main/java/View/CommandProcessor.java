@@ -64,7 +64,21 @@ public class CommandProcessor {
 
     }
 
+    public static void viewAllUsers(){
 
+    }
+
+    public static void viewUser(String command){
+
+    }
+
+    public static void deleteUser(String command){
+
+    }
+
+    public static void createManagerProfile(){
+
+    }
 
     
 
