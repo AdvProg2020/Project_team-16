@@ -4,10 +4,9 @@ import View.CommandProcessor;
 import View.exceptions.InvalidCommandException;
 import View.exceptions.NotAnAvailableMenu;
 
-public class OrderMenu extends Menu {
-
-    public OrderMenu(Menu parent) {
-        super("Order Menu" , parent);
+public class ManageUserMenu extends Menu {
+    public ManageUserMenu(Menu parent) {
+        super("Manage Users menu",parent);
     }
 
     @Override
@@ -17,10 +16,12 @@ public class OrderMenu extends Menu {
 
     @Override
     void executeValidCommand(String command) throws InvalidCommandException {
-        if (command.startsWith("show order")){
-            CommandProcessor.showOrder(command);
-        }else if (command.startsWith("rate")){
-            CommandProcessor.rateOrder(command);
+        if (command.startsWith("view")){
+            CommandProcessor.viewUser(command);
+        }else if (command.startsWith("delete user")){
+            CommandProcessor.deleteUser(command);
+        }else if (command.equalsIgnoreCase("create manager profile")){
+            CommandProcessor.createManagerProfile();
         }else {
             throw new InvalidCommandException();
         }
@@ -33,6 +34,6 @@ public class OrderMenu extends Menu {
 
     @Override
     void additionalPrints() {
-        CommandProcessor.showOrders();
+        CommandProcessor.viewAllUsers();
     }
 }

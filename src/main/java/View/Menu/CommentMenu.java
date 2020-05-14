@@ -4,15 +4,9 @@ import View.CommandProcessor;
 import View.exceptions.InvalidCommandException;
 import View.exceptions.NotAnAvailableMenu;
 
-public class PersonalInfoMenu extends Menu {
-    public PersonalInfoMenu(Menu parent) {
-        super("Personal Info Menu" , parent);
-    }
-
-    @Override
-    public void execute() {
-        CommandProcessor.viewPersonalInfo();
-        super.execute();
+public class CommentMenu extends Menu {
+    public CommentMenu(Menu parent){
+        super("Comment Menu",parent);
     }
 
     @Override
@@ -22,9 +16,9 @@ public class PersonalInfoMenu extends Menu {
 
     @Override
     void executeValidCommand(String command) throws InvalidCommandException {
-        if (command.startsWith("edit")){
-            CommandProcessor.editPersonalInfo(command);
-        }else {
+        if (command.equalsIgnoreCase("add comment")){
+            CommandProcessor.addAComment();
+        }else{
             throw new InvalidCommandException();
         }
     }
@@ -32,5 +26,10 @@ public class PersonalInfoMenu extends Menu {
     @Override
     void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu {
         throw new NotAnAvailableMenu();
+    }
+
+    @Override
+    void additionalPrints() {
+        CommandProcessor.showAllComments();
     }
 }
