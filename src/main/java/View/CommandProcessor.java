@@ -195,6 +195,22 @@ public class CommandProcessor {
     public static void updateFilters(){
 
     }
+    
+    public static void showAvailableFilters(){
+    
+    }
+
+    public static void filter(String command){
+
+    }
+
+    public static void curruntFilters(){
+
+    }
+
+    public static void disableAFilter(String command){
+
+    }
 
     private static Matcher getMatcher(String input, String regex){
         Pattern pattern = Pattern.compile(regex);
