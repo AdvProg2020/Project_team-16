@@ -7,8 +7,7 @@ import ModelPackage.Users.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountController {
-    private AccountManager accountManager = AccountManager.getInstance();
+public class AccountController extends Controller {
     private User loggedInUser;
 
     public void usernameInitialCheck(String username){
