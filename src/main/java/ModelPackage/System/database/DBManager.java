@@ -45,9 +45,4 @@ public class DBManager {
         criteria.from(type);
         return session.createQuery(criteria).getResultList();
     }
-
-    public boolean checkIfIsTheFirstManager(){
-        List<Manager> list = loadAllData(Manager.class);
-        return !list.isEmpty();
-    }
 }

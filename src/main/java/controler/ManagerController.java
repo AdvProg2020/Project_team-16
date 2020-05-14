@@ -24,6 +24,10 @@ public class ManagerController extends Controller {
         managerManager.deleteUser(username);
     }
 
+    public void createManagerProfile(String[] info){
+        managerManager.createManagerProfile(info);
+    }
+
     public void createDiscount(String[] data) throws ParseException,
             NotValidPercentageException, StartingDateIsAfterEndingDate {
         Date startTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[0]);
