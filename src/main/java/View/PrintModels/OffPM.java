@@ -1,14 +1,25 @@
 package View.PrintModels;
 
 import lombok.Data;
-import java.sql.Time;
+
+import java.util.Date;
+import java.util.ArrayList;
 
 @Data
 public class OffPM {
-    private String offId;
-    private String[] productNames;
+    private int offId;
+    private ArrayList<Integer> productIds;
     private String seller;
-    private Time startTime;
-    private Time endTime;
+    private Date startTime;
+    private Date endTime;
     private int offPercentage;
+
+    public OffPM(int offId, ArrayList<Integer> productIds, String seller, Date startTime, Date endTime, int offPercentage) {
+        this.offId = offId;
+        this.productIds = productIds;
+        this.seller = seller;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.offPercentage = offPercentage;
+    }
 }
