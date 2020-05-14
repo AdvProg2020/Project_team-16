@@ -5,10 +5,7 @@ import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
-import ModelPackage.System.exeption.discount.NegativeMaxDiscountException;
-import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
-import ModelPackage.System.exeption.discount.NotValidPercentageException;
-import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
+import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.User;
 import View.PrintModels.*;
@@ -130,13 +127,14 @@ public class ManagerController extends Controller {
     }
 
     public void editDiscountCode(String code, String whatToEdit, String newInfo) throws NoSuchADiscountCodeException,
-            ParseException, StartingDateIsAfterEndingDate, NotValidPercentageException, NegativeMaxDiscountException {
-
+            ParseException, StartingDateIsAfterEndingDate, NotValidPercentageException,
+            NegativeMaxDiscountException, UserNotExistedInDiscountCodeException {
         switch (whatToEdit){
             case "starting date" : editDiscountStartingDate(code, newInfo); break;
             case "ending date" : editDiscountEndingDate(code, newInfo); break;
             case "off percentage" : editDiscountOffPercentage(code, newInfo);
             case "max discount" : editDiscountMaxDiscount(code, newInfo);
+            case "remove user" : removeUserFromDiscountCodeUsers(code, newInfo);
         }
     }
 
@@ -162,5 +160,14 @@ public class ManagerController extends Controller {
     private void editDiscountMaxDiscount(String code, String newInfo) throws NegativeMaxDiscountException, NoSuchADiscountCodeException {
         long newMaxDiscount = Long.parseLong(newInfo);
         discountManager.editDiscountMaxDiscount(code, newMaxDiscount);
+    }
+
+    private void removeUserFromDiscountCodeUsers(String code, String username) throws UserNotExistedInDiscountCodeException, NoSuchADiscountCodeException {
+        User user = accountManager.getUserByUsername(username);
+        discountManager.removeUserFromDiscountCodeUsers(code, user);
+    }
+
+    public void removeDiscountCode(String code) throws NoSuchADiscountCodeException {
+        discountManager.removeDiscount(code);
     }
 }
