@@ -1,8 +1,12 @@
 package controler;
 
+import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.category.NoSuchACategoryException;
+import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.discount.NotValidPercentageException;
 import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
+import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.User;
 
 import java.text.ParseException;
@@ -26,6 +30,15 @@ public class ManagerController extends Controller {
 
     public void createManagerProfile(String[] info){
         managerManager.createManagerProfile(info);
+    }
+
+    public List<Product> manageProducts(){
+        return productManager.getAllProducts();
+    }
+
+    public void removeProduct(int productId) throws NoSuchACategoryException,
+            NoSuchAProductInCategoryException, NoSuchAProductException {
+        productManager.deleteProduct(productId);
     }
 
     public void createDiscount(String[] data) throws ParseException,
