@@ -1,9 +1,8 @@
 package controler;
 
-import ModelPackage.System.AccountManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.User;
-import View.PrintModels.UserPM;
+import View.PrintModels.UserFullPM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +26,8 @@ public class AccountController extends Controller {
         return type;
     }
 
-    public UserPM viewPersonalInfo(){
-        return new UserPM(
+    public UserFullPM viewPersonalInfo(){
+        return new UserFullPM(
                 loggedInUser.getUsername(),
                 loggedInUser.getFirstName(),
                 loggedInUser.getLastName(),

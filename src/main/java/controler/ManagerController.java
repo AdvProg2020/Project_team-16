@@ -11,6 +11,8 @@ import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.User;
 import View.PrintModels.MiniProductPM;
+import View.PrintModels.UserFullPM;
+import View.PrintModels.UserMiniPM;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,12 +22,34 @@ import java.util.List;
 
 public class ManagerController extends Controller {
 
-    public List<User> manageUsers () {
-        return DBManager.loadAllData(User.class);
+    public List<UserMiniPM> manageUsers () {
+        List<User> users = DBManager.loadAllData(User.class);
+        ArrayList<UserMiniPM> userMiniPMS = new ArrayList<>();
+
+        for (User user : users) {
+            userMiniPMS.add(createUserMiniPM(user));
+        }
+
+        return userMiniPMS;
     }
 
-    public User viewUser(String username){
-        return accountManager.getUserByUsername(username);
+    private UserMiniPM createUserMiniPM(User user){
+        return new UserMiniPM(
+                user.getUsername(),
+                user.getClass().toString().split(" ")[1]
+        );
+    }
+
+    public UserFullPM viewUser(String username){
+        User user = accountManager.getUserByUsername(username);
+        return new UserFullPM(
+                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhoneNumber(),
+                user.getClass().toString().split(" ")[1]
+        );
     }
 
     public void deleteUser(String username){
