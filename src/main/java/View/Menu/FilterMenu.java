@@ -21,7 +21,7 @@ public class FilterMenu extends Menu {
         }else if (command.startsWith("filter")){
             CommandProcessor.filter(command);
         }else if (command.equalsIgnoreCase("current filters")){
-            CommandProcessor.curruntFilters();
+            CommandProcessor.currentFilters();
         }else if (command.startsWith("disable a filter")){
             CommandProcessor.disableAFilter(command);
         }else {

@@ -204,11 +204,27 @@ public class CommandProcessor {
 
     }
 
-    public static void curruntFilters(){
+    public static void currentFilters(){
 
     }
 
     public static void disableAFilter(String command){
+
+    }
+    
+    public static void showAvailableSorts(){
+    
+    }
+    
+    public static void sort(String command){
+    
+    }
+
+    public static void currentSort(){
+
+    }
+
+    public static void disableSort(){
 
     }
 

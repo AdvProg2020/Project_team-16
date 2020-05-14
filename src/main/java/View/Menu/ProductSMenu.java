@@ -47,8 +47,11 @@ public class ProductSMenu extends Menu{
             goToSubMenu("Filter Menu");
         } else if (menuName.equalsIgnoreCase("sorting")){
             goToSubMenu("Sort Menu");
+        } else {
+            throw new NotAnAvailableMenu();
         }
     }
+
     @Override
     void additionalPrints() {
 
