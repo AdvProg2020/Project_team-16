@@ -3,6 +3,7 @@ package controler;
 import ModelPackage.System.AccountManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.User;
+import View.PrintModels.UserPM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,15 @@ public class AccountController extends Controller {
         return type;
     }
 
-    public User viewPersonalInfo(){
-        return loggedInUser;
+    public UserPM viewPersonalInfo(){
+        return new UserPM(
+                loggedInUser.getUsername(),
+                loggedInUser.getFirstName(),
+                loggedInUser.getLastName(),
+                loggedInUser.getEmail(),
+                loggedInUser.getPhoneNumber(),
+                loggedInUser.getClass().toString().split(" ")[1]
+        );
     }
 
     public void editPersonalInfo(String type, String newInfo){

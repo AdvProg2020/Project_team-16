@@ -80,13 +80,7 @@ public class AccountManager {
             throw new WrongPasswordException(username);
         }
 
-        if (user.getClass().equals(Customer.class)){
-            return "customer";
-        } else if (user.getClass().equals(Seller.class)){
-            return "seller";
-        } else {
-            return "manager";
-        }
+        return user.getClass().toString().split(" ")[1];
     }
 
     public void changeInfo(String[] info) {

@@ -10,6 +10,14 @@ public class UserPM {
     private String lastName;
     private String email;
     private String phoneNumber;
-    private String shippingAddress;
     private String role;
+
+    public UserPM(String username, String firstName, String lastName, String email, String phoneNumber, String role) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+    }
 }
