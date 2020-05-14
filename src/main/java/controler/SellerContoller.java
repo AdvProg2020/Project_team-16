@@ -5,7 +5,7 @@ import ModelPackage.Product.Company;
 import View.PrintModels.CompanyPM;
 import View.PrintModels.SellLogPM;
 
-import java.util.List;
+import java.util.*;
 
 public class SellerContoller extends Controller{
 
@@ -14,13 +14,12 @@ public class SellerContoller extends Controller{
          return new CompanyPM(company.getName(), company.getGroup(), company.getPhone());
      }
 
-    public SellLogPM[] viewSalesHistory(String sellerUserName) {
+    public List<SellLogPM> viewSalesHistory(String sellerUserName) {
         List<SellLog> sellLogs = sellerManager.viewSalesHistory(sellerUserName);
-        SellLogPM[] sellLogPMs = new SellLogPM[sellLogs.size()];
-        for (int i = 0; i < sellLogPMs.length; i++) {
-            sellLogPMs[i] = new SellLogPM(sellLogs.get(i).getProduct().getId(),
-                    sellLogs.get(i).getMoneyGotten(), sellLogs.get(i).getDiscount(),
-                    sellLogs.get(i).getBuyer().getUsername(), sellLogs.get(i).getDeliveryStatus());
+        ArrayList<SellLogPM> sellLogPMs = new ArrayList<>();
+        for (SellLog sellLog : sellLogs) {
+            sellLogPMs.add(new SellLogPM(sellLog.getProduct().getId(), sellLog.getMoneyGotten(),
+                    sellLog.getDiscount(), sellLog.getBuyer().getUsername(), sellLog.getDeliveryStatus()))
         }
         return sellLogPMs;
     }
