@@ -88,7 +88,25 @@ public class CommandProcessor {
 
     }
 
-    
+    public static void viewCompanyInformation(){
+
+    }
+
+    public static void viewSalesHistory(){
+
+    }
+
+    public static void addProduct(){
+
+    }
+
+    public static void showCategories(){
+
+    }
+
+    public static void viewBalanceSeller(){
+
+    }
 
     private static Matcher getMatcher(String input, String regex){
         Pattern pattern = Pattern.compile(regex);

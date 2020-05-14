@@ -2,7 +2,6 @@ package View.Menu;
 
 import View.exceptions.InvalidCommandException;
 import View.exceptions.NotAnAvailableMenu;
-import View.exceptions.NotSignedInYetException;
 
 import java.util.HashMap;
 
