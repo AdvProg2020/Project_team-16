@@ -14,4 +14,6 @@ public abstract class Menu {
         this.name = name;
         this.parent = parent;
     }
+
+    //public abstract boolean isAValidMenu(String input);
 }

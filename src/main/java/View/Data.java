@@ -1,7 +1,10 @@
 package View;
 
+import View.Menu.Menu;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Queue;
 
 @lombok.Data
 public class Data {
@@ -9,6 +12,7 @@ public class Data {
     private String categoryInId;
     private String productSeeingInId;
     private String role;
+    private Queue<Menu> menuHistory;
 
     /* Filter And Sort Options */
     private boolean isAscending;
@@ -19,4 +23,12 @@ public class Data {
     private ArrayList<String> specialFeatures;
     private HashMap<String,String> activeFilters;
     private boolean isOnOffMode;
+
+    public void addMenuToHistory(Menu menu){
+        menuHistory.add(menu);
+    }
+
+    public Menu dropLastMenu(){
+        return menuHistory.poll();
+    }
 }
