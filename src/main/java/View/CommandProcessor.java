@@ -175,6 +175,15 @@ public class CommandProcessor {
 
     }
 
+
+    public static void showOrders(){
+
+    }
+
+    public static void rateOrder(String command){
+
+    }
+
     public static void showCart(){
 
     }
