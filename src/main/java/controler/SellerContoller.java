@@ -2,6 +2,7 @@ package controler;
 
 import ModelPackage.Log.SellLog;
 import ModelPackage.Product.Company;
+import ModelPackage.Users.Seller;
 import View.PrintModels.CompanyPM;
 import View.PrintModels.SellLogPM;
 
@@ -22,6 +23,11 @@ public class SellerContoller extends Controller{
                     sellLog.getDiscount(), sellLog.getBuyer().getUsername(), sellLog.getDeliveryStatus()))
         }
         return sellLogPMs;
+    }
+
+    public long viewBalance(String sellerUserName) {
+        Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
+        return seller.getBalance();
     }
 
 }
