@@ -146,8 +146,13 @@ public class CommandProcessor {
 
     }
 
+    public static void viewBalanceCustomer(){
 
+    }
 
+    public static void viewDiscountCodesCustomer(){
+
+    }
 
 
     private static Matcher getMatcher(String input, String regex){
