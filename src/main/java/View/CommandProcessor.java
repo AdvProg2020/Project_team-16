@@ -108,6 +108,30 @@ public class CommandProcessor {
 
     }
 
+    public static void viewAllProductSeller(){
+
+    }
+
+    public static void viewProduct(String command){
+
+    }
+
+    public static void editProduct(String command){
+
+    }
+
+    public static void deleteProduct(String command){
+
+    }
+
+    public static void viewBuyersOfThisProduct(String command){
+
+    }
+
+
+
+
+
     private static Matcher getMatcher(String input, String regex){
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
