@@ -3,12 +3,11 @@ package controler;
 import ModelPackage.Log.SellLog;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
+import ModelPackage.System.exeption.category.NoSuchACategoryException;
+import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
-import View.PrintModels.CompanyPM;
-import View.PrintModels.FullProductPM;
-import View.PrintModels.MiniProductPM;
-import View.PrintModels.SellLogPM;
+import View.PrintModels.*;
 
 import java.util.*;
 
@@ -60,6 +59,11 @@ public class SellerContoller extends Controller{
                  product.getCompany(),
                  product.getTotalScore(),
                  product.getDescription());
+    }
+
+    public void removeProduct(int productId) throws NoSuchACategoryException,
+            NoSuchAProductInCategoryException, NoSuchAProductException {
+         productManager.deleteProduct(productId);
     }
 
 }
