@@ -1,6 +1,8 @@
 package ModelPackage.Product;
 
 import ModelPackage.Maps.SellerIntegerMap;
+import ModelPackage.Off.Off;
+import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.Users.Seller;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
@@ -97,6 +99,9 @@ public class Product {
 
     private boolean isOnOff = false;
 
+    @OneToOne
+    private Off off;
+
     public Product(int id){this.id = id;}
 
     public Product(String name, String company, ArrayList<Seller> allSellers, String categoryId, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, List<SellerIntegerMap> stock, List<SellerIntegerMap> prices) {
@@ -116,27 +121,6 @@ public class Product {
         this.view = 0;
         this.boughtAmount = 0;
         this.totalScore = 0;
-    }
-
-    public Product(Product product){
-        this.id = product.id;
-        this.productStatus = product.productStatus;
-        this.name = product.name;
-        this.dateAdded = product.dateAdded;
-        this.company = product.company;
-        this.allSellers = product.allSellers;
-        this.category = product.category;
-        this.categoryId = product.categoryId;
-        this.publicFeatures = new HashMap<>(product.publicFeatures);
-        this.specialFeatures = new HashMap<>(product.specialFeatures);
-        this.description = product.description;
-        this.allScores = new ArrayList<>(product.allScores);
-        this.totalScore =product.totalScore;
-        this.allComments = new ArrayList<>(product.allComments);
-        this.stock = new ArrayList<>(product.stock);
-        this.prices = new ArrayList<>(product.prices);
-        this.view = product.view;
-        this.boughtAmount = product.boughtAmount;
     }
 
     public Product() {
