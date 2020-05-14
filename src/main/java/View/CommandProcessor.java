@@ -48,11 +48,27 @@ public class CommandProcessor {
 
     }
 
-    public static void showAllRequests(){
+    public static void viewAllRequests(){
 
     }
 
-    protected static Matcher getMatcher(String input, String regex){
+    public static void viewRequest(String command){
+
+    }
+
+    public static void acceptRequest(String command){
+
+    }
+
+    public static void declineRequest(String command){
+
+    }
+
+
+
+    
+
+    private static Matcher getMatcher(String input, String regex){
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
     }
