@@ -154,6 +154,30 @@ public class CommandProcessor {
 
     }
 
+    public static void showProductsInCart(){
+
+    }
+
+
+    public static void increseProductInCart(String command){
+
+    }
+
+    public static void decreaseProductInCart(String command){
+
+    }
+
+    public static void showTotalPrice(){
+
+    }
+
+    public static void showOrder(String comand){
+
+    }
+
+    public static void showCart(){
+
+    }
 
     private static Matcher getMatcher(String input, String regex){
         Pattern pattern = Pattern.compile(regex);

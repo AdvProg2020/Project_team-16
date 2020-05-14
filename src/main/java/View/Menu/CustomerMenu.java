@@ -47,8 +47,6 @@ public class CustomerMenu extends Menu {
             goToSubMenu("Personal Info Menu");
         }else if (menuName.equalsIgnoreCase("view cart")){
             goToSubMenu("Cart Menu");
-        }else if (menuName.equalsIgnoreCase("purchase")){
-            goToSubMenu("Purchase Menu");
         }else if (menuName.equalsIgnoreCase("view orders")){
             goToSubMenu("Order Menu");
         }else {
