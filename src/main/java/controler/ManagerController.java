@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ManagerAccountController {
+public class ManagerController {
 
     public void createDiscount(String[] data) throws ParseException,
             NotValidPercentageException, StartingDateIsAfterEndingDate {
