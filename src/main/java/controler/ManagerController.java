@@ -5,6 +5,7 @@ import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
+import ModelPackage.System.exeption.discount.NegativeMaxDiscountException;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.discount.NotValidPercentageException;
 import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
@@ -129,12 +130,13 @@ public class ManagerController extends Controller {
     }
 
     public void editDiscountCode(String code, String whatToEdit, String newInfo) throws NoSuchADiscountCodeException,
-            ParseException, StartingDateIsAfterEndingDate {
+            ParseException, StartingDateIsAfterEndingDate, NotValidPercentageException, NegativeMaxDiscountException {
 
         switch (whatToEdit){
             case "starting date" : editDiscountStartingDate(code, newInfo); break;
             case "ending date" : editDiscountEndingDate(code, newInfo); break;
-
+            case "off percentage" : editDiscountOffPercentage(code, newInfo);
+            case "max discount" : editDiscountMaxDiscount(code, newInfo);
         }
     }
 
@@ -150,5 +152,15 @@ public class ManagerController extends Controller {
         Date endTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(newDate);
 
         discountManager.editDiscountStartingDate(code, endTime);
+    }
+
+    private void editDiscountOffPercentage(String code, String newInfo) throws NotValidPercentageException, NoSuchADiscountCodeException {
+        int newPercentage = Integer.parseInt(newInfo);
+        discountManager.editDiscountOffPercentage(code, newPercentage);
+    }
+
+    private void editDiscountMaxDiscount(String code, String newInfo) throws NegativeMaxDiscountException, NoSuchADiscountCodeException {
+        long newMaxDiscount = Long.parseLong(newInfo);
+        discountManager.editDiscountMaxDiscount(code, newMaxDiscount);
     }
 }

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="620cfbdc-442c-4411-8f94-64ebffa85b2c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controler/ManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/ManagerController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -194,14 +193,7 @@
       <workItem from="1589319163611" duration="721000" />
       <workItem from="1589374594586" duration="296000" />
       <workItem from="1589389149981" duration="8446000" />
-      <workItem from="1589443453208" duration="9807000" />
-    </task>
-    <task id="LOCAL-00016" summary="Company info test implemented">
-      <created>1588311332275</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1588311332275</updated>
+      <workItem from="1589443453208" duration="10154000" />
     </task>
     <task id="LOCAL-00017" summary="Change in UserNotAvailableException">
       <created>1588311651303</created>
@@ -539,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589454189435</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="edit discode start and end date in controller">
+      <created>1589454754020</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1589454754020</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -599,7 +598,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="change in create customer" />
     <MESSAGE value="change in create manager" />
     <MESSAGE value="change in create account test" />
     <MESSAGE value="username available test added" />
@@ -624,7 +622,8 @@
     <MESSAGE value="view all products got better" />
     <MESSAGE value="view all users got better" />
     <MESSAGE value="view all discount got better" />
-    <option name="LAST_COMMIT_MESSAGE" value="view all discount got better" />
+    <MESSAGE value="edit discode start and end date in controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="edit discode start and end date in controller" />
   </component>
   <component name="WindowStateProjectService">
     <state x="93" y="93" width="1350" height="678" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1588324899715">
@@ -651,10 +650,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="499" y="179" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.0.1536.864@0.0.1536.864" timestamp="1589398263316" />
-    <state x="191" y="30" key="CommitChangelistDialog2" timestamp="1589454188622">
+    <state x="191" y="30" key="CommitChangelistDialog2" timestamp="1589454753099">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="191" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1589454188622" />
+    <state x="191" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1589454753099" />
     <state x="93" y="93" width="1350" height="678" key="DiffContextDialog" timestamp="1587192992116">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
