@@ -81,7 +81,7 @@ public class AccountManager {
             throw new WrongPasswordException(username);
         }
 
-        return user.getClass().toString().split(" ")[1];
+        return user.getClass().getName();
     }
 
     public User viewPersonalInfo(String username){

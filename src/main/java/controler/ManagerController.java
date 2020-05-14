@@ -1,12 +1,15 @@
 package controler;
 
 import ModelPackage.Off.DiscountCode;
+import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.discount.*;
+import ModelPackage.System.exeption.product.AlreadyASeller;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
+import ModelPackage.System.exeption.request.NoSuchARequestException;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
 import View.PrintModels.*;
@@ -33,7 +36,7 @@ public class ManagerController extends Controller {
     private UserMiniPM createUserMiniPM(User user){
         return new UserMiniPM(
                 user.getUsername(),
-                user.getClass().toString().split(" ")[1]
+                user.getClass().getName()
         );
     }
 
@@ -45,7 +48,7 @@ public class ManagerController extends Controller {
                 user.getLastName(),
                 user.getEmail(),
                 user.getPhoneNumber(),
-                user.getClass().toString().split(" ")[1]
+                user.getClass().getName()
         );
     }
 
@@ -191,4 +194,42 @@ public class ManagerController extends Controller {
                 request.getRequest()
         );
     }
+
+    public RequestPM viewRequest(int id) throws NoSuchARequestException {
+        Request request = requestManager.findRequestById(id);
+        return new RequestPM(
+                request.getUserHasRequested(),
+                request.getRequestId(),
+                request.getRequestType().toString(),
+                request.getRequest()
+        );
+    }
+
+    public void acceptRequest(int id) throws NoSuchARequestException, AlreadyASeller, NoSuchAProductException {
+        requestManager.accept(id);
+    }
+
+    public void declineRequest(int id) throws NoSuchARequestException {
+        requestManager.decline(id);
+    }
+
+    public List<CategoryPM> manageCategories(){
+        List<Category> categories = DBManager.loadAllData(Category.class);
+        ArrayList<CategoryPM> categoryPMS = new ArrayList<>();
+
+        for (Category category : categories) {
+            categoryPMS.add(createCategoryPM(category));
+        }
+
+        return categoryPMS;
+    }
+
+    private CategoryPM createCategoryPM(Category category){
+        return new CategoryPM(
+                category.getName(),
+                category.getId()
+        );
+    }
+
+
 }

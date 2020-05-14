@@ -20,8 +20,7 @@ public class AccountController extends Controller {
     }
 
     public String login(String username, String password) {
-        String type = accountManager.login(username, password);
-        return type;
+        return accountManager.login(username, password);
     }
 
     public UserFullPM viewPersonalInfo(String username){
@@ -32,7 +31,7 @@ public class AccountController extends Controller {
                 user.getLastName(),
                 user.getEmail(),
                 user.getPhoneNumber(),
-                user.getClass().toString().split(" ")[1]
+                user.getClass().getName()
         );
     }
 
