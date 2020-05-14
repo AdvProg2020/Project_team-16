@@ -159,7 +159,7 @@ public class CommandProcessor {
     }
 
 
-    public static void increseProductInCart(String command){
+    public static void increaseProductInCart(String command){
 
     }
 
@@ -227,6 +227,36 @@ public class CommandProcessor {
     public static void disableSort(){
 
     }
+    
+    public static void attributes(){
+    
+    }
+    
+    public static void compare(String command){
+    
+    }
+    
+    public static void showAllComments(){
+    
+    }
+    
+    public static void addAComment(){
+    
+    }
+    
+    public static void addToCart(){
+    
+    }
+
+    public static void sellectSeller(){
+
+    }
+
+    public static void briefInfo(){
+
+    }
+
+
 
     private static Matcher getMatcher(String input, String regex){
         Pattern pattern = Pattern.compile(regex);

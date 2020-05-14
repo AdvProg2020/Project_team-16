@@ -22,7 +22,7 @@ public class CartMenu extends Menu{
         }else if (command.startsWith("view")){
             CommandProcessor.viewProduct(command);
         }else if (command.startsWith("increase")){
-            CommandProcessor.increseProductInCart(command);
+            CommandProcessor.increaseProductInCart(command);
         }else if (command.startsWith("decrease")){
             CommandProcessor.decreaseProductInCart(command);
         }else if (command.equalsIgnoreCase("show total price")){

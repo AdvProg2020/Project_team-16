@@ -3,10 +3,11 @@ package View.Menu;
 import View.exceptions.InvalidCommandException;
 import View.exceptions.NotAnAvailableMenu;
 
-public class DigestMenu extends Menu {
-    public DigestMenu(Menu parent) {
-        super("Digest Menu",parent);
+public class CommentMenu extends Menu {
+    public CommentMenu(Menu parent){
+        super("Comment Menu",parent);
     }
+
 
     @Override
     void helpPrinter() {

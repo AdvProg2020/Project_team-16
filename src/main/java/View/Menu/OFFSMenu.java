@@ -36,4 +36,9 @@ public class OFFSMenu extends Menu {
     void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu {
 
     }
+
+    @Override
+    void additionalPrints() {
+
+    }
 }

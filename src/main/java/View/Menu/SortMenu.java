@@ -17,7 +17,7 @@ public class SortMenu extends Menu {
     @Override
     void executeValidCommand(String command) throws InvalidCommandException {
         if (command.equalsIgnoreCase("show available sorts")){
-            CommandProcessor.showAvailableFilters();
+            CommandProcessor.showAvailableSorts();
         }else if (command.equalsIgnoreCase("current sort")){
             CommandProcessor.currentSort();
         }else if (command.equalsIgnoreCase("disable sort")){
