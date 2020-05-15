@@ -100,6 +100,30 @@ public class SellerContoller extends Controller{
         offManager.createOff(seller, dates, offPercentage);
     }
 
+    /*public void editOff(String[] data) throws ParseException,
+            NoSuchAOffException, NoSuchAProductException {
+        String sellerUserName = data[0];
+        User user = accountManager.getUserByUsername(sellerUserName);
+        int editedOffId = Integer.parseInt(data[1]);
+        String toChangeInfoType = data[2];
+        switch (toChangeInfoType) {
+            case "start time of off" : offManager.editStartTimeOfOff(user, editedOffId,
+                        new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[3]));
+            break;
+            case "end time of off" : offManager.editEndTimeOfOff(user, editedOffId,
+                        new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[3]));
+            break;
+            case "percentage of off" : offManager.editPercentageOfOff(user, editedOffId,
+                    Integer.parseInt(data[3]));
+            break;
+            case "add product" : offManager.addProductToOff(user, editedOffId,
+                    Integer.parseInt(data[3]));
+            break;
+            case "delete product" : offManager.deleteProductFromOff(user, editedOffId,
+                    Integer.parseInt(data[3]));
+        }
+    }*/
+
     public UserFullPM viewSellerPersonalInfo(String sellerUserName) {
         User user = accountManager.viewPersonalInfo(sellerUserName);
         return new UserFullPM(user.getUsername(), user.getFirstName(),
