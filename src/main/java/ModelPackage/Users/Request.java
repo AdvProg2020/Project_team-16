@@ -27,7 +27,11 @@ public class Request {
 
     @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "OFF")
-    OffChangeAttributes off;
+    Off off;
+
+    @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "OFF_EDIT")
+    OffChangeAttributes offEdit;
 
     @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "PRODUCT")
@@ -53,8 +57,10 @@ public class Request {
 
         switch (className) {
             case "ModelPackage.Off.OffChangeAttributes":
-                off = (OffChangeAttributes) toChange;
+                offEdit = (OffChangeAttributes) toChange;
                 break;
+            case "ModelPackage.Off.Off" :
+                off = (Off) toChange;
             case "ModelPackage.Product.Comment":
                 comment = (Comment) toChange;
                 break;
