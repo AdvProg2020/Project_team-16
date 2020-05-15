@@ -101,11 +101,19 @@ public class SellerContoller extends Controller{
     }
 
     public UserFullPM viewSellerPersonalInfo(String sellerUserName) {
-        User user = accountManager.getUserByUsername(sellerUserName);
+        User user = accountManager.viewPersonalInfo(sellerUserName);
         return new UserFullPM(user.getUsername(), user.getFirstName(),
                 user.getLastName(), user.getEmail(),
                 user.getPhoneNumber(), "seller");
     }
+
+    /*public void editSellerInfo(String[] data, String sellerUserName) {
+        String[] info = new String[3];
+        info[0] = sellerUserName;
+        info[1] = data[0];
+        info[2] = data[1];
+        accountManager.changeInfo(info);
+    }*/
 
     public void addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures) {
         String sellerUserName = data[0];
