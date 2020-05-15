@@ -36,6 +36,10 @@ public class ProductControler extends Controller{
         return commentPMs;
     }
 
+    public FullProductPM viewAttributes(int productId) throws NoSuchAProductException {
+        return createFullProductPM(productId);
+    }
+
     public FullProductPM[] compareProducts(String[] data) throws NoSuchAProductException {
         int firstProductId = Integer.parseInt(data[0]);
         int secondProductId = Integer.parseInt(data[1]);
