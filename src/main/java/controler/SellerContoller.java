@@ -124,6 +124,11 @@ public class SellerContoller extends Controller{
         }
     }*/
 
+    public void deleteOff(String data) throws NoSuchAOffException {
+        int offId = Integer.parseInt(data);
+        offManager.deleteOff(offId);
+    }
+
     public UserFullPM viewSellerPersonalInfo(String sellerUserName) {
         User user = accountManager.viewPersonalInfo(sellerUserName);
         return new UserFullPM(user.getUsername(), user.getFirstName(),
