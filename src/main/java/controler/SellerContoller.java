@@ -1,6 +1,7 @@
 package controler;
 
 import ModelPackage.Log.SellLog;
+import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
@@ -55,7 +56,7 @@ public class SellerContoller extends Controller{
     public FullProductPM viewProduct(int productId) throws NoSuchAProductException {
          Product product = productManager.findProductById(productId);
         return new FullProductPM(createMiniProductPM(product),
-                mergeProductFeatures(product));
+                productManager.allFeaturesOf(product));
     }
 
     public void removeProduct(int productId) throws NoSuchACategoryException,
@@ -106,6 +107,59 @@ public class SellerContoller extends Controller{
                 user.getPhoneNumber(), "seller");
     }
 
+    public void addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures) {
+        String sellerUserName = data[0];
+        String productName = data[1];
+        String companyName = data[2];
+        String categoryId = data[3];
+        String description = data[4];
+        int amountOfProduct = Integer.parseInt(data[5]);
+        int priceOfProduct = Integer.parseInt(data[6]);
+        ArrayList<Seller> sellers = addSellerToNewProduct(sellerUserName);
+        List<SellerIntegerMap> stock = addStockToNewProduct(sellers.get(0), amountOfProduct);
+        List<SellerIntegerMap> prices = addPriceToNewProduct(sellers.get(0), priceOfProduct);
+        Product product = new Product(productName, companyName, sellers, categoryId,
+                publicFeaturesOf(productPublicFeatures),
+                specialFeaturesOf(productSpecialFeatures),
+                description, stock, prices);
+        productManager.createProduct(product, sellerUserName);
+    }
+
+    private ArrayList<Seller> addSellerToNewProduct(String sellerUserName) {
+        Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
+        ArrayList<Seller> sellers = new ArrayList<>();
+        sellers.add(seller);
+        return sellers;
+    }
+
+    private List<SellerIntegerMap> addStockToNewProduct(Seller seller, int amountOfProduct) {
+        List<SellerIntegerMap> stock = new ArrayList<>();
+        stock.add(new SellerIntegerMap(seller, amountOfProduct));
+        return stock;
+    }
+
+    private List<SellerIntegerMap> addPriceToNewProduct(Seller seller, int newPrice) {
+        List<SellerIntegerMap> prices = new ArrayList<>();
+        prices.add(new SellerIntegerMap(seller, newPrice));
+        return prices;
+    }
+
+    private HashMap<String,String> publicFeaturesOf(String[] publicFeatureData) {
+        HashMap<String,String> publicFeatures = new HashMap<>();
+        for (int i = 0; i < publicFeatureData.length; i += 2) {
+            publicFeatures.put(publicFeatureData[i], publicFeatureData[i + 1]);
+        }
+        return publicFeatures;
+    }
+
+    private HashMap<String,String> specialFeaturesOf(String[] specialFeatureData) {
+        HashMap<String,String> specialFeatures = new HashMap<>();
+        for (int i = 0; i < specialFeatureData.length; i += 2) {
+            specialFeatures.put(specialFeatureData[i], specialFeatureData[i + 1]);
+        }
+        return specialFeatures;
+    }
+
     private ArrayList<Integer> addProductIdsToOffPM(Off off) {
         ArrayList<Integer> productIds = new ArrayList<>();
         for (Product product : off.getProducts()) {
@@ -121,13 +175,6 @@ public class SellerContoller extends Controller{
                 product.getCompany(),
                 product.getTotalScore(),
                 product.getDescription());
-    }
-
-    private Map<String, String> mergeProductFeatures(Product product) {
-        Map <String, String> features = new HashMap<>();
-        features.putAll(product.getPublicFeatures());
-        features.putAll(product.getSpecialFeatures());
-        return features;
     }
 
 }
