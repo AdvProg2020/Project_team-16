@@ -5,6 +5,7 @@ import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Product;
+import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
@@ -90,7 +91,8 @@ public class CustomerController extends Controller {
         return cart.getTotalPrice();
     }
 
-    public void purchase(String username, String[] customerInfo, String disCode) throws NoSuchADiscountCodeException {
+    public void purchase(String username, String[] customerInfo, String disCode)
+            throws NoSuchADiscountCodeException, NotEnoughAmountOfProductException, NoSuchAProductException {
         CustomerInformation customerInformation = new CustomerInformation(
                 customerInfo[0],
                 customerInfo[1],
