@@ -3,6 +3,7 @@ package ModelPackage.System;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.SameInfoException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
+import ModelPackage.System.exeption.account.UserNotLoggedInException;
 import ModelPackage.System.exeption.account.WrongPasswordException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
 import ModelPackage.Users.*;
@@ -80,7 +81,13 @@ public class AccountManager {
             throw new WrongPasswordException(username);
         }
 
-        return user.getClass().toString().split(" ")[1];
+        return user.getClass().getName();
+    }
+
+    public User viewPersonalInfo(String username){
+        User user = getUserByUsername(username);
+        checkIfUserHasLoggedIn(user);
+        return user;
     }
 
     public void changeInfo(String[] info) {
@@ -144,7 +151,9 @@ public class AccountManager {
         user.setPassword(newInfo);
     }
 
-    public void logout(User user) {
+    public void logout(String username) {
+        User user = getUserByUsername(username);
+        checkIfUserHasLoggedIn(user);
         user.setHasSignedIn(false);
     }
 
@@ -162,6 +171,12 @@ public class AccountManager {
     public boolean isUsernameAvailable(String username){
         User user = DBManager.load(User.class,username);
         return user != null;
+    }
+
+    private void checkIfUserHasLoggedIn(User user){
+        if (!user.isHasSignedIn()){
+            throw new UserNotLoggedInException();
+        }
     }
 
 }

@@ -6,9 +6,12 @@ import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.NotEnoughMoneyException;
+import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
+import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
 import ModelPackage.Users.CustomerInformation;
+import ModelPackage.Users.SubCart;
 
 import java.util.List;
 
@@ -36,8 +39,11 @@ public class CustomerManager {
         return customer.getDiscountCodes();
     }
 
-    public void purchase(String username, CustomerInformation customerInformation, DiscountCode discountCode){
+    public void purchase(String username, CustomerInformation customerInformation, DiscountCode discountCode)
+            throws NotEnoughAmountOfProductException, NoSuchAProductException {
         Customer customer = DBManager.load(Customer.class, username);
+
+        checkIfThereIsEnoughAmount(customer);
 
         purchaseForCustomer(customer, customerInformation, discountCode);
 
@@ -47,6 +53,20 @@ public class CustomerManager {
             csclManager.createPurchaseLog(customer.getCart(), discountCode.getOffPercentage(),customer);
         } else {
             csclManager.createPurchaseLog(customer.getCart(), 0,customer);
+        }
+
+        productChangeInPurchase(customer);
+    }
+
+    public void checkIfThereIsEnoughAmount(Customer customer) throws NotEnoughAmountOfProductException, NoSuchAProductException {
+        Cart cart = customer.getCart();
+
+        for (SubCart subCart : cart.getSubCarts()) {
+            CartManager.getInstance().checkIfThereIsEnoughAmountOfProduct(
+                    subCart.getProduct().getId(),
+                    subCart.getSeller().getUsername(),
+                    subCart.getAmount()
+            );
         }
     }
 
@@ -61,16 +81,29 @@ public class CustomerManager {
         customer.getCustomerInformation().add(customerInformation);
     }
 
+    public void productChangeInPurchase(Customer customer){
+        Cart cart = customer.getCart();
+
+        for (SubCart subCart : cart.getSubCarts()) {
+            ProductManager.getInstance().changeAmountOfStock(
+                    subCart.getProduct().getId(),
+                    subCart.getSeller().getUsername(),
+                    -subCart.getAmount()
+            );
+        }
+
+    }
+
     public long getTotalPrice(DiscountCode discountCode, Customer customer) {
         Cart cart = customer.getCart();
         long totalPrice;
 
         if (discountCode != null){
-            long discount = cart.getTotalPrice() * discountCode.getOffPercentage() / 100;
+            double discount = (double) cart.getTotalPrice() * discountCode.getOffPercentage() / 100;
             if (discount > discountCode.getMaxDiscount()){
                 totalPrice = cart.getTotalPrice() - discountCode.getMaxDiscount();
             } else {
-                totalPrice = cart.getTotalPrice() - discount;
+                totalPrice = cart.getTotalPrice() - (int)discount;
             }
         } else {
             totalPrice = cart.getTotalPrice();
@@ -84,7 +117,7 @@ public class CustomerManager {
         }
     }
 
-    public void addPrurchaseLog(PurchaseLog log,Customer customer){
+    public void addPurchaseLog(PurchaseLog log, Customer customer){
         customer.getPurchaseLogs().add(log);
         DBManager.save(customer);
     }

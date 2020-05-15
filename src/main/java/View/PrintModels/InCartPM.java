@@ -8,4 +8,10 @@ public class InCartPM{
     private MiniProductPM product;
     private String sellerId;
     private int amount;
+
+    public InCartPM(MiniProductPM product, String sellerId, int amount) {
+        this.product = product;
+        this.sellerId = sellerId;
+        this.amount = amount;
+    }
 }

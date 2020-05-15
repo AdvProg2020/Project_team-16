@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountController extends Controller {
-    private User loggedInUser;
 
     public void usernameInitialCheck(String username){
         if (accountManager.isUsernameAvailable(username)){
@@ -21,32 +20,31 @@ public class AccountController extends Controller {
     }
 
     public String login(String username, String password) {
-        String type = accountManager.login(username, password);
-        loggedInUser = accountManager.getUserByUsername(username);
-        return type;
+        return accountManager.login(username, password);
     }
 
-    public UserFullPM viewPersonalInfo(){
+    public UserFullPM viewPersonalInfo(String username){
+        User user = accountManager.viewPersonalInfo(username);
         return new UserFullPM(
-                loggedInUser.getUsername(),
-                loggedInUser.getFirstName(),
-                loggedInUser.getLastName(),
-                loggedInUser.getEmail(),
-                loggedInUser.getPhoneNumber(),
-                loggedInUser.getClass().toString().split(" ")[1]
+                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhoneNumber(),
+                user.getClass().getName()
         );
     }
 
-    public void editPersonalInfo(String type, String newInfo){
+    public void editPersonalInfo(String username, String type, String newInfo){
         List<String> info = new ArrayList<>();
-        info.add(loggedInUser.getUsername());
+        info.add(username);
         info.add(type);
         info.add(newInfo);
 
         accountManager.changeInfo((String[]) info.toArray());
     }
 
-    public void logout(){
-        accountManager.logout(loggedInUser);
+    public void logout(String username){
+        accountManager.logout(username);
     }
 }
