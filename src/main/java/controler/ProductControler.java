@@ -49,6 +49,11 @@ public class ProductControler extends Controller{
         return fullProductPMs;
     }
 
+    public MiniProductPM digest(int productId) throws NoSuchAProductException {
+        Product product = productManager.findProductById(productId);
+        return createMiniProductPM(product);
+    }
+
     private FullProductPM createFullProductPM(int productId) throws NoSuchAProductException {
         Product product = productManager.findProductById(productId);
         return new FullProductPM(createMiniProductPM(product),
