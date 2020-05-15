@@ -2,7 +2,12 @@ package controler;
 
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
+import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
+import View.PrintModels.CommentPM;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductControler extends Controller{
 
@@ -16,6 +21,18 @@ public class ProductControler extends Controller{
                 CommentStatus.NOT_VERIFIED, false);
         comment.setProduct(productManager.findProductById(productId));
         csclManager.createComment(comment);
+    }
+
+    public List<CommentPM> viewProductComments(int productId) throws NoSuchAProductException {
+        Product product = productManager.findProductById(productId);
+        List<Comment> comments = product.getAllComments();
+        List<CommentPM> commentPMs = new ArrayList<>();
+        for (Comment comment : comments) {
+            commentPMs.add(new CommentPM(comment.getUserId(),
+                    comment.getTitle(),
+                    comment.getText()));
+        }
+        return commentPMs;
     }
 
 }
