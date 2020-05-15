@@ -53,7 +53,7 @@ public class ProductManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void addAmountOfStock(int productId, String sellerId,int amount){
+    public void changeAmountOfStock(int productId, String sellerId, int amount){
         Product product = DBManager.load(Product.class,productId);
         List<SellerIntegerMap> list = product.getStock();
         for (SellerIntegerMap map : list) {

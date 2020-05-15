@@ -4,7 +4,6 @@ import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
-import ModelPackage.System.exeption.cart.NotPositiveAmountProductException;
 import ModelPackage.System.exeption.cart.ProductExistedInCart;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
@@ -123,10 +122,6 @@ public class CartManagerTest {
     @Test(expected = NoSuchAProductInCart.class)
     public void changeProductAmountNotFoundExcTest() throws Exception{
         cartManager.changeProductAmountInCart(cart, "Pro#14", "ali110", 2);
-    }
-    @Test(expected = NotPositiveAmountProductException.class)
-    public void changeProductAmountNotPositiveAmountExcTest() throws Exception{
-        cartManager.changeProductAmountInCart(cart, "Pro#13", "ali110", -1);
     }
     @Test(expected = NotEnoughAmountOfProductException.class)
     public void changeProductAmountInCartNotEnoughExcTest() throws Exception{

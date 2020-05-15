@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Log.DeliveryStatus;
+import ModelPackage.Log.Log;
 import ModelPackage.Log.PurchaseLog;
 import ModelPackage.Log.SellLog;
 import ModelPackage.Maps.SellerIntegerMap;
@@ -8,13 +9,13 @@ import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
+import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -122,7 +123,7 @@ public class CSCLManager {
         }
         PurchaseLog log = new PurchaseLog(new Date(),DeliveryStatus.DEPENDING,map,pricePaid,discount);
         DBManager.save(log);
-        CustomerManager.getInstance().addPrurchaseLog(log,customer);
+        CustomerManager.getInstance().addPurchaseLog(log,customer);
     }
 
     int findPrice(SubCart subCart){
@@ -135,5 +136,13 @@ public class CSCLManager {
             }
         }
         return price;
+    }
+
+    public Log getLogById(int id){
+        Log log = DBManager.load(Log.class,id);
+        if (log == null) {
+            throw new NoSuchALogException(Integer.toString(id));
+        }
+        return log;
     }
 }

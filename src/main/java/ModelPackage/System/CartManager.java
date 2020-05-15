@@ -5,10 +5,10 @@ import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
-import ModelPackage.System.exeption.cart.NotPositiveAmountProductException;
 import ModelPackage.System.exeption.cart.ProductExistedInCart;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
+import ModelPackage.Users.Seller;
 import ModelPackage.Users.SubCart;
 import lombok.Data;
 
@@ -25,8 +25,14 @@ public class CartManager {
     public void addProductToCart(Cart cart, String sellerId, int productId, int amount) throws Exception {
         checkIfProductExistsInCart(cart, productId);
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, amount);
-        cart.getSubCarts().add(new SubCart());
+        Product product = ProductManager.getInstance().findProductById(productId);
+        Seller seller = (Seller) AccountManager.getInstance().getUserByUsername(sellerId);
+        SubCart subCart = new SubCart(product, seller, amount);
+
+        cart.getSubCarts().add(subCart);
         cart.setTotalPrice(calculateTotalPrice(cart));
+
+        DBManager.save(subCart);
         DBManager.save(cart);
     }
 
@@ -39,7 +45,7 @@ public class CartManager {
         return total;
     }
 
-    private void checkIfThereIsEnoughAmountOfProduct(int productId, String sellerId, int amount)
+    public void checkIfThereIsEnoughAmountOfProduct(int productId, String sellerId, int amount)
             throws NotEnoughAmountOfProductException, NoSuchAProductException {
         Product product = ProductManager.getInstance().findProductById(productId);
         for (SellerIntegerMap map : product.getStock()) {
@@ -69,18 +75,18 @@ public class CartManager {
         DBManager.save(cart);
     }
 
-    public void changeProductAmountInCart(Cart cart, int productId, String sellerId, int newAmount)
+    public void changeProductAmountInCart(Cart cart, int productId, String sellerId, int change)
             throws Exception {
         SubCart subCart = getSubCartByProductId(cart, productId);
-        checkIfThereIsEnoughAmountOfProduct(productId, sellerId, newAmount);
-        checkIfAmountIsPositive(newAmount);
-        subCart.setAmount(newAmount);
+        int previousAmount = subCart.getAmount();
+        checkIfThereIsEnoughAmountOfProduct(productId, sellerId, previousAmount + change);
+        if (previousAmount + change == 0){
+            cart.getSubCarts().remove(subCart);
+        } else {
+            subCart.setAmount(previousAmount + change);
+        }
         cart.setTotalPrice(calculateTotalPrice(cart));
         DBManager.save(cart);
     }
 
-    private void checkIfAmountIsPositive(int newAmount) throws Exception{
-        if (newAmount <= 0)
-            throw new NotPositiveAmountProductException(newAmount);
-    }
 }
