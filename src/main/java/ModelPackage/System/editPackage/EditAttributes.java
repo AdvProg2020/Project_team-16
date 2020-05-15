@@ -8,4 +8,6 @@ import javax.persistence.*;
 public abstract class EditAttributes {
     @Id @GeneratedValue @Column(name = "ID",updatable = false)
     protected int id;
+
+    protected int sourceId;
 }

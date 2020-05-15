@@ -8,7 +8,6 @@ import java.util.Date;
 @Entity
 @Table(name = "t_off_edit_attributes")
 public class OffChangeAttributes extends EditAttributes {
-    private int target;
 
     @Temporal(TemporalType.DATE)
     Date start;
