@@ -1,6 +1,7 @@
 package controler;
 
 import ModelPackage.Log.PurchaseLog;
+import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Product;
@@ -175,4 +176,27 @@ public class CustomerController extends Controller {
         return customer.getBalance();
     }
 
+    public List<DisCodeUserPM> viewDiscountCodes(String username){
+        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        List<DiscountcodeIntegerMap> discountCodes = customer.getDiscountCodes();
+        ArrayList<DisCodeUserPM> disCodeUserPMS = new ArrayList<>();
+
+        for (DiscountcodeIntegerMap discountCode : discountCodes) {
+            disCodeUserPMS.add(createDiscountPM(discountCode));
+        }
+
+        return disCodeUserPMS;
+    }
+
+    private DisCodeUserPM createDiscountPM(DiscountcodeIntegerMap discountcodeIntegerMap){
+        DiscountCode discountCode = discountcodeIntegerMap.getDiscountCode();
+        return new DisCodeUserPM(
+                discountCode.getCode(),
+                discountCode.getStartTime(),
+                discountCode.getEndTime(),
+                discountCode.getOffPercentage(),
+                discountCode.getMaxDiscount(),
+                discountcodeIntegerMap.getInteger()
+        );
+    }
 }

@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="620cfbdc-442c-4411-8f94-64ebffa85b2c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ModelPackage/System/AccountManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ModelPackage/System/AccountManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/PrintModels/RequestPM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/PrintModels/RequestPM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controler/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controler/ManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/ManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controler/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/CustomerController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,77 +195,8 @@
       <workItem from="1589374594586" duration="296000" />
       <workItem from="1589389149981" duration="8446000" />
       <workItem from="1589443453208" duration="10794000" />
-      <workItem from="1589463751157" duration="1918000" />
-    </task>
-    <task id="LOCAL-00020" summary="Change in view selllog test">
-      <created>1588323012604</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1588323012604</updated>
-    </task>
-    <task id="LOCAL-00021" summary="view products added">
-      <created>1588323431594</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1588323431594</updated>
-    </task>
-    <task id="LOCAL-00022" summary="view products test implemented">
-      <created>1588324942190</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1588324942190</updated>
-    </task>
-    <task id="LOCAL-00023" summary="view sellers of a product">
-      <created>1588325542319</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1588325542319</updated>
-    </task>
-    <task id="LOCAL-00024" summary="sellers of a product test done">
-      <created>1588325948292</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1588325948292</updated>
-    </task>
-    <task id="LOCAL-00025" summary="get all categories by seller">
-      <created>1588326659953</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1588326659953</updated>
-    </task>
-    <task id="LOCAL-00026" summary="get all categories by seller test">
-      <created>1588326673217</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1588326673217</updated>
-    </task>
-    <task id="LOCAL-00027" summary="CustomerManager and CustomerManagerTest initialized">
-      <created>1588327487401</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1588327487401</updated>
-    </task>
-    <task id="LOCAL-00028" summary="view Orders implemented">
-      <created>1588340460351</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1588340460351</updated>
-    </task>
-    <task id="LOCAL-00029" summary="change in accept create product">
-      <created>1588341575701</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1588341575701</updated>
+      <workItem from="1589463751157" duration="5814000" />
+      <workItem from="1589540977734" duration="13329000" />
     </task>
     <task id="LOCAL-00030" summary="adding generate id to Logs">
       <created>1588342021783</created>
@@ -543,7 +471,77 @@
       <option name="project" value="LOCAL" />
       <updated>1589469844339</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="manage requests controller">
+      <created>1589470357651</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1589470357651</updated>
+    </task>
+    <task id="LOCAL-00070" summary="manage category controller">
+      <created>1589471728599</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1589471728599</updated>
+    </task>
+    <task id="LOCAL-00071" summary="add and remove category controller">
+      <created>1589473162584</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1589473162584</updated>
+    </task>
+    <task id="LOCAL-00072" summary="view Cart controller">
+      <created>1589542798882</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1589542798884</updated>
+    </task>
+    <task id="LOCAL-00073" summary="show products controller">
+      <created>1589546333333</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1589546333333</updated>
+    </task>
+    <task id="LOCAL-00074" summary="change amount with some changes in cart manager controller">
+      <created>1589547401325</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1589547401325</updated>
+    </task>
+    <task id="LOCAL-00075" summary="purchase and show total price controller">
+      <created>1589547801888</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1589547801888</updated>
+    </task>
+    <task id="LOCAL-00076" summary="view orders controller">
+      <created>1589548394697</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1589548394697</updated>
+    </task>
+    <task id="LOCAL-00077" summary="view orders controller">
+      <created>1589554933824</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1589554933824</updated>
+    </task>
+    <task id="LOCAL-00078" summary="view balance and rate controller">
+      <created>1589555929749</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1589555929750</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -603,15 +601,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="get user not found test added" />
-    <MESSAGE value="create seller test done" />
-    <MESSAGE value="get money after selling product implemented" />
-    <MESSAGE value="get money edited" />
-    <MESSAGE value="change in access modifiers" />
-    <MESSAGE value="get money from sale test accomplished" />
-    <MESSAGE value="change" />
-    <MESSAGE value="create account in controller with some other changes" />
-    <MESSAGE value="login in controller with some other changes" />
     <MESSAGE value="changeInfo in controller with some other changes" />
     <MESSAGE value="logout in controller with some other changes" />
     <MESSAGE value="returning roll in login" />
@@ -628,17 +617,26 @@
     <MESSAGE value="edit discode all done in controller" />
     <MESSAGE value="remove discode done in controller" />
     <MESSAGE value="changes in account controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="changes in account controller" />
+    <MESSAGE value="manage requests controller" />
+    <MESSAGE value="manage category controller" />
+    <MESSAGE value="add and remove category controller" />
+    <MESSAGE value="view Cart controller" />
+    <MESSAGE value="show products controller" />
+    <MESSAGE value="change amount with some changes in cart manager controller" />
+    <MESSAGE value="purchase and show total price controller" />
+    <MESSAGE value="view orders controller" />
+    <MESSAGE value="view balance and rate controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="view balance and rate controller" />
   </component>
   <component name="WindowStateProjectService">
     <state x="93" y="93" width="1350" height="678" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1588324899715">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="93" y="93" width="1350" height="678" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1536.864@0.0.1536.864" timestamp="1588324899715" />
-    <state x="574" y="148" key="#com.intellij.ide.util.MemberChooser" timestamp="1589470287070">
+    <state x="574" y="148" key="#com.intellij.ide.util.MemberChooser" timestamp="1589549955585">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="574" y="148" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1589470287070" />
+    <state x="574" y="148" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1589549955585" />
     <state x="618" y="321" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1587190924791">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -647,18 +645,22 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="286" y="358" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.864@0.0.1536.864" timestamp="1587191516429" />
-    <state x="499" y="179" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1588259160769">
+    <state x="303" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1589553920711">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="499" y="179" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1588259160769" />
+    <state x="303" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.864@0.0.1536.864" timestamp="1589553920711" />
+    <state x="499" y="179" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1589547145308">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="499" y="179" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1589547145308" />
     <state x="499" y="179" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1589398263316">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="499" y="179" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.0.1536.864@0.0.1536.864" timestamp="1589398263316" />
-    <state x="191" y="30" key="CommitChangelistDialog2" timestamp="1589469843120">
+    <state x="191" y="30" key="CommitChangelistDialog2" timestamp="1589555928313">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="191" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1589469843120" />
+    <state x="191" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1589555928313" />
     <state x="93" y="93" width="1350" height="678" key="DiffContextDialog" timestamp="1587192992116">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -723,10 +725,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="382" y="148" key="VCS.ChangeListViewerDialog/0.0.1536.864@0.0.1536.864" timestamp="1587190479910" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1589452627127">
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1589554948729">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1589452627127" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1589554948729" />
     <state x="93" y="93" width="1350" height="678" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1587192992116">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -747,10 +749,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="578" y="349" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864@0.0.1536.864" timestamp="1589446767479" />
-    <state x="868" y="151" key="extract.method.dialog" timestamp="1589397960079">
+    <state x="868" y="151" key="extract.method.dialog" timestamp="1589552869363">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="868" y="151" key="extract.method.dialog/0.0.1536.864@0.0.1536.864" timestamp="1589397960079" />
+    <state x="868" y="151" key="extract.method.dialog/0.0.1536.864@0.0.1536.864" timestamp="1589552869363" />
     <state x="0" y="145" key="git4idea.branch.GitSmartOperationDialog" timestamp="1589035521384">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -767,10 +769,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="475" y="61" key="refactoring.ChangeSignatureDialog/0.0.1536.864@0.0.1536.864" timestamp="1589398221097" />
-    <state x="425" y="197" key="run.anything.popup" timestamp="1589470284405">
+    <state x="425" y="197" key="run.anything.popup" timestamp="1589551712824">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1589470284405" />
+    <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1589551712824" />
     <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1588311468311">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
