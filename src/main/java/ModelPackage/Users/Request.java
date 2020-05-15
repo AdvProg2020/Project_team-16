@@ -1,9 +1,10 @@
 package ModelPackage.Users;
 
 import ModelPackage.Off.Off;
-import ModelPackage.Off.OffChangeAttributes;
+import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.Product;
+import ModelPackage.System.editPackage.ProductEditAttribute;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -27,11 +28,19 @@ public class Request {
 
     @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "OFF")
-    OffChangeAttributes off;
+    Off off;
+
+    @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "OFF_EDIT")
+    OffChangeAttributes offEdit;
 
     @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "PRODUCT")
     Product product;
+
+    @OneToOne
+    @JoinColumn(name = "PRODUCT_EDIT")
+    ProductEditAttribute productEditAttribute;
 
     @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "COMMENT")
@@ -41,9 +50,6 @@ public class Request {
         @JoinColumn(name = "SELLER")
     Seller seller;
 
-    @Column
-    private int idOfRequestedItem;
-
     public Request(String usernameHasRequested, RequestType requestType, String request,Object toChange) {
         this.userHasRequested = usernameHasRequested;
         this.requestType = requestType;
@@ -52,9 +58,11 @@ public class Request {
         String className = toChange.getClass().getName();
 
         switch (className) {
-            case "ModelPackage.Off.OffChangeAttributes":
-                off = (OffChangeAttributes) toChange;
+            case "ModelPackage.System.editPackage.OffChangeAttributes":
+                offEdit = (OffChangeAttributes) toChange;
                 break;
+            case "ModelPackage.Off.Off" :
+                off = (Off) toChange;
             case "ModelPackage.Product.Comment":
                 comment = (Comment) toChange;
                 break;

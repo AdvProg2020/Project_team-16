@@ -1,9 +1,8 @@
 package View.PrintModels;
 
-import lombok.Builder;
 import lombok.Data;
 
-@Data @Builder
+@Data
 public class CommentPM {
     private String userName;
     private String title;
