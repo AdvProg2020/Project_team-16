@@ -42,7 +42,7 @@ public class OffManager {
         return off;
     }
 
-    public void EditStartTimeOfOff(User editor, int id, Date newDate)
+    public void editStartTimeOfOff(User editor, int id, Date newDate)
             throws NoSuchAOffException {
         findOffById(id);
         OffChangeAttributes edit = new OffChangeAttributes();
@@ -54,7 +54,7 @@ public class OffManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void EditEndTimeOfOff(User editor, int id, Date newDate)
+    public void editEndTimeOfOff(User editor, int id, Date newDate)
             throws NoSuchAOffException {
         findOffById(id);
         OffChangeAttributes edit = new OffChangeAttributes();
@@ -66,7 +66,7 @@ public class OffManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void EditPercentageOfOff(User editor, int id, int percentage)
+    public void editPercentageOfOff(User editor, int id, int percentage)
             throws NoSuchAOffException {
         findOffById(id);
         OffChangeAttributes edit = new OffChangeAttributes();
@@ -78,7 +78,7 @@ public class OffManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void AddProductToOff(User editor, int id, int newProduct)
+    public void addProductToOff(User editor, int id, int newProduct)
             throws NoSuchAOffException, NoSuchAProductException {
         findOffById(id);
         ProductManager.getInstance().findProductById(id);
@@ -104,7 +104,7 @@ public class OffManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void delteOff(int id) throws NoSuchAOffException {
+    public void deleteOff(int id) throws NoSuchAOffException {
         Off off = findOffById(id);
         DBManager.delete(off);
     }
