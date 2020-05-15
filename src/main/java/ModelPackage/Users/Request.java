@@ -4,6 +4,7 @@ import ModelPackage.Off.Off;
 import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.Product;
+import ModelPackage.System.editPackage.ProductEditAttribute;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -37,6 +38,10 @@ public class Request {
         @JoinColumn(name = "PRODUCT")
     Product product;
 
+    @OneToOne
+    @JoinColumn(name = "PRODUCT_EDIT")
+    ProductEditAttribute productEditAttribute;
+
     @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "COMMENT")
     Comment comment;
@@ -44,9 +49,6 @@ public class Request {
     @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "SELLER")
     Seller seller;
-
-    @Column
-    private int idOfRequestedItem;
 
     public Request(String usernameHasRequested, RequestType requestType, String request,Object toChange) {
         this.userHasRequested = usernameHasRequested;
