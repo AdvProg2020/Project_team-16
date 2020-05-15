@@ -1,6 +1,8 @@
 package controler;
 
 import ModelPackage.Product.Product;
+import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
+import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
 import ModelPackage.Users.SubCart;
@@ -57,6 +59,18 @@ public class CustomerController extends Controller {
 
         return products;
     }
+
+    public Product viewProduct(int id) throws NoSuchAProductException {
+        return productManager.findProductById(id);
+    }
+
+    public void changeAmount(String username, int id, int change) throws Exception {
+        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        Cart cart = customer.getCart();
+        String sellerId = cartManager.getSubCartByProductId(cart, id).getSeller().getUsername();
+        cartManager.changeProductAmountInCart(cart, id, sellerId, change);
+    }
+
 
 
 }
