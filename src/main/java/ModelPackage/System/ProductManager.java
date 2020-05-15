@@ -6,6 +6,7 @@ import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.Product.Score;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.account.ProductNotHaveSellerException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.product.*;
@@ -154,6 +155,16 @@ public class ProductManager {
             if(leastPrice > value) leastPrice = value;
         }
         return leastPrice;
+    }
+
+    public Seller showSellerOfProduct(int productId, String sellerUserName)
+            throws NoSuchAProductException, ProductNotHaveSellerException {
+        Product product = findProductById(productId);
+        for (SellerIntegerMap price : product.getPrices()) {
+            if (sellerUserName.equals(price.getSeller().getUsername()))
+                return price.getSeller();
+        }
+        throw new ProductNotHaveSellerException(productId, sellerUserName);
     }
 
     public void deleteProduct(int productId)

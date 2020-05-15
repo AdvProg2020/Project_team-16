@@ -1,9 +1,13 @@
 package controler;
 
+import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
+import ModelPackage.System.exeption.account.ProductNotHaveSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
+import ModelPackage.Users.Seller;
+import ModelPackage.Users.User;
 import View.PrintModels.CommentPM;
 import View.PrintModels.FullProductPM;
 import View.PrintModels.MiniProductPM;
@@ -52,6 +56,13 @@ public class ProductControler extends Controller{
     public MiniProductPM digest(int productId) throws NoSuchAProductException {
         Product product = productManager.findProductById(productId);
         return createMiniProductPM(product);
+    }
+
+    public Seller selectSeller(String[] data) throws NoSuchAProductException,
+            ProductNotHaveSellerException {
+        int productId = Integer.parseInt(data[0]);
+        String sellerUserName = data[1];
+        return productManager.showSellerOfProduct(productId, sellerUserName);
     }
 
     private FullProductPM createFullProductPM(int productId) throws NoSuchAProductException {
