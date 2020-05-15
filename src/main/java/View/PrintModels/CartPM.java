@@ -7,6 +7,11 @@ import java.util.ArrayList;
 
 @Data
 public class CartPM {
-    private int totalPrice;
+    private long totalPrice;
     private ArrayList<InCartPM> purchases;
+
+    public CartPM(long totalPrice, ArrayList<InCartPM> purchases) {
+        this.totalPrice = totalPrice;
+        this.purchases = purchases;
+    }
 }
