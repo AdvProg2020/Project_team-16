@@ -39,6 +39,7 @@ public class CustomerController extends Controller {
         MiniProductPM miniProductPM = new MiniProductPM(
                 product.getName(),
                 product.getId(),
+                product.getCategory().getName(),
                 product.getPrices(),
                 product.getCompany(),
                 product.getTotalScore(),
@@ -62,6 +63,7 @@ public class CustomerController extends Controller {
             MiniProductPM miniProductPM = new MiniProductPM(
                     product.getName(),
                     product.getId(),
+                    product.getCategory().getName(),
                     product.getPrices(),
                     product.getCompany(),
                     product.getTotalScore(),
@@ -161,6 +163,7 @@ public class CustomerController extends Controller {
         return new MiniProductPM(
                 product.getName(),
                 product.getId(),
+                product.getCategory().getName(),
                 product.getPrices(),
                 product.getCompany(),
                 product.getTotalScore(),

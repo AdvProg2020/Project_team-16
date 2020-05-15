@@ -76,6 +76,7 @@ public class ManagerController extends Controller {
         return new MiniProductPM(
                 product.getName(),
                 product.getId(),
+                product.getCategory().getName(),
                 product.getPrices(),
                 product.getCompany(),
                 product.getTotalScore(),

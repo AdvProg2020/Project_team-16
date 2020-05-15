@@ -57,6 +57,7 @@ public class ProductControler extends Controller{
 
     private MiniProductPM createMiniProductPM(Product product) {
         return new MiniProductPM(product.getName(), product.getId(),
+                product.getCategory().getName(),
                 product.getPrices(), product.getCompany(),
                 product.getTotalScore(), product.getDescription());
     }
