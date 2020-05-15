@@ -107,11 +107,11 @@ public class SellerContoller extends Controller{
                 user.getPhoneNumber(), "seller");
     }
 
-    /*public void editSellerInfo(String[] data, String sellerUserName) {
+    /*public void editSellerInfo(String[] data) {
         String[] info = new String[3];
-        info[0] = sellerUserName;
-        info[1] = data[0];
-        info[2] = data[1];
+        info[0] = data[0];
+        info[1] = data[1];
+        info[2] = data[2];
         accountManager.changeInfo(info);
     }*/
 
@@ -132,6 +132,13 @@ public class SellerContoller extends Controller{
                 description, stock, prices);
         productManager.createProduct(product, sellerUserName);
     }
+
+    /*public void editProduct(String[] data) throws NoSuchAProductException {
+        String sellerUserName = data[0];
+        int productId = Integer.parseInt(data[1]);
+        Product product = productManager.findProductById(productId);
+        productManager.editProduct(product, sellerUserName);
+    }*/
 
     private ArrayList<Seller> addSellerToNewProduct(String sellerUserName) {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
