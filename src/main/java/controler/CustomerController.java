@@ -45,4 +45,18 @@ public class CustomerController extends Controller {
                 subCart.getAmount()
         );
     }
+
+    public List<Product> showProducts(String username){
+        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        Cart cart = customer.getCart();
+        List<Product> products = new ArrayList<>();
+
+        for (SubCart subCart : cart.getSubCarts()) {
+            products.add(subCart.getProduct());
+        }
+
+        return products;
+    }
+
+
 }
