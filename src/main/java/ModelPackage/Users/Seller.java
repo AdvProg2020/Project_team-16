@@ -36,6 +36,8 @@ public class Seller extends User {
         @OneToMany
     private List<Message> messages;
 
+    private boolean verified;
+
     public Seller(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart, Company company, long balance) {
         super(username, password, firstName, lastName, email, phoneNumber, cart);
         this.company = company;

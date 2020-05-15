@@ -1,4 +1,4 @@
-package ModelPackage.Off;
+package ModelPackage.System.editPackage;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,10 +7,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "t_off_edit_attributes")
-public class OffChangeAttributes {
-    @Id @GeneratedValue
-    private int id;
-
+public class OffChangeAttributes extends EditAttributes {
     private int target;
 
     @Temporal(TemporalType.DATE)

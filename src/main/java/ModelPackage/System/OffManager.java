@@ -1,7 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Off.Off;
-import ModelPackage.Off.OffChangeAttributes;
+import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.Off.OffStatus;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.off.InvalidTimes;

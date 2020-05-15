@@ -1,7 +1,7 @@
 package ModelPackage.Users;
 
 import ModelPackage.Off.Off;
-import ModelPackage.Off.OffChangeAttributes;
+import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.Product;
 import lombok.AccessLevel;
@@ -56,7 +56,7 @@ public class Request {
         String className = toChange.getClass().getName();
 
         switch (className) {
-            case "ModelPackage.Off.OffChangeAttributes":
+            case "ModelPackage.System.editPackage.OffChangeAttributes":
                 offEdit = (OffChangeAttributes) toChange;
                 break;
             case "ModelPackage.Off.Off" :
