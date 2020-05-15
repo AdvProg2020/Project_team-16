@@ -8,6 +8,7 @@ import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.cart.ProductExistedInCart;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
+import ModelPackage.Users.Seller;
 import ModelPackage.Users.SubCart;
 import lombok.Data;
 
@@ -24,8 +25,14 @@ public class CartManager {
     public void addProductToCart(Cart cart, String sellerId, int productId, int amount) throws Exception {
         checkIfProductExistsInCart(cart, productId);
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, amount);
-        cart.getSubCarts().add(new SubCart());
+        Product product = ProductManager.getInstance().findProductById(productId);
+        Seller seller = (Seller) AccountManager.getInstance().getUserByUsername(sellerId);
+        SubCart subCart = new SubCart(product, seller, amount);
+
+        cart.getSubCarts().add(subCart);
         cart.setTotalPrice(calculateTotalPrice(cart));
+
+        DBManager.save(subCart);
         DBManager.save(cart);
     }
 
@@ -38,7 +45,7 @@ public class CartManager {
         return total;
     }
 
-    private void checkIfThereIsEnoughAmountOfProduct(int productId, String sellerId, int amount)
+    public void checkIfThereIsEnoughAmountOfProduct(int productId, String sellerId, int amount)
             throws NotEnoughAmountOfProductException, NoSuchAProductException {
         Product product = ProductManager.getInstance().findProductById(productId);
         for (SellerIntegerMap map : product.getStock()) {

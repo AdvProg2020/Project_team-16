@@ -1,6 +1,7 @@
 package controler;
 
 import ModelPackage.Log.PurchaseLog;
+import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
@@ -9,10 +10,7 @@ import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
 import ModelPackage.Users.CustomerInformation;
 import ModelPackage.Users.SubCart;
-import View.PrintModels.CartPM;
-import View.PrintModels.InCartPM;
-import View.PrintModels.MiniProductPM;
-import View.PrintModels.OrderMiniLog;
+import View.PrintModels.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,16 +50,25 @@ public class CustomerController extends Controller {
         );
     }
 
-    public List<Product> showProducts(String username){
+    public List<MiniProductPM> showProducts(String username){
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         Cart cart = customer.getCart();
-        List<Product> products = new ArrayList<>();
+        List<MiniProductPM> miniProductPMS = new ArrayList<>();
 
         for (SubCart subCart : cart.getSubCarts()) {
-            products.add(subCart.getProduct());
+            Product product = subCart.getProduct();
+            MiniProductPM miniProductPM = new MiniProductPM(
+                    product.getName(),
+                    product.getId(),
+                    product.getPrices(),
+                    product.getCompany(),
+                    product.getTotalScore(),
+                    product.getDescription()
+            );
+            miniProductPMS.add(miniProductPM);
         }
 
-        return products;
+        return miniProductPMS;
     }
 
     public Product viewProduct(int id) throws NoSuchAProductException {
@@ -98,24 +105,65 @@ public class CustomerController extends Controller {
         );
     }
 
-    public List<OrderMiniLog> viewOrders(String username){
+    public List<OrderMiniLogPM> viewOrders(String username){
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         List<PurchaseLog> purchaseLogs = customer.getPurchaseLogs();
-        List<OrderMiniLog> orderMiniLogs = new ArrayList<>();
+        List<OrderMiniLogPM> orderMiniLogPMS = new ArrayList<>();
 
         for (PurchaseLog purchaseLog : purchaseLogs) {
-            orderMiniLogs.add(createOrderMiniLog(purchaseLog));
+            orderMiniLogPMS.add(createOrderMiniLog(purchaseLog));
         }
 
-        return orderMiniLogs;
+        return orderMiniLogPMS;
     }
 
-    private OrderMiniLog createOrderMiniLog(PurchaseLog purchaseLog){
-        return new OrderMiniLog(
+    private OrderMiniLogPM createOrderMiniLog(PurchaseLog purchaseLog){
+        return new OrderMiniLogPM(
                 purchaseLog.getDate(),
                 purchaseLog.getLogId(),
                 purchaseLog.getPricePaid()
         );
     }
+
+    public OrderLogPM showOrder(int id) throws NoSuchAProductException {
+        PurchaseLog purchaseLog = (PurchaseLog) csclManager.getLogById(id);
+        ArrayList<MiniProductPM> miniProductPMS = createMiniProductPM(purchaseLog);
+
+        float realPrice = (float) purchaseLog.getPricePaid() / (1 + (float)purchaseLog.getDiscount()/100);
+
+        return new OrderLogPM(
+                purchaseLog.getDate(),
+                miniProductPMS,
+                purchaseLog.getDeliveryStatus().toString(),
+                (long)realPrice,
+                purchaseLog.getPricePaid(),
+                purchaseLog.getDiscount()
+        );
+    }
+
+    private ArrayList<MiniProductPM> createMiniProductPM(PurchaseLog purchaseLog) throws NoSuchAProductException {
+        List<SoldProductSellerMap> productSellerMaps = purchaseLog.getProductsAndItsSellers();
+        ArrayList<MiniProductPM> miniProductPMS = new ArrayList<>();
+
+        for (SoldProductSellerMap productSellerMap : productSellerMaps) {
+            int id = productSellerMap.getSoldProduct().getSourceId();
+            Product product = productManager.findProductById(id);
+            miniProductPMS.add(addMiniProductPM(product));
+        }
+
+        return miniProductPMS;
+    }
+
+    private MiniProductPM addMiniProductPM(Product product){
+        return new MiniProductPM(
+                product.getName(),
+                product.getId(),
+                product.getPrices(),
+                product.getCompany(),
+                product.getTotalScore(),
+                product.getDescription()
+        );
+    }
+
 
 }

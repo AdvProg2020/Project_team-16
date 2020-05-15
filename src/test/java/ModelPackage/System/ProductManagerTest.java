@@ -5,14 +5,11 @@ import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.Users.Cart;
-import ModelPackage.Users.Request;
 import ModelPackage.Users.Seller;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.persistence.Temporal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class ProductManagerTest {
@@ -125,7 +122,7 @@ public class ProductManagerTest {
 
     @Test
     public void addAmountOfStockTest(){
-        productManager.addAmountOfStock(14,"reza120",1);
+        productManager.changeAmountOfStock(14,"reza120",1);
         int expected = 13;
         product = DBManager.load(Product.class,14);
         int actual = product.getStock().get(1).getInteger();
@@ -134,7 +131,7 @@ public class ProductManagerTest {
 
     @Test
     public void addAmountOfStockNegativeNumTest(){
-        productManager.addAmountOfStock(14,"reza120",-8);
+        productManager.changeAmountOfStock(14,"reza120",-8);
         int expected = 5;
         product = DBManager.load(Product.class,14);
         int actual = product.getStock().get(1).getInteger();
