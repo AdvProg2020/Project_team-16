@@ -276,5 +276,11 @@ public class ProductManagerTest {
         features.put("Material","Cotton");
 
         Assert.assertEquals(features,productManager.allFeaturesOf(product));
+    }
+    @Test
+    public void showSellerOfProductTest() throws Exception{
+        Seller actualSeller = productManager.showSellerOfProduct(product.getId(), "asghar120");
+        Seller expectedSeller = asghar;
+        Assert.assertEquals(expectedSeller, actualSeller);
     }*/
 }
