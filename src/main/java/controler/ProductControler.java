@@ -5,6 +5,8 @@ import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.PrintModels.CommentPM;
+import View.PrintModels.FullProductPM;
+import View.PrintModels.MiniProductPM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +26,7 @@ public class ProductControler extends Controller{
     }
 
     public List<CommentPM> viewProductComments(int productId) throws NoSuchAProductException {
-        Product product = productManager.findProductById(productId);
-        List<Comment> comments = product.getAllComments();
+        Comment[] comments = productManager.showComments(productId);
         List<CommentPM> commentPMs = new ArrayList<>();
         for (Comment comment : comments) {
             commentPMs.add(new CommentPM(comment.getUserId(),
@@ -33,6 +34,27 @@ public class ProductControler extends Controller{
                     comment.getText()));
         }
         return commentPMs;
+    }
+
+    public FullProductPM[] compareProducts(String[] data) throws NoSuchAProductException {
+        int firstProductId = Integer.parseInt(data[0]);
+        int secondProductId = Integer.parseInt(data[1]);
+        FullProductPM[] fullProductPMs = new FullProductPM[2];
+        fullProductPMs[0] = createFullProductPM(firstProductId);
+        fullProductPMs[1] = createFullProductPM(secondProductId);
+        return fullProductPMs;
+    }
+
+    private FullProductPM createFullProductPM(int productId) throws NoSuchAProductException {
+        Product product = productManager.findProductById(productId);
+        return new FullProductPM(createMiniProductPM(product),
+                productManager.allFeaturesOf(product));
+    }
+
+    private MiniProductPM createMiniProductPM(Product product) {
+        return new MiniProductPM(product.getName(), product.getId(),
+                product.getPrices(), product.getCompany(),
+                product.getTotalScore(), product.getDescription());
     }
 
 }
