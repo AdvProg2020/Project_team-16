@@ -165,5 +165,14 @@ public class CustomerController extends Controller {
         );
     }
 
+    public void rate(int logId, int rate){
+        PurchaseLog purchaseLog = (PurchaseLog) csclManager.getLogById(logId);
+        csclManager.rate(purchaseLog, rate);
+    }
+
+    public long viewBalance(String username){
+        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        return customer.getBalance();
+    }
 
 }
