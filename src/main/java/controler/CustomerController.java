@@ -1,8 +1,8 @@
 package controler;
 
+import ModelPackage.Log.PurchaseLog;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Product;
-import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
@@ -12,6 +12,7 @@ import ModelPackage.Users.SubCart;
 import View.PrintModels.CartPM;
 import View.PrintModels.InCartPM;
 import View.PrintModels.MiniProductPM;
+import View.PrintModels.OrderMiniLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,26 @@ public class CustomerController extends Controller {
                 username,
                 customerInformation,
                 discountCode
+        );
+    }
+
+    public List<OrderMiniLog> viewOrders(String username){
+        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        List<PurchaseLog> purchaseLogs = customer.getPurchaseLogs();
+        List<OrderMiniLog> orderMiniLogs = new ArrayList<>();
+
+        for (PurchaseLog purchaseLog : purchaseLogs) {
+            orderMiniLogs.add(createOrderMiniLog(purchaseLog));
+        }
+
+        return orderMiniLogs;
+    }
+
+    private OrderMiniLog createOrderMiniLog(PurchaseLog purchaseLog){
+        return new OrderMiniLog(
+                purchaseLog.getDate(),
+                purchaseLog.getLogId(),
+                purchaseLog.getPricePaid()
         );
     }
 
