@@ -1,11 +1,15 @@
 package ModelPackage.System;
 
 import ModelPackage.Off.Off;
+import ModelPackage.Off.OffStatus;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.editPackage.ProductEditAttribute;
+import ModelPackage.System.exeption.category.NoSuchACategoryException;
+import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.product.AlreadyASeller;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
@@ -18,6 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RequestManager {
     private List<Request> requests;
@@ -65,7 +70,6 @@ public class RequestManager {
     private void acceptCreateProduct(Request request) throws AlreadyASeller{
         Product product = request.getProduct();
         product.setProductStatus(ProductStatus.VERIFIED);
-
         Seller seller = request.getSeller();
         seller.getProducts().add(product);
         ProductManager.getInstance().addASellerToProduct(product,seller);
@@ -74,21 +78,56 @@ public class RequestManager {
     }
 
     private void acceptEditProduct(Request request) throws NoSuchAProductException {
-        Product product = request.getProduct();
-        product.setId(request.getIdOfRequestedItem());
-        product.setProductStatus(ProductStatus.VERIFIED);
-        Product productToRemove = ProductManager.getInstance().findProductById(request.getIdOfRequestedItem());
+        ProductEditAttribute editAttribute = request.getProductEditAttribute();
+        Product product = ProductManager.getInstance().findProductById(editAttribute.getSourceId());
+        if (editAttribute.getName() != null) {
+            product.setName(editAttribute.getName());
+            DBManager.save(product);
+        }else if (editAttribute.getPublicFeatureTitle() != null) {
+            editPublicFeatureProduct(product,editAttribute);
+        }else if (editAttribute.getSpecialFeatureTitle() != null) {
+            editSpecialFeatureProduct(product,editAttribute);
+        }else if (editAttribute.getNewCategoryId() != 0){
+            try {
+                CategoryManager.getInstance().editProductCategory(product.getId(),product.getCategory().getId(),editAttribute.getNewCategoryId());
+            } catch (Exception e) {}
+        }
+    }
+
+    private void editPublicFeatureProduct(Product product,ProductEditAttribute editAttribute){
+        String title = editAttribute.getPublicFeatureTitle();
+        String feature = editAttribute.getPublicFeature();
+        Map<String, String> features = product.getPublicFeatures();
+        if (features.containsKey(title)){
+            features.replace(title,feature);
+        }
         DBManager.save(product);
-        DBManager.delete(productToRemove);
-        DBManager.delete(request);
+    }
+
+    private void editSpecialFeatureProduct(Product product,ProductEditAttribute editAttribute){
+        String title = editAttribute.getSpecialFeatureTitle();
+        String feature = editAttribute.getSpecialFeature();
+        Map<String, String> features = product.getSpecialFeatures();
+        if (features.containsKey(title)){
+            features.replace(title,feature);
+        }
+        DBManager.save(product);
     }
 
     private void acceptCreateOff(Request request){
         Off off = request.getOff();
+        off.setOffStatus(OffStatus.ACCEPTED);
         Seller seller = off.getSeller();
         List<Off> offs = seller.getOffs();
         offs.add(off);
         seller.setOffs(offs);
+    }
+
+    private void addOffToProducts(Off off){
+        for (Product product : off.getProducts()) {
+            product.setOff(off);
+            product.setOnOff(true);
+        }
     }
 
     private void acceptEditOff(Request request){

@@ -14,8 +14,7 @@ public class ProductEditAttribute extends EditAttributes{
     private String name;
     private String publicFeatureTitle;
     private String publicFeature;
-    private String onePublicFeatureRemove;
     private String specialFeatureTitle;
     private String specialFeature;
-    private String oneSpecialFeatureRemove;
+    private int  newCategoryId;
 }

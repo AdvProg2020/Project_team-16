@@ -6,6 +6,7 @@ import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.Product.Score;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.product.*;
@@ -44,12 +45,11 @@ public class ProductManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void editProduct(Product edited,String editor) throws NoSuchAProductException {
+    public void editProduct(ProductEditAttribute edited, String editor) throws NoSuchAProductException {
         String requestStr = String.format("%s has requested to edit Product \"%s\" with id %s",edited,edited.getName(),edited.getId());
-        Product product = findProductById(edited.getId());
+        Product product = findProductById(edited.getSourceId());
         product.setProductStatus(ProductStatus.UNDER_EDIT);
-        Seller seller = DBManager.load(Seller.class,editor);
-        Request request = new Request(seller.getUsername(),RequestType.CHANGE_PRODUCT,requestStr,edited);
+        Request request = new Request(editor,RequestType.CHANGE_PRODUCT,requestStr,edited);
         RequestManager.getInstance().addRequest(request);
     }
 
@@ -212,7 +212,4 @@ public class ProductManager {
         product.setStock(prices);
     }
 
-    public void clear(){
-        allProducts.clear();
-    }
 }
