@@ -1,10 +1,13 @@
 package controler;
 
+import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
+import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
+import ModelPackage.Users.CustomerInformation;
 import ModelPackage.Users.SubCart;
 import View.PrintModels.CartPM;
 import View.PrintModels.InCartPM;
@@ -71,6 +74,27 @@ public class CustomerController extends Controller {
         cartManager.changeProductAmountInCart(cart, id, sellerId, change);
     }
 
+    public long showTotalPrice(String username){
+        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        Cart cart = customer.getCart();
 
+        return cart.getTotalPrice();
+    }
+
+    public void purchase(String username, String[] customerInfo, String disCode) throws NoSuchADiscountCodeException {
+        CustomerInformation customerInformation = new CustomerInformation(
+                customerInfo[0],
+                customerInfo[1],
+                customerInfo[2],
+                customerInfo[3]
+        );
+        DiscountCode discountCode = discountManager.getDiscountByCode(disCode);
+
+        customerManager.purchase(
+                username,
+                customerInformation,
+                discountCode
+        );
+    }
 
 }

@@ -25,4 +25,11 @@ public class CustomerInformation {
 
     @Column(name = "CARD_PASSWORD")
     private String cardPassword;
+
+    public CustomerInformation(String address, String zipCode, String cardNumber, String cardPassword) {
+        this.address = address;
+        this.zipCode = zipCode;
+        this.cardNumber = cardNumber;
+        this.cardPassword = cardPassword;
+    }
 }
