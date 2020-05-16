@@ -145,8 +145,4 @@ public class CSCLManager {
         }
         return log;
     }
-
-    public void rate(PurchaseLog purchaseLog, int rate) {
-        purchaseLog.setRate(rate);
-    }
 }

@@ -26,9 +26,6 @@ public class PurchaseLog extends Log {
     @Column(name = "DISCOUNT")
     private int discount;
 
-    @Column(name = "RATE")
-    private int rate;
-
     public PurchaseLog(Date date, DeliveryStatus deliveryStatus, List<SoldProductSellerMap> productsAndItsSellers, int pricePaid, int discount) {
         super(date, deliveryStatus);
         this.productsAndItsSellers = productsAndItsSellers;
