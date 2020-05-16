@@ -4,10 +4,12 @@ import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
+import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.AlreadyASeller;
@@ -205,8 +207,9 @@ public class ManagerController extends Controller {
         );
     }
 
-    public void editCategory(int id){
-        /*TODO: edit*/
+    public void editCategory(int id, CategoryEditAttribute editAttribute)
+            throws RepeatedNameInParentCategoryExeption, NoSuchACategoryException, RepeatedFeatureException {
+        categoryManager.editCategory(id, editAttribute);
     }
 
     public void addCategory(String name, int parentId) throws RepeatedNameInParentCategoryExeption, NoSuchACategoryException {

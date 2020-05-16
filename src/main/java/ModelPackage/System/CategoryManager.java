@@ -3,6 +3,7 @@ package ModelPackage.System;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.PrintModels.CategoryPM;
@@ -128,6 +129,31 @@ public class CategoryManager {
         DBManager.save(category);
     }
 
+    public void editCategory(int categoryId, CategoryEditAttribute editAttribute)
+            throws NoSuchACategoryException, RepeatedNameInParentCategoryExeption, RepeatedFeatureException {
+        Category category = getCategoryById(categoryId);
+
+        String newName = editAttribute.getName();
+        String addFeature = editAttribute.getAddFeature();
+        String removeFeature = editAttribute.getRemoveFeature();
+        int newParentId = editAttribute.getNewParentId();
+
+        if (newName != null){
+            editName(newName, categoryId);
+        }
+        if (addFeature != null){
+            addFeatureToCategory(categoryId, addFeature);
+        }
+        if (removeFeature != null){
+            removeFeatureInCategory(categoryId, removeFeature);
+        }
+        if (newParentId != 0) {
+            category.setParentId(newParentId);
+        }
+
+        DBManager.save(category);
+    }
+
     public void editName(String name,int categoryId) throws
             NoSuchACategoryException, RepeatedNameInParentCategoryExeption {
         Category category = getCategoryById(categoryId);
@@ -175,10 +201,36 @@ public class CategoryManager {
         }
     }
 
+    public void removeFeatureInCategory(int categoryId,String removeFeature)
+            throws NoSuchACategoryException, RepeatedFeatureException {
+        Category category = getCategoryById(categoryId);
+        checkIfThisFeatureExistInThisCategoryForRemove(category,removeFeature);
+        List<String> features = category.getSpecialFeatures();
+        features.remove(removeFeature);
+        category.setSpecialFeatures(features);
+        removeNewFeatureToProducts(removeFeature,category.getAllProducts());
+        DBManager.save(category);
+    }
+
+    private void checkIfThisFeatureExistInThisCategoryForRemove(Category category, String feature){
+        for (String specialFeature : category.getSpecialFeatures()) {
+            if (specialFeature.equals(feature)) throw new NoSuchAFeatureInCategoryException(feature,Integer.toString(category.getId()));
+        }
+    }
+
     void addNewFeatureToProducts(String newFeature,List<Product> products){
         for (Product product : products) {
             Map<String,String> specialFeatures = product.getSpecialFeatures();
             specialFeatures.put(newFeature,"");
+            product.setSpecialFeatures(specialFeatures);
+            /* TODO : Notify The Seller To Add New Feature */
+        }
+    }
+
+    void removeNewFeatureToProducts(String removeFeature,List<Product> products){
+        for (Product product : products) {
+            Map<String,String> specialFeatures = product.getSpecialFeatures();
+            specialFeatures.remove(removeFeature);
             product.setSpecialFeatures(specialFeatures);
             /* TODO : Notify The Seller To Add New Feature */
         }

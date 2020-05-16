@@ -63,12 +63,14 @@ public class DiscountManager {
             checkIfNewStartingDateIsBeforeEndingDate(discountCode, newEnd);
             discountCode.setEndTime(newEnd);
         }
-
-        checkIfPercentageIsValid(newOffPercent);
-        discountCode.setOffPercentage(newOffPercent);
-
-        checkIfMaxDiscountIsPositive(newMaxDiscount);
-        discountCode.setMaxDiscount(newMaxDiscount);
+        if (newOffPercent != 0) {
+            checkIfPercentageIsValid(newOffPercent);
+            discountCode.setOffPercentage(newOffPercent);
+        }
+        if (newMaxDiscount != 0) {
+            checkIfMaxDiscountIsPositive(newMaxDiscount);
+            discountCode.setMaxDiscount(newMaxDiscount);
+        }
 
         DBManager.save(discountCode);
     }

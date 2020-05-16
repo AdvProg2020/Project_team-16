@@ -40,7 +40,7 @@ public class Category {
     private Category parent;
 
     @Column(name = "PARENT__ID")
-    private String parentId;
+    private int parentId;
 
     @ElementCollection(targetClass = Product.class)
     @LazyCollection(LazyCollectionOption.FALSE)
