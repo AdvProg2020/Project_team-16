@@ -20,19 +20,12 @@ public class AccountController extends Controller {
         }
     }
 
-    public void createAccount(String[] info, String type, Cart cart){
+    public void createAccount(String[] info, String type){
         accountManager.createAccount(info, type);
-        if (type.equalsIgnoreCase("customer")){
-            addCartToCustomer(info[0], cart);
-        }
     }
 
-    public String login(String username, String password, Cart cart) {
-        String roll = accountManager.login(username, password);
-        if (roll.equals("ModelPackage.Users.Customer")){
-            addCartToCustomer(username, cart);
-        }
-        return roll;
+    public String login(String username, String password) {
+        return accountManager.login(username, password);
     }
 
     public UserFullPM viewPersonalInfo(String username){
