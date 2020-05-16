@@ -1,17 +1,13 @@
 package controler;
 
-import ModelPackage.Maps.SellerIntegerMap;
-import ModelPackage.Product.Category;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.System.SortType;
-import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.ProductNotHaveSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
-import View.PrintModels.CategoryPM;
 import View.PrintModels.CommentPM;
 import View.PrintModels.FullProductPM;
 import View.PrintModels.MiniProductPM;
@@ -73,10 +69,6 @@ public class ProductControler extends Controller{
         User user = accountManager.getUserByUsername(userName);
         if (user.isHasSignedIn()) {
             int productId = Integer.parseInt(data[1]);
-            //String[] toFindSellerData = new String[2];
-            //toFindSellerData[0] = data[1];
-            //toFindSellerData[1] = data[2];
-            //String sellerUserName = selectSeller(toFindSellerData).getUsername();
             String sellerUserName = data[2];
             int amount = Integer.parseInt(data[3]);
             cartManager.addProductToCart(user.getCart(), sellerUserName, productId, amount);

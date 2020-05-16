@@ -7,6 +7,7 @@ import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.CategoryManager;
+import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.OffChangeAttributes;
@@ -53,10 +54,10 @@ public class SellerContoller extends Controller{
          Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
          List<Product> sellerProducts = seller.getProducts();
          ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
-        for (Product sellerProduct : sellerProducts) {
-            miniProductPMs.add(createMiniProductPM(sellerProduct));
+         for (Product sellerProduct : sellerProducts) {
+             miniProductPMs.add(createMiniProductPM(sellerProduct));
         }
-        return miniProductPMs;
+         return miniProductPMs;
     }
 
     public FullProductPM viewProduct(int productId) throws NoSuchAProductException {
@@ -107,7 +108,8 @@ public class SellerContoller extends Controller{
     }
 
     public void editOff(String[] data, OffChangeAttributes editAttributes)
-            throws InvalidTimes, NoSuchAOffException, NoSuchAProductException, UserNotAvailableException {
+            throws InvalidTimes, NoSuchAOffException, NoSuchAProductException,
+            UserNotAvailableException {
         int offId = Integer.parseInt(data[0]);
         String userName = data[1];
         Seller seller = (Seller) accountManager.getUserByUsername(userName);
@@ -140,7 +142,8 @@ public class SellerContoller extends Controller{
                 user.getPhoneNumber(), "seller");
     }
 
-    public void editSellerInfo(String userName, UserEditAttributes editAttributes) throws UserNotAvailableException {
+    public void editSellerInfo(String userName, UserEditAttributes editAttributes)
+            throws UserNotAvailableException {
         accountManager.changeInfo(userName, editAttributes);
     }
 
@@ -150,7 +153,7 @@ public class SellerContoller extends Controller{
         String productName = data[1];
         String companyName = data[2];
         String categoryId = data[3];
-        Category category = CategoryManager.getInstance().getCategoryById(Integer.parseInt(categoryId));
+        Category category = categoryManager.getCategoryById(Integer.parseInt(categoryId));
         String description = data[4];
         int amountOfProduct = Integer.parseInt(data[5]);
         int priceOfProduct = Integer.parseInt(data[6]);
@@ -163,21 +166,10 @@ public class SellerContoller extends Controller{
                 description, stock, prices);
         productManager.createProduct(product, sellerUserName);
     }
-    // TODO : editProduct
-    /*public void editProduct(String[] data) throws NoSuchAProductException {
-        String sellerUserName = data[0];
-        int productId = Integer.parseInt(data[1]);
-        Product product = productManager.findProductById(productId);
-        productManager.editProduct(product, sellerUserName);
-    }*/
 
-    public List<CategoryPM> showCategories() {
-        List<Category> categories = DBManager.loadAllData(Category.class);
-        List<CategoryPM> categoryPMs = new ArrayList<>();
-        for (Category category : categories) {
-            categoryPMs.add(new CategoryPM(category.getName(), category.getId()));
-        }
-        return categoryPMs;
+    public void editProduct(String sellerUserName, ProductEditAttribute editAttribute)
+            throws NoSuchAProductException {
+        productManager.editProduct(editAttribute, sellerUserName);
     }
 
     private ArrayList<Seller> addSellerToNewProduct(String sellerUserName) throws UserNotAvailableException {

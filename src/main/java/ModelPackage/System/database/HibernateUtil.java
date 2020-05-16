@@ -10,6 +10,7 @@ import ModelPackage.Maps.UserIntegerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.*;
+import ModelPackage.System.editPackage.*;
 import ModelPackage.Users.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -49,6 +50,12 @@ public class HibernateUtil {
                     .addAnnotatedClass(DiscountcodeIntegerMap.class)
                     .addAnnotatedClass(CustomerInformation.class)
                     .addAnnotatedClass(CustomerInformation.class)
+                    .addAnnotatedClass(CategoryEditAttribute.class)
+                    .addAnnotatedClass(DiscountCodeEditAttributes.class)
+                    .addAnnotatedClass(EditAttributes.class)
+                    .addAnnotatedClass(OffChangeAttributes.class)
+                    .addAnnotatedClass(ProductEditAttribute.class)
+                    .addAnnotatedClass(UserEditAttributes.class)
                     .buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
