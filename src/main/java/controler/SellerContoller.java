@@ -8,6 +8,7 @@ import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.OffChangeAttributes;
+import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.off.InvalidTimes;
@@ -136,14 +137,10 @@ public class SellerContoller extends Controller{
                 user.getLastName(), user.getEmail(),
                 user.getPhoneNumber(), "seller");
     }
-    // TODO : editInfo
-    /*public void editSellerInfo(String[] data) {
-        String[] info = new String[3];
-        info[0] = data[0];
-        info[1] = data[1];
-        info[2] = data[2];
-        accountManager.changeInfo(info);
-    }*/
+
+    public void editSellerInfo(String userName, UserEditAttributes editAttributes) {
+        accountManager.changeInfo(userName, editAttributes);
+    }
 
     public void addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures) {
         String sellerUserName = data[0];
