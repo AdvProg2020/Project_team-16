@@ -22,7 +22,8 @@ public class CartManager {
 
     private CartManager() {}
 
-    public void addProductToCart(Cart cart, String sellerId, int productId, int amount) throws Exception {
+    public void addProductToCart(Cart cart, String sellerId, int productId, int amount)
+            throws ProductExistedInCart, NotEnoughAmountOfProductException, NoSuchAProductException {
         checkIfProductExistsInCart(cart, productId);
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, amount);
         Product product = ProductManager.getInstance().findProductById(productId);
@@ -45,7 +46,7 @@ public class CartManager {
         return total;
     }
 
-    public void checkIfThereIsEnoughAmountOfProduct(int productId, String sellerId, int amount)
+    void checkIfThereIsEnoughAmountOfProduct(int productId, String sellerId, int amount)
             throws NotEnoughAmountOfProductException, NoSuchAProductException {
         Product product = ProductManager.getInstance().findProductById(productId);
         for (SellerIntegerMap map : product.getStock()) {
