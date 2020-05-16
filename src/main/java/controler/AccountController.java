@@ -1,8 +1,10 @@
 package controler;
 
+import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
+import ModelPackage.Users.SubCart;
 import ModelPackage.Users.User;
 import View.PrintModels.UserFullPM;
 
@@ -59,6 +61,24 @@ public class AccountController extends Controller {
 
     private void addCartToCustomer(String username, Cart cart){
         Customer customer = (Customer)accountManager.getUserByUsername(username);
-        customer.setCart(cart);
+        Cart previousCart = customer.getCart();
+
+        boolean added = false;
+        for (SubCart subCart : cart.getSubCarts()) {
+            added = false;
+            Product product = subCart.getProduct();
+            for (SubCart previousCartSubCart : previousCart.getSubCarts()) {
+                Product previousCartProduct = previousCartSubCart.getProduct();
+                if (previousCartProduct.getId() == product.getId() &&
+                        previousCartSubCart.getSeller().getUsername().equals(subCart.getSeller().getUsername())){
+                    previousCartSubCart.setAmount(previousCartSubCart.getAmount() + subCart.getAmount());
+                    added = true;
+                    break;
+                }
+            }
+            if (!added){
+                previousCart.getSubCarts().add(subCart);
+            }
+        }
     }
 }
