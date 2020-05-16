@@ -2,6 +2,7 @@ package controler;
 
 import ModelPackage.Log.PurchaseLog;
 import ModelPackage.Maps.DiscountcodeIntegerMap;
+import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Product;
@@ -10,10 +11,7 @@ import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
-import ModelPackage.Users.Cart;
-import ModelPackage.Users.Customer;
-import ModelPackage.Users.CustomerInformation;
-import ModelPackage.Users.SubCart;
+import ModelPackage.Users.*;
 import View.PrintModels.*;
 
 import java.util.ArrayList;
@@ -51,6 +49,8 @@ public class CustomerController extends Controller {
         return new InCartPM(
                 miniProductPM,
                 subCart.getSeller().getUsername(),
+                findPriceForSpecialSeller(subCart.getSeller(), product) * subCart.getAmount(),
+                product.getOff().getOffPercentage(),
                 subCart.getAmount()
         );
     }
@@ -122,6 +122,14 @@ public class CustomerController extends Controller {
         }
 
         return orderMiniLogPMS;
+    }
+
+    private int findPriceForSpecialSeller(Seller seller, Product product) {
+        for (SellerIntegerMap sellerIntegerMap : product.getPrices()) {
+            if (sellerIntegerMap.getSeller().equals(seller))
+                return sellerIntegerMap.getInteger();
+        }
+        return 0;
     }
 
     private OrderMiniLogPM createOrderMiniLog(PurchaseLog purchaseLog){
