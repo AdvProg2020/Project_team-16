@@ -7,6 +7,7 @@ import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.off.InvalidTimes;
@@ -101,30 +102,28 @@ public class SellerContoller extends Controller{
         int offPercentage = Integer.parseInt(data[2]);
         offManager.createOff(seller, dates, offPercentage);
     }
-    // TODO : editOff
-    /*public void editOff(String[] data) throws ParseException,
-            NoSuchAOffException, NoSuchAProductException {
-        String sellerUserName = data[0];
-        User user = accountManager.getUserByUsername(sellerUserName);
-        int editedOffId = Integer.parseInt(data[1]);
-        String toChangeInfoType = data[2];
-        switch (toChangeInfoType) {
-            case "start time of off" : offManager.editStartTimeOfOff(user, editedOffId,
-                        new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[3]));
-            break;
-            case "end time of off" : offManager.editEndTimeOfOff(user, editedOffId,
-                        new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[3]));
-            break;
-            case "percentage of off" : offManager.editPercentageOfOff(user, editedOffId,
-                    Integer.parseInt(data[3]));
-            break;
-            case "add product" : offManager.addProductToOff(user, editedOffId,
-                    Integer.parseInt(data[3]));
-            break;
-            case "delete product" : offManager.deleteProductFromOff(user, editedOffId,
-                    Integer.parseInt(data[3]));
-        }
-    }*/
+
+    public void editOff(String[] data, OffChangeAttributes editAttributes)
+            throws InvalidTimes, NoSuchAOffException, NoSuchAProductException {
+        int offId = Integer.parseInt(data[0]);
+        String userName = data[1];
+        Seller seller = (Seller) accountManager.getUserByUsername(userName);
+        Date start = editAttributes.getStart();
+        Date end = editAttributes.getEnd();
+        int productIdToRemove = editAttributes.getProductIdToRemove();
+        int productIdToAdd = editAttributes.getProductIdToAdd();
+        int percentage = editAttributes.getPercentage();
+        if (start != null)
+            offManager.editStartTimeOfOff(seller, offId, start);
+        if (end != null)
+            offManager.editEndTimeOfOff(seller, offId, end);
+        if (productIdToRemove != 0)
+            offManager.deleteProductFromOff(seller, offId, productIdToRemove);
+        if (productIdToAdd != 0)
+            offManager.addProductToOff(seller, offId, productIdToAdd);
+        if (percentage != 0)
+            offManager.editPercentageOfOff(seller, offId, percentage);
+    }
 
     public void deleteOff(String data) throws NoSuchAOffException {
         int offId = Integer.parseInt(data);
