@@ -95,7 +95,7 @@ public class ProductManagerTest {
             DBManager.save(map);
         }
 
-        product = new Product("Shirt","Adidas",sellers,category.getCategoryId(),publicFeatures,specialFeatures,
+        product = new Product("Shirt","Adidas",sellers,null,publicFeatures,specialFeatures,
                 "bulshit",stock,prices);
         product.setAllComments(comments);
         product.setAllScores(scores);
@@ -106,7 +106,7 @@ public class ProductManagerTest {
 
         DBManager.save(product);
 
-        product2 = new Product("Shirt XXL","Adidas",new ArrayList<>(sellers),category.getCategoryId(),new HashMap<>(publicFeatures),new HashMap<>(specialFeatures),
+        product2 = new Product("Shirt XXL","Adidas",new ArrayList<>(sellers),null,new HashMap<>(publicFeatures),new HashMap<>(specialFeatures),
                 "Bull",new ArrayList<>(),new ArrayList<>());
         product2.setTotalScore(3);
         product2.setView(460);

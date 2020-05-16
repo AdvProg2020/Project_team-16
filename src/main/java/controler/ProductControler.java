@@ -147,7 +147,7 @@ public class ProductControler extends Controller{
             throws ProductsNotBelongToUniqueCategoryException, NoSuchAProductException {
         Product firstProduct = productManager.findProductById(firstProductId);
         Product secondProduct = productManager.findProductById(secondProductId);
-        if (!firstProduct.getCategoryId().equals(secondProduct.getCategoryId()))
+        if (firstProduct.getId() != (secondProduct.getId()))
             throw new ProductsNotBelongToUniqueCategoryException(firstProduct.getId(), secondProduct.getId());
     }
 

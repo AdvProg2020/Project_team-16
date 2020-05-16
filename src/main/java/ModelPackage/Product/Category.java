@@ -24,9 +24,6 @@ public class Category {
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "CAT_ID")
-    private String categoryId;
-
     @ElementCollection
     @Column(name = "SPECIAL_FEATURES")
     private List<String> specialFeatures;
@@ -39,25 +36,17 @@ public class Category {
     @ManyToOne
     private Category parent;
 
-    @Column(name = "PARENT__ID")
-    private String parentId;
-
     @ElementCollection(targetClass = Product.class)
     @LazyCollection(LazyCollectionOption.FALSE)
-        @OneToMany(cascade = CascadeType.ALL)
+        @OneToMany
     private List<Product> allProducts;
 
     public Category(String name, Category parent) {
         this.name = name;
-        this.categoryId = idGenerator();
         this.parent = parent;
         this.specialFeatures = new ArrayList<String>();
         this.subCategories  = new ArrayList<Category>();
         this.allProducts = new ArrayList<>();
     }
 
-    private String idGenerator(){
-        Date date = new Date();
-        return String.format("CT%s%04d",date.toString().replaceAll("\\s","").replaceAll(":",""),(int)(Math.random()*9999+1));
-    }
 }
