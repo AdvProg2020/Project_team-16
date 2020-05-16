@@ -41,4 +41,8 @@ public class Comment {
         this.status = status;
         this.boughtThisProduct = boughtThisProduct;
     }
+
+    public Comment(){
+
+    }
 }

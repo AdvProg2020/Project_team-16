@@ -121,6 +121,8 @@ public class Product {
     }
 
     public Product() {
+        this.allScores = new ArrayList<>();
+        this.allComments = new ArrayList<>();
 
     }
 }

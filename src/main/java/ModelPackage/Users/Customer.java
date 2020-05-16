@@ -38,4 +38,9 @@ public class Customer extends User {
         this.purchaseLogs = new ArrayList<PurchaseLog>();
         this.discountCodes = new ArrayList<>();
     }
+
+    public Customer(){
+        this.purchaseLogs = new ArrayList<PurchaseLog>();
+        this.discountCodes = new ArrayList<>();
+    }
 }

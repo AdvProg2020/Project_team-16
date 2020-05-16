@@ -34,4 +34,8 @@ public class SellLog extends Log {
         this.discount = discount;
         this.buyer = buyer;
     }
+
+    public SellLog(){
+
+    }
 }

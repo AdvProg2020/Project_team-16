@@ -29,4 +29,8 @@ public class SubCart{
         this.seller = seller;
         this.amount = amount;
     }
+
+    public SubCart(){
+
+    }
 }

@@ -42,4 +42,8 @@ public class DiscountCode {
         this.users = new ArrayList<>();
     }
 
+    public DiscountCode(){
+        this.users = new ArrayList<>();
+    }
+
 }

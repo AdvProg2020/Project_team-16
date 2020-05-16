@@ -49,4 +49,10 @@ public class Category {
         this.allProducts = new ArrayList<>();
     }
 
+    public Category(){
+        this.specialFeatures = new ArrayList<>();
+        this.subCategories  = new ArrayList<>();
+        this.allProducts = new ArrayList<>();
+    }
+
 }

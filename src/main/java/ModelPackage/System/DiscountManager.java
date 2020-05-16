@@ -145,6 +145,7 @@ public class DiscountManager {
             throws NotValidPercentageException, StartingDateIsAfterEndingDate {
         checkIfStartingDateIsBeforeEndingDate(startTime, endTime);
         checkIfPercentageIsValid(offPercentage);
+        /* TODO : Check for repeated code */
         DiscountCode discountCode = new DiscountCode(code,startTime, endTime, offPercentage, maxDiscount);
         DBManager.save(discountCode);
     }

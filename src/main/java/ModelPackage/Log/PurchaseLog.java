@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,5 +33,9 @@ public class PurchaseLog extends Log {
         this.pricePaid = pricePaid;
         this.discount = discount;
         //this.sellers = sellers;
+    }
+
+    public PurchaseLog(){
+        this.productsAndItsSellers = new ArrayList<>();
     }
 }
