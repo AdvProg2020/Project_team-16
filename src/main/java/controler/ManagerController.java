@@ -7,6 +7,7 @@ import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.editPackage.OffChangeAttributes;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedFeatureException;
@@ -142,7 +143,7 @@ public class ManagerController extends Controller {
         discountManager.editDiscountCode(code, editAttributes);
     }
 
-    private void removeUserFromDiscountCodeUsers(String code, String username) throws UserNotExistedInDiscountCodeException, NoSuchADiscountCodeException {
+    private void removeUserFromDiscountCodeUsers(String code, String username) throws UserNotExistedInDiscountCodeException, NoSuchADiscountCodeException, UserNotAvailableException {
         User user = accountManager.getUserByUsername(username);
         discountManager.removeUserFromDiscountCodeUsers(code, user);
     }

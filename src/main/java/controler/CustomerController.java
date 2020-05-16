@@ -88,7 +88,7 @@ public class CustomerController extends Controller {
         cartManager.changeProductAmountInCart(cart, id, sellerId, change);
     }
 
-    public long showTotalPrice(String username){
+    public long showTotalPrice(String username) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         Cart cart = customer.getCart();
 
@@ -112,7 +112,7 @@ public class CustomerController extends Controller {
         );
     }
 
-    public List<OrderMiniLogPM> viewOrders(String username){
+    public List<OrderMiniLogPM> viewOrders(String username) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         List<PurchaseLog> purchaseLogs = customer.getPurchaseLogs();
         List<OrderMiniLogPM> orderMiniLogPMS = new ArrayList<>();

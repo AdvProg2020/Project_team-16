@@ -1,6 +1,8 @@
 package controler;
 
 import ModelPackage.Product.Product;
+import ModelPackage.System.editPackage.UserEditAttributes;
+import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
@@ -13,7 +15,7 @@ import java.util.List;
 
 public class AccountController extends Controller {
 
-    public void usernameInitialCheck(String username){
+    public void usernameInitialCheck(String username) throws UserNotAvailableException {
         if (accountManager.isUsernameAvailable(username)){
             throw new UserNotAvailableException();
         }
@@ -21,16 +23,13 @@ public class AccountController extends Controller {
 
     public void createAccount(String[] info, String type) throws UserNotAvailableException {
         accountManager.createAccount(info, type);
-        if (type.equalsIgnoreCase("customer")){
-            addCartToCustomer(info[0], cart);
-        }
     }
 
     public String login(String username, String password) throws NotVerifiedSeller, UserNotAvailableException {
         return accountManager.login(username, password);
     }
 
-    public UserFullPM viewPersonalInfo(String username){
+    public UserFullPM viewPersonalInfo(String username) throws UserNotAvailableException {
         User user = accountManager.viewPersonalInfo(username);
         return new UserFullPM(
                 user.getUsername(),
@@ -42,7 +41,7 @@ public class AccountController extends Controller {
         );
     }
 
-    public void editPersonalInfo(String username, UserEditAttributes editAttributes){
+    public void editPersonalInfo(String username, UserEditAttributes editAttributes) throws UserNotAvailableException {
         accountManager.changeInfo(username, editAttributes);
     }
 

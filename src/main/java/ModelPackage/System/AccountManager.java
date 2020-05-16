@@ -94,10 +94,7 @@ public class AccountManager {
         return user;
     }
 
-    public void changeInfo(String[] info) throws UserNotAvailableException {
-        String username = info[0];
-        String type = info[1];
-        String newInfo = info[2];
+    public void changeInfo(String username,UserEditAttributes editAttributes) throws UserNotAvailableException {
 
         User user = getUserByUsername(username);
         String newFirstName = editAttributes.getNewFirstName();

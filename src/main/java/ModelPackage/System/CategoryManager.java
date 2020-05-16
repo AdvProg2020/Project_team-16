@@ -7,7 +7,6 @@ import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
-import View.PrintModels.CategoryPM;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -146,7 +145,7 @@ public class CategoryManager {
             removeFeatureInCategory(categoryId, removeFeature);
         }
         if (newParentId != 0) {
-            category.setParentId(newParentId);
+            CategoryManager.getInstance().moveCategoryToAnotherParent(newParentId,categoryId);
         }
 
         DBManager.save(category);
@@ -206,7 +205,7 @@ public class CategoryManager {
         List<String> features = category.getSpecialFeatures();
         features.remove(removeFeature);
         category.setSpecialFeatures(features);
-        removeNewFeatureToProducts(removeFeature,category.getAllProducts());
+        removeAFeatureFromProducts(removeFeature,category.getAllProducts());
         DBManager.save(category);
     }
 
@@ -226,7 +225,7 @@ public class CategoryManager {
         }
     }
 
-    void removeNewFeatureToProducts(String removeFeature,List<Product> products){
+    void removeAFeatureFromProducts(String removeFeature, List<Product> products){
         for (Product product : products) {
             Map<String,String> specialFeatures = product.getSpecialFeatures();
             specialFeatures.remove(removeFeature);
