@@ -1,62 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="620cfbdc-442c-4411-8f94-64ebffa85b2c" name="Default Changelist" comment="">
+    <list default="true" id="9bbd8324-a671-446e-9860-4cf50298f04f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controler/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controler/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/PrintModels/MiniProductPM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/PrintModels/MiniProductPM.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CoverageViewManager">
-    <option name="myElementSize" value="129" />
-  </component>
-  <component name="DatabaseView">
-    <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
-    <option name="GROUP_SCHEMA" value="true" />
-    <option name="GROUP_CONTENTS" value="false" />
-    <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand />
-    <select />
-  </component>
-  <component name="DefaultGradleProjectSettings">
-    <option name="isMigrated" value="true" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="CustomerManager" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="MERGE" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="importAutomatically" value="true" />
-      </MavenImportingSettings>
-    </option>
-  </component>
-  <component name="ProjectId" id="1b7kUgxlWeMxxn4SDiUH86azyKR" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="1c0EVP2tuoaEhpyFHfCNukR196S" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -64,823 +22,83 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Assignment/Temp" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-  </component>
-  <component name="RunManager" selected="JUnit.AccountManagerTest.test (1)">
-    <configuration name="AccountManagerTest.IsUsernameAvailable_NotAvailable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project_team-16" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ModelPackage.System.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.AccountManagerTest" />
-      <option name="METHOD_NAME" value="IsUsernameAvailable_NotAvailable" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AccountManagerTest.getUserByUsername" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project_team-16" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ModelPackage.System.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.AccountManagerTest" />
-      <option name="METHOD_NAME" value="getUserByUsername" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AccountManagerTest.login" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project_team-16" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Models.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Models" />
-      <option name="MAIN_CLASS_NAME" value="Models.AccountManagerTest" />
-      <option name="METHOD_NAME" value="login" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AccountManagerTest.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project_team-16" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ModelPackage.System.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="ModelPackage.System" />
-      <option name="MAIN_CLASS_NAME" value="ModelPackage.System.AccountManagerTest" />
-      <option name="METHOD_NAME" value="test" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AccountManagerTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Project_team-16" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Models.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Models" />
-      <option name="MAIN_CLASS_NAME" value="Models.AccountManagerTest" />
-      <option name="METHOD_NAME" value="test" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.AccountManagerTest.test (1)" />
-        <item itemvalue="JUnit.AccountManagerTest.test" />
-        <item itemvalue="JUnit.AccountManagerTest.login" />
-        <item itemvalue="JUnit.AccountManagerTest.IsUsernameAvailable_NotAvailable" />
-        <item itemvalue="JUnit.AccountManagerTest.getUserByUsername" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="620cfbdc-442c-4411-8f94-64ebffa85b2c" name="Default Changelist" comment="" />
-      <created>1586335730199</created>
+      <changelist id="9bbd8324-a671-446e-9860-4cf50298f04f" name="Default Changelist" comment="" />
+      <created>1589657133964</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1586335730199</updated>
-      <workItem from="1586335734972" duration="1276000" />
-      <workItem from="1586370496485" duration="639000" />
-      <workItem from="1587990540978" duration="5916000" />
-      <workItem from="1588077214235" duration="6583000" />
-      <workItem from="1588257664026" duration="6321000" />
-      <workItem from="1588312973025" duration="7642000" />
-      <workItem from="1588338921409" duration="4112000" />
-      <workItem from="1588345431215" duration="1426000" />
-      <workItem from="1588485315698" duration="15299000" />
-      <workItem from="1589319163611" duration="721000" />
-      <workItem from="1589374594586" duration="296000" />
-      <workItem from="1589389149981" duration="8446000" />
-      <workItem from="1589443453208" duration="10794000" />
-      <workItem from="1589463751157" duration="5814000" />
-      <workItem from="1589540977734" duration="13329000" />
+      <updated>1589657133964</updated>
+      <workItem from="1589657136527" duration="5726000" />
     </task>
-    <task id="LOCAL-00030" summary="adding generate id to Logs">
-      <created>1588342021783</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
+    <task id="LOCAL-00001" summary="print Cart :)">
+      <created>1589661767761</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1588342021783</updated>
+      <updated>1589661767761</updated>
     </task>
-    <task id="LOCAL-00031" summary="view orders test">
-      <created>1588342132267</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
+    <task id="LOCAL-00002" summary="print notSignedIn Cart :)">
+      <created>1589661964188</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1588342132267</updated>
+      <updated>1589661964188</updated>
     </task>
-    <task id="LOCAL-00032" summary="view discodes implemented">
-      <created>1588342785470</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
+    <task id="LOCAL-00003" summary="print in Cart :)">
+      <created>1589663305417</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1588342785470</updated>
+      <updated>1589663305417</updated>
     </task>
-    <task id="LOCAL-00033" summary="view discodes test accomplished">
-      <created>1588342864861</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1588342864861</updated>
-    </task>
-    <task id="LOCAL-00034" summary="change in DiscountManager 'updating the customer's discount list'">
-      <created>1588495052693</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1588495052693</updated>
-    </task>
-    <task id="LOCAL-00035" summary="CustomerInformation class implemented">
-      <created>1588496097124</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1588496097124</updated>
-    </task>
-    <task id="LOCAL-00036" summary="Customer class updated">
-      <created>1588496202214</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1588496202214</updated>
-    </task>
-    <task id="LOCAL-00037" summary="adding NotEnoughMoneyException">
-      <created>1588502134603</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1588502134603</updated>
-    </task>
-    <task id="LOCAL-00038" summary="purchase method done">
-      <created>1588502161338</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1588502161338</updated>
-    </task>
-    <task id="LOCAL-00039" summary="change in create customer">
-      <created>1588513582670</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1588513582670</updated>
-    </task>
-    <task id="LOCAL-00040" summary="change in create manager">
-      <created>1588513616389</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1588513616389</updated>
-    </task>
-    <task id="LOCAL-00041" summary="change in create account test">
-      <created>1588514173011</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1588514173011</updated>
-    </task>
-    <task id="LOCAL-00042" summary="username available test added">
-      <created>1588514947631</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1588514947631</updated>
-    </task>
-    <task id="LOCAL-00043" summary="get user not found test added">
-      <created>1588515308134</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1588515308134</updated>
-    </task>
-    <task id="LOCAL-00044" summary="create seller test done">
-      <created>1588516227968</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1588516227968</updated>
-    </task>
-    <task id="LOCAL-00045" summary="get money after selling product implemented">
-      <created>1588517896494</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1588517896494</updated>
-    </task>
-    <task id="LOCAL-00046" summary="get money edited">
-      <created>1588517921667</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1588517921667</updated>
-    </task>
-    <task id="LOCAL-00047" summary="change in access modifiers">
-      <created>1588518395298</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1588518395298</updated>
-    </task>
-    <task id="LOCAL-00048" summary="change in access modifiers">
-      <created>1588518429195</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1588518429195</updated>
-    </task>
-    <task id="LOCAL-00049" summary="get money from sale test accomplished">
-      <created>1588518861161</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1588518861161</updated>
-    </task>
-    <task id="LOCAL-00050" summary="change">
-      <created>1589035491057</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1589035491057</updated>
-    </task>
-    <task id="LOCAL-00051" summary="create account in controller with some other changes">
-      <created>1589392251835</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1589392251837</updated>
-    </task>
-    <task id="LOCAL-00052" summary="login in controller with some other changes">
-      <created>1589393214686</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1589393214686</updated>
-    </task>
-    <task id="LOCAL-00053" summary="changeInfo in controller with some other changes">
-      <created>1589398315430</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1589398315430</updated>
-    </task>
-    <task id="LOCAL-00054" summary="logout in controller with some other changes">
-      <created>1589398890134</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1589398890134</updated>
-    </task>
-    <task id="LOCAL-00055" summary="returning roll in login">
-      <created>1589445291844</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1589445291845</updated>
-    </task>
-    <task id="LOCAL-00056" summary="manage users in controller">
-      <created>1589445377491</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1589445377491</updated>
-    </task>
-    <task id="LOCAL-00057" summary="main Controller implemented">
-      <created>1589446682002</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1589446682002</updated>
-    </task>
-    <task id="LOCAL-00058" summary="discount create">
-      <created>1589446913872</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1589446913872</updated>
-    </task>
-    <task id="LOCAL-00059" summary="create manager profile">
-      <created>1589447476043</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1589447476044</updated>
-    </task>
-    <task id="LOCAL-00060" summary="manage products">
-      <created>1589447654634</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1589447654634</updated>
-    </task>
-    <task id="LOCAL-00061" summary="user pm done">
-      <created>1589449659534</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1589449659534</updated>
-    </task>
-    <task id="LOCAL-00062" summary="view all products got better">
-      <created>1589450310326</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1589450310326</updated>
-    </task>
-    <task id="LOCAL-00063" summary="view all users got better">
-      <created>1589452505812</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1589452505812</updated>
-    </task>
-    <task id="LOCAL-00064" summary="view all discount got better">
-      <created>1589454189435</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1589454189435</updated>
-    </task>
-    <task id="LOCAL-00065" summary="edit discode start and end date in controller">
-      <created>1589454754020</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1589454754020</updated>
-    </task>
-    <task id="LOCAL-00066" summary="edit discode all done in controller">
-      <created>1589455093063</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1589455093063</updated>
-    </task>
-    <task id="LOCAL-00067" summary="remove discode done in controller">
-      <created>1589455352885</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1589455352885</updated>
-    </task>
-    <task id="LOCAL-00068" summary="changes in account controller">
-      <created>1589469844338</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1589469844339</updated>
-    </task>
-    <task id="LOCAL-00069" summary="manage requests controller">
-      <created>1589470357651</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1589470357651</updated>
-    </task>
-    <task id="LOCAL-00070" summary="manage category controller">
-      <created>1589471728599</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1589471728599</updated>
-    </task>
-    <task id="LOCAL-00071" summary="add and remove category controller">
-      <created>1589473162584</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1589473162584</updated>
-    </task>
-    <task id="LOCAL-00072" summary="view Cart controller">
-      <created>1589542798882</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1589542798884</updated>
-    </task>
-    <task id="LOCAL-00073" summary="show products controller">
-      <created>1589546333333</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1589546333333</updated>
-    </task>
-    <task id="LOCAL-00074" summary="change amount with some changes in cart manager controller">
-      <created>1589547401325</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1589547401325</updated>
-    </task>
-    <task id="LOCAL-00075" summary="purchase and show total price controller">
-      <created>1589547801888</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1589547801888</updated>
-    </task>
-    <task id="LOCAL-00076" summary="view orders controller">
-      <created>1589548394697</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1589548394697</updated>
-    </task>
-    <task id="LOCAL-00077" summary="view orders controller">
-      <created>1589554933824</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1589554933824</updated>
-    </task>
-    <task id="LOCAL-00078" summary="view balance and rate controller">
-      <created>1589555929749</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1589555929750</updated>
-    </task>
-    <option name="localTasksCounter" value="79" />
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="Vcs.Log.History.Properties">
-    <option name="COLUMN_ORDER">
-      <list>
-        <option value="0" />
-        <option value="2" />
-        <option value="3" />
-        <option value="1" />
-      </list>
-    </option>
-  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
-        <entry key="1">
-          <value>
-            <State>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="HEAD" />
-                      </list>
-                    </value>
-                  </entry>
-                  <entry key="structure">
-                    <value>
-                      <list>
-                        <option value="dir:C:/Users/arash/Desktop/Uniwork/Term 2/Advanced Programming/Project/Phase 1/CFKala/Project_team-16/src" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
-    <option name="OPEN_TABS">
-      <set>
-        <option value="1" />
-      </set>
-    </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="changeInfo in controller with some other changes" />
-    <MESSAGE value="logout in controller with some other changes" />
-    <MESSAGE value="returning roll in login" />
-    <MESSAGE value="manage users in controller" />
-    <MESSAGE value="main Controller implemented" />
-    <MESSAGE value="discount create" />
-    <MESSAGE value="create manager profile" />
-    <MESSAGE value="manage products" />
-    <MESSAGE value="user pm done" />
-    <MESSAGE value="view all products got better" />
-    <MESSAGE value="view all users got better" />
-    <MESSAGE value="view all discount got better" />
-    <MESSAGE value="edit discode start and end date in controller" />
-    <MESSAGE value="edit discode all done in controller" />
-    <MESSAGE value="remove discode done in controller" />
-    <MESSAGE value="changes in account controller" />
-    <MESSAGE value="manage requests controller" />
-    <MESSAGE value="manage category controller" />
-    <MESSAGE value="add and remove category controller" />
-    <MESSAGE value="view Cart controller" />
-    <MESSAGE value="show products controller" />
-    <MESSAGE value="change amount with some changes in cart manager controller" />
-    <MESSAGE value="purchase and show total price controller" />
-    <MESSAGE value="view orders controller" />
-    <MESSAGE value="view balance and rate controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="view balance and rate controller" />
+    <MESSAGE value="print Cart :)" />
+    <MESSAGE value="print notSignedIn Cart :)" />
+    <MESSAGE value="print in Cart :)" />
+    <option name="LAST_COMMIT_MESSAGE" value="print in Cart :)" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="93" y="93" width="1350" height="678" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1588324899715">
+    <state x="223" y="27" key="CommitChangelistDialog2" timestamp="1589663304703">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="93" y="93" width="1350" height="678" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1536.864@0.0.1536.864" timestamp="1588324899715" />
-    <state x="574" y="148" key="#com.intellij.ide.util.MemberChooser" timestamp="1589549955585">
+    <state x="223" y="27" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1589663304703" />
+    <state x="93" y="93" width="1350" height="678" key="DiffContextDialog" timestamp="1589659123495">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="574" y="148" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1589549955585" />
-    <state x="618" y="321" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1587190924791">
+    <state x="93" y="93" width="1350" height="678" key="DiffContextDialog/0.0.1536.864@0.0.1536.864" timestamp="1589659123495" />
+    <state x="578" y="349" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589658673566">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="618" y="321" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.864@0.0.1536.864" timestamp="1587190924791" />
-    <state x="286" y="358" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1587191516429">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="286" y="358" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.864@0.0.1536.864" timestamp="1587191516429" />
-    <state x="303" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1589553920711">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="303" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.864@0.0.1536.864" timestamp="1589553920711" />
-    <state x="499" y="179" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1589547145308">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="499" y="179" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1589547145308" />
-    <state x="499" y="179" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1589398263316">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="499" y="179" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.0.1536.864@0.0.1536.864" timestamp="1589398263316" />
-    <state x="191" y="30" key="CommitChangelistDialog2" timestamp="1589555928313">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="191" y="30" key="CommitChangelistDialog2/0.0.1536.864@0.0.1536.864" timestamp="1589555928313" />
-    <state x="93" y="93" width="1350" height="678" key="DiffContextDialog" timestamp="1587192992116">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="93" y="93" width="1350" height="678" key="DiffContextDialog/0.0.1536.864@0.0.1536.864" timestamp="1587192992116" />
-    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1589464011531">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1589464011531" />
-    <state x="136" y="234" key="FileDocumentManager.FileCacheConflict" timestamp="1589374703353">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="136" y="234" key="FileDocumentManager.FileCacheConflict/0.0.1536.864@0.0.1536.864" timestamp="1589374703353" />
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1588519080102">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1588519080102" />
-    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1588519080102">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1588519080102" />
-    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1588519080102">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1588519080102" />
-    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1588519080102">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1588519080102" />
-    <state width="1493" height="277" key="GridCell.Tab.1.bottom" timestamp="1588327645974">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="277" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1588327645974" />
-    <state width="1493" height="277" key="GridCell.Tab.1.center" timestamp="1588327645974">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="277" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1588327645974" />
-    <state width="1493" height="277" key="GridCell.Tab.1.left" timestamp="1588327645974">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="277" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1588327645974" />
-    <state width="1493" height="277" key="GridCell.Tab.1.right" timestamp="1588327645974">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="277" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1588327645974" />
-    <state x="147" y="69" key="MergeDialog" timestamp="1589446814626">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="147" y="69" key="MergeDialog/0.0.1536.864@0.0.1536.864" timestamp="1589446814626" />
-    <state x="481" y="148" key="MultipleFileMergeDialog" timestamp="1589446814636">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="481" y="148" key="MultipleFileMergeDialog/0.0.1536.864@0.0.1536.864" timestamp="1589446814636" />
-    <state x="361" y="154" key="RollbackChangesDialog" timestamp="1588485641005">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="361" y="154" key="RollbackChangesDialog/0.0.1536.864@0.0.1536.864" timestamp="1588485641005" />
-    <state x="249" y="7" key="SettingsEditor" timestamp="1587992551909">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="249" y="7" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1587992551909" />
-    <state x="382" y="148" key="VCS.ChangeListViewerDialog" timestamp="1587190479910">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="382" y="148" key="VCS.ChangeListViewerDialog/0.0.1536.864@0.0.1536.864" timestamp="1587190479910" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1589554948729">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1589554948729" />
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1587192992116">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.dvcs.ui.CompareBranchesDialog/0.0.1536.864@0.0.1536.864" timestamp="1587192992116" />
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1588485776446">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1536.864@0.0.1536.864" timestamp="1588485776446" />
-    <state x="97" y="36" width="1350" height="678" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1587192216137">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="97" y="36" width="1350" height="678" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.864@0.0.1536.864" timestamp="1587192216137" />
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1587192644264">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="93" y="93" width="1350" height="678" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.0.1536.864@0.0.1536.864" timestamp="1587192644264" />
-    <state x="578" y="349" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589446767479">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="578" y="349" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864@0.0.1536.864" timestamp="1589446767479" />
-    <state x="868" y="151" key="extract.method.dialog" timestamp="1589552869363">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="868" y="151" key="extract.method.dialog/0.0.1536.864@0.0.1536.864" timestamp="1589552869363" />
-    <state x="0" y="145" key="git4idea.branch.GitSmartOperationDialog" timestamp="1589035521384">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="0" y="145" key="git4idea.branch.GitSmartOperationDialog/0.0.1536.864@0.0.1536.864" timestamp="1589035521384" />
-    <state x="387" y="224" key="git4idea.merge.GitPullDialog" timestamp="1588327505541">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="387" y="224" key="git4idea.merge.GitPullDialog/0.0.1536.864@0.0.1536.864" timestamp="1588327505541" />
-    <state x="209" y="128" key="new project wizard" timestamp="1589464028732">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="209" y="128" key="new project wizard/0.0.1536.864@0.0.1536.864" timestamp="1589464028732" />
-    <state x="475" y="61" key="refactoring.ChangeSignatureDialog" timestamp="1589398221097">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="475" y="61" key="refactoring.ChangeSignatureDialog/0.0.1536.864@0.0.1536.864" timestamp="1589398221097" />
-    <state x="425" y="197" key="run.anything.popup" timestamp="1589551712824">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1589551712824" />
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1588311468311">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1588311468311" />
-  </component>
-  <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_createAccount_Seller.ic" NAME="AccountManagerTest.createAccount_Seller Coverage Results" MODIFIED="1588516135822" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$SortManagerTest.ic" NAME="SortManagerTest Coverage Results" MODIFIED="1588516453522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$RequestManagerTest_acceptCreateProductTest.ic" NAME="RequestManagerTest.acceptCreateProductTest Coverage Results" MODIFIED="1588516486695" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$DiscountManagerTest_getDiscountByCodeTest.ic" NAME="DiscountManagerTest.getDiscountByCodeTest Coverage Results" MODIFIED="1588516572929" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$DiscountManagerTest_removeDiscountTest.ic" NAME="DiscountManagerTest.removeDiscountTest Coverage Results" MODIFIED="1588516580575" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$CategoryManagerTest_addProductToCategoryTest.ic" NAME="CategoryManagerTest.addProductToCategoryTest Coverage Results" MODIFIED="1588516665909" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$SellerManagerTest.ic" NAME="SellerManagerTest Coverage Results" MODIFIED="1588516391263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_login.ic" NAME="AccountManagerTest.login Coverage Results" MODIFIED="1588514524318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_getUserByUsername_UserNotFound.ic" NAME="AccountManagerTest.getUserByUsername_UserNotFound Coverage Results" MODIFIED="1588515257131" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$RequestManagerTest.ic" NAME="RequestManagerTest Coverage Results" MODIFIED="1588516476323" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_createAccount_Customer.ic" NAME="AccountManagerTest.createAccount_Customer Coverage Results" MODIFIED="1588514363956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$CSCLManagerTest_createCommentTest.ic" NAME="CSCLManagerTest.createCommentTest Coverage Results" MODIFIED="1588516642935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$DiscountManagerTest_useADiscountTest.ic" NAME="DiscountManagerTest.useADiscountTest Coverage Results" MODIFIED="1588516592275" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$FilterManagerTest.ic" NAME="FilterManagerTest Coverage Results" MODIFIED="1588516553048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$ProductManagerTest_editProductTest.ic" NAME="ProductManagerTest.editProductTest Coverage Results" MODIFIED="1588516512178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$CategoryManagerTest_editProductCategoryNoPrInCtExcTest.ic" NAME="CategoryManagerTest.editProductCategoryNoPrInCtExcTest Coverage Results" MODIFIED="1588516675912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$ManagerManagerTest.ic" NAME="ManagerManagerTest Coverage Results" MODIFIED="1588516530458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_getUserByUsername.ic" NAME="AccountManagerTest.getUserByUsername Coverage Results" MODIFIED="1588514552494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_login_UserNotFound.ic" NAME="AccountManagerTest.login_UserNotFound Coverage Results" MODIFIED="1588515427303" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$ProductManagerTest_createProductTest.ic" NAME="ProductManagerTest.createProductTest Coverage Results" MODIFIED="1588516519167" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_loginWithWrongPassword.ic" NAME="AccountManagerTest.loginWithWrongPassword Coverage Results" MODIFIED="1588514537781" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$ManagerManagerTest_deleteUser.ic" NAME="ManagerManagerTest.deleteUser Coverage Results" MODIFIED="1588516539177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$DiscountManagerTest.ic" NAME="DiscountManagerTest Coverage Results" MODIFIED="1588516563291" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$DiscountManagerTest_useADiscountCodeUserNotHaveChoiceExcTest.ic" NAME="DiscountManagerTest.useADiscountCodeUserNotHaveChoiceExcTest Coverage Results" MODIFIED="1588516598414" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$ProductManagerTest.ic" NAME="ProductManagerTest Coverage Results" MODIFIED="1588516502356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$SellerManagerTest_getMoneyFromSale.ic" NAME="SellerManagerTest.getMoneyFromSale Coverage Results" MODIFIED="1588518734295" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_createAccount.ic" NAME="AccountManagerTest.createAccount Coverage Results" MODIFIED="1588514305155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$CustomerManagerTest.ic" NAME="CustomerManagerTest Coverage Results" MODIFIED="1588513036755" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest.ic" NAME="AccountManagerTest Coverage Results" MODIFIED="1588514402646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$AccountManagerTest_isUsernameAvailable.ic" NAME="AccountManagerTest.isUsernameAvailable Coverage Results" MODIFIED="1588514894558" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$CategoryManagerTest.ic" NAME="CategoryManagerTest Coverage Results" MODIFIED="1588516652221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$CartManagerTest.ic" NAME="CartManagerTest Coverage Results" MODIFIED="1588516688915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/CFKala$CSCLManagerTest.ic" NAME="CSCLManagerTest Coverage Results" MODIFIED="1588516633250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>ModelPackage.System.*</FILTER>
-    </SUITE>
+    <state x="578" y="349" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.864@0.0.1536.864" timestamp="1589658673566" />
   </component>
 </project>
