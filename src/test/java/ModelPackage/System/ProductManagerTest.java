@@ -4,6 +4,7 @@ package ModelPackage.System;
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.account.ProductNotHaveSellerException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Seller;
 import org.junit.Assert;
@@ -282,5 +283,9 @@ public class ProductManagerTest {
         Seller actualSeller = productManager.showSellerOfProduct(product.getId(), "asghar120");
         Seller expectedSeller = asghar;
         Assert.assertEquals(expectedSeller, actualSeller);
+    }
+    @Test(expected = ProductNotHaveSellerException.class)
+    public void showSellerOfProductNotExistedSellerExcTest() throws Exception{
+        Seller seller = productManager.showSellerOfProduct(product.getId(), "ali110");
     }*/
 }

@@ -58,6 +58,24 @@ public class ProductControler extends Controller{
         return createMiniProductPM(product);
     }
 
+    public void addToCart(String[] data) throws Exception {
+        String userName = data[0];
+        User user = accountManager.getUserByUsername(userName);
+        if (user.isHasSignedIn()) {
+            int productId = Integer.parseInt(data[1]);
+            //String[] toFindSellerData = new String[2];
+            //toFindSellerData[0] = data[1];
+            //toFindSellerData[1] = data[2];
+            //String sellerUserName = selectSeller(toFindSellerData).getUsername();
+            String sellerUserName = data[2];
+            int amount = Integer.parseInt(data[3]);
+            cartManager.addProductToCart(user.getCart(), sellerUserName, productId, amount);
+        }
+        else {
+            accountManager.login(user.getUsername(), user.getPassword());
+        }
+    }
+
     public Seller selectSeller(String[] data) throws NoSuchAProductException,
             ProductNotHaveSellerException {
         int productId = Integer.parseInt(data[0]);
