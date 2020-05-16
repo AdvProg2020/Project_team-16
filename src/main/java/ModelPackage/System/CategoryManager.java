@@ -2,6 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
+import ModelPackage.Product.ProductStatus;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
@@ -53,13 +54,9 @@ public class CategoryManager {
         }
     }
 
-    public void addProductToCategory(int productId,int categoryId)
-            throws NoSuchACategoryException, NoSuchAProductException {
-        Category toBeAddedTo = getCategoryById(categoryId);
-        ProductManager.getInstance().checkIfThisProductExists(productId);
-
+    public void addProductToCategory(Product product,Category toBeAddedTo) {
         List<Product> productsIn = toBeAddedTo.getAllProducts();
-        productsIn.add(ProductManager.getInstance().findProductById(productId));
+        productsIn.add(product);
         toBeAddedTo.setAllProducts(productsIn);
         DBManager.save(toBeAddedTo);
     }
@@ -106,6 +103,7 @@ public class CategoryManager {
             features.put(feature,"");
         }
         product.setSpecialFeatures(features);
+        product.setProductStatus(ProductStatus.UNDER_EDIT);
         /* TODO : send message to seller to edit the product's feature */
     }
 
@@ -117,7 +115,7 @@ public class CategoryManager {
         throw new NoSuchAProductInCategoryException(productId,Integer.toString(category.getId()));
     }
 
-    public void removeProductFromCategory(int productId,int categoryId)
+    void removeProductFromCategory(int productId,int categoryId)
             throws NoSuchACategoryException, NoSuchAProductInCategoryException, NoSuchAProductException {
         Category category = getCategoryById(categoryId);
         Product product = ProductManager.getInstance().findProductById(productId);
@@ -125,7 +123,6 @@ public class CategoryManager {
         List<Product> products = category.getAllProducts();
         products.remove(product);
         category.setAllProducts(products);
-        DBManager.save(product);
         DBManager.save(category);
     }
 
@@ -181,6 +178,7 @@ public class CategoryManager {
             Map<String,String> specialFeatures = product.getSpecialFeatures();
             specialFeatures.put(newFeature,"");
             product.setSpecialFeatures(specialFeatures);
+            DBManager.save(product);
             /* TODO : Notify The Seller To Add New Feature */
         }
     }
@@ -242,6 +240,7 @@ public class CategoryManager {
         List<Category> subCategories = parent.getSubCategories();
         subCategories.add(cat);
         parent.setSubCategories(subCategories);
+        DBManager.save(parent);
     }
 
 }

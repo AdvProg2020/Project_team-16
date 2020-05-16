@@ -78,6 +78,7 @@ public class RequestManager {
         product.setProductStatus(ProductStatus.VERIFIED);
         ProductManager.getInstance().addToActive(product);
         DBManager.save(product);
+        CategoryManager.getInstance().addProductToCategory(product,product.getCategory());
         Seller seller = request.getSeller();
         seller.getProducts().add(product);
         DBManager.save(seller);
