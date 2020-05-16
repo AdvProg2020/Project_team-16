@@ -111,6 +111,10 @@ public class ProductControler extends Controller{
         sortManager.sort(toSortProducts, sortType);
     }
 
+    public void disableSortProducts() {
+        sortManager.sort(sortManager.getList(), SortType.VIEW);
+    }
+
     private SortType findSortType(String sortType) {
         switch (sortType) {
             case "Name" :
