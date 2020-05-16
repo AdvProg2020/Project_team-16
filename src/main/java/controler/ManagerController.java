@@ -45,7 +45,7 @@ public class ManagerController extends Controller {
         );
     }
 
-    public UserFullPM viewUser(String username){
+    public UserFullPM viewUser(String username) throws UserNotAvailableException {
         User user = accountManager.getUserByUsername(username);
         return new UserFullPM(
                 user.getUsername(),
@@ -99,7 +99,7 @@ public class ManagerController extends Controller {
         Date endTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[1]);
         int offPercentage = Integer.parseInt(data[2]);
         long maxDiscount = Long.parseLong(data[3]);
-        discountManager.createDiscountCode(startTime, endTime, offPercentage, maxDiscount);
+        discountManager.createDiscountCode(data[4],startTime, endTime, offPercentage, maxDiscount);
     }
 
     public List<DiscountMiniPM> viewDiscountCodes(){

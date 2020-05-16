@@ -9,7 +9,7 @@ public class testDB {
 
     @Test
     public void hibernateUtilTest(){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSession();
         Product product = new Product();
         product.setName("Pen");
         session.getTransaction().begin();

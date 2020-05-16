@@ -30,4 +30,8 @@ public class Score {
         this.productId = productId;
         this.score = score;
     }
+
+    public Score(){
+
+    }
 }

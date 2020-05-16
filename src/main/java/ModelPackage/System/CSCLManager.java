@@ -77,6 +77,7 @@ public class CSCLManager {
     }
 
     public void createComment(Comment comment) {
+        DBManager.save(comment);
         String requestStr = String.format("User (%s) has requested to assign a comment on product (%d) :\n" +
                 "Title : %s\n" +
                 "Text : %s",comment.getUserId(),comment.getProduct().getId(),comment.getTitle(),comment.getText());
@@ -123,6 +124,7 @@ public class CSCLManager {
         }
         PurchaseLog log = new PurchaseLog(new Date(),DeliveryStatus.DEPENDING,map,pricePaid,discount);
         DBManager.save(log);
+
         CustomerManager.getInstance().addPurchaseLog(log,customer);
     }
 

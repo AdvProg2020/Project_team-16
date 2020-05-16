@@ -7,6 +7,7 @@ import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
@@ -19,6 +20,9 @@ import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
 import com.google.gson.Gson;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -46,7 +50,7 @@ public class RequestManager {
     }
 
     public void accept(int requestId)
-            throws NoSuchARequestException, AlreadyASeller, NoSuchAProductException {
+            throws NoSuchARequestException, NoSuchAProductException {
         Request request = findRequestById(requestId);
         RequestType type = request.getRequestType();
         switch (type){
@@ -69,13 +73,14 @@ public class RequestManager {
         }
     }
 
-    private void acceptCreateProduct(Request request) throws AlreadyASeller{
+    private void acceptCreateProduct(Request request){
         Product product = request.getProduct();
         product.setProductStatus(ProductStatus.VERIFIED);
+        ProductManager.getInstance().addToActive(product);
         DBManager.save(product);
+        CategoryManager.getInstance().addProductToCategory(product,product.getCategory());
         Seller seller = request.getSeller();
         seller.getProducts().add(product);
-        ProductManager.getInstance().addASellerToProduct(product,seller);
         DBManager.save(seller);
         DBManager.delete(request);
     }
@@ -83,6 +88,7 @@ public class RequestManager {
     private void acceptEditProduct(Request request) throws NoSuchAProductException {
         ProductEditAttribute editAttribute = request.getProductEditAttribute();
         Product product = ProductManager.getInstance().findProductById(editAttribute.getSourceId());
+        product.setProductStatus(ProductStatus.VERIFIED);
         if (editAttribute.getName() != null) {
             product.setName(editAttribute.getName());
             DBManager.save(product);
@@ -95,6 +101,7 @@ public class RequestManager {
                 CategoryManager.getInstance().editProductCategory(product.getId(),product.getCategory().getId(),editAttribute.getNewCategoryId());
             } catch (Exception e) {}
         }
+        ProductManager.getInstance().addToActive(product);
         DBManager.delete(editAttribute);
     }
 
@@ -204,5 +211,18 @@ public class RequestManager {
             requestManager = new RequestManager();
         }
         return requestManager;
+    }
+
+    public List<Request> getAllRequestsWithoutObjectsInside(){
+        Session session = HibernateUtil.getSession();
+        Criteria criteria = session.createCriteria(Request.class)
+                .setProjection(Projections.projectionList()
+                    .add(Projections.property("requestId"))
+                    .add(Projections.property("userHasRequested"))
+                    .add(Projections.property("requestType"))
+                    .add(Projections.property("request"))
+                );
+
+        return criteria.list();
     }
 }

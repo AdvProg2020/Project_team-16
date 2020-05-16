@@ -7,6 +7,7 @@ import ModelPackage.Off.DiscountCode;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.exeption.discount.*;
+import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.Users.Customer;
 import ModelPackage.Users.User;
 import lombok.Data;
@@ -140,11 +141,12 @@ public class DiscountManager {
         return getDiscountByCode(code);
     }
 
-    public void createDiscountCode(Date startTime, Date endTime, int offPercentage, long maxDiscount)
+    public void createDiscountCode(String code,Date startTime, Date endTime, int offPercentage, long maxDiscount)
             throws NotValidPercentageException, StartingDateIsAfterEndingDate {
         checkIfStartingDateIsBeforeEndingDate(startTime, endTime);
         checkIfPercentageIsValid(offPercentage);
-        DiscountCode discountCode = new DiscountCode(startTime, endTime, offPercentage, maxDiscount);
+        /* TODO : Check for repeated code */
+        DiscountCode discountCode = new DiscountCode(code,startTime, endTime, offPercentage, maxDiscount);
         DBManager.save(discountCode);
     }
 

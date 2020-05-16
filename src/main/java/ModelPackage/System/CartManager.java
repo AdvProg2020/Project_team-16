@@ -3,6 +3,7 @@ package ModelPackage.System;
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.cart.ProductExistedInCart;
@@ -22,7 +23,8 @@ public class CartManager {
 
     private CartManager() {}
 
-    public void addProductToCart(Cart cart, String sellerId, int productId, int amount) throws Exception {
+    public void addProductToCart(Cart cart, String sellerId, int productId, int amount)
+            throws ProductExistedInCart, NotEnoughAmountOfProductException, NoSuchAProductException, UserNotAvailableException {
         checkIfProductExistsInCart(cart, productId);
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, amount);
         Product product = ProductManager.getInstance().findProductById(productId);
@@ -45,7 +47,7 @@ public class CartManager {
         return total;
     }
 
-    public void checkIfThereIsEnoughAmountOfProduct(int productId, String sellerId, int amount)
+    void checkIfThereIsEnoughAmountOfProduct(int productId, String sellerId, int amount)
             throws NotEnoughAmountOfProductException, NoSuchAProductException {
         Product product = ProductManager.getInstance().findProductById(productId);
         for (SellerIntegerMap map : product.getStock()) {

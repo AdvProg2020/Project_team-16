@@ -1,9 +1,11 @@
 package ModelPackage.Users;
 
-
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Data @Entity
 @Table(name = "t_user")
@@ -34,6 +36,9 @@ public class User {
     @Transient
     private boolean hasSignedIn;
 
+    @OneToMany
+    private List<Message> messages;
+
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart) {
         this.username = username;
         this.password = password;
@@ -43,8 +48,9 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.cart = cart;
         this.hasSignedIn = false;
+        this.messages = new ArrayList<>();
     }
     public User(){
-
+        this.messages = new ArrayList<>();
     }
 }

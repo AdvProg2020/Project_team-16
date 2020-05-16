@@ -29,12 +29,9 @@ public class Seller extends User {
     private List<Off> offs;
 
     @ElementCollection(targetClass = SellLog.class)
-        @OneToMany
+        @OneToMany(cascade = CascadeType.ALL)
     private List<SellLog> sellLogs;
 
-    @ElementCollection(targetClass = Message.class)
-        @OneToMany
-    private List<Message> messages;
 
     private boolean verified;
 
@@ -45,12 +42,14 @@ public class Seller extends User {
         this.offs = new ArrayList<Off>();
         this.products = new ArrayList<>();
         this.sellLogs = new ArrayList<SellLog>();
-        this.messages = new ArrayList<>();
     }
     public Seller(){
         this.offs = new ArrayList<Off>();
         this.products = new ArrayList<>();
         this.sellLogs = new ArrayList<SellLog>();
-        this.messages = new ArrayList<>();
+    }
+
+    public boolean getVerified(){
+        return verified;
     }
 }

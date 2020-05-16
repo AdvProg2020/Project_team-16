@@ -1,7 +1,6 @@
 package controler;
 
 import ModelPackage.Product.Product;
-import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
@@ -20,11 +19,14 @@ public class AccountController extends Controller {
         }
     }
 
-    public void createAccount(String[] info, String type){
+    public void createAccount(String[] info, String type) throws UserNotAvailableException {
         accountManager.createAccount(info, type);
+        if (type.equalsIgnoreCase("customer")){
+            addCartToCustomer(info[0], cart);
+        }
     }
 
-    public String login(String username, String password) {
+    public String login(String username, String password) throws NotVerifiedSeller, UserNotAvailableException {
         return accountManager.login(username, password);
     }
 
@@ -44,11 +46,11 @@ public class AccountController extends Controller {
         accountManager.changeInfo(username, editAttributes);
     }
 
-    public void logout(String username){
+    public void logout(String username) throws UserNotAvailableException {
         accountManager.logout(username);
     }
 
-    private void addCartToCustomer(String username, Cart cart){
+    private void addCartToCustomer(String username, Cart cart) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         Cart previousCart = customer.getCart();
 

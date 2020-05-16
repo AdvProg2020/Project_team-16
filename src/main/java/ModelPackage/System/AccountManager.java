@@ -2,11 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.UserEditAttributes;
-import ModelPackage.System.exeption.account.SameInfoException;
-import ModelPackage.System.exeption.account.UserNotAvailableException;
-import ModelPackage.System.exeption.account.UserNotLoggedInException;
-import ModelPackage.System.exeption.account.WrongPasswordException;
-import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
+import ModelPackage.System.exeption.account.*;
 import ModelPackage.Users.*;
 
 
@@ -25,13 +21,11 @@ public class AccountManager {
     private CSCLManager csclManager = CSCLManager.getInstance();
 
     public void createAccount(String[] info, String type) {
-        User user = null;
         switch (type){
             case "seller" : createSeller(info); break;
-            case "manager" : user = createManager(info); break;
-            case  "customer" : user = createCustomer(info); break;
+            case "manager" : Manager manager = createManager(info);DBManager.save(manager); break;
+            case  "customer" : Customer customer = createCustomer(info);DBManager.save(customer); break;
         }
-        DBManager.save(user);
     }
 
     private void createSeller(String[] info) {
@@ -73,26 +67,38 @@ public class AccountManager {
         );
     }
 
-    public String login(String username,String password) {
+    public String login(String username,String password) throws NotVerifiedSeller, UserNotAvailableException {
         User user = getUserByUsername(username);
 
-        if (isCorrectPassword(username, password)){
-            user.setHasSignedIn(true);
+        if (isCorrectPassword(user, password)){
+            Customer customer = DBManager.load(Customer.class,username);
+            if (customer != null) return "Customer";
+            Seller seller = DBManager.load(Seller.class,username);
+            if (seller != null) if (seller.getVerified())
+                return "Seller";
+            else
+                throw new NotVerifiedSeller();
+            Manager manager = DBManager.load(Manager.class,username);
+            if (manager != null) {
+                return "Manager";
+            }
         } else {
             throw new WrongPasswordException(username);
         }
-
-        DBManager.save(user);
-        return user.getClass().getName();
+        return "";
     }
 
-    public User viewPersonalInfo(String username){
+    public User viewPersonalInfo(String username) throws UserNotAvailableException {
         User user = getUserByUsername(username);
         checkIfUserHasLoggedIn(user);
         return user;
     }
 
-    public void changeInfo(String username, UserEditAttributes editAttributes) {
+    public void changeInfo(String[] info) throws UserNotAvailableException {
+        String username = info[0];
+        String type = info[1];
+        String newInfo = info[2];
+
         User user = getUserByUsername(username);
         String newFirstName = editAttributes.getNewFirstName();
         String newLastName = editAttributes.getNewLastName();
@@ -120,18 +126,18 @@ public class AccountManager {
     }
 
 
-    public void logout(String username) {
+    public void logout(String username) throws UserNotAvailableException {
         User user = getUserByUsername(username);
         checkIfUserHasLoggedIn(user);
         user.setHasSignedIn(false);
         DBManager.save(user);
     }
 
-    private boolean isCorrectPassword(String username,String password) {
-        return getUserByUsername(username).getPassword().equals(password);
+    private boolean isCorrectPassword(User username,String password) {
+        return username.getPassword().equals(password);
     }
 
-    public User getUserByUsername(String username) {
+    public User getUserByUsername(String username) throws UserNotAvailableException {
         User user = DBManager.load(User.class,username);
         if (user == null)
             throw new UserNotAvailableException();

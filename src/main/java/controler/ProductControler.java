@@ -66,6 +66,8 @@ public class ProductControler extends Controller{
         return createMiniProductPM(product);
     }
 
+
+    /*TODO : Change */
     public void addToCart(String[] data) throws Exception {
         String userName = data[0];
         User user = accountManager.getUserByUsername(userName);
@@ -78,9 +80,6 @@ public class ProductControler extends Controller{
             String sellerUserName = data[2];
             int amount = Integer.parseInt(data[3]);
             cartManager.addProductToCart(user.getCart(), sellerUserName, productId, amount);
-        }
-        else {
-            accountManager.login(user.getUsername(), user.getPassword());
         }
     }
 
@@ -160,7 +159,7 @@ public class ProductControler extends Controller{
             throws ProductsNotBelongToUniqueCategoryException, NoSuchAProductException {
         Product firstProduct = productManager.findProductById(firstProductId);
         Product secondProduct = productManager.findProductById(secondProductId);
-        if (!firstProduct.getCategoryId().equals(secondProduct.getCategoryId()))
+        if (firstProduct.getId() != (secondProduct.getId()))
             throw new ProductsNotBelongToUniqueCategoryException(firstProduct.getId(), secondProduct.getId());
     }
 

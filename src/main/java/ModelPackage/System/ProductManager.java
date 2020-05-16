@@ -1,10 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Maps.SellerIntegerMap;
-import ModelPackage.Product.Comment;
-import ModelPackage.Product.Product;
-import ModelPackage.Product.ProductStatus;
-import ModelPackage.Product.Score;
+import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.account.ProductNotHaveSellerException;
@@ -22,11 +19,12 @@ import java.util.List;
 
 @Data
 public class ProductManager {
-    private ArrayList<Product> allProducts;
+    private List<Product> allProductsActive;
     private static ProductManager productManager = null;
 
     private ProductManager(){
-        allProducts = new ArrayList<>();
+        if (allProductsActive == null)
+            allProductsActive = new ArrayList<>();
     }
 
     public static ProductManager getInstance(){
@@ -49,6 +47,7 @@ public class ProductManager {
     public void editProduct(ProductEditAttribute edited, String editor) throws NoSuchAProductException {
         String requestStr = String.format("%s has requested to edit Product \"%s\" with id %s",edited,edited.getName(),edited.getId());
         Product product = findProductById(edited.getSourceId());
+        allProductsActive.remove(product);
         product.setProductStatus(ProductStatus.UNDER_EDIT);
         Request request = new Request(editor,RequestType.CHANGE_PRODUCT,requestStr,edited);
         RequestManager.getInstance().addRequest(request);
@@ -76,7 +75,7 @@ public class ProductManager {
 
     public Product[] findProductByName(String name){
         List<Product> list = new ArrayList<>();
-        for (Product product : allProducts) {
+        for (Product product : allProductsActive) {
             if(product.getName().toLowerCase().contains(name.toLowerCase()))list.add(product);
         }
         Product[] toReturn = new Product[list.size()];
@@ -196,14 +195,6 @@ public class ProductManager {
         else{
             throw new AlreadyASeller(seller.getUsername());
         }
-    }
-
-    public void addASellerToProduct(Product product,Seller seller)
-            throws  AlreadyASeller {
-        List<Seller> sellers = product.getAllSellers();
-        if (sellers.contains(seller)){
-            throw new AlreadyASeller(seller.getUsername());
-        }
         DBManager.save(product);
     }
 
@@ -224,6 +215,10 @@ public class ProductManager {
     }
 
     public void clear(){
-        allProducts.clear();
+        allProductsActive.clear();
+    }
+
+    public void addToActive(Product product){
+        allProductsActive.add(product);
     }
 }

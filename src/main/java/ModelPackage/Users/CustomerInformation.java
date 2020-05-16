@@ -32,4 +32,8 @@ public class CustomerInformation {
         this.cardNumber = cardNumber;
         this.cardPassword = cardPassword;
     }
+
+    public CustomerInformation(){
+
+    }
 }

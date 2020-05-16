@@ -5,6 +5,7 @@ import ModelPackage.Log.SellLog;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Seller;
@@ -24,17 +25,17 @@ public class SellerManager {
     private AccountManager accountManager = AccountManager.getInstance();
     private ProductManager productManager = ProductManager.getInstance();
 
-    public Company viewCompanyInformation(String username) {
+    public Company viewCompanyInformation(String username) throws UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(username);
         return seller.getCompany();
     }
 
-    public List<SellLog> viewSalesHistory(String username){
+    public List<SellLog> viewSalesHistory(String username) throws UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(username);
         return seller.getSellLogs();
     }
 
-    public List<Product> viewProducts(String username){
+    public List<Product> viewProducts(String username) throws UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(username);
         return seller.getProducts();
     }

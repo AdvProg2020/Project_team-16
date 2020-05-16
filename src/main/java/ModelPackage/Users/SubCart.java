@@ -5,7 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Data @NoArgsConstructor
+@Data
 @Entity
 @Table(name = "t_sub_carts")
 public class SubCart{
@@ -13,11 +13,11 @@ public class SubCart{
     @Id @GeneratedValue
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
         @JoinColumn(name = "PRODUCT")
     private Product product;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
         @JoinColumn(name = "SELLER")
     private Seller seller;
 
@@ -28,5 +28,9 @@ public class SubCart{
         this.product = product;
         this.seller = seller;
         this.amount = amount;
+    }
+
+    public SubCart(){
+
     }
 }

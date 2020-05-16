@@ -13,13 +13,15 @@ import ModelPackage.Product.*;
 import ModelPackage.Users.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
     private static final SessionFactory sessionFactory = buildSessionFactory();
     private static Session session = sessionFactory.openSession();
-    private static SessionFactory buildSessionFactory()
-    {
+    private static Transaction transaction = session.beginTransaction();
+
+    private static SessionFactory buildSessionFactory() {
         try {
             return new Configuration().configure("hibernate.cfg.xml")
                     .addAnnotatedClass(Product.class)
@@ -54,15 +56,11 @@ public class HibernateUtil {
         }
     }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public static void startTransaction(){
-        session.beginTransaction();
-    }
-
     public static void shutdown() {
-        getSessionFactory().close();
+        sessionFactory.close();
+    }
+
+    public static Session getSession() {
+        return session;
     }
 }

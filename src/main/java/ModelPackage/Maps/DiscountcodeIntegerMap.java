@@ -14,7 +14,7 @@ public class DiscountcodeIntegerMap {
     @Id@GeneratedValue
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "CODE")
     private DiscountCode discountCode;
 
