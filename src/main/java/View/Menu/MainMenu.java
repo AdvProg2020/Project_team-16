@@ -1,9 +1,13 @@
 package View.Menu;
 
+import View.exceptions.InvalidCommandException;
+import View.exceptions.NotAnAvailableMenu;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashMap;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class MainMenu extends Menu {
     public MainMenu(){
@@ -18,5 +22,25 @@ public class MainMenu extends Menu {
         subMenus.put("Off Menu",new OFFSMenu(this));
 
         this.setSubMenus(subMenus);
+    }
+
+    @Override
+    void helpPrinter() {
+        /*TODO*/
+    }
+
+    @Override
+    void executeValidCommand(String command) throws InvalidCommandException {
+        throw new InvalidCommandException();
+    }
+
+    @Override
+    void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu {
+        throw new NotAnAvailableMenu();
+    }
+
+    @Override
+    void additionalPrints() {
+
     }
 }

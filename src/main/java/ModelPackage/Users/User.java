@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Data @Entity
 @Table(name = "t_user")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id @Column(name = "username" , unique = true, length = 64 , nullable = false)
     protected String username;

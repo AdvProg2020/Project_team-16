@@ -1,7 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Off.Off;
-import ModelPackage.Off.OffChangeAttributes;
+import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.Off.OffStatus;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.off.InvalidTimes;
@@ -13,7 +13,6 @@ import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
 
 import java.util.Date;
-
 
 public class OffManager {
     private static OffManager offManager;
@@ -43,11 +42,12 @@ public class OffManager {
     }
 
     public void editStartTimeOfOff(User editor, int id, Date newDate)
-            throws NoSuchAOffException {
-        findOffById(id);
+            throws NoSuchAOffException, InvalidTimes {
+        Off off = findOffById(id);
+        if (off.getEndTime().before(newDate)) throw new InvalidTimes();
         OffChangeAttributes edit = new OffChangeAttributes();
         edit.setStart(newDate);
-        edit.setTarget(id);
+        edit.setSourceId(id);
         DBManager.save(edit);
         String strRequest = String.format("%s requested to change start time of off (%d) to %s",editor.getUsername(),id,newDate);
         Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
@@ -55,11 +55,12 @@ public class OffManager {
     }
 
     public void editEndTimeOfOff(User editor, int id, Date newDate)
-            throws NoSuchAOffException {
-        findOffById(id);
+            throws NoSuchAOffException, InvalidTimes {
+        Off off = findOffById(id);
+        if (off.getStartTime().after(newDate)) throw new InvalidTimes();
         OffChangeAttributes edit = new OffChangeAttributes();
         edit.setEnd(newDate);
-        edit.setTarget(id);
+        edit.setSourceId(id);
         DBManager.save(edit);
         String strRequest = String.format("%s requested to change end time of off (%d) to %s",editor.getUsername(),id,newDate);
         Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
@@ -71,7 +72,7 @@ public class OffManager {
         findOffById(id);
         OffChangeAttributes edit = new OffChangeAttributes();
         edit.setPercentage(percentage);
-        edit.setTarget(id);
+        edit.setSourceId(id);
         DBManager.save(edit);
         String strRequest = String.format("%s requested to change percentage of off (%d) to %d",editor.getUsername(),id,percentage);
         Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
@@ -84,7 +85,7 @@ public class OffManager {
         ProductManager.getInstance().findProductById(id);
         OffChangeAttributes edit = new OffChangeAttributes();
         edit.setProductIdToAdd(newProduct);
-        edit.setTarget(id);
+        edit.setSourceId(id);
         DBManager.save(edit);
         String strRequest = String.format("%s requested to add product (%d) to off (%d)",editor.getUsername(),newProduct,id);
         Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
@@ -96,7 +97,7 @@ public class OffManager {
         findOffById(id);
         ProductManager.getInstance().findProductById(id);
         OffChangeAttributes edit = new OffChangeAttributes();
-        edit.setTarget(id);
+        edit.setSourceId(id);
         edit.setProductIdToRemove(toDelete);
         DBManager.save(edit);
         String strRequest = String.format("%s requested to add product (%d) to off (%d)",editor.getUsername(),toDelete,id);

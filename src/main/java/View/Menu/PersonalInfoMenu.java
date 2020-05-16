@@ -10,12 +10,6 @@ public class PersonalInfoMenu extends Menu {
     }
 
     @Override
-    public void execute() {
-        CommandProcessor.viewPersonalInfo();
-        super.execute();
-    }
-
-    @Override
     void helpPrinter() {
         /*TODO*/
     }
@@ -32,5 +26,10 @@ public class PersonalInfoMenu extends Menu {
     @Override
     void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu {
         throw new NotAnAvailableMenu();
+    }
+
+    @Override
+    void additionalPrints() {
+        CommandProcessor.viewPersonalInfo();
     }
 }

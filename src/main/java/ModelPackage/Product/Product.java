@@ -33,7 +33,7 @@ public class Product {
     private String name;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "DATE_ADDED")
+    @Column(name = "DATE_ADDED",updatable = false)
     private Date dateAdded;
 
     @ManyToOne
