@@ -5,11 +5,14 @@ import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Maps.UserIntegerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.Users.Customer;
 import ModelPackage.Users.User;
 import lombok.Data;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,11 +45,31 @@ public class DiscountManager {
         DBManager.delete(discountCode);
     }
 
-    public void editDiscountStartingDate(String code, Date newStartingDate)
-            throws NoSuchADiscountCodeException, StartingDateIsAfterEndingDate {
+    public void editDiscountCode(String code, DiscountCodeEditAttributes editAttributes)
+            throws NoSuchADiscountCodeException, StartingDateIsAfterEndingDate,
+            NotValidPercentageException, NegativeMaxDiscountException {
         DiscountCode discountCode = getDiscountByCode(code);
-        checkIfNewStartingDateIsBeforeEndingDate(discountCode, newStartingDate);
-        discountCode.setStartTime(newStartingDate);
+
+        Date newStart = editAttributes.getStart();
+        Date newEnd = editAttributes.getEnd();
+        int newOffPercent = editAttributes.getOffPercent();
+        int newMaxDiscount = editAttributes.getMaxDiscount();
+
+        if (newStart != null){
+            checkIfNewStartingDateIsBeforeEndingDate(discountCode, newStart);
+            discountCode.setStartTime(newStart);
+        }
+        if (newEnd != null){
+            checkIfNewStartingDateIsBeforeEndingDate(discountCode, newEnd);
+            discountCode.setEndTime(newEnd);
+        }
+
+        checkIfPercentageIsValid(newOffPercent);
+        discountCode.setOffPercentage(newOffPercent);
+
+        checkIfMaxDiscountIsPositive(newMaxDiscount);
+        discountCode.setMaxDiscount(newMaxDiscount);
+
         DBManager.save(discountCode);
     }
 
@@ -56,40 +79,15 @@ public class DiscountManager {
             throw new StartingDateIsAfterEndingDate();
     }
 
-    public void editDiscountEndingDate(String code, Date newEndingDate)
-            throws NoSuchADiscountCodeException, StartingDateIsAfterEndingDate {
-        DiscountCode discountCode = getDiscountByCode(code);
-        checkIfStartingDateIsBeforeEndingDate(discountCode.getStartTime(), newEndingDate);
-        discountCode.setEndTime(newEndingDate);
-        DBManager.save(discountCode);
-    }
-
     private void checkIfStartingDateIsBeforeEndingDate(Date startDate, Date newEndingDate)
             throws StartingDateIsAfterEndingDate {
         if (newEndingDate.before(startDate))
             throw new StartingDateIsAfterEndingDate();
     }
 
-    public void editDiscountOffPercentage(String code, int newPercentage)
-            throws NoSuchADiscountCodeException, NotValidPercentageException {
-        DiscountCode discountCode = getDiscountByCode(code);
-        checkIfPercentageIsValid(newPercentage);
-        discountCode.setOffPercentage(newPercentage);
-        DBManager.save(discountCode);
-
-    }
-
     private void checkIfPercentageIsValid(int newPercentage) throws NotValidPercentageException {
         if (newPercentage > 100 || newPercentage < 0)
             throw new NotValidPercentageException(newPercentage);
-    }
-
-    public void editDiscountMaxDiscount(String code, long newMaxDiscount)
-            throws NoSuchADiscountCodeException, NegativeMaxDiscountException {
-        DiscountCode discountCode = getDiscountByCode(code);
-        checkIfMaxDiscountIsPositive(newMaxDiscount);
-        discountCode.setMaxDiscount(newMaxDiscount);
-        DBManager.save(discountCode);
     }
 
     private void checkIfMaxDiscountIsPositive(long newMaxDiscount)

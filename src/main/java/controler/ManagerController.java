@@ -4,6 +4,8 @@ import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
+import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
@@ -132,40 +134,8 @@ public class ManagerController extends Controller {
         );
     }
 
-    public void editDiscountCode(String code, String whatToEdit, String newInfo) throws NoSuchADiscountCodeException,
-            ParseException, StartingDateIsAfterEndingDate, NotValidPercentageException,
-            NegativeMaxDiscountException, UserNotExistedInDiscountCodeException {
-        switch (whatToEdit){
-            case "starting date" : editDiscountStartingDate(code, newInfo); break;
-            case "ending date" : editDiscountEndingDate(code, newInfo); break;
-            case "off percentage" : editDiscountOffPercentage(code, newInfo);
-            case "max discount" : editDiscountMaxDiscount(code, newInfo);
-            case "remove user" : removeUserFromDiscountCodeUsers(code, newInfo);
-        }
-    }
-
-    private void editDiscountStartingDate(String code, String newDate) throws ParseException,
-            StartingDateIsAfterEndingDate, NoSuchADiscountCodeException {
-        Date startTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(newDate);
-
-        discountManager.editDiscountStartingDate(code, startTime);
-    }
-
-    private void editDiscountEndingDate(String code, String newDate) throws ParseException,
-            StartingDateIsAfterEndingDate, NoSuchADiscountCodeException {
-        Date endTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(newDate);
-
-        discountManager.editDiscountStartingDate(code, endTime);
-    }
-
-    private void editDiscountOffPercentage(String code, String newInfo) throws NotValidPercentageException, NoSuchADiscountCodeException {
-        int newPercentage = Integer.parseInt(newInfo);
-        discountManager.editDiscountOffPercentage(code, newPercentage);
-    }
-
-    private void editDiscountMaxDiscount(String code, String newInfo) throws NegativeMaxDiscountException, NoSuchADiscountCodeException {
-        long newMaxDiscount = Long.parseLong(newInfo);
-        discountManager.editDiscountMaxDiscount(code, newMaxDiscount);
+    public void editDiscountCode(String code, DiscountCodeEditAttributes editAttributes) {
+        discountManager.ed
     }
 
     private void removeUserFromDiscountCodeUsers(String code, String username) throws UserNotExistedInDiscountCodeException, NoSuchADiscountCodeException {

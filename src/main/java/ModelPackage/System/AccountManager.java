@@ -82,6 +82,7 @@ public class AccountManager {
             throw new WrongPasswordException(username);
         }
 
+        DBManager.save(user);
         return user.getClass().getName();
     }
 
@@ -114,6 +115,8 @@ public class AccountManager {
         if (newPhone != null){
             user.setPhoneNumber(newPhone);
         }
+
+        DBManager.save(user);
     }
 
 
@@ -121,6 +124,7 @@ public class AccountManager {
         User user = getUserByUsername(username);
         checkIfUserHasLoggedIn(user);
         user.setHasSignedIn(false);
+        DBManager.save(user);
     }
 
     private boolean isCorrectPassword(String username,String password) {
