@@ -60,7 +60,7 @@ public class HibernateUtil {
         sessionFactory.close();
     }
 
-    static Session getSession() {
+    public static Session getSession() {
         return session;
     }
 }
