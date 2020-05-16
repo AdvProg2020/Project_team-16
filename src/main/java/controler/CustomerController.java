@@ -117,9 +117,9 @@ public class CustomerController extends Controller {
     }
 
     private double findOffPriceFor(SubCart subCart) {
-        Off off = subCart.getProduct().getOff();
-        if (off == null)
+        if (!subCart.getProduct().isOnOff())
             return 0;
+        Off off = subCart.getProduct().getOff();
         return findPriceForSpecialSeller(subCart.getSeller(), subCart.getProduct()) -
                 (double)(off.getOffPercentage() / 100) *
                         findPriceForSpecialSeller(subCart.getSeller(), subCart.getProduct());
