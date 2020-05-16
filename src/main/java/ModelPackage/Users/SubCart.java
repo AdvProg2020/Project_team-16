@@ -13,11 +13,11 @@ public class SubCart{
     @Id @GeneratedValue
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
         @JoinColumn(name = "PRODUCT")
     private Product product;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
         @JoinColumn(name = "SELLER")
     private Seller seller;
 
