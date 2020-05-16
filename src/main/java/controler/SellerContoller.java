@@ -3,8 +3,10 @@ package controler;
 import ModelPackage.Log.SellLog;
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Off.Off;
+import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.off.InvalidTimes;
@@ -168,6 +170,15 @@ public class SellerContoller extends Controller{
         Product product = productManager.findProductById(productId);
         productManager.editProduct(product, sellerUserName);
     }*/
+
+    public List<CategoryPM> showCategories() {
+        List<Category> categories = DBManager.loadAllData(Category.class);
+        List<CategoryPM> categoryPMs = new ArrayList<>();
+        for (Category category : categories) {
+            categoryPMs.add(new CategoryPM(category.getName(), category.getId()));
+        }
+        return categoryPMs;
+    }
 
     private ArrayList<Seller> addSellerToNewProduct(String sellerUserName) {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);

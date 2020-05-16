@@ -100,7 +100,8 @@ public class ProductControler extends Controller{
         return availableSort;
     }
 
-    public void sortProducts(String[] data) throws NotAvailableSort, NoSuchAProductException {
+    public void sortProducts(String[] data) throws NotAvailableSort,
+            NoSuchAProductException {
         String sortName = data[0];
         checkIfSortIsAvailable(sortName);
         ArrayList<Product> toSortProducts = new ArrayList<>();
