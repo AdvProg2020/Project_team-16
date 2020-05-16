@@ -3,8 +3,10 @@ package controler;
 import ModelPackage.Log.SellLog;
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Off.Off;
+import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
+import ModelPackage.System.CategoryManager;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.off.InvalidTimes;
@@ -144,18 +146,20 @@ public class SellerContoller extends Controller{
         accountManager.changeInfo(info);
     }*/
 
-    public void addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures) {
+    public void addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures)
+            throws NoSuchACategoryException {
         String sellerUserName = data[0];
         String productName = data[1];
         String companyName = data[2];
         String categoryId = data[3];
+        Category category = CategoryManager.getInstance().getCategoryById(Integer.parseInt(categoryId));
         String description = data[4];
         int amountOfProduct = Integer.parseInt(data[5]);
         int priceOfProduct = Integer.parseInt(data[6]);
         ArrayList<Seller> sellers = addSellerToNewProduct(sellerUserName);
         List<SellerIntegerMap> stock = addStockToNewProduct(sellers.get(0), amountOfProduct);
         List<SellerIntegerMap> prices = addPriceToNewProduct(sellers.get(0), priceOfProduct);
-        Product product = new Product(productName, companyName, sellers, categoryId,
+        Product product = new Product(productName, companyName, sellers, category,
                 publicFeaturesOf(productPublicFeatures),
                 specialFeaturesOf(productSpecialFeatures),
                 description, stock, prices);

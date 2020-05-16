@@ -49,9 +49,6 @@ public class Product {
     @ManyToOne
     private Category category;
 
-    @Column(name = "CAT_ID")
-    private String categoryId;
-
     @ElementCollection
         @JoinTable(name = "t_product_public_feature")
         @MapKeyColumn(name = "feature")
@@ -104,11 +101,11 @@ public class Product {
 
     public Product(int id){this.id = id;}
 
-    public Product(String name, String company, ArrayList<Seller> allSellers, String categoryId, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, List<SellerIntegerMap> stock, List<SellerIntegerMap> prices) {
+    public Product(String name, String company, ArrayList<Seller> allSellers, Category category, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, List<SellerIntegerMap> stock, List<SellerIntegerMap> prices) {
         this.name = name;
         this.company = company;
         this.allSellers = allSellers;
-        this.categoryId = categoryId;
+        this.category = category;
         this.publicFeatures = publicFeatures;
         this.specialFeatures = specialFeatures;
         this.description = description;

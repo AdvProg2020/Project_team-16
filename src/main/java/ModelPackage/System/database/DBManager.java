@@ -4,7 +4,6 @@ import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
 import ModelPackage.System.CategoryManager;
 import ModelPackage.System.ProductManager;
-import ModelPackage.Users.Manager;
 import org.hibernate.Session;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -33,7 +32,7 @@ public class DBManager {
     }
 
     public static void initialLoad(){
-        ProductManager.getInstance().setAllProducts(loadAllData(Product.class));
+        ProductManager.getInstance().setAllProductsActive(loadAllData(Product.class));
         CategoryManager.getInstance().setAllCategories(loadAllData(Category.class));
     }
 

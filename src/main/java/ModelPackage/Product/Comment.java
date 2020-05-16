@@ -28,7 +28,7 @@ public class Comment {
     @Column(name = "STATUS")
     private CommentStatus status;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Product product;
 
     @Column(name = "BOUGHT_THIS_PRODUCT")
