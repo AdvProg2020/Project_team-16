@@ -1,6 +1,7 @@
 package controler;
 
 import ModelPackage.Product.Product;
+import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
@@ -46,13 +47,8 @@ public class AccountController extends Controller {
         );
     }
 
-    public void editPersonalInfo(String username, String type, String newInfo){
-        List<String> info = new ArrayList<>();
-        info.add(username);
-        info.add(type);
-        info.add(newInfo);
-
-        accountManager.changeInfo((String[]) info.toArray());
+    public void editPersonalInfo(String username, UserEditAttributes editAttributes){
+        accountManager.changeInfo(username, editAttributes);
     }
 
     public void logout(String username){
@@ -63,7 +59,7 @@ public class AccountController extends Controller {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         Cart previousCart = customer.getCart();
 
-        boolean added = false;
+        boolean added;
         for (SubCart subCart : cart.getSubCarts()) {
             added = false;
             Product product = subCart.getProduct();

@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.account.SameInfoException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.account.UserNotLoggedInException;
@@ -90,66 +91,31 @@ public class AccountManager {
         return user;
     }
 
-    public void changeInfo(String[] info) {
-        String username = info[0];
-        String type = info[1];
-        String newInfo = info[2];
-
+    public void changeInfo(String username, UserEditAttributes editAttributes) {
         User user = getUserByUsername(username);
+        String newFirstName = editAttributes.getNewFirstName();
+        String newLastName = editAttributes.getNewLastName();
+        String newPassword = editAttributes.getNewPassword();
+        String newEmail = editAttributes.getNewEmail();
+        String newPhone = editAttributes.getNewPhone();
 
-        switch (type){
-            case "password" :
-                changePass(newInfo, user);
-                break;
-            case "firstName" :
-                changeFName(newInfo, user);
-                break;
-            case "lastName" :
-                changeLName(newInfo, user);
-                break;
-            case "email" :
-                changeEmail(newInfo, user);
-                break;
-            case "phoneNumber" :
-                changePhone(newInfo, user);
-                break;
+        if (newFirstName != null){
+            user.setFirstName(newFirstName);
+        }
+        if (newLastName != null){
+            user.setLastName(newLastName);
+        }
+        if (newPassword != null){
+            user.setPassword(newPassword);
+        }
+        if (newEmail != null){
+            user.setEmail(newEmail);
+        }
+        if (newPhone != null){
+            user.setPhoneNumber(newPhone);
         }
     }
 
-    private void changePhone(String newInfo, User user) {
-        if (user.getPhoneNumber().equals(newInfo)){
-            throw new SameInfoException("Phone Number");
-        }
-        user.setPhoneNumber(newInfo);
-    }
-
-    private void changeEmail(String newInfo, User user) {
-        if (user.getEmail().equals(newInfo)){
-            throw new SameInfoException("Email");
-        }
-        user.setEmail(newInfo);
-    }
-
-    private void changeLName(String newInfo, User user) {
-        if (user.getLastName().equals(newInfo)){
-            throw new SameInfoException("Last Name");
-        }
-        user.setLastName(newInfo);
-    }
-
-    private void changeFName(String newInfo, User user) {
-        if (user.getFirstName().equals(newInfo)){
-            throw new SameInfoException("First Name");
-        }
-        user.setFirstName(newInfo);
-    }
-
-    private void changePass(String newInfo, User user) {
-        if (user.getPassword().equals(newInfo)){
-            throw new SameInfoException("Password");
-        }
-        user.setPassword(newInfo);
-    }
 
     public void logout(String username) {
         User user = getUserByUsername(username);
