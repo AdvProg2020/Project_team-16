@@ -73,10 +73,6 @@ public class ProductControler extends Controller{
         User user = accountManager.getUserByUsername(userName);
         if (user.isHasSignedIn()) {
             int productId = Integer.parseInt(data[1]);
-            //String[] toFindSellerData = new String[2];
-            //toFindSellerData[0] = data[1];
-            //toFindSellerData[1] = data[2];
-            //String sellerUserName = selectSeller(toFindSellerData).getUsername();
             String sellerUserName = data[2];
             int amount = Integer.parseInt(data[3]);
             cartManager.addProductToCart(user.getCart(), sellerUserName, productId, amount);

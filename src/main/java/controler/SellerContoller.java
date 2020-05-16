@@ -107,7 +107,8 @@ public class SellerContoller extends Controller{
     }
 
     public void editOff(String[] data, OffChangeAttributes editAttributes)
-            throws InvalidTimes, NoSuchAOffException, NoSuchAProductException {
+            throws InvalidTimes, NoSuchAOffException, NoSuchAProductException,
+            UserNotAvailableException {
         int offId = Integer.parseInt(data[0]);
         String userName = data[1];
         Seller seller = (Seller) accountManager.getUserByUsername(userName);
@@ -140,7 +141,8 @@ public class SellerContoller extends Controller{
                 user.getPhoneNumber(), "seller");
     }
 
-    public void editSellerInfo(String userName, UserEditAttributes editAttributes) {
+    public void editSellerInfo(String userName, UserEditAttributes editAttributes)
+            throws UserNotAvailableException {
         accountManager.changeInfo(userName, editAttributes);
     }
 
@@ -150,7 +152,7 @@ public class SellerContoller extends Controller{
         String productName = data[1];
         String companyName = data[2];
         String categoryId = data[3];
-        Category category = CategoryManager.getInstance().getCategoryById(Integer.parseInt(categoryId));
+        Category category = categoryManager.getCategoryById(Integer.parseInt(categoryId));
         String description = data[4];
         int amountOfProduct = Integer.parseInt(data[5]);
         int priceOfProduct = Integer.parseInt(data[6]);
@@ -170,15 +172,6 @@ public class SellerContoller extends Controller{
         Product product = productManager.findProductById(productId);
         productManager.editProduct(product, sellerUserName);
     }*/
-
-    public List<CategoryPM> showCategories() {
-        List<Category> categories = DBManager.loadAllData(Category.class);
-        List<CategoryPM> categoryPMs = new ArrayList<>();
-        for (Category category : categories) {
-            categoryPMs.add(new CategoryPM(category.getName(), category.getId()));
-        }
-        return categoryPMs;
-    }
 
     private ArrayList<Seller> addSellerToNewProduct(String sellerUserName) throws UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
