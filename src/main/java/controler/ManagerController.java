@@ -134,8 +134,10 @@ public class ManagerController extends Controller {
         );
     }
 
-    public void editDiscountCode(String code, DiscountCodeEditAttributes editAttributes) {
-        discountManager.ed
+    public void editDiscountCode(String code, DiscountCodeEditAttributes editAttributes)
+            throws NegativeMaxDiscountException, NotValidPercentageException,
+            StartingDateIsAfterEndingDate, NoSuchADiscountCodeException {
+        discountManager.editDiscountCode(code, editAttributes);
     }
 
     private void removeUserFromDiscountCodeUsers(String code, String username) throws UserNotExistedInDiscountCodeException, NoSuchADiscountCodeException {
