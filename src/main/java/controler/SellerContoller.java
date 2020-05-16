@@ -99,7 +99,7 @@ public class SellerContoller extends Controller{
         int offPercentage = Integer.parseInt(data[2]);
         offManager.createOff(seller, dates, offPercentage);
     }
-
+    // TODO : editOff
     /*public void editOff(String[] data) throws ParseException,
             NoSuchAOffException, NoSuchAProductException {
         String sellerUserName = data[0];
@@ -135,7 +135,7 @@ public class SellerContoller extends Controller{
                 user.getLastName(), user.getEmail(),
                 user.getPhoneNumber(), "seller");
     }
-
+    // TODO : editInfo
     /*public void editSellerInfo(String[] data) {
         String[] info = new String[3];
         info[0] = data[0];
@@ -161,7 +161,7 @@ public class SellerContoller extends Controller{
                 description, stock, prices);
         productManager.createProduct(product, sellerUserName);
     }
-
+    // TODO : editProduct
     /*public void editProduct(String[] data) throws NoSuchAProductException {
         String sellerUserName = data[0];
         int productId = Integer.parseInt(data[1]);

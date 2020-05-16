@@ -86,6 +86,18 @@ public class ProductControler extends Controller{
         return productManager.showSellerOfProduct(productId, sellerUserName);
     }
 
+    public String[] showAvailableSorts() {
+        String[] availableSort = new String[7];
+        availableSort[0] = "Name";
+        availableSort[1] = "Time";
+        availableSort[2] = "View";
+        availableSort[3] = "More Price";
+        availableSort[4] = "Less Price";
+        availableSort[5] = "Bought Amount";
+        availableSort[6] = "Score";
+        return availableSort;
+    }
+
     private void checkIfTwoProductsDoesNotBelongToUniqueCategory(int firstProductId, int secondProductId)
             throws ProductsNotBelongToUniqueCategoryException, NoSuchAProductException {
         Product firstProduct = productManager.findProductById(firstProductId);
