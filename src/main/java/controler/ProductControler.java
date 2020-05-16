@@ -1,14 +1,17 @@
 package controler;
 
 import ModelPackage.Maps.SellerIntegerMap;
+import ModelPackage.Product.Category;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.System.SortType;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.ProductNotHaveSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
+import View.PrintModels.CategoryPM;
 import View.PrintModels.CommentPM;
 import View.PrintModels.FullProductPM;
 import View.PrintModels.MiniProductPM;
@@ -100,7 +103,7 @@ public class ProductControler extends Controller{
         return availableSort;
     }
 
-    public void sortProducts(String[] data) throws NotAvailableSort,
+    public List<MiniProductPM> sortProducts(String[] data) throws NotAvailableSort,
             NoSuchAProductException {
         String sortName = data[0];
         checkIfSortIsAvailable(sortName);
@@ -109,11 +112,20 @@ public class ProductControler extends Controller{
             toSortProducts.add(productManager.findProductById(Integer.parseInt(data[i])));
         }
         SortType sortType = findSortType(data[0]);
-        sortManager.sort(toSortProducts, sortType);
+        ArrayList<Product> sortedProducts = sortManager.sort(toSortProducts, sortType);
+        return showSortedProducts(sortedProducts);
     }
 
     public void disableSortProducts() {
         sortManager.sort(sortManager.getList(), SortType.VIEW);
+    }
+
+    private List<MiniProductPM> showSortedProducts(ArrayList<Product> products) {
+        List<MiniProductPM> miniProductPMs = new ArrayList<>();
+        for (Product product : products) {
+            miniProductPMs.add(createMiniProductPM(product));
+        }
+        return miniProductPMs;
     }
 
     private SortType findSortType(String sortType) {
