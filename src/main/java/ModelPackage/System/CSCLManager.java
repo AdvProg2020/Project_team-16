@@ -124,6 +124,7 @@ public class CSCLManager {
         }
         PurchaseLog log = new PurchaseLog(new Date(),DeliveryStatus.DEPENDING,map,pricePaid,discount);
         DBManager.save(log);
+
         CustomerManager.getInstance().addPurchaseLog(log,customer);
     }
 
