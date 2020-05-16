@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Product.Product;
+import ModelPackage.Users.User;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Comparator;
 @Data
 public class SortManager {
     private ArrayList<Product> list;
+    private ArrayList<User> usersList;
     private static SortManager sortManager = new SortManager();
 
     public static SortManager getInstance() {
@@ -45,6 +47,17 @@ public class SortManager {
                 break;
         }
         return list;
+    }
+
+    public ArrayList<User> sortUser(ArrayList<User> toSortList) {
+        usersList = toSortList;
+        usersList.sort(new Comparator<User>() {
+            @Override
+            public int compare(User firstUser, User secondUser) {
+                return firstUser.getUsername().compareTo(secondUser.getUsername());
+            }
+        });
+        return usersList;
     }
 
     private void sortByName(ArrayList<Product> products) {
