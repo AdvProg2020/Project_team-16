@@ -107,7 +107,7 @@ public class SellerContoller extends Controller{
     }
 
     public void editOff(String[] data, OffChangeAttributes editAttributes)
-            throws InvalidTimes, NoSuchAOffException, NoSuchAProductException {
+            throws InvalidTimes, NoSuchAOffException, NoSuchAProductException, UserNotAvailableException {
         int offId = Integer.parseInt(data[0]);
         String userName = data[1];
         Seller seller = (Seller) accountManager.getUserByUsername(userName);
@@ -140,7 +140,7 @@ public class SellerContoller extends Controller{
                 user.getPhoneNumber(), "seller");
     }
 
-    public void editSellerInfo(String userName, UserEditAttributes editAttributes) {
+    public void editSellerInfo(String userName, UserEditAttributes editAttributes) throws UserNotAvailableException {
         accountManager.changeInfo(userName, editAttributes);
     }
 
