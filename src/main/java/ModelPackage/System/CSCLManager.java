@@ -147,4 +147,15 @@ public class CSCLManager {
         }
         return log;
     }
+
+    public List<User> allBuyers(int productId,Seller seller){
+        List<SellLog> logs = seller.getSellLogs();
+        List<User> toReturn = new ArrayList<>();
+        for (SellLog log : logs) {
+            if (log.getProduct().getSourceId() == productId){
+                toReturn.add(log.getBuyer());
+            }
+        }
+        return toReturn;
+    }
 }
