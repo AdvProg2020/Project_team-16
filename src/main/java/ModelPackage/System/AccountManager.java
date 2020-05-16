@@ -1,10 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.System.database.DBManager;
-import ModelPackage.System.exeption.account.SameInfoException;
-import ModelPackage.System.exeption.account.UserNotAvailableException;
-import ModelPackage.System.exeption.account.UserNotLoggedInException;
-import ModelPackage.System.exeption.account.WrongPasswordException;
+import ModelPackage.System.exeption.account.*;
 import ModelPackage.Users.*;
 
 
@@ -69,16 +66,17 @@ public class AccountManager {
         );
     }
 
-    public String login(String username,String password) {
+    public String login(String username,String password) throws NotVerifiedSeller, UserNotAvailableException {
         User user = getUserByUsername(username);
 
         if (isCorrectPassword(user, password)){
             Customer customer = DBManager.load(Customer.class,username);
             if (customer != null) return "Customer";
             Seller seller = DBManager.load(Seller.class,username);
-            if (seller != null) {
+            if (seller != null) if (seller.getVerified())
                 return "Seller";
-            }
+            else
+                throw new NotVerifiedSeller();
             Manager manager = DBManager.load(Manager.class,username);
             if (manager != null) {
                 return "Manager";
@@ -89,13 +87,13 @@ public class AccountManager {
         return "";
     }
 
-    public User viewPersonalInfo(String username){
+    public User viewPersonalInfo(String username) throws UserNotAvailableException {
         User user = getUserByUsername(username);
         checkIfUserHasLoggedIn(user);
         return user;
     }
 
-    public void changeInfo(String[] info) {
+    public void changeInfo(String[] info) throws UserNotAvailableException {
         String username = info[0];
         String type = info[1];
         String newInfo = info[2];
@@ -157,7 +155,7 @@ public class AccountManager {
         user.setPassword(newInfo);
     }
 
-    public void logout(String username) {
+    public void logout(String username) throws UserNotAvailableException {
         User user = getUserByUsername(username);
         checkIfUserHasLoggedIn(user);
         user.setHasSignedIn(false);
@@ -167,7 +165,7 @@ public class AccountManager {
         return username.getPassword().equals(password);
     }
 
-    public User getUserByUsername(String username) {
+    public User getUserByUsername(String username) throws UserNotAvailableException {
         User user = DBManager.load(User.class,username);
         if (user == null)
             throw new UserNotAvailableException();
