@@ -5,6 +5,8 @@ import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Product;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
+import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
@@ -19,7 +21,7 @@ import java.util.List;
 
 public class CustomerController extends Controller {
 
-    public CartPM viewCart(String username){
+    public CartPM viewCart(String username) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         Cart cart = customer.getCart();
         ArrayList<InCartPM> inCartPMS = new ArrayList<>();
@@ -53,7 +55,7 @@ public class CustomerController extends Controller {
         );
     }
 
-    public List<MiniProductPM> showProducts(String username){
+    public List<MiniProductPM> showProducts(String username) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         Cart cart = customer.getCart();
         List<MiniProductPM> miniProductPMS = new ArrayList<>();
@@ -86,7 +88,7 @@ public class CustomerController extends Controller {
         cartManager.changeProductAmountInCart(cart, id, sellerId, change);
     }
 
-    public long showTotalPrice(String username){
+    public long showTotalPrice(String username) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         Cart cart = customer.getCart();
 
@@ -110,7 +112,7 @@ public class CustomerController extends Controller {
         );
     }
 
-    public List<OrderMiniLogPM> viewOrders(String username){
+    public List<OrderMiniLogPM> viewOrders(String username) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         List<PurchaseLog> purchaseLogs = customer.getPurchaseLogs();
         List<OrderMiniLogPM> orderMiniLogPMS = new ArrayList<>();
@@ -171,12 +173,12 @@ public class CustomerController extends Controller {
         );
     }
 
-    public long viewBalance(String username){
+    public long viewBalance(String username) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         return customer.getBalance();
     }
 
-    public List<DisCodeUserPM> viewDiscountCodes(String username){
+    public List<DisCodeUserPM> viewDiscountCodes(String username) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         List<DiscountcodeIntegerMap> discountCodes = customer.getDiscountCodes();
         ArrayList<DisCodeUserPM> disCodeUserPMS = new ArrayList<>();

@@ -4,6 +4,7 @@ import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
@@ -41,7 +42,7 @@ public class ManagerController extends Controller {
         );
     }
 
-    public UserFullPM viewUser(String username){
+    public UserFullPM viewUser(String username) throws UserNotAvailableException {
         User user = accountManager.getUserByUsername(username);
         return new UserFullPM(
                 user.getUsername(),
@@ -95,7 +96,7 @@ public class ManagerController extends Controller {
         Date endTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[1]);
         int offPercentage = Integer.parseInt(data[2]);
         long maxDiscount = Long.parseLong(data[3]);
-        discountManager.createDiscountCode(startTime, endTime, offPercentage, maxDiscount);
+        discountManager.createDiscountCode(data[4],startTime, endTime, offPercentage, maxDiscount);
     }
 
     public List<DiscountMiniPM> viewDiscountCodes(){
@@ -134,7 +135,7 @@ public class ManagerController extends Controller {
 
     public void editDiscountCode(String code, String whatToEdit, String newInfo) throws NoSuchADiscountCodeException,
             ParseException, StartingDateIsAfterEndingDate, NotValidPercentageException,
-            NegativeMaxDiscountException, UserNotExistedInDiscountCodeException {
+            NegativeMaxDiscountException, UserNotExistedInDiscountCodeException, UserNotAvailableException {
         switch (whatToEdit){
             case "starting date" : editDiscountStartingDate(code, newInfo); break;
             case "ending date" : editDiscountEndingDate(code, newInfo); break;
@@ -168,7 +169,7 @@ public class ManagerController extends Controller {
         discountManager.editDiscountMaxDiscount(code, newMaxDiscount);
     }
 
-    private void removeUserFromDiscountCodeUsers(String code, String username) throws UserNotExistedInDiscountCodeException, NoSuchADiscountCodeException {
+    private void removeUserFromDiscountCodeUsers(String code, String username) throws UserNotExistedInDiscountCodeException, NoSuchADiscountCodeException, UserNotAvailableException {
         User user = accountManager.getUserByUsername(username);
         discountManager.removeUserFromDiscountCodeUsers(code, user);
     }

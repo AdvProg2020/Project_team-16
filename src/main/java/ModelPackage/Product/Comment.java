@@ -42,7 +42,4 @@ public class Comment {
         this.boughtThisProduct = boughtThisProduct;
     }
 
-    public Comment(){
-
-    }
 }

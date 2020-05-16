@@ -7,6 +7,7 @@ import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.CategoryManager;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.off.InvalidTimes;
@@ -22,12 +23,12 @@ import java.util.*;
 
 public class SellerContoller extends Controller{
 
-    public CompanyPM viewCompanyInfo(String sellerUserName) {
+    public CompanyPM viewCompanyInfo(String sellerUserName) throws UserNotAvailableException {
          Company company = sellerManager.viewCompanyInformation(sellerUserName);
          return new CompanyPM(company.getName(), company.getGroup(), company.getPhone());
      }
 
-    public List<SellLogPM> viewSalesHistory(String sellerUserName) {
+    public List<SellLogPM> viewSalesHistory(String sellerUserName) throws UserNotAvailableException {
         List<SellLog> sellLogs = sellerManager.viewSalesHistory(sellerUserName);
         ArrayList<SellLogPM> sellLogPMs = new ArrayList<>();
         for (SellLog sellLog : sellLogs) {
@@ -40,12 +41,12 @@ public class SellerContoller extends Controller{
         return sellLogPMs;
     }
 
-    public long viewBalance(String sellerUserName) {
+    public long viewBalance(String sellerUserName) throws UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
         return seller.getBalance();
     }
 
-    public List<MiniProductPM> manageProducts(String sellerUserName) {
+    public List<MiniProductPM> manageProducts(String sellerUserName) throws UserNotAvailableException {
          Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
          List<Product> sellerProducts = seller.getProducts();
          ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
@@ -66,7 +67,7 @@ public class SellerContoller extends Controller{
          productManager.deleteProduct(productId);
     }
 
-    public List<OffPM> viewAllOffs(String sellerUserName) {
+    public List<OffPM> viewAllOffs(String sellerUserName) throws UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
         List<Off> offs = seller.getOffs();
         List<OffPM> offPMs = new ArrayList<>();
@@ -91,7 +92,7 @@ public class SellerContoller extends Controller{
                 off.getOffPercentage());
     }
 
-    public void addOff(String[] data, String sellerUserName) throws ParseException, InvalidTimes {
+    public void addOff(String[] data, String sellerUserName) throws ParseException, InvalidTimes, UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
         Date startTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[0]);
         Date endTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[1]);
@@ -131,7 +132,7 @@ public class SellerContoller extends Controller{
         offManager.deleteOff(offId);
     }
 
-    public UserFullPM viewSellerPersonalInfo(String sellerUserName) {
+    public UserFullPM viewSellerPersonalInfo(String sellerUserName) throws UserNotAvailableException {
         User user = accountManager.viewPersonalInfo(sellerUserName);
         return new UserFullPM(user.getUsername(), user.getFirstName(),
                 user.getLastName(), user.getEmail(),
@@ -147,7 +148,7 @@ public class SellerContoller extends Controller{
     }*/
 
     public void addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures)
-            throws NoSuchACategoryException {
+            throws NoSuchACategoryException, UserNotAvailableException {
         String sellerUserName = data[0];
         String productName = data[1];
         String companyName = data[2];
@@ -173,7 +174,7 @@ public class SellerContoller extends Controller{
         productManager.editProduct(product, sellerUserName);
     }*/
 
-    private ArrayList<Seller> addSellerToNewProduct(String sellerUserName) {
+    private ArrayList<Seller> addSellerToNewProduct(String sellerUserName) throws UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
         ArrayList<Seller> sellers = new ArrayList<>();
         sellers.add(seller);

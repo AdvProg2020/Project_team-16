@@ -1,6 +1,7 @@
 package controler;
 
 import ModelPackage.Product.Product;
+import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
@@ -13,20 +14,20 @@ import java.util.List;
 
 public class AccountController extends Controller {
 
-    public void usernameInitialCheck(String username){
+    public void usernameInitialCheck(String username) throws UserNotAvailableException {
         if (accountManager.isUsernameAvailable(username)){
             throw new UserNotAvailableException();
         }
     }
 
-    public void createAccount(String[] info, String type, Cart cart){
+    public void createAccount(String[] info, String type, Cart cart) throws UserNotAvailableException {
         accountManager.createAccount(info, type);
         if (type.equalsIgnoreCase("customer")){
             addCartToCustomer(info[0], cart);
         }
     }
 
-    public String login(String username, String password, Cart cart) {
+    public String login(String username, String password, Cart cart) throws NotVerifiedSeller, UserNotAvailableException {
         String roll = accountManager.login(username, password);
         if (roll.equals("ModelPackage.Users.Customer")){
             addCartToCustomer(username, cart);
@@ -34,7 +35,7 @@ public class AccountController extends Controller {
         return roll;
     }
 
-    public UserFullPM viewPersonalInfo(String username){
+    public UserFullPM viewPersonalInfo(String username) throws UserNotAvailableException {
         User user = accountManager.viewPersonalInfo(username);
         return new UserFullPM(
                 user.getUsername(),
@@ -46,7 +47,7 @@ public class AccountController extends Controller {
         );
     }
 
-    public void editPersonalInfo(String username, String type, String newInfo){
+    public void editPersonalInfo(String username, String type, String newInfo) throws UserNotAvailableException {
         List<String> info = new ArrayList<>();
         info.add(username);
         info.add(type);
@@ -55,11 +56,11 @@ public class AccountController extends Controller {
         accountManager.changeInfo((String[]) info.toArray());
     }
 
-    public void logout(String username){
+    public void logout(String username) throws UserNotAvailableException {
         accountManager.logout(username);
     }
 
-    private void addCartToCustomer(String username, Cart cart){
+    private void addCartToCustomer(String username, Cart cart) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         Cart previousCart = customer.getCart();
 

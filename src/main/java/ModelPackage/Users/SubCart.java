@@ -5,7 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Data @NoArgsConstructor
+@Data
 @Entity
 @Table(name = "t_sub_carts")
 public class SubCart{
