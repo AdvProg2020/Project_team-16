@@ -7,6 +7,7 @@ import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.CategoryManager;
+import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.OffChangeAttributes;
@@ -53,10 +54,10 @@ public class SellerContoller extends Controller{
          Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
          List<Product> sellerProducts = seller.getProducts();
          ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
-        for (Product sellerProduct : sellerProducts) {
-            miniProductPMs.add(createMiniProductPM(sellerProduct));
+         for (Product sellerProduct : sellerProducts) {
+             miniProductPMs.add(createMiniProductPM(sellerProduct));
         }
-        return miniProductPMs;
+         return miniProductPMs;
     }
 
     public FullProductPM viewProduct(int productId) throws NoSuchAProductException {
@@ -165,13 +166,11 @@ public class SellerContoller extends Controller{
                 description, stock, prices);
         productManager.createProduct(product, sellerUserName);
     }
-    // TODO : editProduct
-    /*public void editProduct(String[] data) throws NoSuchAProductException {
-        String sellerUserName = data[0];
-        int productId = Integer.parseInt(data[1]);
-        Product product = productManager.findProductById(productId);
-        productManager.editProduct(product, sellerUserName);
-    }*/
+
+    public void editProduct(String sellerUserName, ProductEditAttribute editAttribute)
+            throws NoSuchAProductException {
+        productManager.editProduct(editAttribute, sellerUserName);
+    }
 
     private ArrayList<Seller> addSellerToNewProduct(String sellerUserName) throws UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);

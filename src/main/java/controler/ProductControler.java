@@ -1,17 +1,13 @@
 package controler;
 
-import ModelPackage.Maps.SellerIntegerMap;
-import ModelPackage.Product.Category;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.System.SortType;
-import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.ProductNotHaveSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
-import View.PrintModels.CategoryPM;
 import View.PrintModels.CommentPM;
 import View.PrintModels.FullProductPM;
 import View.PrintModels.MiniProductPM;
