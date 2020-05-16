@@ -11,6 +11,7 @@ import ModelPackage.Users.User;
 import View.PrintModels.CommentPM;
 import View.PrintModels.FullProductPM;
 import View.PrintModels.MiniProductPM;
+import controler.exceptions.ProductsNotBelongToUniqueCategoryException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +45,11 @@ public class ProductControler extends Controller{
         return createFullProductPM(productId);
     }
 
-    public FullProductPM[] compareProducts(String[] data) throws NoSuchAProductException {
+    public FullProductPM[] compareProducts(String[] data)
+            throws NoSuchAProductException, ProductsNotBelongToUniqueCategoryException {
         int firstProductId = Integer.parseInt(data[0]);
         int secondProductId = Integer.parseInt(data[1]);
+        checkIfTwoProductsDoesNotBelongToUniqueCategory(firstProductId, secondProductId);
         FullProductPM[] fullProductPMs = new FullProductPM[2];
         fullProductPMs[0] = createFullProductPM(firstProductId);
         fullProductPMs[1] = createFullProductPM(secondProductId);
@@ -81,6 +84,14 @@ public class ProductControler extends Controller{
         int productId = Integer.parseInt(data[0]);
         String sellerUserName = data[1];
         return productManager.showSellerOfProduct(productId, sellerUserName);
+    }
+
+    private void checkIfTwoProductsDoesNotBelongToUniqueCategory(int firstProductId, int secondProductId)
+            throws ProductsNotBelongToUniqueCategoryException, NoSuchAProductException {
+        Product firstProduct = productManager.findProductById(firstProductId);
+        Product secondProduct = productManager.findProductById(secondProductId);
+        if (!firstProduct.getCategoryId().equals(secondProduct.getCategoryId()))
+            throw new ProductsNotBelongToUniqueCategoryException(firstProduct.getId(), secondProduct.getId());
     }
 
     private FullProductPM createFullProductPM(int productId) throws NoSuchAProductException {
