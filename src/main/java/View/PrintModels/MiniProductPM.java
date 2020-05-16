@@ -4,7 +4,6 @@ import ModelPackage.Maps.SellerIntegerMap;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Data @Builder
@@ -25,5 +24,19 @@ public class MiniProductPM {
         this.brand = brand;
         this.score = score;
         this.description = description;
+    }
+
+    public void print(MiniProductPM miniProductPM){
+        System.out.println(String.format(
+                "%s     -%d-    '%s'\n" +
+                "Sellers : " ,
+                miniProductPM.name, miniProductPM.id,
+                miniProductPM.categoryName
+        ));
+        for (SellerIntegerMap seller : sellers) {
+            System.out.println(String.format("%s    In Stock : %d | ", seller.getSeller().getUsername(), seller.getInteger()));
+        }
+        System.out.println("\b\n");
+        System.out.println(String.format("Brand : %s    Average Score : %s\nAbout : %s\n", brand, score, description));
     }
 }

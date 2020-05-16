@@ -55,26 +55,17 @@ public class CustomerController extends Controller {
         );
     }
 
-    public List<MiniProductPM> showProducts(String username) throws UserNotAvailableException {
+    public List<InCartPM> showProducts(String username) throws UserNotAvailableException {
+        ArrayList<InCartPM> inCartPMS = new ArrayList<>();
+
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         Cart cart = customer.getCart();
-        List<MiniProductPM> miniProductPMS = new ArrayList<>();
 
         for (SubCart subCart : cart.getSubCarts()) {
-            Product product = subCart.getProduct();
-            MiniProductPM miniProductPM = new MiniProductPM(
-                    product.getName(),
-                    product.getId(),
-                    product.getCategory().getName(),
-                    product.getPrices(),
-                    product.getCompany(),
-                    product.getTotalScore(),
-                    product.getDescription()
-            );
-            miniProductPMS.add(miniProductPM);
+            inCartPMS.add(createInCartPM(subCart));
         }
 
-        return miniProductPMS;
+        return inCartPMS;
     }
 
     public Product viewProduct(int id) throws NoSuchAProductException {

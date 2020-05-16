@@ -18,4 +18,17 @@ public class InCartPM{
         this.offPrice = offPrice;
         this.amount = amount;
     }
+
+    public void print(InCartPM inCartPM){
+        System.out.println(
+                String.format(
+                                "-- %s     -%d     (%d) \n" +
+                                "Brand : %s     Seller : %s\n" +
+                                "About : %s"
+                                , product.getName(), product.getId(), amount,
+                                  product.getBrand(), sellerId,
+                                  product.getDescription()
+                )
+        );
+    }
 }
