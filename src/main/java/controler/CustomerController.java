@@ -5,6 +5,7 @@ import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Off.DiscountCode;
+import ModelPackage.Off.Off;
 import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
@@ -50,7 +51,7 @@ public class CustomerController extends Controller {
                 miniProductPM,
                 subCart.getSeller().getUsername(),
                 findPriceForSpecialSeller(subCart.getSeller(), product) * subCart.getAmount(),
-                product.getOff().getOffPercentage(),
+                (int) findOffPriceFor(subCart),
                 subCart.getAmount()
         );
     }
@@ -113,6 +114,15 @@ public class CustomerController extends Controller {
         }
 
         return orderMiniLogPMS;
+    }
+
+    private double findOffPriceFor(SubCart subCart) {
+        Off off = subCart.getProduct().getOff();
+        if (off == null)
+            return 0;
+        return findPriceForSpecialSeller(subCart.getSeller(), subCart.getProduct()) -
+                (double)(off.getOffPercentage() / 100) *
+                        findPriceForSpecialSeller(subCart.getSeller(), subCart.getProduct());
     }
 
     private int findPriceForSpecialSeller(Seller seller, Product product) {
