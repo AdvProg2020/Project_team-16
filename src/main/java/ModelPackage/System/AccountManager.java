@@ -5,7 +5,6 @@ import ModelPackage.System.exeption.account.SameInfoException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.account.UserNotLoggedInException;
 import ModelPackage.System.exeption.account.WrongPasswordException;
-import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
 import ModelPackage.Users.*;
 
 
@@ -24,13 +23,11 @@ public class AccountManager {
     private CSCLManager csclManager = CSCLManager.getInstance();
 
     public void createAccount(String[] info, String type) {
-        User user = null;
         switch (type){
             case "seller" : createSeller(info); break;
-            case "manager" : user = createManager(info); break;
-            case  "customer" : user = createCustomer(info); break;
+            case "manager" : Manager manager = createManager(info);DBManager.save(manager); break;
+            case  "customer" : Customer customer = createCustomer(info);DBManager.save(customer); break;
         }
-        DBManager.save(user);
     }
 
     private void createSeller(String[] info) {
@@ -75,13 +72,21 @@ public class AccountManager {
     public String login(String username,String password) {
         User user = getUserByUsername(username);
 
-        if (isCorrectPassword(username, password)){
-            user.setHasSignedIn(true);
+        if (isCorrectPassword(user, password)){
+            Customer customer = DBManager.load(Customer.class,username);
+            if (customer != null) return "Customer";
+            Seller seller = DBManager.load(Seller.class,username);
+            if (seller != null) {
+                return "Seller";
+            }
+            Manager manager = DBManager.load(Manager.class,username);
+            if (manager != null) {
+                return "Manager";
+            }
         } else {
             throw new WrongPasswordException(username);
         }
-
-        return user.getClass().getName();
+        return "";
     }
 
     public User viewPersonalInfo(String username){
@@ -114,6 +119,7 @@ public class AccountManager {
                 changePhone(newInfo, user);
                 break;
         }
+        DBManager.save(user);
     }
 
     private void changePhone(String newInfo, User user) {
@@ -157,8 +163,8 @@ public class AccountManager {
         user.setHasSignedIn(false);
     }
 
-    private boolean isCorrectPassword(String username,String password) {
-        return getUserByUsername(username).getPassword().equals(password);
+    private boolean isCorrectPassword(User username,String password) {
+        return username.getPassword().equals(password);
     }
 
     public User getUserByUsername(String username) {
