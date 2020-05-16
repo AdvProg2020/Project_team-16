@@ -15,11 +15,12 @@ import java.util.Map;
 
 @Data
 public class CategoryManager {
+    private List<Category> allCategories;
     private static CategoryManager categoryManager = new CategoryManager();
     private static ArrayList<String> publicFeatures;
 
     private CategoryManager(){
-
+        if (allCategories == null) allCategories = new ArrayList<>();
     }
 
     public static CategoryManager getInstance(){

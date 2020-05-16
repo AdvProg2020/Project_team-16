@@ -22,11 +22,12 @@ import java.util.List;
 
 @Data
 public class ProductManager {
-    private ArrayList<Product> allProducts;
+    private List<Product> allProducts;
     private static ProductManager productManager = null;
 
     private ProductManager(){
-        allProducts = new ArrayList<>();
+        if (allProducts == null)
+            allProducts = new ArrayList<>();
     }
 
     public static ProductManager getInstance(){
