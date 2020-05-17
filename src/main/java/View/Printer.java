@@ -74,6 +74,7 @@ public class Printer {
                 StringUtils.center("Special",24),
                 StringUtils.center("Public",24)
         );
+        System.out.println(line);
         for (String special : product.getFeatures().keySet()) {
             System.out.printf("|%s|%s|\n",
                     StringUtils.center(special,24),
@@ -89,6 +90,7 @@ public class Printer {
                 StringUtils.center("Username",24),
                 StringUtils.center("Role",24)
         );
+        System.out.println(line);
         for (UserMiniPM user : users) {
             System.out.printf("|%s|%s|\n",
                     StringUtils.center(user.getUsername(),24),
@@ -120,8 +122,28 @@ public class Printer {
 
     }
 
-    public void printAllProducts(List<MiniProductPM> products){}
-    public void printAllDiscountCodes(List<DiscountMiniPM> discountCode){}
+    public void printAllProducts(List<MiniProductPM> products){
+        for (MiniProductPM product : products) {
+            productPrinterShort(product);
+        }
+    }
+
+    public void printAllDiscountCodes(List<DiscountMiniPM> discountCodes){
+        System.out.println(line);
+        System.out.printf("|%s|%s|\n",
+                StringUtils.center("Code",24),
+                StringUtils.center("OffPercentage",24)
+        );
+        System.out.println(line);
+        for (DiscountMiniPM discountCode : discountCodes) {
+            System.out.printf("|%s|%s|\n",
+                    StringUtils.center(discountCode.getDiscountCode(),24),
+                    StringUtils.center(Integer.toString(discountCode.getOffPercentage()),24)
+            );
+            System.out.println(line);
+        }
+    }
+
     public void printDiscountManager(DisCodeManagerPM discountCode){}
     public void printAllRequests(List<RequestPM> requests){}
     public void printDetailedRequest(RequestPM request){}
