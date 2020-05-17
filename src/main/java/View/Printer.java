@@ -145,8 +145,46 @@ public class Printer {
         }
     }
 
-    public void printDiscountManager(DisCodeManagerPM discountCode){}
-    public void printAllRequests(List<RequestPM> requests){}
+    public void printDiscountManager(DisCodeManagerPM discountCode){
+        System.out.println(line);
+        System.out.printf("|%s|%s|%s|%s|%s|\n",
+                StringUtils.center("Code",12),
+                StringUtils.center("Start Date",9),
+                StringUtils.center("End Date",9),
+                StringUtils.center("Off Percentage",9),
+                StringUtils.center("Max Discount Price",9)
+        );
+        System.out.println(line);
+
+        System.out.printf("|%s|%s|%s|%s|%s|\n",
+                StringUtils.center(discountCode.getDiscountCode(),12),
+                StringUtils.center(discountCode.getStartTime().toString(),9),
+                StringUtils.center(discountCode.getEndTime().toString(),9),
+                StringUtils.center(Integer.toString(discountCode.getOffPercentage()),9),
+                StringUtils.center(Long.toString(discountCode.getMaxOfPriceDiscounted()),9)
+        );
+        System.out.println(line);
+
+        System.out.println(new String(new char[32]).replace('\0', '-'));
+        System.out.printf("|%s|%s|\n",
+                StringUtils.center("User", 16),
+                StringUtils.center("Count", 16)
+        );
+        System.out.println(new String(new char[32]).replace('\0', '-'));
+
+        for (UserIntegerMap user : discountCode.getUsersHavingDiscountCodeWithCount()) {
+            System.out.printf("|%s|%s|\n",
+                    StringUtils.center(user.getUser().getUsername(), 16),
+                    StringUtils.center(Integer.toString(user.getInteger()), 16)
+            );
+            System.out.println(new String(new char[32]).replace('\0', '-'));
+        }
+    }
+
+    public void printAllRequests(List<RequestPM> requests){
+
+    }
+
     public void printDetailedRequest(RequestPM request){}
     public void printAllCategories(List<CategoryPM> categories){}
     public void printCompany(CompanyPM company){}
