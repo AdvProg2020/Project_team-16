@@ -115,23 +115,33 @@ public class Printer {
 
     public void userPrinter(UserFullPM user){
         System.out.println(lineMedium);
-        System.out.printf("|%s|%s|%s|\n|%s|%s|%s|\n",
-                StringUtils.center("Username",16),
-                StringUtils.center("First Name",16),
-                StringUtils.center("Last Name",16),
-                StringUtils.center("Email",16),
-                StringUtils.center("Phone Number",16),
-                StringUtils.center("Role",16)
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center("Username",15),
+                StringUtils.center("First Name",15),
+                StringUtils.center("Last Name",15)
         );
         System.out.println(lineMedium);
-        System.out.printf("|%s|%s|%s|\n|%s|%s|%s|\n",
-                StringUtils.center(user.getUsername(),16),
-                StringUtils.center(user.getFirstName(),16),
-                StringUtils.center(user.getLastName(),16),
-                StringUtils.center(user.getEmail(),16),
-                StringUtils.center(user.getPhoneNumber(),16),
-                StringUtils.center(user.getRole(),16)
+
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center(user.getUsername(),15),
+                StringUtils.center(user.getFirstName(),15),
+                StringUtils.center(user.getLastName(),15)
         );
+        System.out.println(lineMedium);
+
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center("Email",15),
+                StringUtils.center("Phone Number",15),
+                StringUtils.center("Role",15)
+        );
+        System.out.println(lineMedium);
+
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center(user.getEmail(),15),
+                StringUtils.center(user.getPhoneNumber(),15),
+                StringUtils.center(user.getRole(),15)
+        );
+        System.out.println(lineMedium);
 
     }
 
@@ -180,7 +190,7 @@ public class Printer {
                 StringUtils.center("Off Percentage",16),
                 StringUtils.center("Max Discount Price",16)
         );
-        System.out.println(lineMedium);
+        System.out.println(lineLarge);
 
         System.out.printf("|%s|%s|%s|%s|%s|\n",
                 StringUtils.center(discountCode.getDiscountCode(),16),
@@ -189,7 +199,7 @@ public class Printer {
                 StringUtils.center(Integer.toString(discountCode.getOffPercentage()),16),
                 StringUtils.center(Long.toString(discountCode.getMaxOfPriceDiscounted()),16)
         );
-        System.out.println(lineMedium);
+        System.out.println(lineLarge);
 
         System.out.println(lineSmall);
         System.out.printf("|%s|%s|\n",
@@ -446,7 +456,37 @@ public class Printer {
         printAllProducts(order.getProductPMs());
     }
 
-    public void viewUserDiscounts(DisCodeUserPM discountCode){}
+    public void viewUserDiscounts(DisCodeUserPM discountCode){
+        System.out.println(lineMedium);
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center("Code",15),
+                StringUtils.center("Start Date",15),
+                StringUtils.center("End Date",15)
+        );
+        System.out.println(lineMedium);
+
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center(discountCode.getDiscountCode(),15),
+                StringUtils.center(discountCode.getStartTime().toString(),15),
+                StringUtils.center(discountCode.getEndTime().toString(),15)
+        );
+        System.out.println(lineMedium);
+
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center("Off Percentage",15),
+                StringUtils.center("Max Discount Price",15),
+                StringUtils.center("Count",15)
+        );
+        System.out.println(lineMedium);
+
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center(Integer.toString(discountCode.getOffPercentage()),15),
+                StringUtils.center(Long.toString(discountCode.getMaxOfPriceDiscounted()),15),
+                StringUtils.center(Integer.toString(discountCode.getCount()),15)
+        );
+        System.out.println(lineMedium);
+    }
+
     public void comparePrinter(FullProductPM[] products){}
     public void printAllCategories(List<CategoryPM> categories){}
 
