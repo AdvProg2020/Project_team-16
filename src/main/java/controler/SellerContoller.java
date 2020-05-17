@@ -60,6 +60,19 @@ public class SellerContoller extends Controller{
          return miniProductPMs;
     }
 
+    public List<UserMiniPM> viewAllBuyersOfProduct(int productId) throws NoSuchAProductException {
+        List<UserMiniPM> userMiniPMs = new ArrayList<>();
+        List<User> allBuyers = new ArrayList<>();
+        Product product = productManager.findProductById(productId);
+        for (Seller seller : product.getAllSellers()) {
+            allBuyers.addAll(csclManager.allBuyers(productId, seller));
+        }
+        for (User buyer : allBuyers) {
+            userMiniPMs.add(createUserMiniPM(buyer));
+        }
+        return userMiniPMs;
+    }
+
     public FullProductPM viewProduct(int productId) throws NoSuchAProductException {
          Product product = productManager.findProductById(productId);
         return new FullProductPM(createMiniProductPM(product),
@@ -223,6 +236,10 @@ public class SellerContoller extends Controller{
                 product.getCompany(),
                 product.getTotalScore(),
                 product.getDescription());
+    }
+
+    private UserMiniPM createUserMiniPM(User user) {
+        return new UserMiniPM(user.getUsername(), "buyer");
     }
 
 }
