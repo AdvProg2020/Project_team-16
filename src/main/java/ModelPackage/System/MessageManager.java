@@ -5,6 +5,7 @@ import ModelPackage.Users.Message;
 import ModelPackage.Users.User;
 
 import java.util.Date;
+import java.util.List;
 
 public class MessageManager {
     private static MessageManager messageManager;
@@ -22,5 +23,16 @@ public class MessageManager {
         DBManager.save(message);
         user.getMessages().add(message);
         DBManager.save(user);
+    }
+
+    public List<Message> getAllMesagesOfThisUser(User user){
+        return user.getMessages();
+    }
+
+    public void setMessageAsRead(int id){
+        Message message = DBManager.load(Message.class,id);
+        if (message != null) {
+            message.setRead(true);
+        }
     }
 }
