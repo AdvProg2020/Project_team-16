@@ -158,4 +158,17 @@ public class CSCLManager {
         }
         return toReturn;
     }
+
+    public boolean boughtThisProduct(int productId, String probableBuyerId) throws NoSuchAProductException {
+        Product product = ProductManager.getInstance().findProductById(productId);
+        List<User> allBuyers = new ArrayList<>();
+        for (Seller seller : product.getAllSellers()) {
+            allBuyers.addAll(allBuyers(productId, seller));
+        }
+        for (User buyer : allBuyers) {
+            if (buyer.getUsername().equals(probableBuyerId))
+                return true;
+        }
+        return false;
+    }
 }
