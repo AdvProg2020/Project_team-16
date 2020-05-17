@@ -26,7 +26,7 @@ public class Printer {
 
     public void productPrinterShort(MiniProductPM product){
         System.out.println(line);
-        System.out.printf("|%s|%s|%s|",
+        System.out.printf("|%s|%s|%s|\n",
                 StringUtils.center("Name",20),
                 StringUtils.center("ID", 8),
                 StringUtils.center("Category",16)
@@ -50,7 +50,7 @@ public class Printer {
         System.out.println("\b\n");
 
         System.out.println(line);
-        System.out.printf("|%s|%s|%s|",
+        System.out.printf("|%s|%s|%s|\n",
                 StringUtils.center("Brand",20),
                 StringUtils.center("Score", 8),
                 StringUtils.center("About",16)
@@ -64,7 +64,25 @@ public class Printer {
         );
     }
 
-    public void productPrintFull(FullProductPM product){}
+    public void productPrintFull(FullProductPM product){
+        productPrinterShort(product.getProduct());
+
+        System.out.println(line);
+        System.out.printf("|%s|\n", StringUtils.center("Features",48));
+        System.out.println(line);
+        System.out.printf("|%s|%s|\n",
+                StringUtils.center("Special",24),
+                StringUtils.center("Public",24)
+        );
+        for (String special : product.getFeatures().keySet()) {
+            System.out.printf("|%s|%s|\n",
+                    StringUtils.center(special,24),
+                    StringUtils.center(product.getFeatures().get(special),24)
+            );
+            System.out.println(line);
+        }
+    }
+
     public void usersPrinter(List<UserMiniPM> users){}
     public void userPrinter(UserFullPM user){}
     public void printAllProducts(List<MiniProductPM> products){}
@@ -84,15 +102,14 @@ public class Printer {
     public void comparePrinter(FullProductPM[] products){}
 
     public void printComments(List<CommentPM> comments){
-
         System.out.println(line);
-        System.out.printf("|%s|%s|",
+        System.out.printf("|%s|%s|\n",
                 StringUtils.center("Name",24),
                 StringUtils.center("Title",24)
         );
         for (CommentPM comment : comments) {
             System.out.println(line);
-            System.out.printf("|%s|%s|",
+            System.out.printf("|%s|%s|\n",
                     StringUtils.center(comment.getUserName(),24),
                     StringUtils.center(comment.getTitle(),24)
             );
