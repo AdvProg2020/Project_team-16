@@ -49,6 +49,7 @@ public class Printer {
         }
         System.out.println("\b\n");
 
+        System.out.println(line);
         System.out.printf("|%s|%s|%s|",
                 StringUtils.center("Brand",20),
                 StringUtils.center("Score", 8),
@@ -67,19 +68,37 @@ public class Printer {
     public void usersPrinter(List<UserMiniPM> users){}
     public void userPrinter(UserFullPM user){}
     public void printAllProducts(List<MiniProductPM> products){}
-        public void printAllDiscountCodes(List<DiscountMiniPM> discountCode){}
-        public void printDiscountManager(DisCodeManagerPM discountCode){}
-        public void printAllRequests(List<RequestPM> requests){}
-        public void printDetailedRequest(RequestPM request){}
-        public void printAllCategories(List<CategoryPM> categories){}
-        public void printCompany(CompanyPM company){}
-        public void printSaleHistory(List<SellLogPM> sellLog){}
-        public void viewOffs(List<OffPM> offs){}
-        public void viewBalance(long balance){}
-        public void viewCart(CartPM cartPM){}
-        public void viewProductsInCart(InCartPM cart){}
-        public void viewOrderHistory (List<OrderLogPM> orders){}
-        public void viewUserDiscounts(DisCodeUserPM discountCode){}
-        public void comparePrinter(FullProductPM[] products){}
-        public void printComments(List<CommentPM> comments){}
+    public void printAllDiscountCodes(List<DiscountMiniPM> discountCode){}
+    public void printDiscountManager(DisCodeManagerPM discountCode){}
+    public void printAllRequests(List<RequestPM> requests){}
+    public void printDetailedRequest(RequestPM request){}
+    public void printAllCategories(List<CategoryPM> categories){}
+    public void printCompany(CompanyPM company){}
+    public void printSaleHistory(List<SellLogPM> sellLog){}
+    public void viewOffs(List<OffPM> offs){}
+    public void viewBalance(long balance){}
+    public void viewCart(CartPM cartPM){}
+    public void viewProductsInCart(InCartPM cart){}
+    public void viewOrderHistory (List<OrderLogPM> orders){}
+    public void viewUserDiscounts(DisCodeUserPM discountCode){}
+    public void comparePrinter(FullProductPM[] products){}
+
+    public void printComments(List<CommentPM> comments){
+
+        System.out.println(line);
+        System.out.printf("|%s|%s|",
+                StringUtils.center("Name",24),
+                StringUtils.center("Title",24)
+        );
+        for (CommentPM comment : comments) {
+            System.out.println(line);
+            System.out.printf("|%s|%s|",
+                    StringUtils.center(comment.getUserName(),24),
+                    StringUtils.center(comment.getTitle(),24)
+            );
+            System.out.println(line);
+            System.out.println(comment.getComment());
+            System.out.println(line);
+        }
+    }
 }
