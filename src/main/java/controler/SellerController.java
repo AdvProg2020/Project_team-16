@@ -24,7 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class SellerContoller extends Controller{
+public class SellerController extends Controller{
 
     public CompanyPM viewCompanyInfo(String sellerUserName) throws UserNotAvailableException {
          Company company = sellerManager.viewCompanyInformation(sellerUserName);
@@ -84,13 +84,12 @@ public class SellerContoller extends Controller{
          productManager.deleteProduct(productId);
     }
 
-    public List<OffPM> viewAllOffs(String sellerUserName) throws UserNotAvailableException {
+    public List<MiniOffPM> viewAllOffs(String sellerUserName) throws UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
         List<Off> offs = seller.getOffs();
-        List<OffPM> offPMs = new ArrayList<>();
+        List<MiniOffPM> offPMs = new ArrayList<>();
         for (Off off : offs) {
-            offPMs.add(new OffPM(off.getOffId(),
-                    addProductIdsToOffPM(off),
+            offPMs.add(new MiniOffPM(off.getOffId(),
                     off.getSeller().getUsername(),
                     off.getStartTime(),
                     off.getEndTime(),
@@ -232,6 +231,7 @@ public class SellerContoller extends Controller{
         return new MiniProductPM(product.getName(),
                 product.getId(),
                 product.getCategory().getName(),
+                product.getStock(),
                 product.getPrices(),
                 product.getCompany(),
                 product.getTotalScore(),

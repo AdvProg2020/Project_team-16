@@ -82,6 +82,7 @@ public class ManagerController extends Controller {
                 product.getName(),
                 product.getId(),
                 product.getCategory().getName(),
+                product.getStock(),
                 product.getPrices(),
                 product.getCompany(),
                 product.getTotalScore(),

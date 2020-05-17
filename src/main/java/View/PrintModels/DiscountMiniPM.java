@@ -1,5 +1,8 @@
 package View.PrintModels;
 
+import lombok.Data;
+
+@Data
 public class DiscountMiniPM {
     private String discountCode;
     private int offPercentage;
