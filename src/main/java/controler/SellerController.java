@@ -84,13 +84,12 @@ public class SellerController extends Controller{
          productManager.deleteProduct(productId);
     }
 
-    public List<OffPM> viewAllOffs(String sellerUserName) throws UserNotAvailableException {
+    public List<MiniOffPM> viewAllOffs(String sellerUserName) throws UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
         List<Off> offs = seller.getOffs();
-        List<OffPM> offPMs = new ArrayList<>();
+        List<MiniOffPM> offPMs = new ArrayList<>();
         for (Off off : offs) {
-            offPMs.add(new OffPM(off.getOffId(),
-                    addProductIdsToOffPM(off),
+            offPMs.add(new MiniOffPM(off.getOffId(),
                     off.getSeller().getUsername(),
                     off.getStartTime(),
                     off.getEndTime(),

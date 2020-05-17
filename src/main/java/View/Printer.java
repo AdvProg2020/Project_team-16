@@ -171,22 +171,22 @@ public class Printer {
     }
 
     public void printDiscountManager(DisCodeManagerPM discountCode){
-        System.out.println(lineMedium);
+        System.out.println(lineLarge);
         System.out.printf("|%s|%s|%s|%s|%s|\n",
-                StringUtils.center("Code",12),
-                StringUtils.center("Start Date",9),
-                StringUtils.center("End Date",9),
-                StringUtils.center("Off Percentage",9),
-                StringUtils.center("Max Discount Price",9)
+                StringUtils.center("Code",16),
+                StringUtils.center("Start Date",16),
+                StringUtils.center("End Date",16),
+                StringUtils.center("Off Percentage",16),
+                StringUtils.center("Max Discount Price",16)
         );
         System.out.println(lineMedium);
 
         System.out.printf("|%s|%s|%s|%s|%s|\n",
-                StringUtils.center(discountCode.getDiscountCode(),12),
-                StringUtils.center(discountCode.getStartTime().toString(),9),
-                StringUtils.center(discountCode.getEndTime().toString(),9),
-                StringUtils.center(Integer.toString(discountCode.getOffPercentage()),9),
-                StringUtils.center(Long.toString(discountCode.getMaxOfPriceDiscounted()),9)
+                StringUtils.center(discountCode.getDiscountCode(),16),
+                StringUtils.center(discountCode.getStartTime().toString(),16),
+                StringUtils.center(discountCode.getEndTime().toString(),16),
+                StringUtils.center(Integer.toString(discountCode.getOffPercentage()),16),
+                StringUtils.center(Long.toString(discountCode.getMaxOfPriceDiscounted()),16)
         );
         System.out.println(lineMedium);
 
@@ -234,16 +234,21 @@ public class Printer {
         );
         System.out.println(lineMedium);
 
-        System.out.printf("|%s|%s|%s|\n",
+        System.out.printf("|%s|%s|%s|\n\n",
                 StringUtils.center(request.getRequesterUserName(),16),
                 StringUtils.center(Integer.toString(request.getRequestId()),16),
                 StringUtils.center(request.getRequestType(),16)
         );
-        System.out.printf("Request :\n%s\n", request.getRequest());
+
+        System.out.println(lineMedium);
+        System.out.printf("|%s|\n",
+                StringUtils.center("Request",48)
+        );
+        System.out.println(lineMedium);
+
+        System.out.printf("%s\n", request.getRequest());
         System.out.println(lineMedium);
     }
-
-    public void printAllCategories(List<CategoryPM> categories){}
 
     public void printSaleHistory(List<SellLogPM> sellLogs){
         System.out.println(lineLarge);
@@ -286,13 +291,70 @@ public class Printer {
 
     }
 
-    public void viewOffs(List<OffPM> offs){}
+    public void viewOff(OffPM off){
+        System.out.println(lineLarge);
+        System.out.printf("|%s|%s|%s|%s|%s|\n",
+                StringUtils.center("ID",16),
+                StringUtils.center("Seller",16),
+                StringUtils.center("Start Date",16),
+                StringUtils.center("End Date",16),
+                StringUtils.center("Off Percentage",16)
+        );
+        System.out.println(lineLarge);
+
+        System.out.printf("|%s|%s|%s|%s|%s|\n",
+                StringUtils.center(Integer.toString(off.getOffId()),16),
+                StringUtils.center(off.getSeller(),16),
+                StringUtils.center("Start Date",16),
+                StringUtils.center("End Date",16),
+                StringUtils.center("Off Percentage",16)
+        );
+        System.out.println(lineLarge);
+        System.out.printf("|%s|\n", StringUtils.center("Products",80));
+        System.out.println(lineLarge);
+
+        int count = 0;
+        for (Integer productId : off.getProductIds()) {
+            if (count == 8){
+                System.out.println(lineLarge);
+                count = 0;
+            }
+            System.out.printf("|%s|", StringUtils.center("Products",10));
+            count++;
+        }
+        System.out.println(lineLarge);
+    }
+
+    public void viewOffs(List<MiniOffPM> offs){
+        System.out.println(lineLarge);
+        System.out.printf("|%s|%s|%s|%s|%s|\n",
+                StringUtils.center("ID",16),
+                StringUtils.center("Seller",16),
+                StringUtils.center("Start Date",16),
+                StringUtils.center("End Date",16),
+                StringUtils.center("Off Percentage",16)
+        );
+        System.out.println(lineLarge);
+
+        for (MiniOffPM off : offs) {
+            System.out.printf("|%s|%s|%s|%s|%s|\n",
+                    StringUtils.center(Integer.toString(off.getOffId()),16),
+                    StringUtils.center(off.getSeller(),16),
+                    StringUtils.center("Start Date",16),
+                    StringUtils.center("End Date",16),
+                    StringUtils.center("Off Percentage",16)
+            );
+        }
+        System.out.println(lineLarge);
+    }
+
     public void viewBalance(long balance){}
     public void viewCart(CartPM cartPM){}
     public void viewProductsInCart(InCartPM cart){}
     public void viewOrderHistory (List<OrderLogPM> orders){}
     public void viewUserDiscounts(DisCodeUserPM discountCode){}
     public void comparePrinter(FullProductPM[] products){}
+    public void printAllCategories(List<CategoryPM> categories){}
 
     public void printComments(List<CommentPM> comments){
         System.out.println(lineMedium);
