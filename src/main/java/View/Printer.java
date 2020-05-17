@@ -206,27 +206,41 @@ public class Printer {
 
     public void printAllRequests(List<RequestPM> requests){
         System.out.println(line);
-        System.out.printf("|%s|%s|%s|%s|\n",
-                StringUtils.center("Username",12),
-                StringUtils.center("ID",8),
-                StringUtils.center("Type",12),
-                StringUtils.center("Request",16)
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center("Username",16),
+                StringUtils.center("ID",16),
+                StringUtils.center("Type",16)
         );
         System.out.println(line);
 
         for (RequestPM request : requests) {
-            System.out.printf("|%s|%s|%s|%s|\n",
-                    StringUtils.center(request.getRequesterUserName(),12),
-                    StringUtils.center(Integer.toString(request.getRequestId()),8),
-                    StringUtils.center(request.getRequestType(),12),
-                    StringUtils.center(request.getRequest(),16)
+            System.out.printf("|%s|%s|%s|\n",
+                    StringUtils.center(request.getRequesterUserName(),16),
+                    StringUtils.center(Integer.toString(request.getRequestId()),16),
+                    StringUtils.center(request.getRequestType(),16)
             );
         }
         System.out.println(line);
-
     }
 
-    public void printDetailedRequest(RequestPM request){}
+    public void printDetailedRequest(RequestPM request){
+        System.out.println(line);
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center("Username",16),
+                StringUtils.center("ID",16),
+                StringUtils.center("Type",16)
+        );
+        System.out.println(line);
+
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center(request.getRequesterUserName(),16),
+                StringUtils.center(Integer.toString(request.getRequestId()),16),
+                StringUtils.center(request.getRequestType(),16)
+        );
+        System.out.printf("Request :\n%s\n", request.getRequest());
+        System.out.println(line);
+    }
+
     public void printAllCategories(List<CategoryPM> categories){}
     public void printCompany(CompanyPM company){}
     public void printSaleHistory(List<SellLogPM> sellLog){}
