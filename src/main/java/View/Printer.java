@@ -129,7 +129,9 @@ public class Printer {
                 StringUtils.center(user.getLastName(),15)
         );
         System.out.println(lineMedium);
+        System.out.println();
 
+        System.out.println(lineMedium);
         System.out.printf("|%s|%s|%s|\n",
                 StringUtils.center("Email",15),
                 StringUtils.center("Phone Number",15),
@@ -524,6 +526,7 @@ public class Printer {
 
 
     }
+
     public void printAllCategories(List<CategoryPM> categories){}
 
     public void printComments(List<CommentPM> comments){

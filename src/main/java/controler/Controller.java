@@ -2,7 +2,9 @@ package controler;
 
 import ModelPackage.System.*;
 import ModelPackage.Users.Manager;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class Controller {
     protected AccountManager accountManager = AccountManager.getInstance();
     protected CartManager cartManager = CartManager.getInstance();
