@@ -1,6 +1,7 @@
 package View;
 
 import ModelPackage.Maps.SellerIntegerMap;
+import ModelPackage.Maps.UserIntegerMap;
 import View.PrintModels.*;
 import org.apache.commons.lang3.StringUtils;
 
