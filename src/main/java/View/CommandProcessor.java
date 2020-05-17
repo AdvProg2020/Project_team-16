@@ -3,15 +3,16 @@ package View;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.discount.AlreadyExistCodeException;
-import ModelPackage.System.exeption.discount.NotValidPercentageException;
+import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
+import ModelPackage.Users.Manager;
+import View.PrintModels.DisCodeManagerPM;
 import View.exceptions.InvalidCharacter;
 import View.exceptions.OutOfRangeInputException;
 import controler.AccountController;
 import controler.ManagerController;
 import controler.exceptions.ManagerExist;
 
-import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -176,7 +177,16 @@ public class CommandProcessor {
     }
 
     public static void viewDiscountCode(String command){
-
+        Matcher matcher = getMatcher(command,"view discount code (.*?)");
+        if (matcher.find()){
+            String code = matcher.group(1);
+            try {
+                DisCodeManagerPM pm = managerController.viewDiscountCode(code);
+            } catch (NoSuchADiscountCodeException e) {
+               Printer.printMessage(e.getMessage());
+            }
+        }else
+            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
     }
 
     public static void editDiscountCode(String command){
