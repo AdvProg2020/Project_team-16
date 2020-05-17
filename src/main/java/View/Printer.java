@@ -100,6 +100,7 @@ public class Printer {
                 StringUtils.center("Role",24)
         );
         System.out.println(line);
+
         for (UserMiniPM user : users) {
             System.out.printf("|%s|%s|\n",
                     StringUtils.center(user.getUsername(),24),
@@ -204,6 +205,24 @@ public class Printer {
     }
 
     public void printAllRequests(List<RequestPM> requests){
+        System.out.println(line);
+        System.out.printf("|%s|%s|%s|%s|\n",
+                StringUtils.center("Username",12),
+                StringUtils.center("ID",8),
+                StringUtils.center("Type",12),
+                StringUtils.center("Request",16)
+        );
+        System.out.println(line);
+
+        for (RequestPM request : requests) {
+            System.out.printf("|%s|%s|%s|%s|\n",
+                    StringUtils.center(request.getRequesterUserName(),12),
+                    StringUtils.center(Integer.toString(request.getRequestId()),8),
+                    StringUtils.center(request.getRequestType(),12),
+                    StringUtils.center(request.getRequest(),16)
+            );
+        }
+        System.out.println(line);
 
     }
 
