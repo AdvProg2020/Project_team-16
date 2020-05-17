@@ -7,6 +7,7 @@ import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.editPackage.OffChangeAttributes;
+import ModelPackage.System.exeption.account.SecondManagerByUserException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
@@ -62,7 +63,7 @@ public class ManagerController extends Controller {
         managerManager.deleteUser(username);
     }
 
-    public void createManagerProfile(String[] info){
+    public void createManagerProfile(String[] info) throws SecondManagerByUserException {
         managerManager.createManagerProfile(info);
     }
 

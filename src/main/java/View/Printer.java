@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Printer {
-    private String lineSmall= new String(new char[32]).replace('\0', '-');
-    private String lineMedium = new String(new char[48]).replace('\0', '-');
-    private String lineLarge = new String(new char[80]).replace('\0', '-');
+    private static final String lineSmall= new String(new char[32]).replace('\0', '-');
+    private static final String lineMedium = new String(new char[48]).replace('\0', '-');
+    private static final String lineLarge = new String(new char[80]).replace('\0', '-');
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -29,7 +29,7 @@ public class Printer {
     }
 
 
-    public void productPrinterShort(MiniProductPM product){
+    public static void productPrinterShort(MiniProductPM product){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|%s|\n",
                 StringUtils.center("Name",12),
@@ -77,7 +77,7 @@ public class Printer {
         );
     }
 
-    public void productPrintFull(FullProductPM product){
+    public static void productPrintFull(FullProductPM product){
         productPrinterShort(product.getProduct());
 
         System.out.println(lineMedium);
@@ -97,7 +97,7 @@ public class Printer {
         }
     }
 
-    public void usersPrinter(List<UserMiniPM> users){
+    public static void usersPrinter(List<UserMiniPM> users){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|\n",
                 StringUtils.center("Username",24),
@@ -114,7 +114,7 @@ public class Printer {
         }
     }
 
-    public void userPrinter(UserFullPM user){
+    public static void userPrinter(UserFullPM user){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|%s|\n",
                 StringUtils.center("Username",15),
@@ -146,7 +146,7 @@ public class Printer {
 
     }
 
-    public void printAllProducts(List<MiniProductPM> products){
+    public static void printAllProducts(List<MiniProductPM> products){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|%s|\n",
                 StringUtils.center("Name",12),
@@ -166,7 +166,7 @@ public class Printer {
 
     }
 
-    public void printAllDiscountCodes(List<DiscountMiniPM> discountCodes){
+    public static void printAllDiscountCodes(List<DiscountMiniPM> discountCodes){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|\n",
                 StringUtils.center("Code",24),
@@ -182,7 +182,7 @@ public class Printer {
         }
     }
 
-    public void printDiscountManager(DisCodeManagerPM discountCode){
+    public static void printDiscountManager(DisCodeManagerPM discountCode){
         System.out.println(lineLarge);
         System.out.printf("|%s|%s|%s|%s|%s|\n",
                 StringUtils.center("Code",16),
@@ -218,7 +218,7 @@ public class Printer {
         }
     }
 
-    public void printAllRequests(List<RequestPM> requests){
+    public static void printAllRequests(List<RequestPM> requests){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|%s|\n",
                 StringUtils.center("Username",16),
@@ -237,7 +237,7 @@ public class Printer {
         System.out.println(lineMedium);
     }
 
-    public void printDetailedRequest(RequestPM request){
+    public static void printDetailedRequest(RequestPM request){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|%s|\n",
                 StringUtils.center("Username",16),
@@ -262,7 +262,7 @@ public class Printer {
         System.out.println(lineMedium);
     }
 
-    public void printSaleHistory(List<SellLogPM> sellLogs){
+    public static void printSaleHistory(List<SellLogPM> sellLogs){
         System.out.println(lineLarge);
         System.out.printf("|%s|%s|%s|%s|%s|\n",
                 StringUtils.center("Product",15),
@@ -285,7 +285,7 @@ public class Printer {
         System.out.println(lineLarge);
     }
 
-    public void printCompany(CompanyPM company){
+    public static void printCompany(CompanyPM company){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|%s|\n",
                 StringUtils.center("Name",15),
@@ -303,7 +303,7 @@ public class Printer {
 
     }
 
-    public void viewOff(OffPM off){
+    public static void viewOff(OffPM off){
         System.out.println(lineLarge);
         System.out.printf("|%s|%s|%s|%s|%s|\n",
                 StringUtils.center("ID",15),
@@ -337,7 +337,7 @@ public class Printer {
         System.out.println(lineLarge);
     }
 
-    public void viewOffs(List<MiniOffPM> offs){
+    public static void viewOffs(List<MiniOffPM> offs){
         System.out.println(lineLarge);
         System.out.printf("|%s|%s|%s|%s|%s|\n",
                 StringUtils.center("ID",15),
@@ -360,7 +360,7 @@ public class Printer {
         System.out.println(lineLarge);
     }
 
-    public void viewBalance(long balance){
+    public static void viewBalance(long balance){
         System.out.println(lineSmall);
         System.out.printf("|%s : %s|\n", StringUtils.center("Balance",14), StringUtils.center(Long.toString(balance),13));
         System.out.println(lineSmall);
@@ -378,7 +378,7 @@ public class Printer {
         System.out.println(lineLarge);
     }
 
-    public void viewCart(Cart cart){
+    public static void viewCart(Cart cart){
         System.out.println(lineLarge);
         if (cart.getSubCarts().isEmpty()){
             System.out.printf("|%s|", StringUtils.center("Your Cart is Currently Empty!",46));
@@ -390,7 +390,7 @@ public class Printer {
         System.out.println(lineLarge);
     }
 
-    public void viewProductsInCart(List<InCartPM> cart){
+    public static void viewProductsInCart(List<InCartPM> cart){
         System.out.println(lineLarge);
         System.out.printf("|%s|%s|%s|%s|%s|\n",
                 StringUtils.center("Product",15),
@@ -413,7 +413,7 @@ public class Printer {
         System.out.println(lineLarge);
     }
 
-    public void viewOrderHistory(List<OrderMiniLogPM> orders){
+    public static void viewOrderHistory(List<OrderMiniLogPM> orders){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|%s|\n",
                 StringUtils.center("Date",15),
@@ -432,7 +432,7 @@ public class Printer {
         System.out.println(lineMedium);
     }
 
-    public void viewOrder(OrderLogPM order){
+    public static void viewOrder(OrderLogPM order){
         System.out.println(lineLarge);
         System.out.printf("|%s|%s|%s|%s|%s|\n",
                 StringUtils.center("Date",15),
@@ -457,7 +457,7 @@ public class Printer {
         printAllProducts(order.getProductPMs());
     }
 
-    public void viewUserDiscounts(DisCodeUserPM discountCode){
+    public static void viewUserDiscounts(DisCodeUserPM discountCode){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|%s|\n",
                 StringUtils.center("Code",15),
@@ -488,7 +488,7 @@ public class Printer {
         System.out.println(lineMedium);
     }
 
-    public void comparePrinter(FullProductPM[] products){
+    public static void comparePrinter(FullProductPM[] products){
         System.out.println(lineMedium);
         System.out.printf("          |%s|%s|\n",
                 StringUtils.center(String.format("%s(%d)", products[0].getProduct().getName(), products[0].getProduct().getId()),18),
@@ -524,9 +524,9 @@ public class Printer {
 
 
     }
-    public void printAllCategories(List<CategoryPM> categories){}
+    public static void printAllCategories(List<CategoryPM> categories){}
 
-    public void printComments(List<CommentPM> comments){
+    public static void printComments(List<CommentPM> comments){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|\n",
                 StringUtils.center("Name",24),

@@ -28,8 +28,9 @@ public class CSCLManager {
         return csclManager;
     }
 
-    public void createCompany(Company newCompany) {
+    public int createCompany(Company newCompany) {
         DBManager.save(newCompany);
+        return newCompany.getId();
     }
 
     public Company getCompanyById(int id)

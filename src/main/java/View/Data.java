@@ -38,6 +38,8 @@ public class Data {
         return menuHistory.poll();
     }
 
+    public Menu getLastMenu(){return menuHistory.peek();}
+
     private Data(){
         menuHistory = new LinkedList<>();
         publicFeatures = new ArrayList<>();

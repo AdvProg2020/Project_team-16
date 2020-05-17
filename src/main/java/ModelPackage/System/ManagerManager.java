@@ -26,7 +26,7 @@ public class ManagerManager {
 
     AccountManager accountManager = AccountManager.getInstance();
 
-    public void createManagerProfile(String[] info){
+    public void createManagerProfile(String[] info) throws SecondManagerByUserException {
         checkIfIsTheFirstManager();
         Manager manager = accountManager.createManager(info);
         DBManager.save(manager);
@@ -39,7 +39,7 @@ public class ManagerManager {
         DBManager.delete(user);
     }
 
-    public void checkIfIsTheFirstManager(){
+    public void checkIfIsTheFirstManager() throws SecondManagerByUserException {
         List<Manager> list = DBManager.loadAllData(Manager.class);
         if (!list.isEmpty()){
             throw new SecondManagerByUserException();

@@ -21,6 +21,30 @@ public class Scan {
         return scanner.nextLine();
     }
 
+    public String getPassword(String message){
+        boolean contini = true;
+        String password = "";
+        while (contini) {
+            Printer.printMessage(message);
+            password = scanner.nextLine();
+            int strength = calculatePasswordStrength(password);
+            if (strength == 0) {
+                Printer.printMessage("\npassword must be more than 8 character");
+                continue;
+            } else if (strength < 4) Printer.printMessage("\npassword is weak");
+            else if (strength < 6) Printer.printMessage("\npassword is good");
+            else if (strength < 8) Printer.printMessage("\npassword is strong");
+            else if (strength == 10) Printer.printMessage("\npassword is INSANE! hey buddy it's not a FBI account :)");
+            Printer.printMessage("\nDo you want to use a new one ?");
+            String todo = scanner.nextLine();
+            switch (todo){
+                case "yes" : case "y" : case "Yes" :  break;
+                case "no" : case "n" : case "NO" : case "No" : contini = false;
+            }
+        }
+        return password;
+    }
+
     public String getLinesUntil(String end){
         StringBuilder stringBuilder = new StringBuilder();
         String line ;
@@ -41,4 +65,28 @@ public class Scan {
         }
         return line;
     }
+
+    private static int calculatePasswordStrength(String password){
+        int iPasswordScore = 0;
+
+        if( password.length() < 8 )
+            return 0;
+        else if( password.length() >= 10 )
+            iPasswordScore += 2;
+        else
+            iPasswordScore += 1;
+
+        if( password.matches("(?=.*[0-9]).*") )
+            iPasswordScore += 2;
+        if( password.matches("(?=.*[a-z]).*") )
+            iPasswordScore += 2;
+        if( password.matches("(?=.*[A-Z]).*") )
+            iPasswordScore += 2;
+        if( password.matches("(?=.*[~!@#$%^&*()_-]).*") )
+            iPasswordScore += 2;
+
+        return iPasswordScore;
+    }
+
+
 }

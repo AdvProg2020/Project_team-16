@@ -1,11 +1,119 @@
 package View;
 
+import ModelPackage.System.exeption.account.UserNotAvailableException;
+import controler.AccountController;
+import controler.exceptions.ManagerExist;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommandProcessor {
+    private static AccountController accountController = AccountController.getInstance();
+
     public static void createAccount(String command){
-        
+        Matcher matcher = getMatcher(command,"create account ([M,m]anager|[S,s]eller|[C,c]ustomer) (\\S+)");
+        if (matcher.find()){
+            String type = matcher.group(0);
+            String username = matcher.group(1);
+            if (!isUsernameValid(username)){
+                Printer.printMessage("Username format isn't valid. It must contain only alphabets numbers and underscore");
+                return;
+            }
+            try { accountController.usernameInitialCheck(username);
+            }catch (UserNotAvailableException e) {
+                Printer.printMessage("This Username isn't available");return; }
+            switch (type){
+                case "Manager": case "manager" : createManagerAccount(username);
+                case "Customer" : case "customer" : createCustomerAccount(username);
+                case "Seller" : case "seller" : createSellerAccount(username);
+            }
+        }else
+            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
+    }
+
+    private static void getGeneralInformation(String[] info){
+        Scan scan = Scan.getInstance();
+        info[1] = scan.getPassword("Enter your Password");
+        Printer.printMessage("Enter first name : ");
+        info[2] = scan.getLine();
+        Printer.printMessage("Enter Last name : ");
+        info[3] = scan.getLine();
+        while (true){
+            Printer.printMessage("Enter email : ");
+            info[4] = scan.getLine();
+            if (info[4].matches(("\\S+@\\S+\\.(org|net|ir|com|uk|site)")))break;
+            else Printer.printMessage("Invalid email format!\n");
+        }
+        Printer.printMessage("Enter phone number : ");
+        info[5] = scan.getLine();
+    }
+
+    private static void createSellerAccount(String username){
+        String[] info = new String[8];
+        getGeneralInformation(info);
+        info[0] = username;
+        Printer.printMessage("Enter Company Id(Leave it blank to create one) : ");
+        info[6] = Scan.getInstance().getLine();
+        if (info[6].isEmpty())info[6] = createCompany();
+        while (true){
+            Printer.printMessage("Enter Your Balance(It must br a long number) :");
+            info[7] = Scan.getInstance().getLine();
+            if (!info[7].matches("^-?\\d{1,19}$")) Printer.printMessage("invalid balance! \n");
+            else break;
+        }
+        accountController.createAccount(info,"seller");
+        Data data = Data.getInstance();
+        data.setRole("seller");
+        data.setUsername(username);
+        data.getLastMenu().execute();
+    }
+
+    // TODO: 18/05/2020 company exists Exception should be added
+    private static String createCompany(){
+        String[] info = new String[3];
+        Printer.printMessage("Enter name of company : ");
+        info[0] = Scan.getInstance().getLine();
+        Printer.printMessage("Enter phone number of company : ");
+        info[1] = Scan.getInstance().getLine();
+        Printer.printMessage("Enter category of company : ");
+        info[2] = Scan.getInstance().getLine();
+        return Integer.toString(accountController.createCompany(info));
+    }
+
+    private static void createCustomerAccount(String username){
+        String[] info = new String[7];
+        getGeneralInformation(info);
+        info[0] = username;
+        while (true){
+            Printer.printMessage("Enter Your Balance(It must br a long number) :");
+            info[6] = Scan.getInstance().getLine();
+            if (!info[6].matches("^-?\\d{1,19}$")) Printer.printMessage("invalid balance! \n");
+            else break;
+        }
+        accountController.createAccount(info,"customer");
+        Data data = Data.getInstance();
+        data.setRole("customer");
+        data.setUsername(username);
+        data.getLastMenu().execute();
+    }
+
+    private static void createManagerAccount(String username){
+        String[] info = new String[6];
+        getGeneralInformation(info);
+        info[0] = username;
+        try {
+            accountController.createFirstManager(info);
+        } catch (ManagerExist managerExist) {
+            Printer.printMessage("There is already a manager. You can't create any manager");
+        }
+        Data data = Data.getInstance();
+        data.setRole("manger");
+        data.setUsername(username);
+        data.getLastMenu().execute();
+    }
+
+    private static boolean isUsernameValid(String username){
+        return username.matches("\\w+");
     }
 
     public static void login(String command){
@@ -163,7 +271,7 @@ public class CommandProcessor {
 
     }
 
-    public static void decreaseProductInCart(String command){
+    public static  void decreaseProductInCart(String command){
 
     }
 
@@ -189,7 +297,7 @@ public class CommandProcessor {
     }
     
     public static void showProductsInProductMenu(){
-    
+
     }
 
     public static void updateFilters(){
@@ -197,7 +305,7 @@ public class CommandProcessor {
     }
     
     public static void showAvailableFilters(){
-    
+
     }
 
     public static void filter(String command){
@@ -213,11 +321,11 @@ public class CommandProcessor {
     }
     
     public static void showAvailableSorts(){
-    
+
     }
     
     public static void sort(String command){
-    
+
     }
 
     public static void currentSort(){
@@ -229,23 +337,23 @@ public class CommandProcessor {
     }
     
     public static void attributes(){
-    
+
     }
     
     public static void compare(String command){
-    
+
     }
     
     public static void showAllComments(){
-    
+
     }
     
     public static void addAComment(){
-    
+
     }
     
     public static void addToCart(){
-    
+
     }
 
     public static void selectSeller(String command){
