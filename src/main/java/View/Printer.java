@@ -6,6 +6,7 @@ import ModelPackage.Users.Cart;
 import View.PrintModels.*;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Printer {
@@ -487,7 +488,42 @@ public class Printer {
         System.out.println(lineMedium);
     }
 
-    public void comparePrinter(FullProductPM[] products){}
+    public void comparePrinter(FullProductPM[] products){
+        System.out.println(lineMedium);
+        System.out.printf("          |%s|%s|\n",
+                StringUtils.center(String.format("%s(%d)", products[0].getProduct().getName(), products[0].getProduct().getId()),18),
+                StringUtils.center(String.format("%s(%d)", products[1].getProduct().getName(), products[1].getProduct().getId()),18)
+        );
+        System.out.println(lineMedium);
+
+        System.out.printf("%s|%s|%s|\n",
+                StringUtils.center("Category:",10),
+                StringUtils.center(products[0].getProduct().getCategoryName(),18),
+                StringUtils.center(products[1].getProduct().getCategoryName(),18)
+        );
+        System.out.println(lineMedium);
+
+        System.out.printf("%s|%s|%s|\n",
+                StringUtils.center("Brand:",10),
+                StringUtils.center(products[0].getProduct().getBrand(),18),
+                StringUtils.center(products[1].getProduct().getBrand(),18)
+        );
+        System.out.println(lineMedium);
+
+        System.out.printf("%s|%s|%s|\n",
+                StringUtils.center("Score:",10),
+                StringUtils.center(Double.toString(products[0].getProduct().getScore()),18),
+                StringUtils.center(Double.toString(products[1].getProduct().getScore()),18)
+        );
+        System.out.println(lineMedium);
+
+        System.out.printf("          |%s|\n",
+                StringUtils.center("Features",37)
+        );
+        System.out.println(lineMedium);
+
+
+    }
     public void printAllCategories(List<CategoryPM> categories){}
 
     public void printComments(List<CommentPM> comments){
