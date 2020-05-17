@@ -85,6 +85,13 @@
             <version>9.2.2.Final</version>
         </dependency>
 
+        <!-- http://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.6</version>
+        </dependency>
+
     </dependencies>
 
     <build>
