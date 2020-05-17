@@ -358,11 +358,11 @@ public class Printer {
     public void viewCart(CartPM cartPM){
         System.out.println(lineLarge);
         if (cartPM.getPurchases().isEmpty()){
-            System.out.printf("|%s|", StringUtils.center("Your Cart is Currently Empty!",46));
+            System.out.printf("|%s|\n", StringUtils.center("Your Cart is Currently Empty!",46));
         } else {
             String print = String.format("There Are %d Good in Your Cart.\nTotal Price is %o",
                     cartPM.getPurchases().size(), cartPM.getTotalPrice());
-            System.out.printf("|%s|", StringUtils.center(print,46));
+            System.out.printf("|%s|\n", StringUtils.center(print,46));
         }
         System.out.println(lineLarge);
     }
@@ -402,7 +402,50 @@ public class Printer {
         System.out.println(lineLarge);
     }
 
-    public void viewOrderHistory (List<OrderLogPM> orders){}
+    public void viewOrderHistory(List<OrderMiniLogPM> orders){
+        System.out.println(lineMedium);
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center("Date",15),
+                StringUtils.center("ID",15),
+                StringUtils.center("Price",15)
+        );
+        System.out.println(lineMedium);
+
+        for (OrderMiniLogPM order : orders) {
+            System.out.printf("|%s|%s|%s|\n",
+                    StringUtils.center(order.getDate().toString(),15),
+                    StringUtils.center(Integer.toString(order.getOrderId()),15),
+                    StringUtils.center(Long.toString(order.getPaid()),15)
+            );
+        }
+        System.out.println(lineMedium);
+    }
+
+    public void viewOrder(OrderLogPM order){
+        System.out.println(lineLarge);
+        System.out.printf("|%s|%s|%s|%s|%s|\n",
+                StringUtils.center("Date",15),
+                StringUtils.center("Delivery Status",15),
+                StringUtils.center("Price",15),
+                StringUtils.center("Paid",15),
+                StringUtils.center("Discount",15)
+        );
+        System.out.println(lineLarge);
+
+        System.out.printf("|%s|%s|%s|%s|%s|\n",
+                StringUtils.center(order.getDate().toString(),15),
+                StringUtils.center(order.getDeliveryStatus(),15),
+                StringUtils.center(Long.toString(order.getPrice()),15),
+                StringUtils.center(Long.toString(order.getPaid()),15),
+                StringUtils.center(Integer.toString(order.getDiscount()),15)
+        );
+        System.out.println(lineLarge);
+
+        System.out.printf("|%s|\n", StringUtils.center("Products",78));
+
+        printAllProducts(order.getProductPMs());
+    }
+
     public void viewUserDiscounts(DisCodeUserPM discountCode){}
     public void comparePrinter(FullProductPM[] products){}
     public void printAllCategories(List<CategoryPM> categories){}
