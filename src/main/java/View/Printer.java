@@ -83,7 +83,21 @@ public class Printer {
         }
     }
 
-    public void usersPrinter(List<UserMiniPM> users){}
+    public void usersPrinter(List<UserMiniPM> users){
+        System.out.println(line);
+        System.out.printf("|%s|%s|\n",
+                StringUtils.center("Username",24),
+                StringUtils.center("Role",24)
+        );
+        for (UserMiniPM user : users) {
+            System.out.printf("|%s|%s|\n",
+                    StringUtils.center(user.getUsername(),24),
+                    StringUtils.center(user.getRole(),24)
+            );
+            System.out.println(line);
+        }
+    }
+
     public void userPrinter(UserFullPM user){}
     public void printAllProducts(List<MiniProductPM> products){}
     public void printAllDiscountCodes(List<DiscountMiniPM> discountCode){}
