@@ -25,7 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class SellerContoller extends Controller{
+public class SellerController extends Controller{
 
     public CompanyPM viewCompanyInfo(String sellerUserName) throws UserNotAvailableException {
          Company company = sellerManager.viewCompanyInformation(sellerUserName);
@@ -232,6 +232,7 @@ public class SellerContoller extends Controller{
         return new MiniProductPM(product.getName(),
                 product.getId(),
                 product.getCategory().getName(),
+                product.getStock(),
                 product.getPrices(),
                 product.getCompany(),
                 product.getTotalScore(),

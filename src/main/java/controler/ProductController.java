@@ -1,5 +1,6 @@
 package controler;
 
+import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
@@ -17,7 +18,7 @@ import controler.exceptions.ProductsNotBelongToUniqueCategoryException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductControler extends Controller{
+public class ProductController extends Controller{
 
     public void assignComment(String[] data) throws NoSuchAProductException {
         String userId = data[0];
@@ -164,7 +165,7 @@ public class ProductControler extends Controller{
     private MiniProductPM createMiniProductPM(Product product) {
         return new MiniProductPM(product.getName(), product.getId(),
                 product.getCategory().getName(),
-                product.getPrices(), product.getCompany(),
+                product.getStock(), product.getPrices(), product.getCompany(),
                 product.getTotalScore(), product.getDescription());
     }
 
