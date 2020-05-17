@@ -21,7 +21,7 @@ public class Scan {
         return scanner.nextLine();
     }
 
-    public String getPassword(String message){
+    String getPassword(String message){
         boolean contini = true;
         String password = "";
         while (contini) {
@@ -43,6 +43,30 @@ public class Scan {
             }
         }
         return password;
+    }
+
+    String getADate(){
+        while (true){
+            String date = scanner.nextLine();
+            if (date.matches("\\b\\d{4}-\\d{2}-\\d{2} \\d{1,2}:\\d{2}:\\d{2}\\b"))return date;
+            else Printer.printMessage("invalid date Enter a valid one : ");
+        }
+    }
+
+    String getPercentage(){
+         while (true){
+             String input = scanner.nextLine();
+             if (input.matches("100|[0-9][0-9]"))return input;
+             else Printer.printMessage("Enter a valid Percentage : ");
+         }
+    }
+
+    String getLong(){
+        while (true){
+            String input = scanner.nextLine();
+            if (input.matches("^\\d{1,19}$"))return input;
+            else Printer.printMessage("Enter a valid number : ");
+        }
     }
 
     public String getLinesUntil(String end){

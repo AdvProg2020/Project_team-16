@@ -28,6 +28,11 @@ import java.util.Date;
 import java.util.List;
 
 public class ManagerController extends Controller {
+    private static ManagerController managerController = new ManagerController();
+
+    public static ManagerController getInstance() {
+        return managerController;
+    }
 
     public List<UserMiniPM> manageUsers () {
         List<User> users = DBManager.loadAllData(User.class);
@@ -97,9 +102,9 @@ public class ManagerController extends Controller {
     }
 
     public void createDiscount(String[] data) throws ParseException,
-            NotValidPercentageException, StartingDateIsAfterEndingDate {
-        Date startTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[0]);
-        Date endTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[1]);
+            NotValidPercentageException, StartingDateIsAfterEndingDate, AlreadyExistCodeException {
+        Date startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(data[0]);
+        Date endTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(data[1]);
         int offPercentage = Integer.parseInt(data[2]);
         long maxDiscount = Long.parseLong(data[3]);
         discountManager.createDiscountCode(data[4],startTime, endTime, offPercentage, maxDiscount);

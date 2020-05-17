@@ -2,14 +2,22 @@ package View;
 
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
+import ModelPackage.System.exeption.discount.AlreadyExistCodeException;
+import ModelPackage.System.exeption.discount.NotValidPercentageException;
+import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
+import View.exceptions.InvalidCharacter;
+import View.exceptions.OutOfRangeInputException;
 import controler.AccountController;
+import controler.ManagerController;
 import controler.exceptions.ManagerExist;
 
+import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommandProcessor {
     private static AccountController accountController = AccountController.getInstance();
+    private static ManagerController managerController = ManagerController.getInstance();
 
     public static void createAccount(String command){
         Matcher matcher = getMatcher(command,"create account ([M,m]anager|[S,s]eller|[C,c]ustomer) (\\S+)");
@@ -85,12 +93,8 @@ public class CommandProcessor {
         String[] info = new String[7];
         getGeneralInformation(info);
         info[0] = username;
-        while (true){
-            Printer.printMessage("Enter Your Balance(It must br a long number) :");
-            info[6] = Scan.getInstance().getLine();
-            if (!info[6].matches("^-?\\d{1,19}$")) Printer.printMessage("invalid balance! \n");
-            else break;
-        }
+        Printer.printMessage("Enter Your Balance(It must br a long number) :");
+        info[6] = Scan.getInstance().getLong();
         accountController.createAccount(info,"customer");
         Data data = Data.getInstance();
         data.setRole("customer");
@@ -141,8 +145,34 @@ public class CommandProcessor {
         }
     }
 
-    public static void createDiscountCode(String command){
-
+    public static void createDiscountCode(){
+        String[] info = new String[5];
+        Printer.printMessage("Enter a Code for your Discount : ");
+        try {
+            info[0] = Scan.getInstance().getFormalLines(64);
+        } catch (InvalidCharacter invalidCharacter) {
+            Printer.printMessage("Your code only can have A-Z a-z 1-9 _ \n" +
+                    "going back to menu ...");
+        } catch (OutOfRangeInputException e) {
+            Printer.printMessage("Your code only can have 64 characters \n" +
+                    "going back to menu ..."); }
+        Printer.printMessage("Enter start date in format of \"dd-MM-yyyy HH:mm:ss\" : ");
+        info[1] = Scan.getInstance().getADate();
+        Printer.printMessage("Enter end date in format of \"dd-MM-yyyy HH:mm:ss\" : ");
+        info[2] = Scan.getInstance().getADate();
+        Printer.printMessage("Enter Percentage : ");
+        info[3] = Scan.getInstance().getPercentage();
+        Printer.printMessage("Enter Maximum of discount : ");
+        info[4] = Scan.getInstance().getLong();
+        try {
+            managerController.createDiscount(info);
+        } catch (StartingDateIsAfterEndingDate startingDateIsAfterEndingDate) {
+            Printer.printMessage(startingDateIsAfterEndingDate.getMessage());
+        } catch (AlreadyExistCodeException e) {
+            Printer.printMessage("This code Already Exists. Going to menu...");
+        }catch (Exception e){
+            Printer.printMessage("A Problem happened. Try again later ...");
+        }
     }
 
     public static void viewDiscountCode(String command){
