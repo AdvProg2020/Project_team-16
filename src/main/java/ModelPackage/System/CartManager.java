@@ -70,7 +70,7 @@ public class CartManager {
         throw new NoSuchAProductInCart(productId);
     }
 
-    public void deleteProductFromCart(Cart cart, int productId, String sellerId) throws NoSuchAProductInCart {
+    public void deleteProductFromCart(Cart cart, int productId) throws NoSuchAProductInCart {
         SubCart subCart = getSubCartByProductId(cart, productId);
         cart.getSubCarts().remove(subCart);
         DBManager.delete(subCart);
