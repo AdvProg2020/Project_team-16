@@ -98,7 +98,28 @@ public class Printer {
         }
     }
 
-    public void userPrinter(UserFullPM user){}
+    public void userPrinter(UserFullPM user){
+        System.out.println(line);
+        System.out.printf("|%s|%s|%s|\n|%s|%s|%s|\n",
+                StringUtils.center("Username",16),
+                StringUtils.center("First Name",16),
+                StringUtils.center("Last Name",16),
+                StringUtils.center("Email",16),
+                StringUtils.center("Phone Number",16),
+                StringUtils.center("Role",16)
+        );
+        System.out.println(line);
+        System.out.printf("|%s|%s|%s|\n|%s|%s|%s|\n",
+                StringUtils.center(user.getUsername(),16),
+                StringUtils.center(user.getFirstName(),16),
+                StringUtils.center(user.getLastName(),16),
+                StringUtils.center(user.getEmail(),16),
+                StringUtils.center(user.getPhoneNumber(),16),
+                StringUtils.center(user.getRole(),16)
+        );
+
+    }
+
     public void printAllProducts(List<MiniProductPM> products){}
     public void printAllDiscountCodes(List<DiscountMiniPM> discountCode){}
     public void printDiscountManager(DisCodeManagerPM discountCode){}
