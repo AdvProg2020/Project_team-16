@@ -245,24 +245,6 @@ public class Printer {
 
     public void printAllCategories(List<CategoryPM> categories){}
 
-    public void printCompany(CompanyPM company){
-        System.out.println(lineMedium);
-        System.out.printf("|%s|%s|%s|\n",
-                StringUtils.center("Name",16),
-                StringUtils.center("Phone Number",16),
-                StringUtils.center("Group",16)
-        );
-        System.out.println(lineMedium);
-
-        System.out.printf("|%s|%s|%s|\n",
-                StringUtils.center(company.getName(),16),
-                StringUtils.center(company.getPhone(),16),
-                StringUtils.center(company.getGroup(),16)
-        );
-        System.out.println(lineMedium);
-
-    }
-
     public void printSaleHistory(List<SellLogPM> sellLogs){
         System.out.println(lineLarge);
         System.out.printf("|%s|%s|%s|%s|%s|\n",
@@ -284,6 +266,24 @@ public class Printer {
             );
         }
         System.out.println(lineLarge);
+    }
+
+    public void printCompany(CompanyPM company){
+        System.out.println(lineMedium);
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center("Name",16),
+                StringUtils.center("Phone Number",16),
+                StringUtils.center("Group",16)
+        );
+        System.out.println(lineMedium);
+
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center(company.getName(),16),
+                StringUtils.center(company.getPhone(),16),
+                StringUtils.center(company.getGroup(),16)
+        );
+        System.out.println(lineMedium);
+
     }
 
     public void viewOffs(List<OffPM> offs){}
