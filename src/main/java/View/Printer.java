@@ -28,13 +28,13 @@ public class Printer {
     public void productPrinterShort(MiniProductPM product){
         System.out.println(line);
         System.out.printf("|%s|%s|%s|\n",
-                StringUtils.center("Name",20),
-                StringUtils.center("ID", 8),
-                StringUtils.center("Category",16)
+                StringUtils.center("Name",12),
+                StringUtils.center("ID", 12),
+                StringUtils.center("Category",12)
         );
-
         System.out.println(line);
-        System.out.printf("|%s|%s|%s|\n",
+
+        System.out.printf("|%s|%s|%s|\n\n",
                 StringUtils.center(product.getName(), 20),
                 StringUtils.center(Integer.toString(product.getId()), 8),
                 StringUtils.center(product.getCategoryName(), 16)
@@ -51,7 +51,8 @@ public class Printer {
         System.out.println("\b\n");
 
         System.out.println(line);
-        System.out.printf("|%s|%s|%s|\n",
+
+        System.out.printf("\n|%s|%s|%s|\n",
                 StringUtils.center("Brand",20),
                 StringUtils.center("Score", 8),
                 StringUtils.center("About",16)
