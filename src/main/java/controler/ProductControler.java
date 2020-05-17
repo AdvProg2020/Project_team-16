@@ -24,9 +24,9 @@ public class ProductControler extends Controller{
         String commentTitle = data[1];
         String commentText = data[2];
         int productId = Integer.parseInt(data[3]);
-        // TODO : check if user bought this product
         Comment comment = new Comment(userId, commentTitle, commentText,
-                CommentStatus.NOT_VERIFIED, false);
+                CommentStatus.NOT_VERIFIED,
+                csclManager.boughtThisProduct(productId, userId));
         comment.setProduct(productManager.findProductById(productId));
         csclManager.createComment(comment);
     }
@@ -103,7 +103,7 @@ public class ProductControler extends Controller{
             toSortProducts.add(productManager.findProductById(Integer.parseInt(data[i])));
         }
         SortType sortType = findSortType(data[0]);
-        ArrayList<Product> sortedProducts = sortManager.sort(toSortProducts, sortType);
+        List<Product> sortedProducts = sortManager.sort(toSortProducts, sortType);
         return showSortedProducts(sortedProducts);
     }
 
@@ -111,7 +111,7 @@ public class ProductControler extends Controller{
         sortManager.sort(sortManager.getList(), SortType.VIEW);
     }
 
-    private List<MiniProductPM> showSortedProducts(ArrayList<Product> products) {
+    private List<MiniProductPM> showSortedProducts(List<Product> products) {
         List<MiniProductPM> miniProductPMs = new ArrayList<>();
         for (Product product : products) {
             miniProductPMs.add(createMiniProductPM(product));

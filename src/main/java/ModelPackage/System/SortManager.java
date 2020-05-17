@@ -6,11 +6,12 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 @Data
 public class SortManager {
-    private ArrayList<Product> list;
-    private ArrayList<User> usersList;
+    private List<Product> list;
+    private List<User> usersList;
     private static SortManager sortManager = new SortManager();
 
     public static SortManager getInstance() {
@@ -21,7 +22,7 @@ public class SortManager {
         this.list = new ArrayList<>();
     }
 
-    public ArrayList<Product> sort(ArrayList<Product> toSortList, SortType sortType) {
+    public List<Product> sort(List<Product> toSortList, SortType sortType) {
         list = toSortList;
         switch (sortType) {
             case NAME:
@@ -49,7 +50,7 @@ public class SortManager {
         return list;
     }
 
-    public ArrayList<User> sortUser(ArrayList<User> toSortList) {
+    public List<User> sortUser(List<User> toSortList) {
         usersList = toSortList;
         usersList.sort(new Comparator<User>() {
             @Override
@@ -60,7 +61,7 @@ public class SortManager {
         return usersList;
     }
 
-    private void sortByName(ArrayList<Product> products) {
+    private void sortByName(List<Product> products) {
         products.sort(new Comparator<Product>() {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {
@@ -69,7 +70,7 @@ public class SortManager {
         });
     }
 
-    private void sortByView(ArrayList<Product> products) {
+    private void sortByView(List<Product> products) {
         products.sort(new Comparator<Product>() {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {
@@ -78,7 +79,7 @@ public class SortManager {
         });
     }
 
-    private void sortByBoughtAmount(ArrayList<Product> products) {
+    private void sortByBoughtAmount(List<Product> products) {
         products.sort(new Comparator<Product>() {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {
@@ -87,7 +88,7 @@ public class SortManager {
         });
     }
 
-    private void sortByTime(ArrayList<Product> products) {
+    private void sortByTime(List<Product> products) {
         products.sort(new Comparator<Product>() {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {
@@ -96,7 +97,7 @@ public class SortManager {
         });
     }
 
-    private void sortByMorePrice(ArrayList<Product> products) {
+    private void sortByMorePrice(List<Product> products) {
         products.sort(new Comparator<Product>() {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {
@@ -105,7 +106,7 @@ public class SortManager {
         });
     }
 
-    private void sortByLessPrice(ArrayList<Product> products) {
+    private void sortByLessPrice(List<Product> products) {
         products.sort(new Comparator<Product>() {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {
@@ -114,7 +115,7 @@ public class SortManager {
         });
     }
 
-    private void sortByScore(ArrayList<Product> products) {
+    private void sortByScore(List<Product> products) {
         products.sort(new Comparator<Product>() {
             @Override
             public int compare(Product firstProduct, Product secondProduct) {

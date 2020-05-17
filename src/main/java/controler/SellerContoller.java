@@ -6,10 +6,9 @@ import ModelPackage.Off.Off;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
-import ModelPackage.System.CategoryManager;
+import ModelPackage.System.SortType;
 import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
-import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
@@ -51,8 +50,8 @@ public class SellerContoller extends Controller{
     }
 
     public List<MiniProductPM> manageProducts(String sellerUserName) throws UserNotAvailableException {
-         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
-         List<Product> sellerProducts = seller.getProducts();
+         List<Product> sellerProducts = sellerManager.viewProducts(sellerUserName);
+         sellerProducts = sortManager.sort(sellerProducts, SortType.VIEW);
          ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
          for (Product sellerProduct : sellerProducts) {
              miniProductPMs.add(createMiniProductPM(sellerProduct));
@@ -67,6 +66,7 @@ public class SellerContoller extends Controller{
         for (Seller seller : product.getAllSellers()) {
             allBuyers.addAll(csclManager.allBuyers(productId, seller));
         }
+        allBuyers = sortManager.sortUser(allBuyers);
         for (User buyer : allBuyers) {
             userMiniPMs.add(createUserMiniPM(buyer));
         }

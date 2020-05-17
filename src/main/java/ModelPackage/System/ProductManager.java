@@ -159,9 +159,9 @@ public class ProductManager {
     public Seller showSellerOfProduct(int productId, String sellerUserName)
             throws NoSuchAProductException, ProductNotHaveSellerException {
         Product product = findProductById(productId);
-        for (SellerIntegerMap price : product.getPrices()) {
-            if (sellerUserName.equals(price.getSeller().getUsername()))
-                return price.getSeller();
+        for (Seller seller : product.getAllSellers()) {
+            if (sellerUserName.equals(seller.getUsername()))
+                return seller;
         }
         throw new ProductNotHaveSellerException(productId, sellerUserName);
     }
