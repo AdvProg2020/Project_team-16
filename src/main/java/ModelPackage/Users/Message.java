@@ -26,4 +26,8 @@ public class Message {
 
     @Column(name = "IS_READ")
     boolean isRead;
+
+    public boolean getIsRead(){
+        return isRead;
+    }
 }
