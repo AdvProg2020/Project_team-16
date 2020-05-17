@@ -379,7 +379,29 @@ public class Printer {
         System.out.println(lineLarge);
     }
 
-    public void viewProductsInCart(InCartPM cart){}
+    public void viewProductsInCart(List<InCartPM> cart){
+        System.out.println(lineLarge);
+        System.out.printf("|%s|%s|%s|%s|%s|\n",
+                StringUtils.center("Product",15),
+                StringUtils.center("Seller",15),
+                StringUtils.center("Price",15),
+                StringUtils.center("Amount",15),
+                StringUtils.center("Off Price",15)
+        );
+        System.out.println(lineLarge);
+
+        for (InCartPM inCartPM : cart) {
+            System.out.printf("|%s|%s|%s|%s|%s|\n",
+                    StringUtils.center(inCartPM.getProduct().getName(),15),
+                    StringUtils.center(inCartPM.getSellerId(),15),
+                    StringUtils.center(Integer.toString(inCartPM.getPrice()),15),
+                    StringUtils.center(Integer.toString(inCartPM.getAmount()),15),
+                    StringUtils.center(Integer.toString(inCartPM.getOffPrice()),15)
+            );
+        }
+        System.out.println(lineLarge);
+    }
+
     public void viewOrderHistory (List<OrderLogPM> orders){}
     public void viewUserDiscounts(DisCodeUserPM discountCode){}
     public void comparePrinter(FullProductPM[] products){}
