@@ -2,6 +2,7 @@ package View;
 
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Maps.UserIntegerMap;
+import ModelPackage.Users.Cart;
 import View.PrintModels.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -253,21 +254,21 @@ public class Printer {
     public void printSaleHistory(List<SellLogPM> sellLogs){
         System.out.println(lineLarge);
         System.out.printf("|%s|%s|%s|%s|%s|\n",
-                StringUtils.center("Product",16),
-                StringUtils.center("Price",16),
+                StringUtils.center("Product",15),
+                StringUtils.center("Price",15),
                 StringUtils.center("Discount",10),
-                StringUtils.center("Buyer",16),
-                StringUtils.center("Delivery Status",22)
+                StringUtils.center("Buyer",15),
+                StringUtils.center("Delivery Status",20)
         );
         System.out.println(lineLarge);
 
         for (SellLogPM sellLog : sellLogs) {
             System.out.printf("|%s|%s|%s|%s|%s|\n",
-                    StringUtils.center(Integer.toString(sellLog.getProductId()),16),
-                    StringUtils.center(Integer.toString(sellLog.getMoneyGotten()),16),
+                    StringUtils.center(Integer.toString(sellLog.getProductId()),15),
+                    StringUtils.center(Integer.toString(sellLog.getMoneyGotten()),15),
                     StringUtils.center(Integer.toString(sellLog.getDiscount()),10),
-                    StringUtils.center(sellLog.getBuyer(),16),
-                    StringUtils.center(sellLog.getDeliveryStatus().toString(),22)
+                    StringUtils.center(sellLog.getBuyer(),15),
+                    StringUtils.center(sellLog.getDeliveryStatus().toString(),20)
             );
         }
         System.out.println(lineLarge);
@@ -276,16 +277,16 @@ public class Printer {
     public void printCompany(CompanyPM company){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|%s|\n",
-                StringUtils.center("Name",16),
-                StringUtils.center("Phone Number",16),
-                StringUtils.center("Group",16)
+                StringUtils.center("Name",15),
+                StringUtils.center("Phone Number",15),
+                StringUtils.center("Group",15)
         );
         System.out.println(lineMedium);
 
         System.out.printf("|%s|%s|%s|\n",
-                StringUtils.center(company.getName(),16),
-                StringUtils.center(company.getPhone(),16),
-                StringUtils.center(company.getGroup(),16)
+                StringUtils.center(company.getName(),15),
+                StringUtils.center(company.getPhone(),15),
+                StringUtils.center(company.getGroup(),15)
         );
         System.out.println(lineMedium);
 
@@ -294,32 +295,32 @@ public class Printer {
     public void viewOff(OffPM off){
         System.out.println(lineLarge);
         System.out.printf("|%s|%s|%s|%s|%s|\n",
-                StringUtils.center("ID",16),
-                StringUtils.center("Seller",16),
-                StringUtils.center("Start Date",16),
-                StringUtils.center("End Date",16),
-                StringUtils.center("Off Percentage",16)
+                StringUtils.center("ID",15),
+                StringUtils.center("Seller",15),
+                StringUtils.center("Start Date",15),
+                StringUtils.center("End Date",15),
+                StringUtils.center("Off Percentage",15)
         );
         System.out.println(lineLarge);
 
         System.out.printf("|%s|%s|%s|%s|%s|\n",
-                StringUtils.center(Integer.toString(off.getOffId()),16),
-                StringUtils.center(off.getSeller(),16),
-                StringUtils.center("Start Date",16),
-                StringUtils.center("End Date",16),
-                StringUtils.center("Off Percentage",16)
+                StringUtils.center(Integer.toString(off.getOffId()),15),
+                StringUtils.center(off.getSeller(),15),
+                StringUtils.center("Start Date",15),
+                StringUtils.center("End Date",15),
+                StringUtils.center("Off Percentage",15)
         );
         System.out.println(lineLarge);
-        System.out.printf("|%s|\n", StringUtils.center("Products",80));
+        System.out.printf("|%s|\n", StringUtils.center("Products",78));
         System.out.println(lineLarge);
 
         int count = 0;
         for (Integer productId : off.getProductIds()) {
-            if (count == 8){
+            if (count == 5){
                 System.out.println(lineLarge);
                 count = 0;
             }
-            System.out.printf("|%s|", StringUtils.center("Products",10));
+            System.out.printf("|%s|", StringUtils.center(Integer.toString(productId),14));
             count++;
         }
         System.out.println(lineLarge);
@@ -328,28 +329,56 @@ public class Printer {
     public void viewOffs(List<MiniOffPM> offs){
         System.out.println(lineLarge);
         System.out.printf("|%s|%s|%s|%s|%s|\n",
-                StringUtils.center("ID",16),
-                StringUtils.center("Seller",16),
-                StringUtils.center("Start Date",16),
-                StringUtils.center("End Date",16),
-                StringUtils.center("Off Percentage",16)
+                StringUtils.center("ID",15),
+                StringUtils.center("Seller",15),
+                StringUtils.center("Start Date",15),
+                StringUtils.center("End Date",15),
+                StringUtils.center("Off Percentage",15)
         );
         System.out.println(lineLarge);
 
         for (MiniOffPM off : offs) {
             System.out.printf("|%s|%s|%s|%s|%s|\n",
-                    StringUtils.center(Integer.toString(off.getOffId()),16),
-                    StringUtils.center(off.getSeller(),16),
-                    StringUtils.center("Start Date",16),
-                    StringUtils.center("End Date",16),
-                    StringUtils.center("Off Percentage",16)
+                    StringUtils.center(Integer.toString(off.getOffId()),15),
+                    StringUtils.center(off.getSeller(),15),
+                    StringUtils.center("Start Date",15),
+                    StringUtils.center("End Date",15),
+                    StringUtils.center("Off Percentage",15)
             );
         }
         System.out.println(lineLarge);
     }
 
-    public void viewBalance(long balance){}
-    public void viewCart(CartPM cartPM){}
+    public void viewBalance(long balance){
+        System.out.println(lineSmall);
+        System.out.printf("|%s : %s|\n", StringUtils.center("Balance",14), StringUtils.center(Long.toString(balance),13));
+        System.out.println(lineSmall);
+    }
+
+    public void viewCart(CartPM cartPM){
+        System.out.println(lineLarge);
+        if (cartPM.getPurchases().isEmpty()){
+            System.out.printf("|%s|", StringUtils.center("Your Cart is Currently Empty!",46));
+        } else {
+            String print = String.format("There Are %d Good in Your Cart.\nTotal Price is %o",
+                    cartPM.getPurchases().size(), cartPM.getTotalPrice());
+            System.out.printf("|%s|", StringUtils.center(print,46));
+        }
+        System.out.println(lineLarge);
+    }
+
+    public void viewCart(Cart cart){
+        System.out.println(lineLarge);
+        if (cart.getSubCarts().isEmpty()){
+            System.out.printf("|%s|", StringUtils.center("Your Cart is Currently Empty!",46));
+        } else {
+            String print = String.format("There Are %d Good in Your Cart.\nTotal Price is %o",
+                    cart.getSubCarts().size(), cart.getTotalPrice());
+            System.out.printf("|%s|", StringUtils.center(print,46));
+        }
+        System.out.println(lineLarge);
+    }
+
     public void viewProductsInCart(InCartPM cart){}
     public void viewOrderHistory (List<OrderLogPM> orders){}
     public void viewUserDiscounts(DisCodeUserPM discountCode){}

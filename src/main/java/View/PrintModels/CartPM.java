@@ -15,18 +15,4 @@ public class CartPM {
         this.totalPrice = totalPrice;
         this.purchases = purchases;
     }
-
-    public void print(CartPM cartPM){
-        if (purchases.isEmpty()){
-            System.out.println("Your Cart is Currently Empty!");
-        }
-        System.out.println(String.format("There Are %d Good in Your Cart.\nTotal Price is %o", purchases.size(), totalPrice));
-    }
-
-    public void print(Cart cart){
-        if (cart.getSubCarts().isEmpty()){
-            System.out.println("Your Cart is Currently Empty!");
-        }
-        System.out.println(String.format("There Are %d Good in Your Cart.\nTotal Price is %o", cart.getSubCarts().size(), cart.getTotalPrice()));
-    }
 }
