@@ -41,15 +41,22 @@ public class Printer {
         );
 
         System.out.println(line);
-        System.out.println("| Sellers : ");
+        System.out.printf("|%s|%s|%s|\n",
+                StringUtils.center("Seller", 16),
+                StringUtils.center("Price", 16),
+                StringUtils.center("Stock", 16)
+        );
+        System.out.println(line);
+
+        int iterator = 0;
         for (SellerIntegerMap seller : product.getSellers()) {
-            System.out.printf("%s In Stock : %d |",
-                    seller.getSeller().getUsername(),
-                    seller.getInteger()
+            int price = product.getPrices().get(iterator++).getInteger();
+            System.out.printf("|%s|%s|%s|\n",
+                    StringUtils.center(seller.getSeller().getUsername(), 16),
+                    StringUtils.center(Integer.toString(price), 16),
+                    StringUtils.center(Integer.toString(seller.getInteger()), 16)
             );
         }
-        System.out.println("\b\n");
-
         System.out.println(line);
 
         System.out.printf("\n|%s|%s|%s|\n",
