@@ -1,5 +1,6 @@
 package View;
 
+import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import controler.AccountController;
 import controler.exceptions.ManagerExist;
@@ -117,7 +118,27 @@ public class CommandProcessor {
     }
 
     public static void login(String command){
-
+        Matcher matcher = getMatcher(command,"login (\\S+)");
+        if (matcher.find()){
+            String username = matcher.group(1);
+            if (isUsernameValid(username)){
+               String password = Scan.getInstance().getPassword("Enter Your Password : ");
+                try {
+                    String role = accountController.login(username,password);
+                    Data.getInstance().setUsername(username);
+                    Data.getInstance().setRole(role);
+                } catch (NotVerifiedSeller notVerifiedSeller) {
+                    Printer.printMessage("your Account Isn't Verified Yet");
+                } catch (UserNotAvailableException e) {
+                    Printer.printMessage("This username isn't valid");
+                }
+            }else {
+                Printer.printMessage("Username format isn't valid. It must contain only alphabets numbers and underscore");
+            }
+        }
+        else {
+            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
+        }
     }
 
     public static void createDiscountCode(String command){
