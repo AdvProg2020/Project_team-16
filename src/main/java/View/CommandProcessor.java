@@ -815,9 +815,17 @@ public class CommandProcessor {
     }
 
     public static void showProductsInCart(){
-
+        try {
+            List<InCartPM> pms = customerController.showProducts(data.getUsername());
+            if (!pms.isEmpty()){
+                Printer.viewProductsInCart(pms);
+            }else {
+                Printer.printMessage("No product in cart to show");
+            }
+        } catch (UserNotAvailableException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
-
 
     public static void increaseProductInCart(String command){
 
