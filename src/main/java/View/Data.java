@@ -1,13 +1,12 @@
 package View;
 
-import ModelPackage.System.SortType;
 import View.Menu.Menu;
 
 import java.util.*;
 
 @lombok.Data
 public class Data {
-    private static Data data;
+    private static Data data = new Data();
     public static Data getInstance() {
         return data;
     }
@@ -19,7 +18,8 @@ public class Data {
     private Queue<Menu> menuHistory;
 
     /* Filter And Sort Options */
-    private SortAndFilterPackage sortAndFilters;
+    private FilterPackage filters;
+    private SortPackage sorts;
     private boolean isOnOffMode;
     private List<String> publicFeatures;
     private List<String> specialFeatures;
@@ -35,6 +35,8 @@ public class Data {
     public Menu getLastMenu(){return menuHistory.peek();}
 
     private Data(){
+        filters = new FilterPackage();
+        sorts = new SortPackage();
         menuHistory = new LinkedList<>();
         publicFeatures = new ArrayList<>();
         specialFeatures = new ArrayList<>();
@@ -42,5 +44,10 @@ public class Data {
 
     public void logout(){
 
+    }
+
+    public void reset(){
+        sorts.reset();
+        filters.reset();
     }
 }
