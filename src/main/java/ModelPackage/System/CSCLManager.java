@@ -10,6 +10,8 @@ import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
+import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
+import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
 import lombok.Data;
@@ -158,6 +160,13 @@ public class CSCLManager {
             }
         }
         return toReturn;
+    }
+
+    public void checkIfIsASellerOFProduct(Product product,String username) throws YouAreNotASellerException {
+        for (Seller seller : product.getAllSellers()) {
+            if (seller.getUsername().equals(username)) return;
+        }
+        throw new YouAreNotASellerException();
     }
 
     public boolean boughtThisProduct(int productId, String probableBuyerId) throws NoSuchAProductException {

@@ -15,6 +15,7 @@ import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
+import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
@@ -69,10 +70,11 @@ public class SellerController extends Controller{
          return miniProductPMs;
     }
 
-    public List<UserMiniPM> viewAllBuyersOfProduct(int productId) throws NoSuchAProductException {
+    public List<UserMiniPM> viewAllBuyersOfProduct(int productId,String viwer) throws NoSuchAProductException, YouAreNotASellerException {
         List<UserMiniPM> userMiniPMs = new ArrayList<>();
         List<User> allBuyers = new ArrayList<>();
         Product product = productManager.findProductById(productId);
+        csclManager.checkIfIsASellerOFProduct(product,viwer);
         for (Seller seller : product.getAllSellers()) {
             allBuyers.addAll(csclManager.allBuyers(productId, seller));
         }

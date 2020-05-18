@@ -10,6 +10,7 @@ import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
+import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.AlreadyASeller;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
@@ -672,7 +673,20 @@ public class CommandProcessor {
     }
 
     public static void viewBuyersOfThisProduct(String command){
-
+        Matcher matcher = getMatcher(command,"view buyers ()\\d+{1,9}");
+        if (matcher.find()){
+            int id = Integer.parseInt(matcher.group(1));
+            try {
+                List<UserMiniPM> pms = sellerController.viewAllBuyersOfProduct(id, data.getUsername());
+                if (!pms.isEmpty()){
+                    Printer.usersPrinter(pms);
+                }else {
+                    Printer.printMessage("There is no seller to show");
+                }
+            } catch (NoSuchAProductException | YouAreNotASellerException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
     }
 
     public static void viewOff(String command){
