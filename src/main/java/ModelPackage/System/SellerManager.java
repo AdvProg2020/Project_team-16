@@ -22,21 +22,29 @@ public class SellerManager {
         return sellerManager;
     }
 
-    private AccountManager accountManager = AccountManager.getInstance();
     private ProductManager productManager = ProductManager.getInstance();
 
     public Company viewCompanyInformation(String username) throws UserNotAvailableException {
-        Seller seller = (Seller) accountManager.getUserByUsername(username);
+        Seller seller = DBManager.load(Seller.class,username);
+        if (seller == null) {
+            throw new UserNotAvailableException();
+        }
         return seller.getCompany();
     }
 
     public List<SellLog> viewSalesHistory(String username) throws UserNotAvailableException {
-        Seller seller = (Seller) accountManager.getUserByUsername(username);
+        Seller seller = DBManager.load(Seller.class,username);
+        if (seller == null) {
+            throw new UserNotAvailableException();
+        }
         return seller.getSellLogs();
     }
 
     public List<Product> viewProducts(String username) throws UserNotAvailableException {
-        Seller seller = (Seller) accountManager.getUserByUsername(username);
+        Seller seller = DBManager.load(Seller.class,username);
+        if (seller == null) {
+            throw new UserNotAvailableException();
+        }
         return seller.getProducts();
     }
 

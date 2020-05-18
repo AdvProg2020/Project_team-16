@@ -7,6 +7,7 @@ import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.System.SortType;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.editPackage.OffChangeAttributes;
@@ -25,6 +26,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class SellerController extends Controller{
+    private static SellerController sellerController = new SellerController();
+
+    public static SellerController getInstance() {
+        return sellerController;
+    }
 
     public CompanyPM viewCompanyInfo(String sellerUserName) throws UserNotAvailableException {
          Company company = sellerManager.viewCompanyInformation(sellerUserName);
@@ -124,7 +130,10 @@ public class SellerController extends Controller{
             UserNotAvailableException {
         int offId = Integer.parseInt(data[0]);
         String userName = data[1];
-        Seller seller = (Seller) accountManager.getUserByUsername(userName);
+        Seller seller = DBManager.load(Seller.class,userName);
+        if (seller == null) {
+            throw new UserNotAvailableException();
+        }
         Date start = editAttributes.getStart();
         Date end = editAttributes.getEnd();
         int productIdToRemove = editAttributes.getProductIdToRemove();

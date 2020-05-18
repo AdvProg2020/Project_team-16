@@ -18,6 +18,7 @@ import View.exceptions.InvalidCharacter;
 import View.exceptions.OutOfRangeInputException;
 import controler.AccountController;
 import controler.ManagerController;
+import controler.SellerController;
 import controler.exceptions.ManagerExist;
 
 import java.text.ParseException;
@@ -30,6 +31,7 @@ import java.util.regex.Pattern;
 public class CommandProcessor {
     private static AccountController accountController = AccountController.getInstance();
     private static ManagerController managerController = ManagerController.getInstance();
+    private static SellerController sellerController = SellerController.getInstance();
 
     public static void createAccount(String command){
         Matcher matcher = getMatcher(command,"create account ([M,m]anager|[S,s]eller|[C,c]ustomer) (\\S+)");
@@ -512,7 +514,12 @@ public class CommandProcessor {
     }
 
     public static void viewCompanyInformation(){
-
+        try {
+            CompanyPM pm = sellerController.viewCompanyInfo(Data.getInstance().getUsername());
+            Printer.printCompany(pm);
+        } catch (UserNotAvailableException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
 
     public static void viewSalesHistory(){
