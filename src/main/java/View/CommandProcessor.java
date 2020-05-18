@@ -3,8 +3,9 @@ package View;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
+import ModelPackage.System.exeption.category.NoSuchACategoryException;
+import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.discount.*;
-import ModelPackage.Users.Manager;
 import View.PrintModels.DisCodeManagerPM;
 import View.PrintModels.DiscountMiniPM;
 import View.exceptions.InvalidCharacter;
@@ -42,7 +43,7 @@ public class CommandProcessor {
                 case "Seller" : case "seller" : createSellerAccount(username);
             }
         }else
-            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
+            Printer.printInvalidCommand();
     }
 
     private static void getGeneralInformation(String[] info){
@@ -146,7 +147,7 @@ public class CommandProcessor {
             }
         }
         else {
-            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
+            Printer.printInvalidCommand();
         }
     }
 
@@ -190,7 +191,7 @@ public class CommandProcessor {
                Printer.printMessage(e.getMessage());
             }
         }else
-            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
+            Printer.printInvalidCommand();
     }
 
     public static void editDiscountCode(String command){
@@ -236,7 +237,7 @@ public class CommandProcessor {
                 Printer.printMessage("Something went wrong. Try later...");
             }
         }else
-            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
+            Printer.printInvalidCommand();
     }
 
     public static void removeDiscountCode(String command){
@@ -250,7 +251,7 @@ public class CommandProcessor {
             }
         }
         else
-            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
+            Printer.printInvalidCommand();
     }
 
     public static void viewDiscountCodes(){
@@ -275,7 +276,7 @@ public class CommandProcessor {
                 Printer.printMessage(e.getMessage());
             }
         }else
-            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
+            Printer.printInvalidCommand();
     }
 
     public static void removeUserFromDiscountCode(String command){
@@ -289,11 +290,22 @@ public class CommandProcessor {
                 Printer.printMessage(e.getMessage());
             }
         }else
-            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
+            Printer.printInvalidCommand();
     }
 
     public static void addCategory(String command){
-
+        Matcher matcher = getMatcher(command,"add (\\S+)");
+        if (matcher.find()){
+            String name = matcher.group(1);
+            Printer.printMessage("Enter parent ID(Enter zero for no parent) : ");
+            String parentId = Scan.getInstance().getInteger();
+            try {
+                managerController.addCategory(name,Integer.parseInt(parentId));
+            } catch (RepeatedNameInParentCategoryExeption | NoSuchACategoryException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else
+            Printer.printInvalidCommand();
     }
 
     public static void editCategory(String command){

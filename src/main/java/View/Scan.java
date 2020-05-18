@@ -94,6 +94,14 @@ public class Scan {
         }
     }
 
+    String getInteger(){
+        while (true){
+            String input = scanner.nextLine();
+            if (input.matches("^\\d{1,9}$")) return input;
+            else Printer.printMessage("Enter a valid number");
+        }
+    }
+
     public String getLinesUntil(String end){
         StringBuilder stringBuilder = new StringBuilder();
         String line ;

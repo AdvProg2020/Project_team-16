@@ -14,6 +14,9 @@ public class Printer {
     private static final String lineMedium = new String(new char[48]).replace('\0', '-');
     private static final String lineLarge = new String(new char[80]).replace('\0', '-');
 
+    public static void printInvalidCommand(){
+        System.out.println("Invalid command pattern! Please see \"help\" for more.");
+    }
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
