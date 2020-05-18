@@ -12,10 +12,7 @@ import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.AlreadyASeller;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
-import View.PrintModels.DisCodeManagerPM;
-import View.PrintModels.DiscountMiniPM;
-import View.PrintModels.RequestPM;
-import View.PrintModels.UserMiniPM;
+import View.PrintModels.*;
 import View.exceptions.InvalidCharacter;
 import View.exceptions.OutOfRangeInputException;
 import controler.AccountController;
@@ -470,7 +467,12 @@ public class CommandProcessor {
     }
 
     public static void viewPersonalInfo(){
-
+        try {
+            UserFullPM pm = accountController.viewPersonalInfo(Data.getInstance().getUsername());
+            Printer.userPrinter(pm);
+        } catch (UserNotAvailableException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
 
     public static void editPersonalInfo(String command){
