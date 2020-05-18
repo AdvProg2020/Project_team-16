@@ -577,11 +577,16 @@ public class CommandProcessor {
     }
 
     public static void showCategories(){
-
+        // TODO: 18/05/2020
     }
 
     public static void viewBalanceSeller(){
-
+        try {
+            long balance = sellerController.viewBalance(Data.getInstance().getUsername());
+            Printer.printMessage("Your balance : " + balance);
+        } catch (UserNotAvailableException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
 
     public static void viewAllProductSeller(){
