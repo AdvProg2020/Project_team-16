@@ -112,16 +112,17 @@ public class Scan {
         }
     }
 
-    public String getLinesUntil(String end){
+    String getLinesUntil(String end){
         StringBuilder stringBuilder = new StringBuilder();
         String line ;
         while (!(line = scanner.nextLine()).equals(end)){
             stringBuilder.append(line);
+            stringBuilder.append('\n');
         }
         return stringBuilder.toString();
     }
 
-    public String getFormalLines(int limit)
+    String getFormalLines(int limit)
             throws InvalidCharacter, OutOfRangeInputException {
         String line = scanner.nextLine();
         if (line.matches("")){

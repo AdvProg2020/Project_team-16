@@ -6,6 +6,7 @@ import ModelPackage.Off.Off;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
+import ModelPackage.System.CategoryManager;
 import ModelPackage.System.SortType;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.ProductEditAttribute;
@@ -188,13 +189,24 @@ public class SellerController extends Controller{
         productManager.createProduct(product, sellerUserName);
     }
 
+    public List<String> getSpecialFeaturesOfCat(int catId) throws NoSuchACategoryException {
+        return categoryManager.getAllSpecialFeaturesFromCategory(catId);
+    }
+
+    public List<String> getPublicFeatures(){
+        return CategoryManager.getPublicFeatures();
+    }
+
     public void editProduct(String sellerUserName, ProductEditAttribute editAttribute)
             throws NoSuchAProductException {
         productManager.editProduct(editAttribute, sellerUserName);
     }
 
     private ArrayList<Seller> addSellerToNewProduct(String sellerUserName) throws UserNotAvailableException {
-        Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
+        Seller seller = DBManager.load(Seller.class,sellerUserName);
+        if (seller == null) {
+            throw new UserNotAvailableException();
+        }
         ArrayList<Seller> sellers = new ArrayList<>();
         sellers.add(seller);
         return sellers;

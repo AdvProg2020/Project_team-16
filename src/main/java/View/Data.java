@@ -3,10 +3,7 @@ package View;
 import ModelPackage.System.SortType;
 import View.Menu.Menu;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 @lombok.Data
 public class Data {
@@ -24,8 +21,8 @@ public class Data {
     /* Filter And Sort Options */
     private SortAndFilterPackage sortAndFilters;
     private boolean isOnOffMode;
-    private ArrayList<String> publicFeatures;
-    private ArrayList<String> specialFeatures;
+    private List<String> publicFeatures;
+    private List<String> specialFeatures;
 
     public void addMenuToHistory(Menu menu){
         menuHistory.add(menu);

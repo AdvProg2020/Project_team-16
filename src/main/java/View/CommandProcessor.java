@@ -532,7 +532,48 @@ public class CommandProcessor {
     }
 
     public static void addProduct(){
+        String[] info = new String[7];
+        Data.getInstance().setPublicFeatures(sellerController.getPublicFeatures());
+        info[0] = Data.getInstance().getUsername();
+        Printer.printMessage("Enter category id you want to create product in : ");
+        info[3] = Scan.getInstance().getInteger();
+        try {
+            Data.getInstance().setSpecialFeatures(sellerController.getSpecialFeaturesOfCat(Integer.parseInt(info[3])));
+        } catch (NoSuchACategoryException e) {
+            Printer.printMessage(e.getMessage());
+            return;
+        }
+        Printer.printMessage("Enter product name : ");
+        info[1] = Scan.getInstance().getLine();
+        Printer.printMessage("Enter company of product : ");
+        info[2] = Scan.getInstance().getLine();
+        Printer.printMessage("Enter description of the product, enter \\end at the end of your description : \n");
+        info[4] = Scan.getInstance().getLinesUntil("\\end");
+        Printer.printMessage("Enter the price : ");
+        info[5] = Scan.getInstance().getInteger();
+        Printer.printMessage("Enter the amount of product you have in stock : ");
+        info[6] = Scan.getInstance().getInteger();
+        String[] publicFeatureData = new String[Data.getInstance().getPublicFeatures().size()*2];
+        String[] specialFeatureData = new String[Data.getInstance().getSpecialFeatures().size()*2];
+        getFeatures("public",publicFeatureData,Data.getInstance().getPublicFeatures());
+        getFeatures("special",specialFeatureData,Data.getInstance().getSpecialFeatures());
+        try {
+            sellerController.addProduct(info,publicFeatureData,specialFeatureData);
+        } catch (NoSuchACategoryException | UserNotAvailableException e) {
+            Printer.printMessage(e.getMessage());
+        }
+    }
 
+    private static void getFeatures(String title,String[] data,List<String> features){
+        Printer.printMessage("Now enter the "+ title + " features of product : ");
+        int i = 0;
+        for (String feature : features) {
+            Printer.printMessage(feature + " : ");
+            String fea = Scan.getInstance().getLine();
+            data[i*2] = feature;
+            data[i*2+1] = fea;
+            i++;
+        }
     }
 
     public static void showCategories(){
