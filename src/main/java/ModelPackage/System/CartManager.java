@@ -85,6 +85,7 @@ public class CartManager {
         if (previousAmount + change == 0){
             cart.getSubCarts().remove(subCart);
         } else {
+            // TODO : delete from database
             subCart.setAmount(previousAmount + change);
         }
         cart.setTotalPrice(calculateTotalPrice(cart));
