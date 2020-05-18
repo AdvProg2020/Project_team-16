@@ -5,6 +5,7 @@ import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
+import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.discount.*;
 import View.PrintModels.DisCodeManagerPM;
@@ -323,6 +324,29 @@ public class CommandProcessor {
             int id = Integer.parseInt(matcher.group(1));
             CategoryEditAttribute editAttribute = new CategoryEditAttribute();
             Printer.printMessage("Enter new Feature(Leave blank for no change) : ");
+            String newFeature = Scan.getInstance().getLine();
+            if (!newFeature.isEmpty())
+                editAttribute.setAddFeature(newFeature);
+            Printer.printMessage("Enter feature you want to remove(Leave blank for no change) : ");
+            String remove = Scan.getInstance().getLine();
+            if (!remove.isEmpty())
+                editAttribute.setRemoveFeature(remove);
+            Printer.printMessage("Enter new parent id(Leave blank for no change) : ");
+            String newParentId = Scan.getInstance().getNullAbleInteger();
+            if (!newParentId.isEmpty()){
+                int parentId = Integer.parseInt(newParentId);
+                editAttribute.setNewParentId(parentId);
+            }
+            Printer.printMessage("Enter new Name(Leave blank for no change) : ");
+            String newName = Scan.getInstance().getLine();
+            if (!newName.isEmpty()){
+                editAttribute.setName(newName);
+            }
+            try {
+                managerController.editCategory(id,editAttribute);
+            } catch (RepeatedNameInParentCategoryExeption | RepeatedFeatureException | NoSuchACategoryException e) {
+                Printer.printMessage(e.getMessage());
+            }
         } else Printer.printInvalidCommand();
     }
 
