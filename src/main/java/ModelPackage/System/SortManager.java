@@ -1,5 +1,6 @@
 package ModelPackage.System;
 
+import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.Category;
@@ -74,6 +75,10 @@ public class SortManager {
             case NAME:sortDiscountByCode(list);break;
             case TIME:sortDiscountByStartTime(list);break;
         }
+    }
+
+    public void sortDiscountIntegers(List<DiscountcodeIntegerMap> list,SortType sortType){
+        list.sort(Comparator.comparingInt(DiscountcodeIntegerMap::getInteger));
     }
 
     private void sortDiscountByStartTime(List<DiscountCode> list){
