@@ -277,8 +277,19 @@ public class CommandProcessor {
         }else
             Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
     }
-    public static void removeUserFromDiscountCode(String command){
 
+    public static void removeUserFromDiscountCode(String command){
+        Matcher matcher = getMatcher(command,"remove user (.*?) from discount (.*?)");
+        if (matcher.find()){
+            String code = matcher.group(1);
+            String username = matcher.group(2);
+            try {
+                managerController.removeUserFromDiscountCodeUsers(code,username);
+            } catch (UserNotExistedInDiscountCodeException | NoSuchADiscountCodeException | UserNotAvailableException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else
+            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
     }
 
     public static void addCategory(String command){
