@@ -1,9 +1,6 @@
 package View;
 
-import ModelPackage.System.editPackage.CategoryEditAttribute;
-import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
-import ModelPackage.System.editPackage.ProductEditAttribute;
-import ModelPackage.System.editPackage.UserEditAttributes;
+import ModelPackage.System.editPackage.*;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
@@ -25,6 +22,7 @@ import controler.AccountController;
 import controler.ManagerController;
 import controler.SellerController;
 import controler.exceptions.ManagerExist;
+import jdk.internal.net.http.frame.PingFrame;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -704,9 +702,52 @@ public class CommandProcessor {
         }else Printer.printInvalidCommand();
     }
 
-
     public static void editOff(String command){
+        Matcher matcher = getMatcher(command,"edit (\\d+{1,9})");
+        if (matcher.find()){
+            OffChangeAttributes changeAttributes = new OffChangeAttributes();
+            Printer.printMessage("Enter new percentage(Leave it blank if don't want to change) : ");
+            String percentage = scan.getNullAblePercentage();
+            if (!percentage.isEmpty()) {
+                changeAttributes.setPercentage(Integer.parseInt(percentage));
+            }
+            Printer.printMessage("Enter new Start date(Leave it blank if don't want to change)\n" +
+                    "it must have format : \"yyyy-MM-dd HH:mm:ss\" : ");
+            try {
+                String date = scan.getNullAbleDate();
+                if (!date.isEmpty()) {
+                    Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+                    changeAttributes.setStart(start);
+                }
+            } catch (ParseException e) { e.printStackTrace(); }
 
+            Printer.printMessage("Enter new End date(Leave it blank if don't want to change)\n" +
+                    "it must have format : \"yyyy-MM-dd HH:mm:ss\" : ");
+            try {
+                String date = scan.getNullAbleDate();
+                if (!date.isEmpty()) {
+                    Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+                    changeAttributes.setEnd(start);
+                }
+            } catch (ParseException e) { e.printStackTrace(); }
+
+            Printer.printMessage("Enter a product id to be added on off(Leave it blank if don't want to change) : \n");
+            String addProduct = scan.getNullAbleInteger();
+            if (!addProduct.isEmpty()){
+                changeAttributes.setProductIdToAdd(Integer.parseInt(addProduct));
+            }
+            Printer.printMessage("Enter a product id to be removes from off(Leave it blank if don't want to change) : \n");
+            String removeProduvt = scan.getNullAbleInteger();
+            if (!removeProduvt.isEmpty()){
+                changeAttributes.setProductIdToRemove(Integer.parseInt(removeProduvt));
+            }
+            try {
+                sellerController.editOff(data.getUsername(),changeAttributes);
+                Printer.printMessage("your Off wouldn't be available till manager accept your edit ...");
+            } catch (ThisOffDoesNotBelongssToYouException | NoSuchAOffException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
     }
 
 

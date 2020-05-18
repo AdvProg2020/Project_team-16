@@ -133,30 +133,8 @@ public class SellerController extends Controller{
         offManager.createOff(seller, dates, offPercentage);
     }
 
-    public void editOff(String[] data, OffChangeAttributes editAttributes)
-            throws InvalidTimes, NoSuchAOffException, NoSuchAProductException,
-            UserNotAvailableException {
-        int offId = Integer.parseInt(data[0]);
-        String userName = data[1];
-        Seller seller = DBManager.load(Seller.class,userName);
-        if (seller == null) {
-            throw new UserNotAvailableException();
-        }
-        Date start = editAttributes.getStart();
-        Date end = editAttributes.getEnd();
-        int productIdToRemove = editAttributes.getProductIdToRemove();
-        int productIdToAdd = editAttributes.getProductIdToAdd();
-        int percentage = editAttributes.getPercentage();
-        if (start != null)
-            offManager.editStartTimeOfOff(seller, offId, start);
-        if (end != null)
-            offManager.editEndTimeOfOff(seller, offId, end);
-        if (productIdToRemove != 0)
-            offManager.deleteProductFromOff(seller, offId, productIdToRemove);
-        if (productIdToAdd != 0)
-            offManager.addProductToOff(seller, offId, productIdToAdd);
-        if (percentage != 0)
-            offManager.editPercentageOfOff(seller, offId, percentage);
+    public void editOff(String seller, OffChangeAttributes editAttributes) throws ThisOffDoesNotBelongssToYouException, NoSuchAOffException {
+        offManager.editOff(editAttributes,seller);
     }
 
     public void deleteOff(String data) throws NoSuchAOffException {

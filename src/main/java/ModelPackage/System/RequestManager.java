@@ -179,6 +179,7 @@ public class RequestManager {
         try {
             Product product = ProductManager.getInstance().findProductById(changeAttributes.getProductIdToAdd());
             off.getProducts().add(product);
+            DBManager.save(product);
         } catch (NoSuchAProductException e) {
 
         }
