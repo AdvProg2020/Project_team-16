@@ -523,7 +523,12 @@ public class CommandProcessor {
     }
 
     public static void viewSalesHistory(){
-
+        try {
+            List<SellLogPM> pms = sellerController.viewSalesHistory(Data.getInstance().getUsername());
+            Printer.printSaleHistory(pms);
+        } catch (UserNotAvailableException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
 
     public static void addProduct(){
