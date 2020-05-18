@@ -6,6 +6,7 @@ import ModelPackage.Off.OffStatus;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
+import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
@@ -108,5 +109,9 @@ public class OffManager {
     public void deleteOff(int id) throws NoSuchAOffException {
         Off off = findOffById(id);
         DBManager.delete(off);
+    }
+
+    public void checkIfThisSellerCreatedTheOff(Off off,String viwer) throws ThisOffDoesNotBelongssToYouException {
+        if (!off.getSeller().getUsername().equals(viwer))throw new ThisOffDoesNotBelongssToYouException();
     }
 }

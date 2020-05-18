@@ -18,6 +18,7 @@ import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
+import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
@@ -110,8 +111,9 @@ public class SellerController extends Controller{
         return offPMs;
     }
 
-    public OffPM viewOff(int offId) throws NoSuchAOffException {
+    public OffPM viewOff(int offId,String viewer) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {
         Off off = offManager.findOffById(offId);
+        offManager.checkIfThisSellerCreatedTheOff(off,viewer);
         return new OffPM(off.getOffId(),
                 addProductIdsToOffPM(off),
                 off.getSeller().getUsername(),

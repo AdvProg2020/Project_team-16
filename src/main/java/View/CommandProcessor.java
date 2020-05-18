@@ -12,6 +12,8 @@ import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.discount.*;
+import ModelPackage.System.exeption.off.NoSuchAOffException;
+import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
 import ModelPackage.System.exeption.product.AlreadyASeller;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
@@ -690,7 +692,16 @@ public class CommandProcessor {
     }
 
     public static void viewOff(String command){
-
+        Matcher matcher = getMatcher(command,"view ()\\d+{1,9}");
+        if (matcher.find()){
+            int id = Integer.parseInt(matcher.group(1));
+            try {
+                OffPM pm = sellerController.viewOff(id, data.getUsername());
+                Printer.viewOff(pm);
+            } catch (NoSuchAOffException | ThisOffDoesNotBelongssToYouException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
     }
 
 
