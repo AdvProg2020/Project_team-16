@@ -2,20 +2,20 @@ package ModelPackage.System;
 
 import ModelPackage.Product.Company;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.editPackage.UserEditAttributes;
-import ModelPackage.System.exeption.account.NotVerifiedSeller;
-import ModelPackage.System.exeption.account.SameInfoException;
-import ModelPackage.System.exeption.account.UserNotAvailableException;
-import ModelPackage.System.exeption.account.WrongPasswordException;
+import ModelPackage.System.exeption.account.*;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Manager;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
+import View.exceptions.NotSignedInYetException;
 import io.reactivex.exceptions.Exceptions;
 import mockit.Expectations;
 import mockit.Mock;
 import mockit.MockUp;
 import mockit.Mocked;
+import org.hibernate.Session;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,12 +74,18 @@ public class AccountManagerTest {
             public User getUserByUsername(String username) throws UserNotAvailableException {
                 if (username.equals("marmofayezi")) return marmof;
                 else if (username.equals("hatam008")) return hatam;
-                else return sapa;
+                else throw new UserNotAvailableException();
             }
         };
         new MockUp<DBManager>(){
             @Mock
-            public void save(Object o){
+            public void save(Object o) {
+            }
+            @Mock
+            public <T> T load(Class<T> type, Serializable username) throws UserNotAvailableException {
+                if (username.equals("marmofayezi")) return (T) marmof;
+                else if (username.equals("hatam008") && type.getName().equals("ModelPackage.Users.Manager")) return (T) hatam;
+                else return null;
             }
         };
     }
@@ -156,14 +162,6 @@ public class AccountManagerTest {
 
     @Test
     public void login() throws WrongPasswordException, NotVerifiedSeller, UserNotAvailableException {
-        new Expectations(){
-            {
-                DBManager.load(Manager.class, "hatam008");
-                result = hatam;
-                times = 1;
-            }
-        };
-
         String actual = accountManager.login("hatam008","hatam008@kimi");
         Assert.assertEquals("Manager", actual);
     }
@@ -175,9 +173,16 @@ public class AccountManagerTest {
 
     @Test
     public void logout() throws UserNotAvailableException {
+        marmof.setHasSignedIn(true);
         accountManager.logout("marmofayezi");
         boolean actual = marmof.isHasSignedIn();
         Assert.assertFalse(actual);
+    }
+
+    @Test(expected = UserNotLoggedInException.class)
+    public void logout_NotSignedIn() throws UserNotAvailableException {
+        marmof.setHasSignedIn(false);
+        accountManager.logout("marmofayezi");
     }
 
     @Test
@@ -193,6 +198,13 @@ public class AccountManagerTest {
 
     @Test
     public void isUsernameAvailable(){
+        new Expectations(){
+            {
+                DBManager.load(User.class, "marmofayezi");
+                result = marmof;
+                times = 1;
+            }
+        };
         boolean actual = accountManager.isUsernameAvailable("marmofayezi");
         Assert.assertTrue(actual);
     }
