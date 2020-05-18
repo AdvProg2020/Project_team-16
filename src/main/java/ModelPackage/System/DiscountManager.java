@@ -134,6 +134,10 @@ public class DiscountManager {
         UserIntegerMap map = findMap(user,discountCode);
         if (map == null) throw new UserNotExistedInDiscountCodeException(user.getUsername());
         discountCode.getUsers().remove(map);
+        DiscountcodeIntegerMap mapInUser = findDiscountMap(user,code);
+        Customer customer = DBManager.load(Customer.class,user.getUsername());
+        customer.getDiscountCodes().remove(mapInUser);
+        DBManager.save(customer);
         DBManager.save(discountCode);
     }
 
@@ -174,7 +178,7 @@ public class DiscountManager {
     }
 
     private DiscountcodeIntegerMap findDiscountMap(User user,String code){
-        Customer customer = (Customer) user;
+        Customer customer = DBManager.load(Customer.class,user.getUsername());
         for (DiscountcodeIntegerMap map : customer.getDiscountCodes()) {
             if (map.getDiscountCode().getCode().equals(code)) return map;
         }

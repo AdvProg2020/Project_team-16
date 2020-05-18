@@ -262,6 +262,25 @@ public class CommandProcessor {
         }
     }
 
+    public static void addUserToDiscountCode(String command){
+        Matcher matcher = getMatcher(command,"add user (.*?) to discount (.*?)");
+        if (matcher.find()){
+            String code = matcher.group(1);
+            String username = matcher.group(2);
+            Printer.printMessage("Set the number of usage for this user(max 100) : ");
+            String time = Scan.getInstance().getPercentage();
+            try {
+                managerController.addUserToDiscountCode(code,username,Integer.parseInt(time));
+            } catch (UserNotAvailableException | UserExistedInDiscountCodeException | NoSuchADiscountCodeException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else
+            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
+    }
+    public static void removeUserFromDiscountCode(String command){
+
+    }
+
     public static void addCategory(String command){
 
     }

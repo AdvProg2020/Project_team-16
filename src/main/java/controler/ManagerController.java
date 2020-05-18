@@ -150,9 +150,14 @@ public class ManagerController extends Controller {
         discountManager.editDiscountCode(code, editAttributes);
     }
 
-    private void removeUserFromDiscountCodeUsers(String code, String username) throws UserNotExistedInDiscountCodeException, NoSuchADiscountCodeException, UserNotAvailableException {
+    public void removeUserFromDiscountCodeUsers(String code, String username) throws UserNotExistedInDiscountCodeException, NoSuchADiscountCodeException, UserNotAvailableException {
         User user = accountManager.getUserByUsername(username);
         discountManager.removeUserFromDiscountCodeUsers(code, user);
+    }
+
+    public void addUserToDiscountCode(String code,String username,int time) throws UserNotAvailableException, UserExistedInDiscountCodeException, NoSuchADiscountCodeException {
+        User user = accountManager.getUserByUsername(username);
+        discountManager.addUserToDiscountCodeUsers(code,user,time);
     }
 
     public void removeDiscountCode(String code) throws NoSuchADiscountCodeException {
