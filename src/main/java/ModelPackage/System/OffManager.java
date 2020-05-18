@@ -52,8 +52,10 @@ public class OffManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void deleteOff(int id) throws NoSuchAOffException {
+    public void deleteOff(int id,String remover) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {
         Off off = findOffById(id);
+        checkIfThisSellerCreatedTheOff(off,remover);
+        /* TODO : Notify Time manager to remove off */
         DBManager.delete(off);
     }
 

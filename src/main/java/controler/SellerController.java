@@ -140,9 +140,9 @@ public class SellerController extends Controller{
         offManager.editOff(editAttributes,seller);
     }
 
-    public void deleteOff(String data) throws NoSuchAOffException {
+    public void deleteOff(String data,String remover) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {
         int offId = Integer.parseInt(data);
-        offManager.deleteOff(offId);
+        offManager.deleteOff(offId,remover);
     }
 
     public void addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures)

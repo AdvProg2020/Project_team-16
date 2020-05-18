@@ -779,6 +779,18 @@ public class CommandProcessor {
         }
     }
 
+    public static void deleteOff(String command){
+        Matcher matcher = getMatcher(command,"remove (\\d+{1,9})");
+        if (matcher.find()){
+            String id = matcher.group(1);
+            try {
+                sellerController.deleteOff(id,data.getUsername());
+            } catch (NoSuchAOffException | ThisOffDoesNotBelongssToYouException e) {
+               Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
+    }
+
     public static void viewBalanceCustomer(){
 
     }
