@@ -32,6 +32,7 @@ public class CommandProcessor {
     private static AccountController accountController = AccountController.getInstance();
     private static ManagerController managerController = ManagerController.getInstance();
     private static SellerController sellerController = SellerController.getInstance();
+    private static Data data = Data.getInstance();
 
     public static void createAccount(String command){
         Matcher matcher = getMatcher(command,"create account ([M,m]anager|[S,s]eller|[C,c]ustomer) (\\S+)");
@@ -85,7 +86,6 @@ public class CommandProcessor {
             else break;
         }
         accountController.createAccount(info,"seller");
-        Data data = Data.getInstance();
         data.setRole("seller");
         data.setUsername(username);
         data.getLastMenu().execute();
@@ -110,7 +110,6 @@ public class CommandProcessor {
         Printer.printMessage("Enter Your Balance(It must br a long number) :");
         info[6] = Scan.getInstance().getLong();
         accountController.createAccount(info,"customer");
-        Data data = Data.getInstance();
         data.setRole("customer");
         data.setUsername(username);
         data.getLastMenu().execute();
@@ -125,7 +124,6 @@ public class CommandProcessor {
         } catch (ManagerExist managerExist) {
             Printer.printMessage("There is already a manager. You can't create any manager");
         }
-        Data data = Data.getInstance();
         data.setRole("manger");
         data.setUsername(username);
         data.getLastMenu().execute();
@@ -143,8 +141,8 @@ public class CommandProcessor {
                String password = Scan.getInstance().getPassword("Enter Your Password : ");
                 try {
                     String role = accountController.login(username,password);
-                    Data.getInstance().setUsername(username);
-                    Data.getInstance().setRole(role);
+                    data.setUsername(username);
+                    data.setRole(role);
                 } catch (NotVerifiedSeller notVerifiedSeller) {
                     Printer.printMessage("your Account Isn't Verified Yet");
                 } catch (UserNotAvailableException e) {
@@ -471,7 +469,7 @@ public class CommandProcessor {
 
     public static void viewPersonalInfo(){
         try {
-            UserFullPM pm = accountController.viewPersonalInfo(Data.getInstance().getUsername());
+            UserFullPM pm = accountController.viewPersonalInfo(data.getUsername());
             Printer.userPrinter(pm);
         } catch (UserNotAvailableException e) {
             Printer.printMessage(e.getMessage());
@@ -506,7 +504,7 @@ public class CommandProcessor {
                  attributes.setNewPassword(pass);
              }
             try {
-                accountController.editPersonalInfo(Data.getInstance().getUsername(),attributes);
+                accountController.editPersonalInfo(data.getUsername(),attributes);
             } catch (UserNotAvailableException e) {
                 Printer.printMessage(e.getMessage());
             }
@@ -515,7 +513,7 @@ public class CommandProcessor {
 
     public static void viewCompanyInformation(){
         try {
-            CompanyPM pm = sellerController.viewCompanyInfo(Data.getInstance().getUsername());
+            CompanyPM pm = sellerController.viewCompanyInfo(data.getUsername());
             Printer.printCompany(pm);
         } catch (UserNotAvailableException e) {
             Printer.printMessage(e.getMessage());
@@ -524,7 +522,7 @@ public class CommandProcessor {
 
     public static void viewSalesHistory(){
         try {
-            List<SellLogPM> pms = sellerController.viewSalesHistory(Data.getInstance().getUsername());
+            List<SellLogPM> pms = sellerController.viewSalesHistory(data.getUsername());
             Printer.printSaleHistory(pms);
         } catch (UserNotAvailableException e) {
             Printer.printMessage(e.getMessage());
@@ -533,12 +531,12 @@ public class CommandProcessor {
 
     public static void addProduct(){
         String[] info = new String[7];
-        Data.getInstance().setPublicFeatures(sellerController.getPublicFeatures());
-        info[0] = Data.getInstance().getUsername();
+        data.setPublicFeatures(sellerController.getPublicFeatures());
+        info[0] = data.getUsername();
         Printer.printMessage("Enter category id you want to create product in : ");
         info[3] = Scan.getInstance().getInteger();
         try {
-            Data.getInstance().setSpecialFeatures(sellerController.getSpecialFeaturesOfCat(Integer.parseInt(info[3])));
+            data.setSpecialFeatures(sellerController.getSpecialFeaturesOfCat(Integer.parseInt(info[3])));
         } catch (NoSuchACategoryException e) {
             Printer.printMessage(e.getMessage());
             return;
@@ -553,10 +551,10 @@ public class CommandProcessor {
         info[5] = Scan.getInstance().getInteger();
         Printer.printMessage("Enter the amount of product you have in stock : ");
         info[6] = Scan.getInstance().getInteger();
-        String[] publicFeatureData = new String[Data.getInstance().getPublicFeatures().size()*2];
-        String[] specialFeatureData = new String[Data.getInstance().getSpecialFeatures().size()*2];
-        getFeatures("public",publicFeatureData,Data.getInstance().getPublicFeatures());
-        getFeatures("special",specialFeatureData,Data.getInstance().getSpecialFeatures());
+        String[] publicFeatureData = new String[data.getPublicFeatures().size()*2];
+        String[] specialFeatureData = new String[data.getSpecialFeatures().size()*2];
+        getFeatures("public",publicFeatureData,data.getPublicFeatures());
+        getFeatures("special",specialFeatureData,data.getSpecialFeatures());
         try {
             sellerController.addProduct(info,publicFeatureData,specialFeatureData);
         } catch (NoSuchACategoryException | UserNotAvailableException e) {
@@ -582,7 +580,7 @@ public class CommandProcessor {
 
     public static void viewBalanceSeller(){
         try {
-            long balance = sellerController.viewBalance(Data.getInstance().getUsername());
+            long balance = sellerController.viewBalance(data.getUsername());
             Printer.printMessage("Your balance : " + balance);
         } catch (UserNotAvailableException e) {
             Printer.printMessage(e.getMessage());
@@ -590,7 +588,16 @@ public class CommandProcessor {
     }
 
     public static void viewAllProductSeller(){
-
+        try {
+            List<MiniProductPM> pms = sellerController.manageProducts(data.getUsername(), data.getSorts());
+            if (pms.isEmpty()){
+                Printer.printMessage("You have no product to show");
+            }else {
+                Printer.printAllProducts(pms);
+            }
+        } catch (UserNotAvailableException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
 
     public static void viewProduct(String command){

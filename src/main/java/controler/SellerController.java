@@ -21,6 +21,7 @@ import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
 import View.PrintModels.*;
+import View.SortPackage;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,9 +57,10 @@ public class SellerController extends Controller{
         return seller.getBalance();
     }
 
-    public List<MiniProductPM> manageProducts(String sellerUserName) throws UserNotAvailableException {
+    public List<MiniProductPM> manageProducts(String sellerUserName, SortPackage sort) throws UserNotAvailableException {
          List<Product> sellerProducts = sellerManager.viewProducts(sellerUserName);
-         sellerProducts = sortManager.sort(sellerProducts, SortType.VIEW);
+         sortManager.sort(sellerProducts,sort.getSortType());
+         if (!sort.isAscending()) Collections.reverse(sellerProducts);
          ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
          for (Product sellerProduct : sellerProducts) {
              miniProductPMs.add(createMiniProductPM(sellerProduct));
@@ -155,18 +157,6 @@ public class SellerController extends Controller{
     public void deleteOff(String data) throws NoSuchAOffException {
         int offId = Integer.parseInt(data);
         offManager.deleteOff(offId);
-    }
-
-    public UserFullPM viewSellerPersonalInfo(String sellerUserName) throws UserNotAvailableException {
-        User user = accountManager.viewPersonalInfo(sellerUserName);
-        return new UserFullPM(user.getUsername(), user.getFirstName(),
-                user.getLastName(), user.getEmail(),
-                user.getPhoneNumber(), "seller");
-    }
-
-    public void editSellerInfo(String userName, UserEditAttributes editAttributes)
-            throws UserNotAvailableException {
-        accountManager.changeInfo(userName, editAttributes);
     }
 
     public void addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures)
