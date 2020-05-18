@@ -854,6 +854,12 @@ public class CommandProcessor {
     }
 
     public static void showTotalPrice(){
+        try {
+            long totalPrice = customerController.showTotalPrice(data.getUsername());
+            Printer.printMessage("Total Price : " + totalPrice);
+        } catch (UserNotAvailableException e) {
+            Printer.printMessage(e.getMessage());
+        }
 
     }
 
