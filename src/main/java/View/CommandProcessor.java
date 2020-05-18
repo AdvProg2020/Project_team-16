@@ -18,7 +18,6 @@ import controler.exceptions.ManagerExist;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -319,7 +318,7 @@ public class CommandProcessor {
     }
 
     public static void editCategory(String command) {
-        Matcher matcher = getMatcher(command, "edit (\\d+{1,9})");
+        Matcher matcher = getMatcher(command, "edit (\\d{1,9})");
         if (matcher.find()) {
             int id = Integer.parseInt(matcher.group(1));
             CategoryEditAttribute editAttribute = new CategoryEditAttribute();
@@ -351,7 +350,15 @@ public class CommandProcessor {
     }
 
     public static void removeCategory(String command){
-
+        Matcher matcher = getMatcher(command,"remove (\\d{1,9})");
+        if (matcher.find()){
+            int id = Integer.parseInt(matcher.group(1));
+            try {
+                managerController.removeCategory(id);
+            } catch (NoSuchACategoryException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
     }
 
     public static void removeProduct(String command){
