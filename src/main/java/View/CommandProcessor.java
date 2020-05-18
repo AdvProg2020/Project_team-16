@@ -15,6 +15,7 @@ import ModelPackage.System.exeption.request.NoSuchARequestException;
 import View.PrintModels.DisCodeManagerPM;
 import View.PrintModels.DiscountMiniPM;
 import View.PrintModels.RequestPM;
+import View.PrintModels.UserMiniPM;
 import View.exceptions.InvalidCharacter;
 import View.exceptions.OutOfRangeInputException;
 import controler.AccountController;
@@ -421,7 +422,12 @@ public class CommandProcessor {
     }
 
     public static void viewAllUsers(){
-
+        List<UserMiniPM> pms = managerController.manageUsers();
+        if (pms.isEmpty()){
+            Printer.printMessage("No User To Show");
+        }else {
+            Printer.usersPrinter(pms);
+        }
     }
 
     public static void viewUser(String command){
