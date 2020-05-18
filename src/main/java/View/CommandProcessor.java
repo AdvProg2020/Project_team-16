@@ -7,6 +7,7 @@ import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
+import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
 import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.off.InvalidTimes;
@@ -863,8 +864,17 @@ public class CommandProcessor {
 
     }
 
-    public static void showOrder(String comand){
-
+    public static void showOrder(String command){
+        Matcher matcher = getMatcher(command,"show order (\\d+{1,9})");
+        if (matcher.find()){
+            try {
+                OrderLogPM pm = customerController.showOrder(Integer.parseInt(matcher.group(1)));
+                Printer.viewOrder(pm);
+            } catch (NoSuchAProductException | NoSuchALogException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }
+        else Printer.printInvalidCommand();
     }
 
 

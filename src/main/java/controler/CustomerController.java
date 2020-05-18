@@ -10,6 +10,7 @@ import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
+import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
@@ -154,7 +155,7 @@ public class CustomerController extends Controller {
         );
     }
 
-    public OrderLogPM showOrder(int id) throws NoSuchAProductException {
+    public OrderLogPM showOrder(int id) throws NoSuchAProductException, NoSuchALogException {
         PurchaseLog purchaseLog = (PurchaseLog) csclManager.getLogById(id);
         ArrayList<MiniProductPM> miniProductPMS = createMiniProductPM(purchaseLog);
 

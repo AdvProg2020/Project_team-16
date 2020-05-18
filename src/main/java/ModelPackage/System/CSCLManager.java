@@ -143,7 +143,7 @@ public class CSCLManager {
         return price;
     }
 
-    public Log getLogById(int id){
+    public Log getLogById(int id) throws NoSuchALogException {
         Log log = DBManager.load(Log.class,id);
         if (log == null) {
             throw new NoSuchALogException(Integer.toString(id));
