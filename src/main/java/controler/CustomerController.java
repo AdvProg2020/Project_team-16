@@ -7,8 +7,8 @@ import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.Product;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
-import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
@@ -60,7 +60,10 @@ public class CustomerController extends Controller {
     public List<InCartPM> showProducts(String username) throws UserNotAvailableException {
         ArrayList<InCartPM> inCartPMS = new ArrayList<>();
 
-        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        Customer customer = DBManager.load(Customer.class,username);
+        if (customer == null) {
+            throw new UserNotAvailableException();
+        }
         Cart cart = customer.getCart();
 
         for (SubCart subCart : cart.getSubCarts()) {
@@ -75,14 +78,20 @@ public class CustomerController extends Controller {
     }
 
     public void changeAmount(String username, int id, int change) throws Exception {
-        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        Customer customer = DBManager.load(Customer.class,username);
+        if (customer == null) {
+            throw new UserNotAvailableException();
+        }
         Cart cart = customer.getCart();
         String sellerId = cartManager.getSubCartByProductId(cart, id).getSeller().getUsername();
         cartManager.changeProductAmountInCart(cart, id, sellerId, change);
     }
 
     public long showTotalPrice(String username) throws UserNotAvailableException {
-        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        Customer customer = DBManager.load(Customer.class,username);
+        if (customer == null) {
+            throw new UserNotAvailableException();
+        }
         Cart cart = customer.getCart();
 
         return cart.getTotalPrice();

@@ -2,6 +2,7 @@ package View;
 
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
+import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
@@ -476,7 +477,38 @@ public class CommandProcessor {
     }
 
     public static void editPersonalInfo(String command){
-
+        Matcher matcher = getMatcher(command,"edit (.*?)");
+        if (matcher.find()){
+            String field = matcher.group(1);
+            String newField;
+            Scan scan = Scan.getInstance();
+            UserEditAttributes attributes = new UserEditAttributes();
+            Printer.printMessage("Enter new " + field + " : ");
+             if (!field.equals("password")) {
+                 newField = scan.getLine();
+                 switch (field) {
+                     case "first name":
+                         attributes.setNewFirstName(newField);
+                         break;
+                     case "last name":
+                         attributes.setNewLastName(newField);
+                     case "phone number":
+                     case "phone":
+                     case "number":
+                         attributes.setNewPhone(newField);
+                     case "email":
+                         attributes.setNewEmail(newField);
+                 }
+             }else {
+                 String pass = scan.getPassword("Enter new Password : ");
+                 attributes.setNewPassword(pass);
+             }
+            try {
+                accountController.editPersonalInfo(Data.getInstance().getUsername(),attributes);
+            } catch (UserNotAvailableException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }
     }
 
     public static void viewCompanyInformation(){
