@@ -71,15 +71,14 @@ public class SellerController extends Controller{
          return miniProductPMs;
     }
 
-    public List<UserMiniPM> viewAllBuyersOfProduct(int productId,String viwer) throws NoSuchAProductException, YouAreNotASellerException {
+    public List<UserMiniPM> viewAllBuyersOfProduct(int productId,String viwer,SortPackage sortPackage) throws NoSuchAProductException, YouAreNotASellerException {
         List<UserMiniPM> userMiniPMs = new ArrayList<>();
-        List<User> allBuyers = new ArrayList<>();
         Product product = productManager.findProductById(productId);
         csclManager.checkIfIsASellerOFProduct(product,viwer);
-        for (Seller seller : product.getAllSellers()) {
-            allBuyers.addAll(csclManager.allBuyers(productId, seller));
-        }
+        Seller seller = DBManager.load(Seller.class,viwer);
+        List<User> allBuyers = new ArrayList<>(csclManager.allBuyers(productId, seller));
         allBuyers = sortManager.sortUser(allBuyers);
+        if (!sortPackage.isAscending())Collections.reverse(allBuyers);
         for (User buyer : allBuyers) {
             userMiniPMs.add(createUserMiniPM(buyer));
         }
@@ -97,12 +96,14 @@ public class SellerController extends Controller{
          productManager.deleteProduct(productId,editor);
     }
 
-    public List<MiniOffPM> viewAllOffs(String sellerUserName) throws UserNotAvailableException {
+    public List<MiniOffPM> viewAllOffs(String sellerUserName,SortPackage sortPackage) throws UserNotAvailableException {
         Seller seller = DBManager.load(Seller.class,sellerUserName);
         if (seller == null) {
             throw new UserNotAvailableException();
         }
         List<Off> offs = seller.getOffs();
+        sortManager.sortOff(offs);
+        if (!sortPackage.isAscending()) Collections.reverse(offs);
         List<MiniOffPM> offPMs = new ArrayList<>();
         for (Off off : offs) {
             offPMs.add(new MiniOffPM(off.getOffId(),

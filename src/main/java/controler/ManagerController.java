@@ -13,15 +13,18 @@ import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.AlreadyASeller;
+import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
 import View.PrintModels.*;
+import View.SortPackage;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -97,7 +100,11 @@ public class ManagerController extends Controller {
 
     public void removeProduct(int productId) throws NoSuchACategoryException,
             NoSuchAProductInCategoryException, NoSuchAProductException {
-        productManager.deleteProduct(productId);
+        try {
+            productManager.deleteProduct(productId,"MAN@GER");
+        } catch (EditorIsNotSellerException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createDiscount(String[] data) throws ParseException,
@@ -163,14 +170,14 @@ public class ManagerController extends Controller {
         discountManager.removeDiscount(code);
     }
 
-    public List<RequestPM> manageRequests(){
+    public List<RequestPM> manageRequests(SortPackage sortPackage){
         List<Request> requests = DBManager.loadAllData(Request.class);
+        sortManager.sortRequests(requests,sortPackage.getSortType());
+        if (!sortPackage.isAscending()) Collections.reverse(requests);
         ArrayList<RequestPM> requestPMS = new ArrayList<>();
-
         for (Request request : requests) {
             requestPMS.add(createRequestPM(request));
         }
-
         return requestPMS;
     }
 

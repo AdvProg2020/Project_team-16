@@ -1,6 +1,9 @@
 package ModelPackage.System;
 
+import ModelPackage.Off.Off;
+import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
+import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
 import lombok.Data;
 
@@ -54,6 +57,35 @@ public class SortManager {
         usersList = toSortList;
         usersList.sort(Comparator.comparing(User::getUsername));
         return usersList;
+    }
+
+    public void sortCategories(List<Category> list){
+        for (Category category : list) {
+            if (!category.getSubCategories().isEmpty()){
+                sortCategories(category.getSubCategories());
+            }
+        }
+        list.sort(Comparator.comparing(Category::getName));
+    }
+
+    public void sortRequests(List<Request> list,SortType sortType){
+        switch (sortType){
+            case CATEGORIZED_REQUESTS:sortRequestsCategorized(list);
+            case NAME:sortRequestsByName(list);
+            case TIME:default:break;
+        }
+    }
+
+    private void sortRequestsCategorized(List<Request> list){
+        list.sort(Comparator.comparing(Request::getRequestType));
+    }
+
+    private void sortRequestsByName(List<Request> list){
+        list.sort(Comparator.comparing(Request::getUserHasRequested));
+    }
+
+    public void sortOff(List<Off> list){
+        list.sort(Comparator.comparingInt(Off::getOffPercentage));
     }
 
     private void sortByName(List<Product> products) {

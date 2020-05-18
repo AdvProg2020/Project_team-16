@@ -382,7 +382,7 @@ public class CommandProcessor {
     }
 
     public static void viewAllRequests(){
-        List<RequestPM> pms = managerController.manageRequests();
+        List<RequestPM> pms = managerController.manageRequests(data.getSorts());
         Printer.printAllRequests(pms);
     }
 
@@ -678,7 +678,7 @@ public class CommandProcessor {
         if (matcher.find()){
             int id = Integer.parseInt(matcher.group(1));
             try {
-                List<UserMiniPM> pms = sellerController.viewAllBuyersOfProduct(id, data.getUsername());
+                List<UserMiniPM> pms = sellerController.viewAllBuyersOfProduct(id, data.getUsername(),data.getSorts());
                 if (!pms.isEmpty()){
                     Printer.usersPrinter(pms);
                 }else {
@@ -768,7 +768,7 @@ public class CommandProcessor {
 
     public static void viewAllOffs(){
         try {
-            List<MiniOffPM> pms = sellerController.viewAllOffs(data.getUsername());
+            List<MiniOffPM> pms = sellerController.viewAllOffs(data.getUsername(),data.getSorts());
             if (!pms.isEmpty()){
                 Printer.viewOffs(pms);
             }else {

@@ -8,4 +8,5 @@ public enum SortType {
     BOUGHT_AMOUNT,
     TIME,
     SCORE,
+    CATEGORIZED_REQUESTS,
 }
