@@ -20,10 +20,10 @@ import View.PrintModels.*;
 import View.exceptions.InvalidCharacter;
 import View.exceptions.OutOfRangeInputException;
 import controler.AccountController;
+import controler.CustomerController;
 import controler.ManagerController;
 import controler.SellerController;
 import controler.exceptions.ManagerExist;
-import jdk.internal.net.http.frame.PingFrame;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +36,7 @@ public class CommandProcessor {
     private static AccountController accountController = AccountController.getInstance();
     private static ManagerController managerController = ManagerController.getInstance();
     private static SellerController sellerController = SellerController.getInstance();
+    private static CustomerController customerController = CustomerController.getInstance();
     private static Data data = Data.getInstance();
     private static Scan scan = Scan.getInstance();
 
@@ -792,7 +793,12 @@ public class CommandProcessor {
     }
 
     public static void viewBalanceCustomer(){
-
+        try {
+            long balance = customerController.viewBalance(data.getUsername());
+            Printer.printMessage("Your balance is : " + balance);
+        } catch (UserNotAvailableException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
 
     public static void viewDiscountCodesCustomer(){

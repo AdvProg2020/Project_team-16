@@ -19,6 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerController extends Controller {
+    private static CustomerController customerController = new CustomerController();
+
+    public static CustomerController getInstance() {
+        return customerController;
+    }
 
     public CartPM viewCart(String username) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
