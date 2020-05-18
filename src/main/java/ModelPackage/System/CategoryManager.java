@@ -35,12 +35,13 @@ public class CategoryManager {
         else throw new NoSuchACategoryException(Integer.toString(categoryId));
     }
 
-    public void createCategory(String name,int parentId)
+    public void createCategory(String name,int parentId,List<String> features)
             throws RepeatedNameInParentCategoryExeption,NoSuchACategoryException{
         Category parent = getCategoryById(parentId);
         checkIfThisNameIsValidForThisParent(name,parent);
 
         Category toCreate = new Category(name,parent);
+        toCreate.setSpecialFeatures(features);
         addToBase(toCreate,parent);
         DBManager.save(toCreate);
     }

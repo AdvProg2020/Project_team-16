@@ -225,7 +225,7 @@ public class ManagerController extends Controller {
         categoryManager.editCategory(id, editAttribute);
     }
 
-    public void addCategory(String name, int parentId) throws RepeatedNameInParentCategoryExeption, NoSuchACategoryException {
+    public void addCategory(String name, int parentId,List<String> features) throws RepeatedNameInParentCategoryExeption, NoSuchACategoryException {
         categoryManager.createCategory(name, parentId);
     }
 

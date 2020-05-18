@@ -3,6 +3,8 @@ package View;
 import View.exceptions.InvalidCharacter;
 import View.exceptions.OutOfRangeInputException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Scan {
@@ -145,5 +147,12 @@ public class Scan {
         return iPasswordScore;
     }
 
-
+    List<String> getListByEnterTill(String end){
+        String input;
+        List<String> list = new ArrayList<>();
+        while (!(input = scanner.nextLine()).equals(end)){
+            list.add(input);
+        }
+        return list;
+    }
 }

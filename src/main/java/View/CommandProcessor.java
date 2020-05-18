@@ -1,5 +1,6 @@
 package View;
 
+import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
@@ -16,6 +17,7 @@ import controler.exceptions.ManagerExist;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -187,6 +189,7 @@ public class CommandProcessor {
             String code = matcher.group(1);
             try {
                 DisCodeManagerPM pm = managerController.viewDiscountCode(code);
+                Printer.printDiscountManager(pm);
             } catch (NoSuchADiscountCodeException e) {
                Printer.printMessage(e.getMessage());
             }
@@ -300,7 +303,7 @@ public class CommandProcessor {
             Printer.printMessage("Enter parent ID(Enter zero for no parent) : ");
             String parentId = Scan.getInstance().getInteger();
             try {
-                managerController.addCategory(name,Integer.parseInt(parentId));
+                managerController.addCategory(name,Integer.parseInt(parentId),getInitialFeaturesForCategory());
             } catch (RepeatedNameInParentCategoryExeption | NoSuchACategoryException e) {
                 Printer.printMessage(e.getMessage());
             }
@@ -308,8 +311,19 @@ public class CommandProcessor {
             Printer.printInvalidCommand();
     }
 
-    public static void editCategory(String command){
+    private static List<String> getInitialFeaturesForCategory(){
+        Printer.printMessage("Enter features for this category,separate them with an Enter\n" +
+                "use \\end at a new line to submit features : \n");
+        return Scan.getInstance().getListByEnterTill("\\end");
+    }
 
+    public static void editCategory(String command) {
+        Matcher matcher = getMatcher(command, "edit (\\d+{1,9})");
+        if (matcher.find()) {
+            int id = Integer.parseInt(matcher.group(1));
+            CategoryEditAttribute editAttribute = new CategoryEditAttribute();
+            Printer.printMessage("Enter new Feature(Leave blank for no change) : ");
+        } else Printer.printInvalidCommand();
     }
 
     public static void removeCategory(String command){
