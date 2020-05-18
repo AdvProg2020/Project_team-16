@@ -80,10 +80,6 @@ public class CustomerController extends Controller {
         return inCartPMS;
     }
 
-    public Product viewProduct(int id) throws NoSuchAProductException {
-        return productManager.findProductById(id);
-    }
-
     public void changeAmount(String username, int id, int change) throws Exception {
         Customer customer = DBManager.load(Customer.class,username);
         if (customer == null) {

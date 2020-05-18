@@ -828,11 +828,29 @@ public class CommandProcessor {
     }
 
     public static void increaseProductInCart(String command){
-
+        Matcher matcher = getMatcher(command,"increase (\\d+{1,9})");
+        if (matcher.find()){
+            try {
+                customerController.changeAmount(data.getUsername(),Integer.parseInt(matcher.group(1)),+1);
+            } catch (Exception e) {
+                Printer.printMessage("Error : " + e.getMessage());
+            }
+        }else {
+            Printer.printInvalidCommand();
+        }
     }
 
     public static  void decreaseProductInCart(String command){
-
+        Matcher matcher = getMatcher(command,"increase (\\d+{1,9})");
+        if (matcher.find()){
+            try {
+                customerController.changeAmount(data.getUsername(),Integer.parseInt(matcher.group(1)),-1);
+            } catch (Exception e) {
+                Printer.printMessage("Error : " + e.getMessage());
+            }
+        }else {
+            Printer.printInvalidCommand();
+        }
     }
 
     public static void showTotalPrice(){
