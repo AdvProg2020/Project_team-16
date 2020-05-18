@@ -5,9 +5,11 @@ import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
+import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.discount.*;
+import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.PrintModels.DisCodeManagerPM;
 import View.PrintModels.DiscountMiniPM;
 import View.exceptions.InvalidCharacter;
@@ -362,7 +364,15 @@ public class CommandProcessor {
     }
 
     public static void removeProduct(String command){
-
+        Matcher matcher = getMatcher(command,"remove (\\d{1,9})");
+        if (matcher.find()){
+            int id = Integer.parseInt(matcher.group(1));
+            try {
+                managerController.removeProduct(id);
+            } catch (NoSuchACategoryException | NoSuchAProductException | NoSuchAProductInCategoryException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
     }
 
     public static void viewAllRequests(){
