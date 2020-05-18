@@ -32,8 +32,8 @@ public class ManagerManager {
         DBManager.save(manager);
     }
 
-    public void deleteUser(String username) {
-        User user = DBManager.load(User.class, username);
+    public void deleteUser(String username) throws UserNotAvailableException {
+        User user = AccountManager.getInstance().getUserByUsername(username);
         /*TODO : deleting user from products if a seller */
         /* TODO : deleting every log */
         DBManager.delete(user);

@@ -64,7 +64,7 @@ public class ManagerController extends Controller {
         );
     }
 
-    public void deleteUser(String username){
+    public void deleteUser(String username) throws UserNotAvailableException {
         managerManager.deleteUser(username);
     }
 

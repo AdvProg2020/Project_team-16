@@ -443,7 +443,15 @@ public class CommandProcessor {
     }
 
     public static void deleteUser(String command){
-
+        Matcher matcher = getMatcher(command,"view (\\S+)");
+        if (matcher.find()){
+            String username = matcher.group(1);
+            try {
+                managerController.deleteUser(username);
+            } catch (UserNotAvailableException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
     }
 
     public static void createManagerProfile(){
