@@ -52,76 +52,36 @@ public class SortManager {
 
     public List<User> sortUser(List<User> toSortList) {
         usersList = toSortList;
-        usersList.sort(new Comparator<User>() {
-            @Override
-            public int compare(User firstUser, User secondUser) {
-                return firstUser.getUsername().compareTo(secondUser.getUsername());
-            }
-        });
+        usersList.sort(Comparator.comparing(User::getUsername));
         return usersList;
     }
 
     private void sortByName(List<Product> products) {
-        products.sort(new Comparator<Product>() {
-            @Override
-            public int compare(Product firstProduct, Product secondProduct) {
-                return firstProduct.getName().compareTo(secondProduct.getName());
-            }
-        });
+        products.sort(Comparator.comparing(Product::getName));
     }
 
     private void sortByView(List<Product> products) {
-        products.sort(new Comparator<Product>() {
-            @Override
-            public int compare(Product firstProduct, Product secondProduct) {
-                return secondProduct.getView() - firstProduct.getView();
-            }
-        });
+        products.sort((firstProduct, secondProduct) -> secondProduct.getView() - firstProduct.getView());
     }
 
     private void sortByBoughtAmount(List<Product> products) {
-        products.sort(new Comparator<Product>() {
-            @Override
-            public int compare(Product firstProduct, Product secondProduct) {
-                return secondProduct.getBoughtAmount() - firstProduct.getBoughtAmount();
-            }
-        });
+        products.sort((firstProduct, secondProduct) -> secondProduct.getBoughtAmount() - firstProduct.getBoughtAmount());
     }
 
     private void sortByTime(List<Product> products) {
-        products.sort(new Comparator<Product>() {
-            @Override
-            public int compare(Product firstProduct, Product secondProduct) {
-                return secondProduct.getDateAdded().compareTo(firstProduct.getDateAdded());
-            }
-        });
+        products.sort((firstProduct, secondProduct) -> secondProduct.getDateAdded().compareTo(firstProduct.getDateAdded()));
     }
 
     private void sortByMorePrice(List<Product> products) {
-        products.sort(new Comparator<Product>() {
-            @Override
-            public int compare(Product firstProduct, Product secondProduct) {
-                return secondProduct.getLeastPrice() - firstProduct.getLeastPrice();
-            }
-        });
+        products.sort((firstProduct, secondProduct) -> secondProduct.getLeastPrice() - firstProduct.getLeastPrice());
     }
 
     private void sortByLessPrice(List<Product> products) {
-        products.sort(new Comparator<Product>() {
-            @Override
-            public int compare(Product firstProduct, Product secondProduct) {
-                return firstProduct.getLeastPrice() - secondProduct.getLeastPrice();
-            }
-        });
+        products.sort(Comparator.comparingInt(Product::getLeastPrice));
     }
 
     private void sortByScore(List<Product> products) {
-        products.sort(new Comparator<Product>() {
-            @Override
-            public int compare(Product firstProduct, Product secondProduct) {
-                return Double.toString(secondProduct.getTotalScore()).
-                        compareTo(Double.toString(firstProduct.getLeastPrice()));
-            }
-        });
+        products.sort((firstProduct, secondProduct) -> Double.toString(secondProduct.getTotalScore()).
+                compareTo(Double.toString(firstProduct.getLeastPrice())));
     }
 }

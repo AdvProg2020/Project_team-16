@@ -1,6 +1,5 @@
 package controler;
 
-import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
