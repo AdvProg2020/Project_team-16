@@ -8,6 +8,7 @@ import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
+import ModelPackage.System.exeption.clcsmanager.NotABuyer;
 import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.off.InvalidTimes;
@@ -407,7 +408,7 @@ public class CommandProcessor {
             int id = Integer.parseInt(matcher.group(1));
             try {
                 managerController.acceptRequest(id);
-            } catch (NoSuchARequestException | NoSuchAProductException | AlreadyASeller e) {
+            } catch (NoSuchARequestException | NoSuchAProductException  e) {
                 Printer.printMessage(e.getMessage());
             }
         }else Printer.printInvalidCommand();
@@ -891,7 +892,18 @@ public class CommandProcessor {
     }
 
     public static void rateOrder(String command){
-
+        Matcher matcher = getMatcher(command,"rate (\\d+{1,5}) ([1-5])");
+        if (matcher.find()) {
+            int id = Integer.parseInt(matcher.group(1));
+            int score = Integer.parseInt(matcher.group(2));
+            try {
+                customerController.assignAScore(data.getUsername(),id,score);
+            } catch (NoSuchAProductException | NotABuyer e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else {
+            Printer.printInvalidCommand();
+        }
     }
 
     public static void showCart(){

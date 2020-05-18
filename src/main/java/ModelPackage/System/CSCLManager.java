@@ -10,6 +10,7 @@ import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
+import ModelPackage.System.exeption.clcsmanager.NotABuyer;
 import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
@@ -94,7 +95,8 @@ public class CSCLManager {
     }
 
     public void createScore(String userId, int productId, int score)
-            throws NoSuchAProductException {
+            throws NoSuchAProductException, NotABuyer {
+        if (!boughtThisProduct(productId,userId)) throw new NotABuyer();
         Score SCORE = new Score(userId,productId,score);
         ProductManager.getInstance().assignAScore(productId,SCORE);
     }

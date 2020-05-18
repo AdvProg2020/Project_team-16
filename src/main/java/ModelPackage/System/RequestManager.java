@@ -201,7 +201,6 @@ public class RequestManager {
         ProductManager.getInstance().assignAComment(comment.getId(),comment);
     }
 
-
     private void acceptSeller(Request request) {
         Seller seller = request.getSeller();
         seller.setVerified(true);

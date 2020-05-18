@@ -202,7 +202,7 @@ public class ManagerController extends Controller {
         );
     }
 
-    public void acceptRequest(int id) throws NoSuchARequestException, AlreadyASeller, NoSuchAProductException {
+    public void acceptRequest(int id) throws NoSuchARequestException, NoSuchAProductException {
         requestManager.accept(id);
     }
 
