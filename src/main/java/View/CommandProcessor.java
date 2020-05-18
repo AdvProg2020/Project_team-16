@@ -877,9 +877,17 @@ public class CommandProcessor {
         else Printer.printInvalidCommand();
     }
 
-
     public static void showOrders(){
-
+        try {
+            List<OrderMiniLogPM> pms = customerController.viewOrders(data.getUsername());
+            if (!pms.isEmpty()){
+                Printer.viewOrderHistory(pms);
+            }else {
+                Printer.printMessage("No Order To Show.");
+            }
+        } catch (UserNotAvailableException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void rateOrder(String command){
