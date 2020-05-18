@@ -9,6 +9,7 @@ import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.discount.*;
+import ModelPackage.System.exeption.product.AlreadyASeller;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
 import View.PrintModels.DisCodeManagerPM;
@@ -396,7 +397,15 @@ public class CommandProcessor {
     }
 
     public static void acceptRequest(String command){
-
+        Matcher matcher = getMatcher(command,"accept (\\d{1,9})");
+        if (matcher.find()){
+            int id = Integer.parseInt(matcher.group(1));
+            try {
+                managerController.acceptRequest(id);
+            } catch (NoSuchARequestException | NoSuchAProductException | AlreadyASeller e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
     }
 
     public static void declineRequest(String command){
