@@ -601,7 +601,22 @@ public class CommandProcessor {
     }
 
     public static void viewProduct(String command){
-
+        Matcher matcher;
+        if (command.startsWith("view")){
+           matcher = getMatcher(command,"view (\\d+{1,9})");
+        }else {
+            matcher = getMatcher(command,"show product (\\d+{1,9})");
+        }
+        if (matcher.find()){
+            String id = matcher.group(1);
+            try {
+                FullProductPM pm = sellerController.viewProduct(Integer.parseInt(id));
+                Printer.productPrintFull(pm);
+            } catch (NoSuchAProductException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }
+        else Printer.printInvalidCommand();
     }
 
     public static void editProduct(String command){
