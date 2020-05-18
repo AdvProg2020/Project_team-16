@@ -12,6 +12,7 @@ import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.PrintModels.DisCodeManagerPM;
 import View.PrintModels.DiscountMiniPM;
+import View.PrintModels.RequestPM;
 import View.exceptions.InvalidCharacter;
 import View.exceptions.OutOfRangeInputException;
 import controler.AccountController;
@@ -376,7 +377,8 @@ public class CommandProcessor {
     }
 
     public static void viewAllRequests(){
-
+        List<RequestPM> pms = managerController.manageRequests();
+        Printer.printAllRequests(pms);
     }
 
     public static void viewRequest(String command){
