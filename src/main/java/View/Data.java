@@ -1,5 +1,6 @@
 package View;
 
+import ModelPackage.System.SortType;
 import View.Menu.Menu;
 
 import java.util.ArrayList;
@@ -21,14 +22,10 @@ public class Data {
     private Queue<Menu> menuHistory;
 
     /* Filter And Sort Options */
-    private boolean isAscending;
-    private SortType sortType;
-    private int upPriceLimit;
-    private int downPriceLimit;
+    private SortAndFilterPackage sortAndFilters;
+    private boolean isOnOffMode;
     private ArrayList<String> publicFeatures;
     private ArrayList<String> specialFeatures;
-    private HashMap<String,String> activeFilters;
-    private boolean isOnOffMode;
 
     public void addMenuToHistory(Menu menu){
         menuHistory.add(menu);
@@ -44,7 +41,6 @@ public class Data {
         menuHistory = new LinkedList<>();
         publicFeatures = new ArrayList<>();
         specialFeatures = new ArrayList<>();
-        activeFilters = new HashMap<>();
     }
 
     public void logout(){

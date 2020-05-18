@@ -26,8 +26,7 @@ public class ManagerManager {
 
     AccountManager accountManager = AccountManager.getInstance();
 
-    public void createManagerProfile(String[] info) throws SecondManagerByUserException {
-        checkIfIsTheFirstManager();
+    public void createManagerProfile(String[] info) {
         Manager manager = accountManager.createManager(info);
         DBManager.save(manager);
     }

@@ -455,7 +455,18 @@ public class CommandProcessor {
     }
 
     public static void createManagerProfile(){
-
+        String[] info = new String[6];
+        Printer.printMessage("Enter a username : ");
+        info[0] = Scan.getInstance().getLine();
+        if (!isUsernameValid(info[0])){
+            Printer.printMessage("Username format isn't valid. It must contain only alphabets, numbers and underscore");
+            return; }
+        try { accountController.usernameInitialCheck(info[0]);
+        }catch (UserNotAvailableException e) {
+            Printer.printMessage("This Username isn't available");
+        }
+        getGeneralInformation(info);
+        managerController.createManagerProfile(info);
     }
 
     public static void viewPersonalInfo(){

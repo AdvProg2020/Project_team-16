@@ -3,6 +3,7 @@ package controler;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
+import ModelPackage.System.SortManager;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
@@ -20,6 +21,7 @@ import ModelPackage.System.exeption.request.NoSuchARequestException;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
 import View.PrintModels.*;
+import View.SortAndFilterPackage;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +38,7 @@ public class ManagerController extends Controller {
 
     public List<UserMiniPM> manageUsers () {
         List<User> users = DBManager.loadAllData(User.class);
+        sortManager.sortUser(users);
         ArrayList<UserMiniPM> userMiniPMS = new ArrayList<>();
 
         for (User user : users) {
@@ -68,7 +71,7 @@ public class ManagerController extends Controller {
         managerManager.deleteUser(username);
     }
 
-    public void createManagerProfile(String[] info) throws SecondManagerByUserException {
+    public void createManagerProfile(String[] info) {
         managerManager.createManagerProfile(info);
     }
 
