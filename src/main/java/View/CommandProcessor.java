@@ -233,11 +233,22 @@ public class CommandProcessor {
             } catch (Exception e){
                 Printer.printMessage("Something went wrong. Try later...");
             }
-        }
+        }else
+            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
     }
 
     public static void removeDiscountCode(String command){
-
+        Matcher matcher = getMatcher(command,"remove discount code (.*?)");
+        if (matcher.find()){
+            String code = matcher.group(1);
+            try {
+                managerController.removeDiscountCode(code);
+            } catch (NoSuchADiscountCodeException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }
+        else
+            Printer.printMessage("Invalid command pattern! Please see \"help\" for more.");
     }
 
     public static void viewDiscountCodes(){
