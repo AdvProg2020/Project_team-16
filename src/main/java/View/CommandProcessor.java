@@ -660,7 +660,15 @@ public class CommandProcessor {
     }
 
     public static void deleteProduct(String command){
-
+        Matcher matcher = getMatcher(command,"delete (\\d+{1,9})");
+        if (matcher.find()){
+            int id = Integer.parseInt(matcher.group(1));
+            try {
+                sellerController.removeProduct(id,data.getUsername());
+            } catch (NoSuchACategoryException | NoSuchAProductInCategoryException | NoSuchAProductException | EditorIsNotSellerException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
     }
 
     public static void viewBuyersOfThisProduct(String command){

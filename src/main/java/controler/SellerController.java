@@ -89,9 +89,9 @@ public class SellerController extends Controller{
                 productManager.allFeaturesOf(product));
     }
 
-    public void removeProduct(int productId) throws NoSuchACategoryException,
-            NoSuchAProductInCategoryException, NoSuchAProductException {
-         productManager.deleteProduct(productId);
+    public void removeProduct(int productId,String editor) throws NoSuchACategoryException,
+            NoSuchAProductInCategoryException, NoSuchAProductException, EditorIsNotSellerException {
+         productManager.deleteProduct(productId,editor);
     }
 
     public List<MiniOffPM> viewAllOffs(String sellerUserName) throws UserNotAvailableException {
