@@ -1,10 +1,9 @@
 package View;
 
+import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
-import ModelPackage.System.exeption.discount.AlreadyExistCodeException;
-import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
-import ModelPackage.System.exeption.discount.StartingDateIsAfterEndingDate;
+import ModelPackage.System.exeption.discount.*;
 import ModelPackage.Users.Manager;
 import View.PrintModels.DisCodeManagerPM;
 import View.exceptions.InvalidCharacter;
@@ -13,6 +12,9 @@ import controler.AccountController;
 import controler.ManagerController;
 import controler.exceptions.ManagerExist;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -190,7 +192,48 @@ public class CommandProcessor {
     }
 
     public static void editDiscountCode(String command){
+        Matcher matcher = getMatcher(command,"edit discount code (.*?)");
+        if (matcher.find()){
+            DiscountCodeEditAttributes editAttributes = new DiscountCodeEditAttributes();
+            String code = matcher.group(1);
+            Printer.printMessage("Enter new Start date(Leave it blank if don't want to change)\n" +
+                    "it must have format : \"yyyy-MM-dd HH:mm:ss\" : ");
+            try {
+                String date = Scan.getInstance().getNullAbleDate();
+                if (!date.isEmpty()) {
+                    Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+                    editAttributes.setStart(start);
+                }
+            } catch (ParseException e) { e.printStackTrace(); }
 
+            Printer.printMessage("Enter new End date(Leave it blank if don't want to change)\n" +
+                    "it must have format : \"yyyy-MM-dd HH:mm:ss\" : ");
+            try {
+                String date = Scan.getInstance().getNullAbleDate();
+                if (!date.isEmpty()) {
+                    Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+                    editAttributes.setEnd(start);
+                }
+            } catch (ParseException e) { e.printStackTrace(); }
+
+            Printer.printMessage("Enter new percentage(Leave it blank if don't want to change) : ");
+            String percentage = Scan.getInstance().getNullAblePercentage();
+            if (!percentage.isEmpty()) {
+                editAttributes.setOffPercent(Integer.parseInt(percentage));
+            }
+            Printer.printMessage("Enter new maximum of discount(Leave it blank if don't want to change) : ");
+            String max = Scan.getInstance().getNullAbleLong();
+            if (!max.isEmpty()){
+                editAttributes.setMaxDiscount(Integer.parseInt(max));
+            }
+            try {
+                managerController.editDiscountCode(code,editAttributes);
+            }catch (NoSuchADiscountCodeException | StartingDateIsAfterEndingDate e) {
+                Printer.printMessage(e.getMessage());
+            } catch (Exception e){
+                Printer.printMessage("Something went wrong. Try later...");
+            }
+        }
     }
 
     public static void removeDiscountCode(String command){

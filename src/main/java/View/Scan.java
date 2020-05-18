@@ -53,6 +53,15 @@ public class Scan {
         }
     }
 
+    String getNullAbleDate(){
+        while (true){
+            String date = scanner.nextLine();
+            if (date.matches("\\b\\d{4}-\\d{2}-\\d{2} \\d{1,2}:\\d{2}:\\d{2}\\b"))return date;
+            else if (date.isEmpty())return date;
+            else Printer.printMessage("invalid date Enter a valid one : ");
+        }
+    }
+
     String getPercentage(){
          while (true){
              String input = scanner.nextLine();
@@ -61,10 +70,26 @@ public class Scan {
          }
     }
 
+    String getNullAblePercentage(){
+        while (true){
+            String input = scanner.nextLine();
+            if (input.matches("(100|[0-9][0-9])?"))return input;
+            else Printer.printMessage("Enter a valid Percentage : ");
+        }
+    }
+
     String getLong(){
         while (true){
             String input = scanner.nextLine();
             if (input.matches("^\\d{1,19}$"))return input;
+            else Printer.printMessage("Enter a valid number : ");
+        }
+    }
+
+    String getNullAbleLong(){
+        while (true){
+            String input = scanner.nextLine();
+            if (input.matches("(^\\d{1,19}$)?"))return input;
             else Printer.printMessage("Enter a valid number : ");
         }
     }
