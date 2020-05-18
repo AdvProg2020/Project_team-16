@@ -409,7 +409,15 @@ public class CommandProcessor {
     }
 
     public static void declineRequest(String command){
-
+        Matcher matcher = getMatcher(command,"decline (\\d{1,9})");
+        if (matcher.find()){
+            int id = Integer.parseInt(matcher.group(1));
+            try {
+                managerController.declineRequest(id);
+            } catch (NoSuchARequestException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
     }
 
     public static void viewAllUsers(){
