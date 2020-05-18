@@ -35,11 +35,13 @@ public class Customer extends User {
     public Customer(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart, long balance) {
         super(username, password, firstName, lastName, email, phoneNumber, cart);
         this.balance = balance;
+        this.customerInformation = new ArrayList<>();
         this.purchaseLogs = new ArrayList<PurchaseLog>();
         this.discountCodes = new ArrayList<>();
     }
 
     public Customer(){
+        this.customerInformation = new ArrayList<>();
         this.purchaseLogs = new ArrayList<PurchaseLog>();
         this.discountCodes = new ArrayList<>();
     }
