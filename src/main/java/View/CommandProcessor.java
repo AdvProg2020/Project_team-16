@@ -6,6 +6,7 @@ import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.Users.Manager;
 import View.PrintModels.DisCodeManagerPM;
+import View.PrintModels.DiscountMiniPM;
 import View.exceptions.InvalidCharacter;
 import View.exceptions.OutOfRangeInputException;
 import controler.AccountController;
@@ -15,6 +16,7 @@ import controler.exceptions.ManagerExist;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -252,7 +254,12 @@ public class CommandProcessor {
     }
 
     public static void viewDiscountCodes(){
-
+        List<DiscountMiniPM> discountMiniPMS = managerController.viewDiscountCodes();
+        if (!discountMiniPMS.isEmpty()){
+            Printer.printAllDiscountCodes(discountMiniPMS);
+        }else {
+            Printer.printMessage("There isn't discount code to show.");
+        }
     }
 
     public static void addCategory(String command){
