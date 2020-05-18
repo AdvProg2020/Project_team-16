@@ -10,6 +10,7 @@ import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
+import ModelPackage.System.exeption.request.NoSuchARequestException;
 import View.PrintModels.DisCodeManagerPM;
 import View.PrintModels.DiscountMiniPM;
 import View.PrintModels.RequestPM;
@@ -382,7 +383,16 @@ public class CommandProcessor {
     }
 
     public static void viewRequest(String command){
-
+        Matcher matcher = getMatcher(command,"details (\\d{1,9})");
+        if (matcher.find()){
+            int id = Integer.parseInt(matcher.group(1));
+            try {
+                RequestPM requestPM = managerController.viewRequest(id);
+                Printer.printDetailedRequest(requestPM);
+            } catch (NoSuchARequestException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
     }
 
     public static void acceptRequest(String command){
