@@ -2,6 +2,7 @@ package View;
 
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
+import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
@@ -11,6 +12,7 @@ import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.AlreadyASeller;
+import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
 import View.PrintModels.*;
@@ -33,6 +35,7 @@ public class CommandProcessor {
     private static ManagerController managerController = ManagerController.getInstance();
     private static SellerController sellerController = SellerController.getInstance();
     private static Data data = Data.getInstance();
+    private static Scan scan = Scan.getInstance();
 
     public static void createAccount(String command){
         Matcher matcher = getMatcher(command,"create account ([M,m]anager|[S,s]eller|[C,c]ustomer) (\\S+)");
@@ -56,7 +59,6 @@ public class CommandProcessor {
     }
 
     private static void getGeneralInformation(String[] info){
-        Scan scan = Scan.getInstance();
         info[1] = scan.getPassword("Enter your Password");
         Printer.printMessage("Enter first name : ");
         info[2] = scan.getLine();
@@ -77,11 +79,11 @@ public class CommandProcessor {
         getGeneralInformation(info);
         info[0] = username;
         Printer.printMessage("Enter Company Id(Leave it blank to create one) : ");
-        info[6] = Scan.getInstance().getLine();
+        info[6] = scan.getLine();
         if (info[6].isEmpty())info[6] = createCompany();
         while (true){
             Printer.printMessage("Enter Your Balance(It must br a long number) :");
-            info[7] = Scan.getInstance().getLine();
+            info[7] = scan.getLine();
             if (!info[7].matches("^-?\\d{1,19}$")) Printer.printMessage("invalid balance! \n");
             else break;
         }
@@ -95,11 +97,11 @@ public class CommandProcessor {
     private static String createCompany(){
         String[] info = new String[3];
         Printer.printMessage("Enter name of company : ");
-        info[0] = Scan.getInstance().getLine();
+        info[0] = scan.getLine();
         Printer.printMessage("Enter phone number of company : ");
-        info[1] = Scan.getInstance().getLine();
+        info[1] = scan.getLine();
         Printer.printMessage("Enter category of company : ");
-        info[2] = Scan.getInstance().getLine();
+        info[2] = scan.getLine();
         return Integer.toString(accountController.createCompany(info));
     }
 
@@ -108,7 +110,7 @@ public class CommandProcessor {
         getGeneralInformation(info);
         info[0] = username;
         Printer.printMessage("Enter Your Balance(It must br a long number) :");
-        info[6] = Scan.getInstance().getLong();
+        info[6] = scan.getLong();
         accountController.createAccount(info,"customer");
         data.setRole("customer");
         data.setUsername(username);
@@ -138,7 +140,7 @@ public class CommandProcessor {
         if (matcher.find()){
             String username = matcher.group(1);
             if (isUsernameValid(username)){
-               String password = Scan.getInstance().getPassword("Enter Your Password : ");
+               String password = scan.getPassword("Enter Your Password : ");
                 try {
                     String role = accountController.login(username,password);
                     data.setUsername(username);
@@ -161,7 +163,7 @@ public class CommandProcessor {
         String[] info = new String[5];
         Printer.printMessage("Enter a Code for your Discount : ");
         try {
-            info[0] = Scan.getInstance().getFormalLines(64);
+            info[0] = scan.getFormalLines(64);
         } catch (InvalidCharacter invalidCharacter) {
             Printer.printMessage("Your code only can have A-Z a-z 1-9 _ \n" +
                     "going back to menu ...");
@@ -169,13 +171,13 @@ public class CommandProcessor {
             Printer.printMessage("Your code only can have 64 characters \n" +
                     "going back to menu ..."); }
         Printer.printMessage("Enter start date in format of \"dd-MM-yyyy HH:mm:ss\" : ");
-        info[1] = Scan.getInstance().getADate();
+        info[1] = scan.getADate();
         Printer.printMessage("Enter end date in format of \"dd-MM-yyyy HH:mm:ss\" : ");
-        info[2] = Scan.getInstance().getADate();
+        info[2] = scan.getADate();
         Printer.printMessage("Enter Percentage : ");
-        info[3] = Scan.getInstance().getPercentage();
+        info[3] = scan.getPercentage();
         Printer.printMessage("Enter Maximum of discount : ");
-        info[4] = Scan.getInstance().getLong();
+        info[4] = scan.getLong();
         try {
             managerController.createDiscount(info);
         } catch (StartingDateIsAfterEndingDate startingDateIsAfterEndingDate) {
@@ -209,7 +211,7 @@ public class CommandProcessor {
             Printer.printMessage("Enter new Start date(Leave it blank if don't want to change)\n" +
                     "it must have format : \"yyyy-MM-dd HH:mm:ss\" : ");
             try {
-                String date = Scan.getInstance().getNullAbleDate();
+                String date = scan.getNullAbleDate();
                 if (!date.isEmpty()) {
                     Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
                     editAttributes.setStart(start);
@@ -219,7 +221,7 @@ public class CommandProcessor {
             Printer.printMessage("Enter new End date(Leave it blank if don't want to change)\n" +
                     "it must have format : \"yyyy-MM-dd HH:mm:ss\" : ");
             try {
-                String date = Scan.getInstance().getNullAbleDate();
+                String date = scan.getNullAbleDate();
                 if (!date.isEmpty()) {
                     Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
                     editAttributes.setEnd(start);
@@ -227,12 +229,12 @@ public class CommandProcessor {
             } catch (ParseException e) { e.printStackTrace(); }
 
             Printer.printMessage("Enter new percentage(Leave it blank if don't want to change) : ");
-            String percentage = Scan.getInstance().getNullAblePercentage();
+            String percentage = scan.getNullAblePercentage();
             if (!percentage.isEmpty()) {
                 editAttributes.setOffPercent(Integer.parseInt(percentage));
             }
             Printer.printMessage("Enter new maximum of discount(Leave it blank if don't want to change) : ");
-            String max = Scan.getInstance().getNullAbleLong();
+            String max = scan.getNullAbleLong();
             if (!max.isEmpty()){
                 editAttributes.setMaxDiscount(Integer.parseInt(max));
             }
@@ -276,7 +278,7 @@ public class CommandProcessor {
             String code = matcher.group(1);
             String username = matcher.group(2);
             Printer.printMessage("Set the number of usage for this user(max 100) : ");
-            String time = Scan.getInstance().getPercentage();
+            String time = scan.getPercentage();
             try {
                 managerController.addUserToDiscountCode(code,username,Integer.parseInt(time));
             } catch (UserNotAvailableException | UserExistedInDiscountCodeException | NoSuchADiscountCodeException e) {
@@ -305,7 +307,7 @@ public class CommandProcessor {
         if (matcher.find()){
             String name = matcher.group(1);
             Printer.printMessage("Enter parent ID(Enter zero for no parent) : ");
-            String parentId = Scan.getInstance().getInteger();
+            String parentId = scan.getInteger();
             try {
                 managerController.addCategory(name,Integer.parseInt(parentId),getInitialFeaturesForCategory());
             } catch (RepeatedNameInParentCategoryExeption | NoSuchACategoryException e) {
@@ -318,7 +320,7 @@ public class CommandProcessor {
     private static List<String> getInitialFeaturesForCategory(){
         Printer.printMessage("Enter features for this category,separate them with an Enter\n" +
                 "use \\end at a new line to submit features : \n");
-        return Scan.getInstance().getListByEnterTill("\\end");
+        return scan.getListByEnterTill("\\end");
     }
 
     public static void editCategory(String command) {
@@ -327,21 +329,21 @@ public class CommandProcessor {
             int id = Integer.parseInt(matcher.group(1));
             CategoryEditAttribute editAttribute = new CategoryEditAttribute();
             Printer.printMessage("Enter new Feature(Leave blank for no change) : ");
-            String newFeature = Scan.getInstance().getLine();
+            String newFeature = scan.getLine();
             if (!newFeature.isEmpty())
                 editAttribute.setAddFeature(newFeature);
             Printer.printMessage("Enter feature you want to remove(Leave blank for no change) : ");
-            String remove = Scan.getInstance().getLine();
+            String remove = scan.getLine();
             if (!remove.isEmpty())
                 editAttribute.setRemoveFeature(remove);
             Printer.printMessage("Enter new parent id(Leave blank for no change) : ");
-            String newParentId = Scan.getInstance().getNullAbleInteger();
+            String newParentId = scan.getNullAbleInteger();
             if (!newParentId.isEmpty()){
                 int parentId = Integer.parseInt(newParentId);
                 editAttribute.setNewParentId(parentId);
             }
             Printer.printMessage("Enter new Name(Leave blank for no change) : ");
-            String newName = Scan.getInstance().getLine();
+            String newName = scan.getLine();
             if (!newName.isEmpty()){
                 editAttribute.setName(newName);
             }
@@ -455,7 +457,7 @@ public class CommandProcessor {
     public static void createManagerProfile(){
         String[] info = new String[6];
         Printer.printMessage("Enter a username : ");
-        info[0] = Scan.getInstance().getLine();
+        info[0] = scan.getLine();
         if (!isUsernameValid(info[0])){
             Printer.printMessage("Username format isn't valid. It must contain only alphabets, numbers and underscore");
             return; }
@@ -481,7 +483,6 @@ public class CommandProcessor {
         if (matcher.find()){
             String field = matcher.group(1);
             String newField;
-            Scan scan = Scan.getInstance();
             UserEditAttributes attributes = new UserEditAttributes();
             Printer.printMessage("Enter new " + field + " : ");
              if (!field.equals("password")) {
@@ -534,7 +535,7 @@ public class CommandProcessor {
         data.setPublicFeatures(sellerController.getPublicFeatures());
         info[0] = data.getUsername();
         Printer.printMessage("Enter category id you want to create product in : ");
-        info[3] = Scan.getInstance().getInteger();
+        info[3] = scan.getInteger();
         try {
             data.setSpecialFeatures(sellerController.getSpecialFeaturesOfCat(Integer.parseInt(info[3])));
         } catch (NoSuchACategoryException e) {
@@ -542,15 +543,15 @@ public class CommandProcessor {
             return;
         }
         Printer.printMessage("Enter product name : ");
-        info[1] = Scan.getInstance().getLine();
+        info[1] = scan.getLine();
         Printer.printMessage("Enter company of product : ");
-        info[2] = Scan.getInstance().getLine();
+        info[2] = scan.getLine();
         Printer.printMessage("Enter description of the product, enter \\end at the end of your description : \n");
-        info[4] = Scan.getInstance().getLinesUntil("\\end");
+        info[4] = scan.getLinesUntil("\\end");
         Printer.printMessage("Enter the price : ");
-        info[5] = Scan.getInstance().getInteger();
+        info[5] = scan.getInteger();
         Printer.printMessage("Enter the amount of product you have in stock : ");
-        info[6] = Scan.getInstance().getInteger();
+        info[6] = scan.getInteger();
         String[] publicFeatureData = new String[data.getPublicFeatures().size()*2];
         String[] specialFeatureData = new String[data.getSpecialFeatures().size()*2];
         getFeatures("public",publicFeatureData,data.getPublicFeatures());
@@ -567,7 +568,7 @@ public class CommandProcessor {
         int i = 0;
         for (String feature : features) {
             Printer.printMessage(feature + " : ");
-            String fea = Scan.getInstance().getLine();
+            String fea = scan.getLine();
             data[i*2] = feature;
             data[i*2+1] = fea;
             i++;
@@ -620,7 +621,42 @@ public class CommandProcessor {
     }
 
     public static void editProduct(String command){
-
+        ProductEditAttribute editAttribute = new ProductEditAttribute();
+        Matcher matcher = getMatcher(command,"edit (\\d+{1,9})");
+        if (matcher.find()){
+            editAttribute.setSourceId(Integer.parseInt(matcher.group(1)));
+            Printer.printMessage("Enter new name(Leave blank if don't want to change) : ");
+            String newName = scan.getLine();
+            if (!newName.isEmpty()){
+                editAttribute.setName(newName);
+            }
+            Printer.printMessage("Enter public feature title you want to change(Leave blank if don't want to change) : \n");
+            String publicField = scan.getLine();
+            if (!publicField.isEmpty()){
+                Printer.printMessage("Enter new Feature : ");
+                String feature = scan.getLine();
+                editAttribute.setPublicFeatureTitle(publicField);
+                editAttribute.setPublicFeature(feature);
+            }
+            Printer.printMessage("Enter special feature title you want to change(Leave blank if don't want to change) : \n");
+            String specialField = scan.getLine();
+            if (!specialField.isEmpty()){
+                Printer.printMessage("Enter new Feature : ");
+                String feature = scan.getLine();
+                editAttribute.setSpecialFeatureTitle(specialField);
+                editAttribute.setSpecialFeature(feature);
+            }
+            Printer.printMessage("Enter new category id(Leave it blank if don't want to change) : ");
+            String newCatId = scan.getNullAbleInteger();
+            if (!newCatId.isEmpty()){
+                editAttribute.setNewCategoryId(Integer.parseInt(newCatId));
+            }
+            try {
+                sellerController.editProduct(data.getUsername(),editAttribute);
+            } catch (NoSuchAProductException | EditorIsNotSellerException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        } else Printer.printInvalidCommand();
     }
 
     public static void deleteProduct(String command){

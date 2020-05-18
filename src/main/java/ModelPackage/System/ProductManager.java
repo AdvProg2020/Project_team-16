@@ -44,13 +44,21 @@ public class ProductManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void editProduct(ProductEditAttribute edited, String editor) throws NoSuchAProductException {
+    public void editProduct(ProductEditAttribute edited, String editor) throws NoSuchAProductException, EditorIsNotSellerException {
         String requestStr = String.format("%s has requested to edit Product \"%s\" with id %s",edited,edited.getName(),edited.getId());
         Product product = findProductById(edited.getSourceId());
+        checkIfEditorIsASeller(editor,product);
         allProductsActive.remove(product);
         product.setProductStatus(ProductStatus.UNDER_EDIT);
         Request request = new Request(editor,RequestType.CHANGE_PRODUCT,requestStr,edited);
         RequestManager.getInstance().addRequest(request);
+    }
+
+    private void checkIfEditorIsASeller(String username,Product product) throws EditorIsNotSellerException {
+        for (Seller seller : product.getAllSellers()) {
+            if (seller.getUsername().equals(username)) return;
+        }
+        throw new EditorIsNotSellerException();
     }
 
     public void changeAmountOfStock(int productId, String sellerId, int amount){

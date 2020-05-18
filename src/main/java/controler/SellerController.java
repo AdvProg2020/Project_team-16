@@ -17,6 +17,7 @@ import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
+import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
@@ -188,7 +189,7 @@ public class SellerController extends Controller{
     }
 
     public void editProduct(String sellerUserName, ProductEditAttribute editAttribute)
-            throws NoSuchAProductException {
+            throws NoSuchAProductException, EditorIsNotSellerException {
         productManager.editProduct(editAttribute, sellerUserName);
     }
 
