@@ -36,6 +36,7 @@ public class SortManager {
             case TIME:
                 sortByTime(list);
                 break;
+            case DEAFAULT:
             case VIEW:
                 sortByView(list);
                 break;
@@ -73,12 +74,24 @@ public class SortManager {
     public void sortDiscountCodes(List<DiscountCode> list,SortType sortType){
         switch (sortType){
             case NAME:sortDiscountByCode(list);break;
+            case DEAFAULT:
             case TIME:sortDiscountByStartTime(list);break;
         }
     }
 
     public void sortDiscountIntegers(List<DiscountcodeIntegerMap> list,SortType sortType){
+        switch (sortType){
+            case DEAFAULT: sortDiscountIntegersByAmount(list);break;
+            case NAME: sortDiscountIntegersByName(list);break;
+        }
+    }
+
+    private void sortDiscountIntegersByAmount(List<DiscountcodeIntegerMap> list){
         list.sort(Comparator.comparingInt(DiscountcodeIntegerMap::getInteger));
+    }
+
+    private void sortDiscountIntegersByName(List<DiscountcodeIntegerMap> list){
+        list.sort(Comparator.comparing(discountCodeIntegerMap -> discountCodeIntegerMap.getDiscountCode().getCode()));
     }
 
     private void sortDiscountByStartTime(List<DiscountCode> list){
@@ -91,6 +104,7 @@ public class SortManager {
 
     public void sortRequests(List<Request> list,SortType sortType){
         switch (sortType){
+            case DEAFAULT:
             case CATEGORIZED_REQUESTS:sortRequestsCategorized(list);break;
             case NAME:sortRequestsByName(list);break;
             case TIME:default:break;
