@@ -9,6 +9,7 @@ import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.discount.*;
+import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
 import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
 import ModelPackage.System.exeption.product.AlreadyASeller;
@@ -750,9 +751,19 @@ public class CommandProcessor {
         }else Printer.printInvalidCommand();
     }
 
-
     public static void addOff(){
-
+        String[] info = new String[3];
+        Printer.printMessage("Enter percentage of your off : ");
+        info[2] = scan.getPercentage();
+        Printer.printMessage("Enter start date in format of \"dd-MM-yyyy HH:mm:ss\" : ");
+        info[0] = scan.getADate();
+        Printer.printMessage("Enter end date in format of \"dd-MM-yyyy HH:mm:ss\" : ");
+        info[1] = scan.getADate();
+        try {
+            sellerController.addOff(info,data.getUsername());
+        } catch (ParseException | InvalidTimes | UserNotAvailableException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
 
     public static void viewAllOffs(){
