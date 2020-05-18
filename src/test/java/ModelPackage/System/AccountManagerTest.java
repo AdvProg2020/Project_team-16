@@ -11,10 +11,16 @@ import ModelPackage.Users.Cart;
 import ModelPackage.Users.Manager;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
+import io.reactivex.exceptions.Exceptions;
+import mockit.Expectations;
 import mockit.Mock;
 import mockit.MockUp;
+import mockit.Mocked;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,14 +67,25 @@ public class AccountManagerTest {
         );
     }
 
-    @Test
-    public void changeInfo() throws SameInfoException, UserNotAvailableException {
+    @Before
+    public void initialize(){
         new MockUp<AccountManager>(){
             @Mock
             public User getUserByUsername(String username) throws UserNotAvailableException {
-                return marmof;
+                if (username.equals("marmofayezi")) return marmof;
+                else if (username.equals("hatam008")) return hatam;
+                else return sapa;
             }
         };
+        new MockUp<DBManager>(){
+            @Mock
+            public void save(Object o){
+            }
+        };
+    }
+
+    @Test
+    public void changeInfo() throws SameInfoException, UserNotAvailableException {
         UserEditAttributes info = new UserEditAttributes();
         info.setNewEmail("ali@gmail.com");
         accountManager.changeInfo("marmof",info);
@@ -78,6 +95,18 @@ public class AccountManagerTest {
 
     @Test
     public void createAccount_Customer() throws UserNotAvailableException {
+        new MockUp<AccountManager>(){
+            @Mock
+            public User getUserByUsername(String username) throws UserNotAvailableException {
+                return marmof;
+            }
+        };
+        new MockUp<DBManager>(){
+            @Mock
+            public void save(Object o){
+            }
+        };
+
         String[] info = {
                 "marmofayezi",
                 "marmof.ir",
@@ -127,14 +156,21 @@ public class AccountManagerTest {
 
     @Test
     public void login() throws WrongPasswordException, NotVerifiedSeller, UserNotAvailableException {
-        accountManager.login("marmofayezi","marmof.ir");
-        boolean actual = marmof.isHasSignedIn();
-        Assert.assertTrue(actual);
+        new Expectations(){
+            {
+                DBManager.load(Manager.class, "hatam008");
+                result = hatam;
+                times = 1;
+            }
+        };
+
+        String actual = accountManager.login("hatam008","hatam008@kimi");
+        Assert.assertEquals("Manager", actual);
     }
 
     @Test(expected = WrongPasswordException.class)
     public void loginWithWrongPassword() throws WrongPasswordException, NotVerifiedSeller, UserNotAvailableException {
-        accountManager.login("marmofayezi","marmof.com");
+        accountManager.login("hatam008","marmof.com");
     }
 
     @Test
