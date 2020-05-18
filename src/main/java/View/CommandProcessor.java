@@ -767,7 +767,16 @@ public class CommandProcessor {
     }
 
     public static void viewAllOffs(){
-
+        try {
+            List<MiniOffPM> pms = sellerController.viewAllOffs(data.getUsername());
+            if (!pms.isEmpty()){
+                Printer.viewOffs(pms);
+            }else {
+                Printer.printMessage("There isn't any off to show");
+            }
+        } catch (UserNotAvailableException e) {
+            Printer.printMessage("Your not a seller");
+        }
     }
 
     public static void viewBalanceCustomer(){

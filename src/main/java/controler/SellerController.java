@@ -98,7 +98,10 @@ public class SellerController extends Controller{
     }
 
     public List<MiniOffPM> viewAllOffs(String sellerUserName) throws UserNotAvailableException {
-        Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
+        Seller seller = DBManager.load(Seller.class,sellerUserName);
+        if (seller == null) {
+            throw new UserNotAvailableException();
+        }
         List<Off> offs = seller.getOffs();
         List<MiniOffPM> offPMs = new ArrayList<>();
         for (Off off : offs) {
