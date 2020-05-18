@@ -53,6 +53,7 @@ public class SellerManager {
             seller = subCart.getSeller();
             price = CSCLManager.getInstance().findPrice(subCart);
             seller.setBalance(seller.getBalance() + price * subCart.getAmount());
+            DBManager.save(seller);
         }
     }
 

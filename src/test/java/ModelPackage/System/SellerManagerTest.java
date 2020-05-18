@@ -2,9 +2,14 @@ package ModelPackage.System;
 
 import ModelPackage.Log.DeliveryStatus;
 import ModelPackage.Log.SellLog;
+import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
+import ModelPackage.Product.SoldProduct;
+import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
+import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.SubCart;
@@ -29,7 +34,6 @@ public class SellerManagerTest {
     private Product dullForKimmi;
     private Product skirtForKimmi;
     private List<SellLog> sellLogs;
-    private List<String> productIds;
     private List<Product> products;
     private Category category;
     private Cart cart;
@@ -64,9 +68,12 @@ public class SellerManagerTest {
 
         dullForKimmi = new Product();
 
-        HashMap<String, Integer> prices = new HashMap<>();
-        prices.put(marmof.getUsername(), 10000);
-        prices.put("asghar", 20000);
+        List<SellerIntegerMap> prices = new ArrayList<>();
+
+        SellerIntegerMap price = new SellerIntegerMap();
+        price.setInteger(10000);
+        price.setSeller(marmof);
+
         dullForKimmi.setPrices(prices);
 
         skirtForKimmi = new Product();
@@ -78,8 +85,16 @@ public class SellerManagerTest {
         dullForKimmi.setAllSellers(new ArrayList<>());
         dullForKimmi.getAllSellers().add(marmof);
 
+        SoldProduct soldDull = new SoldProduct();
+        soldDull.setSoldPrice(10000);
+        soldDull.setSourceId(dullForKimmi.getId());
+
+        SoldProduct soldSkirt = new SoldProduct();
+        soldDull.setSoldPrice(30000);
+        soldDull.setSourceId(skirtForKimmi.getId());
+
         dullSellLog = new SellLog(
-                dullForKimmi,
+                soldDull,
                 100000,
                 5,
                 hatam,
@@ -87,7 +102,7 @@ public class SellerManagerTest {
                 DeliveryStatus.DELIVERED
         );
         skirtSellLog = new SellLog(
-                skirtForKimmi,
+                soldSkirt,
                 300000,
                 7,
                 hatam,
@@ -101,17 +116,13 @@ public class SellerManagerTest {
 
         marmof.setSellLogs(sellLogs);
 
-        productIds = new ArrayList<>();
-        productIds.add(dullForKimmi.getId());
-        productIds.add(skirtForKimmi.getId());
-
-        marmof.setProductIds(productIds);
+        marmof.setProducts(products);
 
         category = new Category("stuffForKimmi",null);
 
         cart = new Cart();
-        dull = new SubCart(dullForKimmi,dullForKimmi.getProductId(),marmof.getUsername(),5);
-        skirt = new SubCart(skirtForKimmi,skirtForKimmi.getProductId(),marmof.getUsername(),3);
+        dull = new SubCart(dullForKimmi, marmof,5);
+        skirt = new SubCart(skirtForKimmi, marmof,3);
         cart.getSubCarts().add(dull);
         cart.getSubCarts().add(skirt);
 
@@ -119,7 +130,7 @@ public class SellerManagerTest {
 
 
     @Test
-    public void viewCompanyInformation() {
+    public void viewCompanyInformation() throws UserNotAvailableException {
         new MockUp<AccountManager>(){
             @Mock
             User getUserByUsername(String username){
@@ -132,7 +143,7 @@ public class SellerManagerTest {
     }
 
     @Test
-    public void viewSalesHistory(){
+    public void viewSalesHistory() throws UserNotAvailableException {
         new MockUp<AccountManager>(){
             @Mock
             User getUserByUsername(String username){
@@ -146,7 +157,7 @@ public class SellerManagerTest {
     }
 
     @Test
-    public void viewProducts(){
+    public void viewProducts() throws UserNotAvailableException {
         new MockUp<AccountManager>(){
             @Mock
             User getUserByUsername(String username){
@@ -170,10 +181,10 @@ public class SellerManagerTest {
     }
 
     @Test
-    public void viewSellersOfProduct(){
+    public void viewSellersOfProduct() throws NoSuchAProductException {
         new MockUp<ProductManager>(){
             @Mock
-            public Product findProductById(String id){
+            public Product findProductById(int id){
                 return dullForKimmi;
             }
         };
@@ -184,47 +195,32 @@ public class SellerManagerTest {
     }
 
     @Test
-    public void viewAllCategories(){
-        List<Category> categories = new ArrayList<>();
-        new MockUp<CategoryManager>(){
-            @Mock
-            public List<Category> getAllCategories(){
-                categories.add(category);
-                return categories;
-            }
-        };
-
-        List<Category> actualCategories = sellerManager.viewAllCategories();
-
-        Assert.assertArrayEquals(categories.toArray(),actualCategories.toArray());
-
-    }
-
-    @Test
     public void getMoneyFromSale(){
-        new MockUp<AccountManager>(){
+        new MockUp<DBManager>(){
             @Mock
-            User getUserByUsername(String username){
-                return marmof;
+            public void save(Object o) {
             }
         };
-        new MockUp<SellerManager>(){
+        new MockUp<CSCLManager>(){
             @Mock
-            public long getPriceFromProduct(Product product, String sellerId){
-                return 100000;
+            int findPrice(SubCart subCart){
+                if (subCart.getAmount() == 5){
+                    return 10000;
+                } else {
+                    return 30000;
+                }
             }
         };
 
         sellerManager.getMoneyFromSale(cart);
-        Assert.assertEquals(800000,marmof.getBalance());
+        Assert.assertEquals(140000,marmof.getBalance());
     }
 
     @Test
-    public void getPriceFromProduct(){
-        long actual = sellerManager.getPriceFromProduct(dullForKimmi,marmof.getUsername());
+    public void addSellLog() {
+        sellerManager.addASellLog(dullSellLog, marmof);
+        sellerManager.addASellLog(skirtSellLog, marmof);
 
-        Assert.assertEquals(10000,actual);
+        Assert.assertArrayEquals(sellLogs.toArray(), marmof.getSellLogs().toArray());
     }
-
-
 }
