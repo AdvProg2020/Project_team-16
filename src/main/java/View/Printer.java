@@ -17,6 +17,7 @@ public class Printer {
     public static void printInvalidCommand(){
         System.out.println("Invalid command pattern! Please see \"help\" for more.");
     }
+
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -30,7 +31,6 @@ public class Printer {
     public static void printMessage(String message){
         System.out.print(message);
     }
-
 
     public static void productPrinterShort(MiniProductPM product){
         System.out.println(lineMedium);
@@ -369,7 +369,7 @@ public class Printer {
         System.out.println(lineSmall);
     }
 
-    public void viewCart(CartPM cartPM){
+    public static void viewCart(CartPM cartPM){
         System.out.println(lineLarge);
         if (cartPM.getPurchases().isEmpty()){
             System.out.printf("|%s|\n", StringUtils.center("Your Cart is Currently Empty!",46));
@@ -527,6 +527,7 @@ public class Printer {
 
 
     }
+
     public static void printAllCategories(List<CategoryPM> categories){}
 
     public static void printComments(List<CommentPM> comments){

@@ -64,6 +64,7 @@ public class CategoryManager {
 
     public ArrayList<String> getAllSpecialFeaturesFromCategory(int categoryId)
             throws NoSuchACategoryException{
+        if (categoryId == 0) return new ArrayList<>();
         Category category = getCategoryById(categoryId);
         return getAllSpecialFeatures(category);
     }
@@ -266,6 +267,7 @@ public class CategoryManager {
 
     public ArrayList<Product> getAllProductsInThisCategory(int categoryId)
             throws NoSuchACategoryException {
+        if (categoryId == 0) return (ArrayList<Product>)ProductManager.getInstance().getAllProductsActive();
         Category category = getCategoryById(categoryId);
         return (ArrayList<Product>) getAllProductsInThisCategory(category);
     }

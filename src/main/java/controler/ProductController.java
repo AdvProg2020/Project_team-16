@@ -3,19 +3,45 @@ package controler;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
+import ModelPackage.System.FilterManager;
+import ModelPackage.System.ProductManager;
 import ModelPackage.System.exeption.account.ProductNotHaveSellerException;
+import ModelPackage.System.exeption.category.NoSuchACategoryException;
+import ModelPackage.System.exeption.filters.InvalidFilterException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
+import View.FilterPackage;
 import View.PrintModels.CommentPM;
 import View.PrintModels.FullProductPM;
 import View.PrintModels.MiniProductPM;
+import View.SortPackage;
 import controler.exceptions.ProductsNotBelongToUniqueCategoryException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ProductController extends Controller{
+    private static ProductController productController = new ProductController();
+
+    public static ProductController getInstance() {
+        return productController;
+    }
+
+    public List<MiniProductPM> showAllProducts(SortPackage sortPackage, FilterPackage filterPackage) throws NoSuchACategoryException, InvalidFilterException {
+        List<Product> list = ProductManager.getInstance().getAllProductsActive();
+        int[] priceRange = {filterPackage.getDownPriceLimit(),filterPackage.getUpPriceLimit()};
+        ArrayList<Product> products = FilterManager.updateFilterList(filterPackage.getCategoryId(), filterPackage.getActiveFilters(), priceRange);
+        sortManager.sort(products,sortPackage.getSortType());
+        if (!sortPackage.isAscending()) Collections.reverse(products);
+        List<MiniProductPM> toReturn = new ArrayList<>();
+        for (Product product : products) {
+            toReturn.add(createMiniProductPM(product));
+        }
+
+        return toReturn;
+    }
 
     public void assignComment(String[] data) throws NoSuchAProductException {
         String userId = data[0];

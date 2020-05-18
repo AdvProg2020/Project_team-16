@@ -11,6 +11,7 @@ import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
 import ModelPackage.System.exeption.clcsmanager.NotABuyer;
 import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.discount.*;
+import ModelPackage.System.exeption.filters.InvalidFilterException;
 import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
 import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
@@ -21,10 +22,7 @@ import ModelPackage.System.exeption.request.NoSuchARequestException;
 import View.PrintModels.*;
 import View.exceptions.InvalidCharacter;
 import View.exceptions.OutOfRangeInputException;
-import controler.AccountController;
-import controler.CustomerController;
-import controler.ManagerController;
-import controler.SellerController;
+import controler.*;
 import controler.exceptions.ManagerExist;
 
 import java.text.ParseException;
@@ -39,6 +37,7 @@ public class CommandProcessor {
     private static ManagerController managerController = ManagerController.getInstance();
     private static SellerController sellerController = SellerController.getInstance();
     private static CustomerController customerController = CustomerController.getInstance();
+    private static ProductController productController = ProductController.getInstance();
     private static Data data = Data.getInstance();
     private static Scan scan = Scan.getInstance();
 
@@ -842,7 +841,7 @@ public class CommandProcessor {
         }
     }
 
-    public static  void decreaseProductInCart(String command){
+    public static void decreaseProductInCart(String command){
         Matcher matcher = getMatcher(command,"increase (\\d+{1,9})");
         if (matcher.find()){
             try {
@@ -907,49 +906,33 @@ public class CommandProcessor {
     }
 
     public static void showCart(){
-
+        try {
+            CartPM pm = customerController.viewCart(data.getUsername());
+            Printer.viewCart(pm);
+        } catch (UserNotAvailableException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
-    
+
+    // TODO: 19/05/2020 handle not signed in user cart
+
     public static void showProductsInProductMenu(){
-
-    }
-
-    public static void updateFilters(){
-
-    }
-    
-    public static void showAvailableFilters(){
-
-    }
-
-    public static void filter(String command){
-
+        try {
+            List<MiniProductPM> pms = productController.showAllProducts(data.getSorts(), data.getFilters());
+            if (!pms.isEmpty()) {
+                Printer.printAllProducts(pms);
+            }else {
+                Printer.printMessage("No product to Show according to filters selected.");
+            }
+        } catch (NoSuchACategoryException | InvalidFilterException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
 
     public static void currentFilters(){
 
     }
 
-    public static void disableAFilter(String command){
-
-    }
-    
-    public static void showAvailableSorts(){
-
-    }
-    
-    public static void sort(String command){
-
-    }
-
-    public static void currentSort(){
-
-    }
-
-    public static void disableSort(){
-
-    }
-    
     public static void attributes(){
 
     }

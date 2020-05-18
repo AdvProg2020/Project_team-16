@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class FilterPackage {
     private int upPriceLimit;
     private int downPriceLimit;
+    private int categoryId;
     private HashMap<String,String> activeFilters;
 
     public FilterPackage(){

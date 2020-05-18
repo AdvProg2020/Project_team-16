@@ -9,15 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 public class FilterManager {
-    private static FilterManager filterManager = null;
-    private FilterManager(){
-
-    }
-    public static FilterManager getInstance(){
-        if (filterManager == null)
-            filterManager = new FilterManager();
-        return filterManager;
-    }
 
     public static ArrayList<Product> updateFilterList(int categoryId, HashMap<String,String> filters,int[] priceRange)
             throws NoSuchACategoryException, InvalidFilterException {
@@ -57,7 +48,8 @@ public class FilterManager {
         }
     }
 
-    static boolean thisProductIsInPriceRange(int lower, int high, int leastPrice){
+    private static boolean thisProductIsInPriceRange(int lower, int high, int leastPrice){
+        if (high == 0) return true;
         return (leastPrice > lower && leastPrice < high);
     }
 }
