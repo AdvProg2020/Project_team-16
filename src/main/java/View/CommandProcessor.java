@@ -267,7 +267,7 @@ public class CommandProcessor {
     }
 
     public static void viewDiscountCodes(){
-        List<DiscountMiniPM> discountMiniPMS = managerController.viewDiscountCodes();
+        List<DiscountMiniPM> discountMiniPMS = managerController.viewDiscountCodes(data.getSorts());
         if (!discountMiniPMS.isEmpty()){
             Printer.printAllDiscountCodes(discountMiniPMS);
         }else {
@@ -802,7 +802,16 @@ public class CommandProcessor {
     }
 
     public static void viewDiscountCodesCustomer(){
-
+        try {
+            List<DisCodeUserPM> pms = customerController.viewDiscountCodes(data.getUsername(), data.getSorts());
+            if (!pms.isEmpty()){
+                /* TODO */
+            }else {
+                Printer.printMessage("No discount code to show.");
+            }
+        } catch (UserNotAvailableException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void showProductsInCart(){

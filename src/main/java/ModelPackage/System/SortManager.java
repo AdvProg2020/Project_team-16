@@ -1,5 +1,6 @@
 package ModelPackage.System;
 
+import ModelPackage.Off.DiscountCode;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
@@ -68,10 +69,25 @@ public class SortManager {
         list.sort(Comparator.comparing(Category::getName));
     }
 
+    public void sortDiscountCodes(List<DiscountCode> list,SortType sortType){
+        switch (sortType){
+            case NAME:sortDiscountByCode(list);break;
+            case TIME:sortDiscountByStartTime(list);break;
+        }
+    }
+
+    private void sortDiscountByStartTime(List<DiscountCode> list){
+        list.sort(Comparator.comparing(DiscountCode::getStartTime));
+    }
+
+    private void sortDiscountByCode(List<DiscountCode> list){
+        list.sort(Comparator.comparing(DiscountCode::getCode));
+    }
+
     public void sortRequests(List<Request> list,SortType sortType){
         switch (sortType){
-            case CATEGORIZED_REQUESTS:sortRequestsCategorized(list);
-            case NAME:sortRequestsByName(list);
+            case CATEGORIZED_REQUESTS:sortRequestsCategorized(list);break;
+            case NAME:sortRequestsByName(list);break;
             case TIME:default:break;
         }
     }

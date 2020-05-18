@@ -14,6 +14,7 @@ import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
 import View.PrintModels.*;
+import View.SortPackage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,7 +204,7 @@ public class CustomerController extends Controller {
         return customer.getBalance();
     }
 
-    public List<DisCodeUserPM> viewDiscountCodes(String username) throws UserNotAvailableException {
+    public List<DisCodeUserPM> viewDiscountCodes(String username, SortPackage sortPackage) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         List<DiscountcodeIntegerMap> discountCodes = customer.getDiscountCodes();
         ArrayList<DisCodeUserPM> disCodeUserPMS = new ArrayList<>();

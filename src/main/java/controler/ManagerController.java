@@ -116,8 +116,10 @@ public class ManagerController extends Controller {
         discountManager.createDiscountCode(data[4],startTime, endTime, offPercentage, maxDiscount);
     }
 
-    public List<DiscountMiniPM> viewDiscountCodes(){
+    public List<DiscountMiniPM> viewDiscountCodes(SortPackage sortPackage){
         List<DiscountCode> discountCodes = DBManager.loadAllData(DiscountCode.class);
+        sortManager.sortDiscountCodes(discountCodes,sortPackage.getSortType());
+        if (!sortPackage.isAscending()) Collections.reverse(discountCodes);
         ArrayList<DiscountMiniPM> disCodeManagerPMS = new ArrayList<>();
 
         for (DiscountCode discountCode : discountCodes) {
