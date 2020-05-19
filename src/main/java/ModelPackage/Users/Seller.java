@@ -9,6 +9,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Setter @Getter
 @Entity @Table(name = "t_seller")
@@ -51,5 +52,10 @@ public class Seller extends User {
 
     public boolean getVerified(){
         return verified;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
     }
 }

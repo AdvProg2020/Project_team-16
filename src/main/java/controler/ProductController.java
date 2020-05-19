@@ -4,7 +4,6 @@ import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.System.FilterManager;
-import ModelPackage.System.ProductManager;
 import ModelPackage.System.exeption.account.ProductNotHaveSellerException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.filters.InvalidFilterException;
@@ -85,23 +84,13 @@ public class ProductController extends Controller{
     }
 
 
-    /*TODO : Change */
     public void addToCart(String[] data) throws Exception {
         String userName = data[0];
         User user = accountManager.getUserByUsername(userName);
-        if (user.isHasSignedIn()) {
-            int productId = Integer.parseInt(data[1]);
-            String sellerUserName = data[2];
-            int amount = Integer.parseInt(data[3]);
-            cartManager.addProductToCart(user.getCart(), sellerUserName, productId, amount);
-        }
-    }
-
-    public Seller selectSeller(String[] data) throws NoSuchAProductException,
-            ProductNotHaveSellerException {
-        int productId = Integer.parseInt(data[0]);
-        String sellerUserName = data[1];
-        return productManager.showSellerOfProduct(productId, sellerUserName);
+        int productId = Integer.parseInt(data[1]);
+        String sellerUserName = data[2];
+        int amount = Integer.parseInt(data[3]);
+        cartManager.addProductToCart(user.getCart(), sellerUserName, productId, amount);
     }
 
     private void checkIfTwoProductsDoesNotBelongToUniqueCategory(int firstProductId, int secondProductId)

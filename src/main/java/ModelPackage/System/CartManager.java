@@ -6,6 +6,7 @@ import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
+import ModelPackage.System.exeption.cart.NotTheSellerException;
 import ModelPackage.System.exeption.cart.ProductExistedInCart;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
@@ -24,11 +25,17 @@ public class CartManager {
     private CartManager() {}
 
     public void addProductToCart(Cart cart, String sellerId, int productId, int amount)
-            throws ProductExistedInCart, NotEnoughAmountOfProductException, NoSuchAProductException, UserNotAvailableException {
+            throws ProductExistedInCart, NotEnoughAmountOfProductException, NoSuchAProductException, UserNotAvailableException, NotTheSellerException {
         checkIfProductExistsInCart(cart, productId);
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, amount);
         Product product = ProductManager.getInstance().findProductById(productId);
-        Seller seller = (Seller) AccountManager.getInstance().getUserByUsername(sellerId);
+        Seller seller;
+        if (!sellerId.isEmpty()){
+            seller = (Seller) AccountManager.getInstance().getUserByUsername(sellerId);
+            checkIfIsTheSellerOfThisProduct(product,seller);
+        }else {
+            seller = ProductManager.getInstance().bestSellerOf(product);
+        }
         SubCart subCart = new SubCart(product, seller, amount);
 
         cart.getSubCarts().add(subCart);
@@ -36,6 +43,10 @@ public class CartManager {
 
         DBManager.save(subCart);
         DBManager.save(cart);
+    }
+
+    private void checkIfIsTheSellerOfThisProduct(Product product,Seller seller) throws NotTheSellerException {
+        if (!product.getAllSellers().contains(seller))throw new NotTheSellerException();
     }
 
     private long calculateTotalPrice(Cart cart) {

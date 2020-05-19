@@ -207,6 +207,18 @@ public class ProductManager {
         DBManager.save(product);
     }
 
+    public Seller bestSellerOf(Product product){
+        Seller seller = new Seller();
+        int pricy = 2000000000;
+        for (SellerIntegerMap price : product.getPrices()) {
+            if (pricy < price.getInteger()){
+                pricy = price.getInteger();
+                seller = price.getSeller();
+            }
+        }
+        return seller;
+    }
+
     private void addAmountToProductForNewSeller(Seller seller,Product product,int amount){
         SellerIntegerMap newStock = new SellerIntegerMap(seller,amount);
         DBManager.save(newStock);

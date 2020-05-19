@@ -980,13 +980,28 @@ public class CommandProcessor {
             Printer.printMessage(e.getMessage());
         }
     }
-    
-    public static void addToCart(){
 
+    public static void addToCart() {
+        addToCart("");
+    }
+
+    private static void addToCart(String seller){
+        Printer.printMessage("Enter Amount : ");
+        String amount = scan.getInteger();
+        String[] info = {data.getUsername(),Integer.toString(data.getProductSeeingInId()),seller,amount};
+        try {
+            productController.addToCart(info);
+        } catch (Exception e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
 
     public static void selectSeller(String command){
-
+        Matcher matcher = getMatcher(command,"select seller (\\w+)");
+        if (matcher.find()) {
+            String seller = matcher.group(1);
+            addToCart(seller);
+        }
     }
 
     public static void briefInfo(){
