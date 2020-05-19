@@ -19,4 +19,8 @@ public class FilterPackage {
         downPriceLimit = 0;
         upPriceLimit = 0;
     }
+
+    public void disableAFilter(String filter){
+        activeFilters.remove(filter);
+    }
 }

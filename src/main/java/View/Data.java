@@ -2,6 +2,7 @@ package View;
 
 import ModelPackage.Users.Cart;
 import View.Menu.Menu;
+import dnl.utils.text.table.TextTable;
 
 import java.util.*;
 
@@ -39,7 +40,7 @@ public class Data {
     public Menu getLastMenu(){return menuHistory.peek();}
 
     private Data(){
-
+        cart = new NotSignedInCart();
         filters = new FilterPackage();
         sorts = new SortPackage();
         menuHistory = new LinkedList<>();
@@ -54,5 +55,25 @@ public class Data {
     public void reset(){
         sorts.reset();
         filters.reset();
+    }
+
+    public void printFilters(){
+        String[] column = {"Filter","Data"};
+        HashMap<String,String> map = filters.getActiveFilters();
+        Object[][] data = new Object[map.size()][2];
+        int i =0;
+        for (String key : map.keySet()) {
+            data[i][0] = key;
+            data[i][1] = map.get(key);
+            i++;
+        }
+
+        TextTable textTable = new TextTable(column,data);
+        textTable.setSort(0);
+        textTable.printTable();
+    }
+
+    public void allPrintFilters() {
+
     }
 }

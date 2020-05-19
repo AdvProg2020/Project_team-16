@@ -96,7 +96,7 @@ public class Scan {
         }
     }
 
-    String getInteger(){
+    public String getInteger(){
         while (true){
             String input = scanner.nextLine();
             if (input.matches("^\\d{1,9}$")) return input;

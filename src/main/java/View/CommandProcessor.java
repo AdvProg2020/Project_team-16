@@ -45,8 +45,8 @@ public class CommandProcessor {
     public static void createAccount(String command){
         Matcher matcher = getMatcher(command,"create account ([M,m]anager|[S,s]eller|[C,c]ustomer) (\\S+)");
         if (matcher.find()){
-            String type = matcher.group(0);
-            String username = matcher.group(1);
+            String type = matcher.group(1);
+            String username = matcher.group(2);
             if (!isUsernameValid(username)){
                 Printer.printMessage("Username format isn't valid. It must contain only alphabets numbers and underscore");
                 return;
@@ -59,8 +59,13 @@ public class CommandProcessor {
                 case "Customer" : case "customer" : createCustomerAccount(username);addTempCartToCart();break;
                 case "Seller" : case "seller" : createSellerAccount(username);break;
             }
+
         }else
             Printer.printInvalidCommand();
+    }
+
+    private static void executeAccountMenu(){
+
     }
 
     private static void addTempCartToCart(){

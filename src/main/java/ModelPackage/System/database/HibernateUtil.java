@@ -64,6 +64,8 @@ public class HibernateUtil {
     }
 
     public static void shutdown() {
+        transaction.commit();
+        session.close();
         sessionFactory.close();
     }
 

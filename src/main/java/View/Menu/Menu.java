@@ -1,5 +1,6 @@
 package View.Menu;
 
+import ModelPackage.System.database.HibernateUtil;
 import View.Data;
 import View.Printer;
 import View.Scan;
@@ -23,6 +24,7 @@ public abstract class Menu {
     public void execute(){
         this.show();
         this.additionalPrints();
+        Data.getInstance().reset();
         Scan scan = Scan.getInstance();
         while (true){
             String command = scan.getLine().trim();
@@ -65,6 +67,7 @@ public abstract class Menu {
             Menu previous = data.dropLastMenu();
             previous.execute();
         }else if (menuName.equalsIgnoreCase("exit")){
+            HibernateUtil.shutdown();
             System.exit(1);
         }else if (menuName.equalsIgnoreCase("logout")){
             data.logout();
