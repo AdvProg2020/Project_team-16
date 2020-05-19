@@ -94,7 +94,7 @@ public class AccountManagerTest {
     public void changeInfo() throws SameInfoException, UserNotAvailableException {
         UserEditAttributes info = new UserEditAttributes();
         info.setNewEmail("ali@gmail.com");
-        accountManager.changeInfo("marmof",info);
+        accountManager.changeInfo("marmofayezi",info);
         String expected = "ali@gmail.com";
         Assert.assertEquals(expected,marmof.getEmail());
     }
@@ -135,11 +135,12 @@ public class AccountManagerTest {
                 "Mofayezi",
                 "marmof@gmail.com",
                 "09121232222",
-                "adidas",
+                "0",
                 "1000000"
         };
         new MockUp<CSCLManager>(){
-            public Company getCompanyByName(String companyName) {
+            @Mock
+            public Company getCompanyById(int id) {
                 return adidas;
             }
         };
