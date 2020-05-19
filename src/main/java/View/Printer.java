@@ -4,6 +4,7 @@ import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Maps.UserIntegerMap;
 import ModelPackage.Users.Cart;
 import View.PrintModels.*;
+import dnl.utils.text.table.TextTable;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -492,40 +493,26 @@ public class Printer {
     }
 
     public static void comparePrinter(FullProductPM[] products){
-        System.out.println(lineMedium);
-        System.out.printf("          |%s|%s|\n",
-                StringUtils.center(String.format("%s(%d)", products[0].getProduct().getName(), products[0].getProduct().getId()),18),
-                StringUtils.center(String.format("%s(%d)", products[1].getProduct().getName(), products[1].getProduct().getId()),18)
-        );
-        System.out.println(lineMedium);
+        String[] columnNames = {"feature",products[0].getProduct().getName(),products[1].getProduct().getName()};
+        int size = products[0].getFeatures().size() + 3;
+        Object[][] data = new Object[3][size];
+        data[0][0] = "Category";
+        data[0][1] = data[0][2] = products[0].getProduct().getCategoryName();
+        data[1][0] = "Brand";
+        data[1][1] = products[0].getProduct().getBrand();
+        data[1][2] = products[1].getProduct().getBrand();
+        data[2][0] = "Score";
+        data[2][1] = products[0].getProduct().getScore();
+        data[2][2] = products[1].getProduct().getScore();
+        int i=3;
+        for (String feature : products[0].getFeatures().keySet()) {
+            data[0][i] = feature;
+            data[1][i] = products[0].getFeatures().get(feature);
+            data[2][i] = products[1].getFeatures().get(feature);
+        }
 
-        System.out.printf("%s|%s|%s|\n",
-                StringUtils.center("Category:",10),
-                StringUtils.center(products[0].getProduct().getCategoryName(),18),
-                StringUtils.center(products[1].getProduct().getCategoryName(),18)
-        );
-        System.out.println(lineMedium);
-
-        System.out.printf("%s|%s|%s|\n",
-                StringUtils.center("Brand:",10),
-                StringUtils.center(products[0].getProduct().getBrand(),18),
-                StringUtils.center(products[1].getProduct().getBrand(),18)
-        );
-        System.out.println(lineMedium);
-
-        System.out.printf("%s|%s|%s|\n",
-                StringUtils.center("Score:",10),
-                StringUtils.center(Double.toString(products[0].getProduct().getScore()),18),
-                StringUtils.center(Double.toString(products[1].getProduct().getScore()),18)
-        );
-        System.out.println(lineMedium);
-
-        System.out.printf("          |%s|\n",
-                StringUtils.center("Features",37)
-        );
-        System.out.println(lineMedium);
-
-
+        TextTable textTable = new TextTable(columnNames,data);
+        textTable.printTable();
     }
 
     public static void printAllCategories(List<CategoryPM> categories){
