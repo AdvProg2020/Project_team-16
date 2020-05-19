@@ -519,4 +519,19 @@ public class Printer {
             System.out.println(lineMedium);
         }
     }
+
+    public static void printAllOffs(List<ProductsOnOffPM> list) {
+        String[] columns = {"Name","Id","Real Price","Price After Off"};
+        Object[][] data = new Object[list.size()][4];
+        int i = 0;
+        for (ProductsOnOffPM pm : list) {
+            data[i][0] = pm.getName();
+            data[i][1] = pm.getId();
+            data[i][2] = pm.getRealPrice();
+            data[i][3] = pm.getAfterOffPrice();
+        }
+
+        TextTable textTable = new TextTable(columns,data);
+        textTable.printTable();
+    }
 }

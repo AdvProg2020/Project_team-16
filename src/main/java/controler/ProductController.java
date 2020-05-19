@@ -1,5 +1,7 @@
 package controler;
 
+import ModelPackage.Maps.SellerIntegerMap;
+import ModelPackage.Off.Off;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
@@ -7,11 +9,10 @@ import ModelPackage.System.FilterManager;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.filters.InvalidFilterException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
+import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
 import View.FilterPackage;
-import View.PrintModels.CommentPM;
-import View.PrintModels.FullProductPM;
-import View.PrintModels.MiniProductPM;
+import View.PrintModels.*;
 import View.SortPackage;
 import controler.exceptions.ProductsNotBelongToUniqueCategoryException;
 
@@ -110,6 +111,33 @@ public class ProductController extends Controller{
                 product.getCategory().getName(),
                 product.getStock(), product.getPrices(), product.getCompany(),
                 product.getTotalScore(), product.getDescription());
+    }
+
+    public List<ProductsOnOffPM> showOffs(SortPackage sortPackage,FilterPackage filterPackage){
+        List<Product> products = productManager.getAllOffFromActiveProducts();
+        int[] priceRange = {filterPackage.getDownPriceLimit(),filterPackage.getUpPriceLimit()};
+        List<Product> filtered = FilterManager.filterList(products,filterPackage.getActiveFilters(),priceRange);
+        sortManager.sort(filtered,sortPackage.getSortType());
+        if (!sortPackage.isAscending())Collections.reverse(filtered);
+        List<ProductsOnOffPM> toReturn = new ArrayList<>();
+        for (Product product : filtered) {
+            toReturn.add(new ProductsOnOffPM(product.getId(),
+                    product.getName(),
+                    product.getLeastPrice(),
+                    calculatePriceAfterOff(product))
+            );
+        }
+        return toReturn;
+    }
+
+    private int calculatePriceAfterOff(Product product){
+        Off off = product.getOff();
+        int percant = off.getOffPercentage();
+        Seller seller = off.getSeller();
+        for (SellerIntegerMap map : product.getPrices()) {
+            if (map.getSeller().equals(seller)) return (int)((100-percant)/100.0)*map.getInteger();
+        }
+        return 0;
     }
 
 }

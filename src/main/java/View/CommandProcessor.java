@@ -1029,7 +1029,8 @@ public class CommandProcessor {
     }
 
     public static void showAllOffs(){
-
+        List<ProductsOnOffPM> pms = productController.showOffs(data.getSorts(), data.getFilters());
+        Printer.printAllOffs(pms);
     }
 
     private static Matcher getMatcher(String input, String regex){

@@ -15,6 +15,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 @Data
@@ -241,5 +242,13 @@ public class ProductManager {
 
     public void addToActive(Product product){
         allProductsActive.add(product);
+    }
+
+    public List<Product> getAllOffFromActiveProducts(){
+        List<Product> toReturn = new ArrayList<>();
+        for (Product product : allProductsActive) {
+            if (product.isOnOff())toReturn.add(product);
+        }
+        return toReturn;
     }
 }

@@ -14,6 +14,8 @@ import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 public class OffManager {
     private static OffManager offManager;

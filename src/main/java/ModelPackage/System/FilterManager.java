@@ -21,6 +21,25 @@ public class FilterManager {
         return matchProductsToFilters(allProductsInCategory,filters,priceRange);
     }
 
+    public static List<Product> filterList(List<Product> list,HashMap<String,String> filters,int[] priceRange){
+        List<Product> toReturn = new ArrayList<>();
+        for (Product product : list) {
+            if (doesMatchTheFilters(product,filters,priceRange))toReturn.add(product);
+        }
+        return toReturn;
+    }
+
+    private static boolean doesMatchTheFilters(Product product,HashMap<String,String> filters,int[] priceRange){
+        if (!thisProductIsInPriceRange(priceRange[0],priceRange[1],product.getLeastPrice())) return false;
+        HashMap<String,String> features = new HashMap<>(product.getPublicFeatures());
+        features.putAll(product.getSpecialFeatures());
+        for (String filter : filters.keySet()) {
+            if (!features.containsKey(filter))return false;
+            if (!features.get(filter).equals(filters.get(filter)))return false;
+        }
+        return true;
+    }
+
     private static ArrayList<Product> matchProductsToFilters(List<Product> products,HashMap<String,String> filters,int[] priceRange){
         ArrayList<Product> filteredProducts = new ArrayList<>();
         ProductManager productManager = ProductManager.getInstance();
