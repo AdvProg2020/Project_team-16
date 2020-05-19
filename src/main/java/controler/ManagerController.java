@@ -211,21 +211,27 @@ public class ManagerController extends Controller {
     }
 
     public List<CategoryPM> manageCategories(){
-        List<Category> categories = DBManager.loadAllData(Category.class);
-        ArrayList<CategoryPM> categoryPMS = new ArrayList<>();
-
-        for (Category category : categories) {
-            categoryPMS.add(createCategoryPM(category));
+        List<Category> cats = categoryManager.getBaseCats();
+        sortManager.sortCategories(cats);
+        List<CategoryPM> toReturn = new ArrayList<>();
+        for (Category cat : cats) {
+            toReturn.addAll(getAllCategoriesIn(0,cat));
         }
-
-        return categoryPMS;
+        return toReturn;
     }
 
-    private CategoryPM createCategoryPM(Category category){
-        return new CategoryPM(
-                category.getName(),
-                category.getId()
-        );
+    private List<CategoryPM> getAllCategoriesIn(int currentIndent,Category category){
+        List<CategoryPM> toReturn = new ArrayList<>();
+        toReturn.add(createCatPM(category,currentIndent));
+        if (!category.getSubCategories().isEmpty())
+            for (Category subCategory : category.getSubCategories()) {
+                toReturn.addAll(getAllCategoriesIn(currentIndent+1,subCategory));
+            }
+        return toReturn;
+    }
+
+    private CategoryPM createCatPM(Category category,int indent){
+        return new CategoryPM(category.getName(),category.getId(),indent);
     }
 
     public void editCategory(int id, CategoryEditAttribute editAttribute)

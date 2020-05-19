@@ -528,7 +528,13 @@ public class Printer {
 
     }
 
-    public static void printAllCategories(List<CategoryPM> categories){}
+    public static void printAllCategories(List<CategoryPM> categories){
+        for (CategoryPM category : categories) {
+            if (category.getIndent() == 0) System.out.println(lineMedium);
+            for (int i = 0; i < category.getIndent(); i++) System.out.print("  ");
+            System.out.println(category.getName() + " " + category.getId());
+        }
+    }
 
     public static void printComments(List<CommentPM> comments){
         System.out.println(lineMedium);

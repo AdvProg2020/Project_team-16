@@ -581,7 +581,7 @@ public class CommandProcessor {
     }
 
     public static void showCategories(){
-        // TODO: 18/05/2020
+        Printer.printAllCategories(managerController.manageCategories());
     }
 
     public static void viewBalanceSeller(){
