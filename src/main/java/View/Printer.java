@@ -461,41 +461,26 @@ public class Printer {
         printAllProducts(order.getProductPMs());
     }
 
-    public static void viewUserDiscounts(DisCodeUserPM discountCode){
-        System.out.println(lineMedium);
-        System.out.printf("|%s|%s|%s|\n",
-                StringUtils.center("Code",15),
-                StringUtils.center("Start Date",15),
-                StringUtils.center("End Date",15)
-        );
-        System.out.println(lineMedium);
-
-        System.out.printf("|%s|%s|%s|\n",
-                StringUtils.center(discountCode.getDiscountCode(),15),
-                StringUtils.center(discountCode.getStartTime().toString(),15),
-                StringUtils.center(discountCode.getEndTime().toString(),15)
-        );
-        System.out.println(lineMedium);
-
-        System.out.printf("|%s|%s|%s|\n",
-                StringUtils.center("Off Percentage",15),
-                StringUtils.center("Max Discount Price",15),
-                StringUtils.center("Count",15)
-        );
-        System.out.println(lineMedium);
-
-        System.out.printf("|%s|%s|%s|\n",
-                StringUtils.center(Integer.toString(discountCode.getOffPercentage()),15),
-                StringUtils.center(Long.toString(discountCode.getMaxOfPriceDiscounted()),15),
-                StringUtils.center(Integer.toString(discountCode.getCount()),15)
-        );
-        System.out.println(lineMedium);
+    public static void viewUserDiscounts(List<DisCodeUserPM> discountCodes){
+        String[] columns = {"Code","Amount","Start Date","End Date","percentage","max"};
+        Object[][] data = new Object[discountCodes.size()][6];
+        int i = 0;
+        for (DisCodeUserPM code : discountCodes) {
+            data[i][0] = code.getDiscountCode();
+            data[i][1] = code.getCount();
+            data[i][2] = code.getStartTime();
+            data[i][3] = code.getEndTime();
+            data[i][4] = code.getOffPercentage();
+            data[i][5] = code.getMaxOfPriceDiscounted();
+        }
+        TextTable textTable = new TextTable(columns,data);
+        textTable.printTable();
     }
 
     public static void comparePrinter(FullProductPM[] products){
         String[] columnNames = {"feature",products[0].getProduct().getName(),products[1].getProduct().getName()};
         int size = products[0].getFeatures().size() + 3;
-        Object[][] data = new Object[3][size];
+        Object[][] data = new Object[size][3];
         data[0][0] = "Category";
         data[0][1] = data[0][2] = products[0].getProduct().getCategoryName();
         data[1][0] = "Brand";
@@ -506,11 +491,11 @@ public class Printer {
         data[2][2] = products[1].getProduct().getScore();
         int i=3;
         for (String feature : products[0].getFeatures().keySet()) {
-            data[0][i] = feature;
-            data[1][i] = products[0].getFeatures().get(feature);
-            data[2][i] = products[1].getFeatures().get(feature);
+            data[i][0] = feature;
+            data[i][1] = products[0].getFeatures().get(feature);
+            data[i][2] = products[1].getFeatures().get(feature);
+            i++;
         }
-
         TextTable textTable = new TextTable(columnNames,data);
         textTable.printTable();
     }

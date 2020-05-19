@@ -807,7 +807,7 @@ public class CommandProcessor {
         try {
             List<DisCodeUserPM> pms = customerController.viewDiscountCodes(data.getUsername(), data.getSorts());
             if (!pms.isEmpty()){
-                /* TODO */
+                Printer.viewUserDiscounts(pms);
             }else {
                 Printer.printMessage("No discount code to show.");
             }
