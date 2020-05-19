@@ -955,7 +955,16 @@ public class CommandProcessor {
     }
     
     public static void showAllComments(){
-
+        try {
+            List<CommentPM> pms = productController.viewProductComments(data.getProductSeeingInId());
+            if (!pms.isEmpty()) {
+                Printer.printComments(pms);
+            }else {
+                Printer.printMessage("No Comments.");
+            }
+        } catch (NoSuchAProductException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
     
     public static void addAComment(){
