@@ -968,7 +968,18 @@ public class CommandProcessor {
     }
     
     public static void addAComment(){
-
+        String[] info = new String[3];
+        Printer.printMessage("Enter title of comment : ");
+        info[0] = data.getUsername();
+        info[1] = scan.getLine();
+        Printer.printMessage("Enter the comment(Enter \\end in a new line at the end of your comment) : \n");
+        info[2] = scan.getLinesUntil("\\end");
+        try {
+            productController.assignComment(info);
+            Printer.printMessage("Your comment will be shown if admins accept it...");
+        } catch (NoSuchAProductException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
     
     public static void addToCart(){
