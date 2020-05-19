@@ -15,6 +15,7 @@ import lombok.Data;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class DiscountManager {
         Date date = new Date();
         Date startDate = discountCode.getStartTime();
         Date endDate = discountCode.getEndTime();
-        return !date.before(startDate) && !date.after(endDate);
+        return date.after(startDate) && date.before(endDate);
     }
 
     public void removeDiscount(String code) throws NoSuchADiscountCodeException {
@@ -60,6 +61,7 @@ public class DiscountManager {
             checkIfNewStartingDateIsBeforeEndingDate(discountCode, newStart);
             discountCode.setStartTime(newStart);
         }
+        // TODO : checkIfStartingDateIsBeforeEndingDate(discountCode.getStartTime(), newEnd);
         if (newEnd != null){
             checkIfNewStartingDateIsBeforeEndingDate(discountCode, newEnd);
             discountCode.setEndTime(newEnd);
