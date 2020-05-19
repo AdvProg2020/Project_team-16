@@ -17,11 +17,18 @@ import java.util.Map;
 @Data
 public class CategoryManager {
     private List<Category> allCategories;
+    private List<Category> baseCategories;
     private static CategoryManager categoryManager = new CategoryManager();
     private static ArrayList<String> publicFeatures;
 
     private CategoryManager(){
         if (allCategories == null) allCategories = new ArrayList<>();
+    }
+
+    public void initialBaseCategories(){
+        for (Category category : allCategories) {
+            if (category.getParent() == null) baseCategories.add(category);
+        }
     }
 
     public static CategoryManager getInstance(){
@@ -37,10 +44,16 @@ public class CategoryManager {
 
     public void createCategory(String name,int parentId,List<String> features)
             throws RepeatedNameInParentCategoryExeption,NoSuchACategoryException{
-        Category parent = getCategoryById(parentId);
+        Category parent;
+        if (parentId != 0)
+            parent = getCategoryById(parentId);
+        else
+            parent = null;
         checkIfThisNameIsValidForThisParent(name,parent);
 
         Category toCreate = new Category(name,parent);
+        allCategories.add(toCreate);
+        if (toCreate.getParent() == null) baseCategories.add(toCreate);
         toCreate.setSpecialFeatures(features);
         addToBase(toCreate,parent);
         DBManager.save(toCreate);
@@ -48,11 +61,19 @@ public class CategoryManager {
 
     private void checkIfThisNameIsValidForThisParent(String name,Category parent)
             throws RepeatedNameInParentCategoryExeption {
-        List<Category> subCategories = parent.getSubCategories();
+        List<Category> subCategories;
+        if (parent != null)
+            subCategories = parent.getSubCategories();
+        else
+            subCategories = baseCategories;
         for (Category category : subCategories) {
             if (category.getName().equals(name))
                 throw new RepeatedNameInParentCategoryExeption(name);
         }
+    }
+
+    public List<Category> getBaseCats(){
+        return baseCategories;
     }
 
     public void addProductToCategory(Product product,Category toBeAddedTo) {
@@ -291,10 +312,16 @@ public class CategoryManager {
     }
 
     public void addToBase(Category cat,Category parent){
-        List<Category> subCategories = parent.getSubCategories();
+        List<Category> subCategories;
+        if (parent != null)
+            subCategories = parent.getSubCategories();
+        else
+            subCategories = baseCategories;
         subCategories.add(cat);
-        parent.setSubCategories(subCategories);
-        DBManager.save(parent);
+        if (parent != null){
+            parent.setSubCategories(subCategories);
+            DBManager.save(parent);
+        }
     }
 
 }

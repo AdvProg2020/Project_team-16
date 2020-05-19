@@ -42,6 +42,7 @@ public class DBManager {
         }
         ProductManager.getInstance().setAllProductsActive(list);
         CategoryManager.getInstance().setAllCategories(loadAllData(Category.class));
+        CategoryManager.getInstance().initialBaseCategories();
     }
 
     public static <T> List<T> loadAllData(Class<T> type) {
