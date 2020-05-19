@@ -18,6 +18,7 @@ import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
+import View.Menu.ProductSMenu;
 import View.PrintModels.*;
 import View.exceptions.InvalidCharacter;
 import View.exceptions.OutOfRangeInputException;
@@ -54,12 +55,22 @@ public class CommandProcessor {
             }catch (UserNotAvailableException e) {
                 Printer.printMessage("This Username isn't available");return; }
             switch (type){
-                case "Manager": case "manager" : createManagerAccount(username);
-                case "Customer" : case "customer" : createCustomerAccount(username);
-                case "Seller" : case "seller" : createSellerAccount(username);
+                case "Manager": case "manager" : createManagerAccount(username);break;
+                case "Customer" : case "customer" : createCustomerAccount(username);addTempCartToCart();break;
+                case "Seller" : case "seller" : createSellerAccount(username);break;
             }
         }else
             Printer.printInvalidCommand();
+    }
+
+    private static void addTempCartToCart(){
+        if (!data.getCart().isEmpty()){
+            String username = data.getUsername();
+            for (SubCart subCart : data.getCart().getSubCarts()) {
+                addToCart(username,"",Integer.toString(subCart.getAmount()),subCart.getProductId());
+            }
+        }
+        data.getCart().clear();
     }
 
     private static void getGeneralInformation(String[] info){
@@ -149,6 +160,7 @@ public class CommandProcessor {
                     String role = accountController.login(username,password);
                     data.setUsername(username);
                     data.setRole(role);
+                    if (role.equals("customer")) addTempCartToCart();
                 } catch (NotVerifiedSeller notVerifiedSeller) {
                     Printer.printMessage("your Account Isn't Verified Yet");
                 } catch (UserNotAvailableException e) {
@@ -613,10 +625,11 @@ public class CommandProcessor {
             matcher = getMatcher(command,"show product (\\d+{1,9})");
         }
         if (matcher.find()){
-            String id = matcher.group(1);
+            int id = Integer.parseInt(matcher.group(1));
             try {
-                FullProductPM pm = sellerController.viewProduct(Integer.parseInt(id));
-                Printer.productPrintFull(pm);
+                productController.digest(id);
+                data.setProductSeeingInId(id);
+                ProductSMenu.getInstance().goToSubMenu("Product Menu");
             } catch (NoSuchAProductException e) {
                 Printer.printMessage(e.getMessage());
             }
@@ -914,8 +927,6 @@ public class CommandProcessor {
         }
     }
 
-    // TODO: 19/05/2020 handle not signed in user cart
-
     public static void showProductsInProductMenu(){
         try {
             List<MiniProductPM> pms = productController.showAllProducts(data.getSorts(), data.getFilters());
@@ -988,7 +999,11 @@ public class CommandProcessor {
     private static void addToCart(String seller){
         Printer.printMessage("Enter Amount : ");
         String amount = scan.getInteger();
-        String[] info = {data.getUsername(),Integer.toString(data.getProductSeeingInId()),seller,amount};
+        addToCart(data.getUsername(),seller,amount,data.getProductSeeingInId());
+    }
+
+    private static void addToCart(String username,String seller,String amount,int productId){
+        String[] info = {username,Integer.toString(productId),seller,amount};
         try {
             productController.addToCart(info);
         } catch (Exception e) {

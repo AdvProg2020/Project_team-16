@@ -1,5 +1,6 @@
 package View;
 
+import ModelPackage.Users.Cart;
 import View.Menu.Menu;
 
 import java.util.*;
@@ -16,6 +17,7 @@ public class Data {
     private int productSeeingInId;
     private String role;
     private Queue<Menu> menuHistory;
+    private NotSignedInCart cart;
 
     /* Filter And Sort Options */
     private FilterPackage filters;
@@ -23,6 +25,8 @@ public class Data {
     private boolean isOnOffMode;
     private List<String> publicFeatures;
     private List<String> specialFeatures;
+
+
 
     public void addMenuToHistory(Menu menu){
         menuHistory.add(menu);
@@ -35,6 +39,7 @@ public class Data {
     public Menu getLastMenu(){return menuHistory.peek();}
 
     private Data(){
+
         filters = new FilterPackage();
         sorts = new SortPackage();
         menuHistory = new LinkedList<>();
@@ -43,7 +48,7 @@ public class Data {
     }
 
     public void logout(){
-
+        cart.clear();
     }
 
     public void reset(){

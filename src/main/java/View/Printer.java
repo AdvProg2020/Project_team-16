@@ -364,12 +364,6 @@ public class Printer {
         System.out.println(lineLarge);
     }
 
-    public static void viewBalance(long balance){
-        System.out.println(lineSmall);
-        System.out.printf("|%s : %s|\n", StringUtils.center("Balance",14), StringUtils.center(Long.toString(balance),13));
-        System.out.println(lineSmall);
-    }
-
     public static void viewCart(CartPM cartPM){
         System.out.println(lineLarge);
         if (cartPM.getPurchases().isEmpty()){

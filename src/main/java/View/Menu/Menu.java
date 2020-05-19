@@ -99,7 +99,7 @@ public abstract class Menu {
 
     abstract void goToSubMenusIfAvailable(String menuName) throws NotAnAvailableMenu;
 
-    void goToSubMenu(String submenu){
+    public void goToSubMenu(String submenu){
         Data data = Data.getInstance();
         Menu next = this.subMenus.get(submenu);
         data.addMenuToHistory(next);
