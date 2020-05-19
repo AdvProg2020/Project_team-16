@@ -24,6 +24,7 @@ import View.exceptions.InvalidCharacter;
 import View.exceptions.OutOfRangeInputException;
 import controler.*;
 import controler.exceptions.ManagerExist;
+import controler.exceptions.ProductsNotBelongToUniqueCategoryException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -929,16 +930,28 @@ public class CommandProcessor {
         }
     }
 
-    public static void currentFilters(){
-
-    }
-
     public static void attributes(){
-
+        try {
+            FullProductPM pm = productController.viewAttributes(data.getProductSeeingInId());
+            Printer.productPrintFull(pm);
+        } catch (NoSuchAProductException e) {
+            Printer.printMessage(e.getMessage());
+        }
     }
     
     public static void compare(String command){
-
+        Matcher matcher = getMatcher(command,"compare (\\d+{1,9})");
+        if (matcher.find()){
+            int[] info = new int[2];
+            info[0] = data.getProductSeeingInId();
+            info[1] = Integer.parseInt(matcher.group(1));
+            try {
+                FullProductPM[] pms = productController.compareProducts(info);
+                Printer.comparePrinter(pms);
+            } catch (NoSuchAProductException | ProductsNotBelongToUniqueCategoryException e) {
+                Printer.printMessage(e.getMessage());
+            }
+        }else Printer.printInvalidCommand();
     }
     
     public static void showAllComments(){

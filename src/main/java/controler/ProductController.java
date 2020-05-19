@@ -70,10 +70,10 @@ public class ProductController extends Controller{
         return createFullProductPM(productId);
     }
 
-    public FullProductPM[] compareProducts(String[] data)
+    public FullProductPM[] compareProducts(int[] data)
             throws NoSuchAProductException, ProductsNotBelongToUniqueCategoryException {
-        int firstProductId = Integer.parseInt(data[0]);
-        int secondProductId = Integer.parseInt(data[1]);
+        int firstProductId = data[0];
+        int secondProductId = data[1];
         checkIfTwoProductsDoesNotBelongToUniqueCategory(firstProductId, secondProductId);
         FullProductPM[] fullProductPMs = new FullProductPM[2];
         fullProductPMs[0] = createFullProductPM(firstProductId);
