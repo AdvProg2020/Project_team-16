@@ -8,8 +8,8 @@ public class SortPackage {
     private boolean isAscending;
     private SortType sortType;
 
-    void reset(){
-        sortType = SortType.VIEW;
+    public void reset(){
+        sortType = SortType.DEAFAULT;
         isAscending = true;
     }
 }
