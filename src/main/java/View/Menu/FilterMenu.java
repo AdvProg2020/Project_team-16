@@ -47,7 +47,6 @@ public class FilterMenu extends Menu {
     }
 
     private void showAvailableFilters() {
-        Data.getInstance().setPublicFeatures(SellerController.getInstance().getPublicFeatures());
         Printer.printMessage("Enter category id you want filter(enter 0 for just public filter) : ");
         String catId = Scan.getInstance().getInteger();
         try {
@@ -66,6 +65,6 @@ public class FilterMenu extends Menu {
 
     @Override
     void additionalPrints() {
-
+        Data.getInstance().setPublicFeatures(SellerController.getInstance().getPublicFeatures());
     }
 }

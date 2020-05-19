@@ -53,7 +53,6 @@ public class CategoryManager {
 
         Category toCreate = new Category(name,parent);
         allCategories.add(toCreate);
-        if (toCreate.getParent() == null) baseCategories.add(toCreate);
         toCreate.setSpecialFeatures(features);
         addToBase(toCreate,parent);
         DBManager.save(toCreate);
