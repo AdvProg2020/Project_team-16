@@ -15,7 +15,6 @@ import ModelPackage.System.exeption.filters.InvalidFilterException;
 import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
 import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
-import ModelPackage.System.exeption.product.AlreadyASeller;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
@@ -991,7 +990,12 @@ public class CommandProcessor {
     }
 
     public static void briefInfo(){
-
+        try {
+            MiniProductPM pm = productController.digest(data.getProductSeeingInId());
+            Printer.productPrinterShort(pm);
+        } catch (NoSuchAProductException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void showAllOffs(){
