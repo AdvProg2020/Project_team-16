@@ -10,6 +10,12 @@ import java.util.HashMap;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class MainMenu extends Menu {
+    private static MainMenu mainMenu;
+
+    public static MainMenu getInstance() {
+        return mainMenu;
+    }
+
     public MainMenu(){
         super("Main Menu",null);
         HashMap<String,Menu> subMenus = new HashMap<String, Menu>();
@@ -22,6 +28,7 @@ public class MainMenu extends Menu {
         subMenus.put("Off Menu",new OFFSMenu(this));
 
         this.setSubMenus(subMenus);
+        mainMenu = this;
     }
 
     @Override

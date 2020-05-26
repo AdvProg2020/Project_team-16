@@ -9,17 +9,14 @@ import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 public class CategoryManager {
     private List<Category> allCategories = new ArrayList<>();
     private List<Category> baseCategories = new ArrayList<>();
     private static CategoryManager categoryManager = new CategoryManager();
-    private static ArrayList<String> publicFeatures;
+    private static ArrayList<String> publicFeatures = new ArrayList<>(Arrays.asList("Dimension","Weigh","Color")) ;
 
     private CategoryManager(){
 

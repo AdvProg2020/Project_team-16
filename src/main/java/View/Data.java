@@ -1,6 +1,6 @@
 package View;
 
-import ModelPackage.Users.Cart;
+import View.Menu.MainMenu;
 import View.Menu.Menu;
 import dnl.utils.text.table.TextTable;
 
@@ -17,7 +17,7 @@ public class Data {
     private int categoryInId;
     private int productSeeingInId;
     private String role;
-    private Queue<Menu> menuHistory;
+    private LinkedList<Menu> menuHistory;
     private NotSignedInCart cart;
 
     /* Filter And Sort Options */
@@ -27,19 +27,24 @@ public class Data {
     private List<String> publicFeatures;
     private List<String> specialFeatures;
 
-
-
     public void addMenuToHistory(Menu menu){
         menuHistory.add(menu);
     }
 
     public Menu dropLastMenu(){
-        return menuHistory.poll();
+        if (!menuHistory.isEmpty())menuHistory.removeLast();
+        if (menuHistory.isEmpty())return MainMenu.getInstance();
+        return menuHistory.getLast();
     }
 
-    public Menu getLastMenu(){return menuHistory.peek();}
+    public Menu getLastMenu(){
+        if (!menuHistory.isEmpty())return menuHistory.getLast();
+        else return MainMenu.getInstance();
+    }
 
     private Data(){
+        username = "";
+        role = "";
         cart = new NotSignedInCart();
         filters = new FilterPackage();
         sorts = new SortPackage();
@@ -49,6 +54,7 @@ public class Data {
     }
 
     public void logout(){
+        menuHistory.clear();
         cart.clear();
     }
 

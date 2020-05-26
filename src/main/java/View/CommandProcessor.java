@@ -64,10 +64,6 @@ public class CommandProcessor {
             Printer.printInvalidCommand();
     }
 
-    private static void executeAccountMenu(){
-
-    }
-
     private static void addTempCartToCart(){
         if (!data.getCart().isEmpty()){
             String username = data.getUsername();
@@ -108,8 +104,6 @@ public class CommandProcessor {
             else break;
         }
         accountController.createAccount(info,"seller");
-        data.setRole("seller");
-        data.setUsername(username);
         data.getLastMenu().execute();
     }
 
@@ -160,7 +154,8 @@ public class CommandProcessor {
         if (matcher.find()){
             String username = matcher.group(1);
             if (isUsernameValid(username)){
-               String password = scan.getPassword("Enter Your Password : ");
+                Printer.printMessage("Enter Your password : ");
+                String password = scan.getLine();
                 try {
                     String role = accountController.login(username,password);
                     data.setUsername(username);
@@ -585,7 +580,7 @@ public class CommandProcessor {
     }
 
     private static void getFeatures(String title,String[] data,List<String> features){
-        Printer.printMessage("Now enter the "+ title + " features of product : ");
+        Printer.printMessage("Now enter the "+ title + " features of product : \n");
         int i = 0;
         for (String feature : features) {
             Printer.printMessage(feature + " : ");

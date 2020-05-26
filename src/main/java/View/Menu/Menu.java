@@ -71,7 +71,7 @@ public abstract class Menu {
             System.exit(1);
         }else if (menuName.equalsIgnoreCase("logout")){
             data.logout();
-            this.execute();
+            MainMenu.getInstance().execute();
         } else{
             goToSubMenusIfAvailable(menuName);
         }
