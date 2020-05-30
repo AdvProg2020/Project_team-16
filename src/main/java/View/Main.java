@@ -2,14 +2,11 @@ package View;
 
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.database.HibernateUtil;
-import View.Menu.MainMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -18,7 +15,6 @@ public class Main extends Application {
     private static Scene scene;
 
     public static void main(String[] args) {
-        MainMenu mainMenu = new MainMenu();
         DBManager.initialLoad();
         try {
             launch(args);
