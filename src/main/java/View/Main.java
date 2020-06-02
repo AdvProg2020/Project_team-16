@@ -42,6 +42,7 @@ public class Main extends Application {
         });
         scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
+        window.setOnCloseRequest(e-> close());
         stage.show();
     }
 
@@ -56,6 +57,11 @@ public class Main extends Application {
         else {
             window.setMaximized(true);
         }
+    }
+
+    public static void close(){
+        // TODO: 02/06/2020 everything before being closed
+        window.close();
     }
 
     public static void setRoot(String fxml) throws IOException {
