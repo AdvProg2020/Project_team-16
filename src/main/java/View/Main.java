@@ -6,16 +6,20 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
 public class Main extends Application {
     private static Stage window;
     private static Scene scene;
+    private static double xOffset;
+    private static double yOffset;
 
     public static void main(String[] args) {
-        DBManager.initialLoad();
+        //DBManager.initialLoad();
         try {
             launch(args);
         }catch (Exception e){
@@ -25,12 +29,33 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        /*window = stage;
-        scene = new Scene(loadFXML("Starter"));
+        window = stage;
+        scene = new Scene(loadFXML("MainPage"));
         stage.setScene(scene);
+        scene.setOnMousePressed(e -> {
+            xOffset = e.getSceneX();
+            yOffset = e.getSceneY();
+        });
+        scene.setOnMouseDragged(e ->{
+            stage.setX(e.getScreenX() - xOffset);
+            stage.setY(e.getScreenY() - yOffset);
+        });
         scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.show();*/
+        stage.show();
+    }
+
+    public static void minimize(){
+        window.setIconified(true);
+    }
+
+    public static void maximize(){
+        if (window.isMaximized()){
+            window.setMaximized(false);
+        }
+        else {
+            window.setMaximized(true);
+        }
     }
 
     public static void setRoot(String fxml) throws IOException {
