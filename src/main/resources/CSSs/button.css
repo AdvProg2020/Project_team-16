@@ -49,3 +49,11 @@
     -fx-background-radius: 10;
     -fx-background-color: #58B19F;
 }
+
+.transparentFadeForProduct{
+    -fx-background-color : rgba(0, 0, 0, 0.35);
+}
+
+.transparentFade15 {
+    -fx-background-color : rgba(0, 0, 0, 0.15);
+}

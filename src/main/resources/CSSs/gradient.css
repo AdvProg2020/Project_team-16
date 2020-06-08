@@ -16,3 +16,7 @@
 .water_fire{
     -fx-background-color: linear-gradient(to top, #2196f3, #f44336);
 }
+
+.unknown2{
+    -fx-background-color: linear-gradient(from 10% 26% to 100% 67%, #8ccfbd, #0499d1);
+}
