@@ -27,7 +27,13 @@ public class ManagerDiscountCodeMenu extends Menu {
             CommandProcessor.editDiscountCode(command);
         }else if (command.startsWith("remove discount code")){
             CommandProcessor.removeDiscountCode(command);
-        }else {
+        }else if (command.startsWith("add user")){
+            CommandProcessor.addUserToDiscountCode(command);
+        }
+        else if (command.startsWith("remove user")){
+            CommandProcessor.removeUserFromDiscountCode(command);
+        }
+        else {
             throw new InvalidCommandException();
         }
     }

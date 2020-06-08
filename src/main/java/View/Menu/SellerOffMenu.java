@@ -27,7 +27,10 @@ public class SellerOffMenu extends Menu {
             CommandProcessor.editOff(command);
         }else if (command.equalsIgnoreCase("add off")){
             CommandProcessor.addOff();
-        }else {
+        }else if (command.startsWith("remove")){
+            CommandProcessor.deleteOff(command);
+        }
+        else {
             throw new InvalidCommandException();
         }
     }

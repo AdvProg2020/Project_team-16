@@ -4,11 +4,14 @@ import ModelPackage.Log.SellLog;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
+import ModelPackage.Product.SellPackage;
+import com.sun.xml.bind.v2.runtime.reflect.Lister;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Setter @Getter
 @Entity @Table(name = "t_seller")
@@ -20,10 +23,6 @@ public class Seller extends User {
     @Column(name = "BALANCE")
     private long balance;
 
-    @ElementCollection(targetClass = Product.class)
-        @OneToMany
-    private List<Product> products;
-
     @ElementCollection(targetClass = Off.class)
         @OneToMany
     private List<Off> offs;
@@ -31,7 +30,8 @@ public class Seller extends User {
     @ElementCollection(targetClass = SellLog.class)
         @OneToMany(cascade = CascadeType.ALL)
     private List<SellLog> sellLogs;
-
+    // TODO: 6/8/2020 DB
+    private ArrayList<SellPackage> packages;
 
     private boolean verified;
 
@@ -39,17 +39,22 @@ public class Seller extends User {
         super(username, password, firstName, lastName, email, phoneNumber, cart);
         this.company = company;
         this.balance = balance;
-        this.offs = new ArrayList<Off>();
-        this.products = new ArrayList<>();
-        this.sellLogs = new ArrayList<SellLog>();
+        this.offs = new ArrayList<>();
+        this.sellLogs = new ArrayList<>();
+        packages = new ArrayList<>();
     }
     public Seller(){
-        this.offs = new ArrayList<Off>();
-        this.products = new ArrayList<>();
-        this.sellLogs = new ArrayList<SellLog>();
+        this.offs = new ArrayList<>();
+        this.sellLogs = new ArrayList<>();
+        this.packages = new ArrayList<>();
     }
 
     public boolean getVerified(){
         return verified;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
     }
 }

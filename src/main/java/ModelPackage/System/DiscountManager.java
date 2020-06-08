@@ -15,6 +15,7 @@ import lombok.Data;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class DiscountManager {
         Date date = new Date();
         Date startDate = discountCode.getStartTime();
         Date endDate = discountCode.getEndTime();
-        return !date.before(startDate) && !date.after(endDate);
+        return date.after(startDate) && date.before(endDate);
     }
 
     public void removeDiscount(String code) throws NoSuchADiscountCodeException {
@@ -60,6 +61,7 @@ public class DiscountManager {
             checkIfNewStartingDateIsBeforeEndingDate(discountCode, newStart);
             discountCode.setStartTime(newStart);
         }
+        // TODO : checkIfStartingDateIsBeforeEndingDate(discountCode.getStartTime(), newEnd);
         if (newEnd != null){
             checkIfNewStartingDateIsBeforeEndingDate(discountCode, newEnd);
             discountCode.setEndTime(newEnd);
@@ -134,6 +136,10 @@ public class DiscountManager {
         UserIntegerMap map = findMap(user,discountCode);
         if (map == null) throw new UserNotExistedInDiscountCodeException(user.getUsername());
         discountCode.getUsers().remove(map);
+        DiscountcodeIntegerMap mapInUser = findDiscountMap(user,code);
+        Customer customer = DBManager.load(Customer.class,user.getUsername());
+        customer.getDiscountCodes().remove(mapInUser);
+        DBManager.save(customer);
         DBManager.save(discountCode);
     }
 
@@ -142,10 +148,13 @@ public class DiscountManager {
     }
 
     public void createDiscountCode(String code,Date startTime, Date endTime, int offPercentage, long maxDiscount)
-            throws NotValidPercentageException, StartingDateIsAfterEndingDate {
+            throws NotValidPercentageException, StartingDateIsAfterEndingDate, AlreadyExistCodeException {
         checkIfStartingDateIsBeforeEndingDate(startTime, endTime);
         checkIfPercentageIsValid(offPercentage);
-        /* TODO : Check for repeated code */
+        DiscountCode discountCodeDF = DBManager.load(DiscountCode.class,code);
+        if (discountCodeDF != null) {
+            throw new AlreadyExistCodeException();
+        }
         DiscountCode discountCode = new DiscountCode(code,startTime, endTime, offPercentage, maxDiscount);
         DBManager.save(discountCode);
     }
@@ -171,7 +180,7 @@ public class DiscountManager {
     }
 
     private DiscountcodeIntegerMap findDiscountMap(User user,String code){
-        Customer customer = (Customer) user;
+        Customer customer = DBManager.load(Customer.class,user.getUsername());
         for (DiscountcodeIntegerMap map : customer.getDiscountCodes()) {
             if (map.getDiscountCode().getCode().equals(code)) return map;
         }

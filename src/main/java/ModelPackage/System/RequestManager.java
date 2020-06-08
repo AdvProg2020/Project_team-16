@@ -92,11 +92,14 @@ public class RequestManager {
         if (editAttribute.getName() != null) {
             product.setName(editAttribute.getName());
             DBManager.save(product);
-        }else if (editAttribute.getPublicFeatureTitle() != null) {
+        }
+        if (editAttribute.getPublicFeatureTitle() != null) {
             editPublicFeatureProduct(product,editAttribute);
-        }else if (editAttribute.getSpecialFeatureTitle() != null) {
+        }
+        if (editAttribute.getSpecialFeatureTitle() != null) {
             editSpecialFeatureProduct(product,editAttribute);
-        }else if (editAttribute.getNewCategoryId() != 0){
+        }
+        if (editAttribute.getNewCategoryId() != 0){
             try {
                 CategoryManager.getInstance().editProductCategory(product.getId(),product.getCategory().getId(),editAttribute.getNewCategoryId());
             } catch (Exception e) {}
@@ -151,13 +154,17 @@ public class RequestManager {
             Off off = OffManager.getInstance().findOffById(changeAttributes.getSourceId());
             if (changeAttributes.getStart() != null){
                 off.setStartTime(changeAttributes.getStart());
-            }else if (changeAttributes.getEnd() != null){
+            }
+            if (changeAttributes.getEnd() != null){
                 off.setEndTime(changeAttributes.getEnd());
-            }else if (changeAttributes.getPercentage() != 0){
+            }
+            if (changeAttributes.getPercentage() != 0){
                 off.setOffPercentage(changeAttributes.getPercentage());
-            }else if (changeAttributes.getProductIdToAdd() != 0){
+            }
+            if (changeAttributes.getProductIdToAdd() != 0){
                 addProductToOff(off,changeAttributes);
-            }else if (changeAttributes.getProductIdToRemove() != 0){
+            }
+            if (changeAttributes.getProductIdToRemove() != 0){
                 removeProductToOff(off,changeAttributes);
             }
             DBManager.save(off);
@@ -172,6 +179,7 @@ public class RequestManager {
         try {
             Product product = ProductManager.getInstance().findProductById(changeAttributes.getProductIdToAdd());
             off.getProducts().add(product);
+            DBManager.save(product);
         } catch (NoSuchAProductException e) {
 
         }
@@ -192,7 +200,6 @@ public class RequestManager {
         comment.setStatus(CommentStatus.VERIFIED);
         ProductManager.getInstance().assignAComment(comment.getId(),comment);
     }
-
 
     private void acceptSeller(Request request) {
         Seller seller = request.getSeller();

@@ -2,6 +2,7 @@ package ModelPackage.System.database;
 
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
+import ModelPackage.Product.ProductStatus;
 import ModelPackage.System.CategoryManager;
 import ModelPackage.System.ProductManager;
 import org.hibernate.Session;
@@ -9,6 +10,7 @@ import org.hibernate.Session;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
 public class DBManager {
@@ -32,8 +34,15 @@ public class DBManager {
     }
 
     public static void initialLoad(){
-        ProductManager.getInstance().setAllProductsActive(loadAllData(Product.class));
+        List<Product> list = loadAllData(Product.class);
+        Iterator<Product> iterator = list.iterator();
+        while (iterator.hasNext()){
+            Product toRemove = iterator.next();
+            if (!(toRemove.getProductStatus() == ProductStatus.VERIFIED)) list.remove(toRemove);
+        }
+        ProductManager.getInstance().setAllProductsActive(list);
         CategoryManager.getInstance().setAllCategories(loadAllData(Category.class));
+        CategoryManager.getInstance().initialBaseCategories();
     }
 
     public static <T> List<T> loadAllData(Class<T> type) {

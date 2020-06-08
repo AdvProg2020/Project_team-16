@@ -6,25 +6,34 @@ import ModelPackage.Off.Off;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
-import ModelPackage.System.SortType;
+import ModelPackage.System.CategoryManager;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.editPackage.OffChangeAttributes;
-import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
+import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
+import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
+import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
 import View.PrintModels.*;
+import View.SortPackage;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class SellerController extends Controller{
+    private static SellerController sellerController = new SellerController();
+
+    public static SellerController getInstance() {
+        return sellerController;
+    }
 
     public CompanyPM viewCompanyInfo(String sellerUserName) throws UserNotAvailableException {
          Company company = sellerManager.viewCompanyInformation(sellerUserName);
@@ -49,9 +58,10 @@ public class SellerController extends Controller{
         return seller.getBalance();
     }
 
-    public List<MiniProductPM> manageProducts(String sellerUserName) throws UserNotAvailableException {
+    public List<MiniProductPM> manageProducts(String sellerUserName, SortPackage sort) throws UserNotAvailableException {
          List<Product> sellerProducts = sellerManager.viewProducts(sellerUserName);
-         sellerProducts = sortManager.sort(sellerProducts, SortType.VIEW);
+         sortManager.sort(sellerProducts,sort.getSortType());
+         if (!sort.isAscending()) Collections.reverse(sellerProducts);
          ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
          for (Product sellerProduct : sellerProducts) {
              miniProductPMs.add(createMiniProductPM(sellerProduct));
@@ -59,14 +69,14 @@ public class SellerController extends Controller{
          return miniProductPMs;
     }
 
-    public List<UserMiniPM> viewAllBuyersOfProduct(int productId) throws NoSuchAProductException {
+    public List<UserMiniPM> viewAllBuyersOfProduct(int productId,String viwer,SortPackage sortPackage) throws NoSuchAProductException, YouAreNotASellerException {
         List<UserMiniPM> userMiniPMs = new ArrayList<>();
-        List<User> allBuyers = new ArrayList<>();
         Product product = productManager.findProductById(productId);
-        for (Seller seller : product.getAllSellers()) {
-            allBuyers.addAll(csclManager.allBuyers(productId, seller));
-        }
+        csclManager.checkIfIsASellerOFProduct(product,viwer);
+        Seller seller = DBManager.load(Seller.class,viwer);
+        List<User> allBuyers = new ArrayList<>(csclManager.allBuyers(productId, seller));
         allBuyers = sortManager.sortUser(allBuyers);
+        if (!sortPackage.isAscending())Collections.reverse(allBuyers);
         for (User buyer : allBuyers) {
             userMiniPMs.add(createUserMiniPM(buyer));
         }
@@ -79,14 +89,19 @@ public class SellerController extends Controller{
                 productManager.allFeaturesOf(product));
     }
 
-    public void removeProduct(int productId) throws NoSuchACategoryException,
-            NoSuchAProductInCategoryException, NoSuchAProductException {
-         productManager.deleteProduct(productId);
+    public void removeProduct(int productId,String editor) throws NoSuchACategoryException,
+            NoSuchAProductInCategoryException, NoSuchAProductException, EditorIsNotSellerException {
+         productManager.deleteProduct(productId,editor);
     }
 
-    public List<MiniOffPM> viewAllOffs(String sellerUserName) throws UserNotAvailableException {
-        Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
+    public List<MiniOffPM> viewAllOffs(String sellerUserName,SortPackage sortPackage) throws UserNotAvailableException {
+        Seller seller = DBManager.load(Seller.class,sellerUserName);
+        if (seller == null) {
+            throw new UserNotAvailableException();
+        }
         List<Off> offs = seller.getOffs();
+        sortManager.sortOff(offs);
+        if (!sortPackage.isAscending()) Collections.reverse(offs);
         List<MiniOffPM> offPMs = new ArrayList<>();
         for (Off off : offs) {
             offPMs.add(new MiniOffPM(off.getOffId(),
@@ -98,8 +113,9 @@ public class SellerController extends Controller{
         return offPMs;
     }
 
-    public OffPM viewOff(int offId) throws NoSuchAOffException {
+    public OffPM viewOff(int offId,String viewer) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {
         Off off = offManager.findOffById(offId);
+        offManager.checkIfThisSellerCreatedTheOff(off,viewer);
         return new OffPM(off.getOffId(),
                 addProductIdsToOffPM(off),
                 off.getSeller().getUsername(),
@@ -119,44 +135,13 @@ public class SellerController extends Controller{
         offManager.createOff(seller, dates, offPercentage);
     }
 
-    public void editOff(String[] data, OffChangeAttributes editAttributes)
-            throws InvalidTimes, NoSuchAOffException, NoSuchAProductException,
-            UserNotAvailableException {
-        int offId = Integer.parseInt(data[0]);
-        String userName = data[1];
-        Seller seller = (Seller) accountManager.getUserByUsername(userName);
-        Date start = editAttributes.getStart();
-        Date end = editAttributes.getEnd();
-        int productIdToRemove = editAttributes.getProductIdToRemove();
-        int productIdToAdd = editAttributes.getProductIdToAdd();
-        int percentage = editAttributes.getPercentage();
-        if (start != null)
-            offManager.editStartTimeOfOff(seller, offId, start);
-        if (end != null)
-            offManager.editEndTimeOfOff(seller, offId, end);
-        if (productIdToRemove != 0)
-            offManager.deleteProductFromOff(seller, offId, productIdToRemove);
-        if (productIdToAdd != 0)
-            offManager.addProductToOff(seller, offId, productIdToAdd);
-        if (percentage != 0)
-            offManager.editPercentageOfOff(seller, offId, percentage);
+    public void editOff(String seller, OffChangeAttributes editAttributes) throws ThisOffDoesNotBelongssToYouException, NoSuchAOffException {
+        offManager.editOff(editAttributes,seller);
     }
 
-    public void deleteOff(String data) throws NoSuchAOffException {
+    public void deleteOff(String data,String remover) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {
         int offId = Integer.parseInt(data);
-        offManager.deleteOff(offId);
-    }
-
-    public UserFullPM viewSellerPersonalInfo(String sellerUserName) throws UserNotAvailableException {
-        User user = accountManager.viewPersonalInfo(sellerUserName);
-        return new UserFullPM(user.getUsername(), user.getFirstName(),
-                user.getLastName(), user.getEmail(),
-                user.getPhoneNumber(), "seller");
-    }
-
-    public void editSellerInfo(String userName, UserEditAttributes editAttributes)
-            throws UserNotAvailableException {
-        accountManager.changeInfo(userName, editAttributes);
+        offManager.deleteOff(offId,remover);
     }
 
     public void addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures)
@@ -179,13 +164,24 @@ public class SellerController extends Controller{
         productManager.createProduct(product, sellerUserName);
     }
 
+    public List<String> getSpecialFeaturesOfCat(int catId) throws NoSuchACategoryException {
+        return categoryManager.getAllSpecialFeaturesFromCategory(catId);
+    }
+
+    public List<String> getPublicFeatures(){
+        return CategoryManager.getPublicFeatures();
+    }
+
     public void editProduct(String sellerUserName, ProductEditAttribute editAttribute)
-            throws NoSuchAProductException {
+            throws NoSuchAProductException, EditorIsNotSellerException {
         productManager.editProduct(editAttribute, sellerUserName);
     }
 
     private ArrayList<Seller> addSellerToNewProduct(String sellerUserName) throws UserNotAvailableException {
-        Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
+        Seller seller = DBManager.load(Seller.class,sellerUserName);
+        if (seller == null) {
+            throw new UserNotAvailableException();
+        }
         ArrayList<Seller> sellers = new ArrayList<>();
         sellers.add(seller);
         return sellers;
@@ -241,5 +237,7 @@ public class SellerController extends Controller{
     private UserMiniPM createUserMiniPM(User user) {
         return new UserMiniPM(user.getUsername(), "buyer");
     }
+
+
 
 }

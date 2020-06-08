@@ -9,19 +9,23 @@ import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 public class CategoryManager {
-    private List<Category> allCategories;
+    private List<Category> allCategories = new ArrayList<>();
+    private List<Category> baseCategories = new ArrayList<>();
     private static CategoryManager categoryManager = new CategoryManager();
-    private static ArrayList<String> publicFeatures;
+    private static ArrayList<String> publicFeatures = new ArrayList<>(Arrays.asList("Dimension","Weigh","Color")) ;
 
     private CategoryManager(){
-        if (allCategories == null) allCategories = new ArrayList<>();
+
+    }
+
+    public void initialBaseCategories(){
+        for (Category category : allCategories) {
+            if (category.getParent() == null) baseCategories.add(category);
+        }
     }
 
     public static CategoryManager getInstance(){
@@ -35,23 +39,37 @@ public class CategoryManager {
         else throw new NoSuchACategoryException(Integer.toString(categoryId));
     }
 
-    public void createCategory(String name,int parentId)
+    public void createCategory(String name,int parentId,List<String> features)
             throws RepeatedNameInParentCategoryExeption,NoSuchACategoryException{
-        Category parent = getCategoryById(parentId);
+        Category parent;
+        if (parentId != 0)
+            parent = getCategoryById(parentId);
+        else
+            parent = null;
         checkIfThisNameIsValidForThisParent(name,parent);
 
         Category toCreate = new Category(name,parent);
+        allCategories.add(toCreate);
+        toCreate.setSpecialFeatures(features);
         addToBase(toCreate,parent);
         DBManager.save(toCreate);
     }
 
     private void checkIfThisNameIsValidForThisParent(String name,Category parent)
             throws RepeatedNameInParentCategoryExeption {
-        List<Category> subCategories = parent.getSubCategories();
+        List<Category> subCategories;
+        if (parent != null)
+            subCategories = parent.getSubCategories();
+        else
+            subCategories = baseCategories;
         for (Category category : subCategories) {
             if (category.getName().equals(name))
                 throw new RepeatedNameInParentCategoryExeption(name);
         }
+    }
+
+    public List<Category> getBaseCats(){
+        return baseCategories;
     }
 
     public void addProductToCategory(Product product,Category toBeAddedTo) {
@@ -63,6 +81,7 @@ public class CategoryManager {
 
     public ArrayList<String> getAllSpecialFeaturesFromCategory(int categoryId)
             throws NoSuchACategoryException{
+        if (categoryId == 0) return new ArrayList<>();
         Category category = getCategoryById(categoryId);
         return getAllSpecialFeatures(category);
     }
@@ -265,6 +284,7 @@ public class CategoryManager {
 
     public ArrayList<Product> getAllProductsInThisCategory(int categoryId)
             throws NoSuchACategoryException {
+        if (categoryId == 0) return (ArrayList<Product>)ProductManager.getInstance().getAllProductsActive();
         Category category = getCategoryById(categoryId);
         return (ArrayList<Product>) getAllProductsInThisCategory(category);
     }
@@ -288,10 +308,16 @@ public class CategoryManager {
     }
 
     public void addToBase(Category cat,Category parent){
-        List<Category> subCategories = parent.getSubCategories();
+        List<Category> subCategories;
+        if (parent != null)
+            subCategories = parent.getSubCategories();
+        else
+            subCategories = baseCategories;
         subCategories.add(cat);
-        parent.setSubCategories(subCategories);
-        DBManager.save(parent);
+        if (parent != null){
+            parent.setSubCategories(subCategories);
+            DBManager.save(parent);
+        }
     }
 
 }

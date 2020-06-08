@@ -26,20 +26,19 @@ public class ManagerManager {
 
     AccountManager accountManager = AccountManager.getInstance();
 
-    public void createManagerProfile(String[] info){
-        checkIfIsTheFirstManager();
+    public void createManagerProfile(String[] info) {
         Manager manager = accountManager.createManager(info);
         DBManager.save(manager);
     }
 
-    public void deleteUser(String username) {
-        User user = DBManager.load(User.class, username);
+    public void deleteUser(String username) throws UserNotAvailableException {
+        User user = AccountManager.getInstance().getUserByUsername(username);
         /*TODO : deleting user from products if a seller */
         /* TODO : deleting every log */
         DBManager.delete(user);
     }
 
-    public void checkIfIsTheFirstManager(){
+    public void checkIfIsTheFirstManager() throws SecondManagerByUserException {
         List<Manager> list = DBManager.loadAllData(Manager.class);
         if (!list.isEmpty()){
             throw new SecondManagerByUserException();

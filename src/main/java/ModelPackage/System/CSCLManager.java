@@ -10,6 +10,9 @@ import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
+import ModelPackage.System.exeption.clcsmanager.NotABuyer;
+import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
+import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
 import lombok.Data;
@@ -28,8 +31,9 @@ public class CSCLManager {
         return csclManager;
     }
 
-    public void createCompany(Company newCompany) {
+    public int createCompany(Company newCompany) {
         DBManager.save(newCompany);
+        return newCompany.getId();
     }
 
     public Company getCompanyById(int id)
@@ -65,14 +69,18 @@ public class CSCLManager {
 
     public void removeProductFromCompany(int productId,int companyId)
             throws NoSuchACompanyException, NoSuchAProductException {
+        // TODO : third exception should be added (NoSuchAProductInCompanyException)
         Company company = getCompanyById(companyId);
         company.getProductsIn().remove(ProductManager.getInstance().findProductById(productId));
+        // TODO : DBManager.save(ProductManager.getInstance().findProductById(productId))
         DBManager.save(company);
     }
 
     public void removeProductFromCompany(Product product){
+        // TODO : product.getCompanyClass is null!
         Company company = product.getCompanyClass();
         company.getProductsIn().remove(product);
+        // TODO : DBManager.save(ProductManager.getInstance().findProductById(productId))
         DBManager.save(company);
     }
 
@@ -91,7 +99,8 @@ public class CSCLManager {
     }
 
     public void createScore(String userId, int productId, int score)
-            throws NoSuchAProductException {
+            throws NoSuchAProductException, NotABuyer {
+        if (!boughtThisProduct(productId,userId)) throw new NotABuyer();
         Score SCORE = new Score(userId,productId,score);
         ProductManager.getInstance().assignAScore(productId,SCORE);
     }
@@ -140,7 +149,7 @@ public class CSCLManager {
         return price;
     }
 
-    public Log getLogById(int id){
+    public Log getLogById(int id) throws NoSuchALogException {
         Log log = DBManager.load(Log.class,id);
         if (log == null) {
             throw new NoSuchALogException(Integer.toString(id));
@@ -157,6 +166,13 @@ public class CSCLManager {
             }
         }
         return toReturn;
+    }
+
+    public void checkIfIsASellerOFProduct(Product product,String username) throws YouAreNotASellerException {
+        for (Seller seller : product.getAllSellers()) {
+            if (seller.getUsername().equals(username)) return;
+        }
+        throw new YouAreNotASellerException();
     }
 
     public boolean boughtThisProduct(int productId, String probableBuyerId) throws NoSuchAProductException {

@@ -9,15 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 public class FilterManager {
-    private static FilterManager filterManager = null;
-    private FilterManager(){
-
-    }
-    public static FilterManager getInstance(){
-        if (filterManager == null)
-            filterManager = new FilterManager();
-        return filterManager;
-    }
 
     public static ArrayList<Product> updateFilterList(int categoryId, HashMap<String,String> filters,int[] priceRange)
             throws NoSuchACategoryException, InvalidFilterException {
@@ -28,6 +19,25 @@ public class FilterManager {
         ArrayList<String> filter = new ArrayList<>(filterSet);
         checkIfFiltersAreAvailable(filter,validFeatures);
         return matchProductsToFilters(allProductsInCategory,filters,priceRange);
+    }
+
+    public static List<Product> filterList(List<Product> list,HashMap<String,String> filters,int[] priceRange){
+        List<Product> toReturn = new ArrayList<>();
+        for (Product product : list) {
+            if (doesMatchTheFilters(product,filters,priceRange))toReturn.add(product);
+        }
+        return toReturn;
+    }
+
+    private static boolean doesMatchTheFilters(Product product,HashMap<String,String> filters,int[] priceRange){
+        if (!thisProductIsInPriceRange(priceRange[0],priceRange[1],product.getLeastPrice())) return false;
+        HashMap<String,String> features = new HashMap<>(product.getPublicFeatures());
+        features.putAll(product.getSpecialFeatures());
+        for (String filter : filters.keySet()) {
+            if (!features.containsKey(filter))return false;
+            if (!features.get(filter).equals(filters.get(filter)))return false;
+        }
+        return true;
     }
 
     private static ArrayList<Product> matchProductsToFilters(List<Product> products,HashMap<String,String> filters,int[] priceRange){
@@ -57,7 +67,8 @@ public class FilterManager {
         }
     }
 
-    static boolean thisProductIsInPriceRange(int lower, int high, int leastPrice){
+    private static boolean thisProductIsInPriceRange(int lower, int high, int leastPrice){
+        if (high == 0) return true;
         return (leastPrice > lower && leastPrice < high);
     }
 }

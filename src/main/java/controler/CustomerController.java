@@ -7,18 +7,27 @@ import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.Product;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
-import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
+import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
+import ModelPackage.System.exeption.clcsmanager.NotABuyer;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
 import View.PrintModels.*;
+import View.SortPackage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CustomerController extends Controller {
+    private static CustomerController customerController = new CustomerController();
+
+    public static CustomerController getInstance() {
+        return customerController;
+    }
 
     public CartPM viewCart(String username) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
@@ -60,7 +69,10 @@ public class CustomerController extends Controller {
     public List<InCartPM> showProducts(String username) throws UserNotAvailableException {
         ArrayList<InCartPM> inCartPMS = new ArrayList<>();
 
-        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        Customer customer = DBManager.load(Customer.class,username);
+        if (customer == null) {
+            throw new UserNotAvailableException();
+        }
         Cart cart = customer.getCart();
 
         for (SubCart subCart : cart.getSubCarts()) {
@@ -70,19 +82,21 @@ public class CustomerController extends Controller {
         return inCartPMS;
     }
 
-    public Product viewProduct(int id) throws NoSuchAProductException {
-        return productManager.findProductById(id);
-    }
-
     public void changeAmount(String username, int id, int change) throws Exception {
-        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        Customer customer = DBManager.load(Customer.class,username);
+        if (customer == null) {
+            throw new UserNotAvailableException();
+        }
         Cart cart = customer.getCart();
         String sellerId = cartManager.getSubCartByProductId(cart, id).getSeller().getUsername();
         cartManager.changeProductAmountInCart(cart, id, sellerId, change);
     }
 
     public long showTotalPrice(String username) throws UserNotAvailableException {
-        Customer customer = (Customer)accountManager.getUserByUsername(username);
+        Customer customer = DBManager.load(Customer.class,username);
+        if (customer == null) {
+            throw new UserNotAvailableException();
+        }
         Cart cart = customer.getCart();
 
         return cart.getTotalPrice();
@@ -142,7 +156,7 @@ public class CustomerController extends Controller {
         );
     }
 
-    public OrderLogPM showOrder(int id) throws NoSuchAProductException {
+    public OrderLogPM showOrder(int id) throws NoSuchAProductException, NoSuchALogException {
         PurchaseLog purchaseLog = (PurchaseLog) csclManager.getLogById(id);
         ArrayList<MiniProductPM> miniProductPMS = createMiniProductPM(purchaseLog);
 
@@ -189,9 +203,11 @@ public class CustomerController extends Controller {
         return customer.getBalance();
     }
 
-    public List<DisCodeUserPM> viewDiscountCodes(String username) throws UserNotAvailableException {
+    public List<DisCodeUserPM> viewDiscountCodes(String username, SortPackage sortPackage) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         List<DiscountcodeIntegerMap> discountCodes = customer.getDiscountCodes();
+        sortManager.sortDiscountIntegers(discountCodes,sortPackage.getSortType());
+        if (!sortPackage.isAscending()) Collections.reverse(discountCodes);
         ArrayList<DisCodeUserPM> disCodeUserPMS = new ArrayList<>();
 
         for (DiscountcodeIntegerMap discountCode : discountCodes) {
@@ -211,5 +227,9 @@ public class CustomerController extends Controller {
                 discountCode.getMaxDiscount(),
                 discountcodeIntegerMap.getInteger()
         );
+    }
+
+    public void assignAScore(String username,int prosuctId,int score) throws NoSuchAProductException, NotABuyer {
+        csclManager.createScore(username,prosuctId,score);
     }
 }
