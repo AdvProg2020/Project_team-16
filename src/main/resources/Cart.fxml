@@ -19,7 +19,6 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-
 <AnchorPane prefHeight="593.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.Cart">
    <children>
       <BorderPane prefHeight="594.0" prefWidth="960.0">
@@ -108,10 +107,11 @@
                <children>
                   <TableView editable="true" prefHeight="506.0" prefWidth="653.0" tableMenuButtonVisible="true">
                      <columns>
-                        <TableColumn fx:id="product" prefWidth="143.19995421171188" text="Product" />
-                        <TableColumn fx:id="price" minWidth="9.59991455078125" prefWidth="170.40000915527344" text="Price" />
-                        <TableColumn fx:id="afterOff" minWidth="0.0" prefWidth="144.79986572265625" text="Price After Off" />
-                        <TableColumn fx:id="discount" prefWidth="176.7999267578125" text="Discount" />
+                        <TableColumn fx:id="product" prefWidth="231.20001524686813" text="Product" />
+                        <TableColumn fx:id="amount" minWidth="0.0" prefWidth="63.19993591308594" text="Quantity" />
+                        <TableColumn fx:id="price" minWidth="0.0" prefWidth="115.199951171875" text="Price" />
+                        <TableColumn fx:id="afterOff" minWidth="0.0" prefWidth="110.39996337890625" text="Price After Off" />
+                        <TableColumn fx:id="discount" prefWidth="119.1998291015625" text="Discount" />
                      </columns>
                   </TableView>
                   <HBox alignment="CENTER_RIGHT" prefHeight="97.0" prefWidth="653.0" spacing="10.0">

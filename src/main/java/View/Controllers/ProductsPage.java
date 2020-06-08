@@ -2,6 +2,7 @@ package View.Controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -22,5 +23,5 @@ public class ProductsPage {
     public TextField serch;
     public Button searchBut;
     public Button ignoreSearch;
-
+    public JFXToggleButton offOnly;
 }

@@ -19,4 +19,5 @@ public class Cart {
     public Button delete;
     public Button increase;
     public Button decrease;
+    public TableColumn amount;
 }

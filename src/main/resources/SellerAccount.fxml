@@ -15,7 +15,6 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-
 <AnchorPane prefHeight="593.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.SellerAccount">
    <children>
       <BorderPane layoutY="1.0" prefHeight="594.0" prefWidth="960.0">
@@ -298,6 +297,14 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
+                  <JFXButton fx:id="newProduct" focusTraversable="false" layoutX="204.0" layoutY="510.0" prefHeight="38.0" prefWidth="174.0" text="New Product">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <graphic>
+                        <FontIcon iconLiteral="fa-dropbox" iconSize="15" />
+                     </graphic>
+                  </JFXButton>
                </children>
             </AnchorPane>
          </center>

@@ -42,10 +42,6 @@ public class Product {
     @Transient
     private String company;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(cascade = CascadeType.ALL,targetEntity = Seller.class)
-    private List<Seller> allSellers;
-
     @ManyToOne
     private Category category;
 
@@ -73,18 +69,6 @@ public class Product {
         @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> allComments;
 
-    @ElementCollection
-    @LazyCollection(LazyCollectionOption.FALSE)
-        @OneToMany(targetEntity = SellerIntegerMap.class,cascade = CascadeType.ALL)
-        @JoinTable(name = "t_product_stock")
-    private List<SellerIntegerMap> stock;
-
-    @ElementCollection
-    @LazyCollection(LazyCollectionOption.FALSE)
-        @OneToMany(targetEntity = SellerIntegerMap.class,cascade = CascadeType.ALL)
-        @JoinTable(name = "t_product_prices")
-    private List<SellerIntegerMap> prices;
-
     @Column(name = "VIEW")
     private int view;
 
@@ -94,23 +78,20 @@ public class Product {
     @Column(name = "LEAST_PRICE")
     private int leastPrice;
 
-    private boolean isOnOff = false;
+    // TODO: 6/8/2020 DataBAse
+    private ArrayList<SellPackage> packages;
 
-    @OneToOne
-    private Off off;
+    private boolean isOnOff = false;
 
     public Product(int id){this.id = id;}
 
-    public Product(String name, String company, ArrayList<Seller> allSellers, Category category, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, List<SellerIntegerMap> stock, List<SellerIntegerMap> prices) {
+    public Product(String name, String company, Category category, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description) {
         this.name = name;
         this.company = company;
-        this.allSellers = allSellers;
         this.category = category;
         this.publicFeatures = publicFeatures;
         this.specialFeatures = specialFeatures;
-        this.description = description;
-        this.stock = stock;
-        this.prices = prices;
+        this.description = description;;
         this.allComments = new ArrayList<>();
         this.productStatus = ProductStatus.UNDER_CREATION;
         this.dateAdded = new Date();
@@ -118,11 +99,18 @@ public class Product {
         this.view = 0;
         this.boughtAmount = 0;
         this.totalScore = 0;
+        this.packages = new ArrayList<>();
     }
 
     public Product() {
         this.allScores = new ArrayList<>();
         this.allComments = new ArrayList<>();
+    }
 
+    public SellPackage findPackageBySeller(String username){
+        for (SellPackage sellPackage : packages) {
+            if (sellPackage.getSeller().getUsername().equals(username))return sellPackage;
+        }
+        return null;
     }
 }

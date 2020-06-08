@@ -20,3 +20,7 @@
 .unknown2{
     -fx-background-color: linear-gradient(from 10% 26% to 100% 67%, #8ccfbd, #0499d1);
 }
+
+.unknown3{
+    -fx-background-color: linear-gradient(from 10% 26% to 100% 67%, rgb(12, 133, 75), rgb(125, 214, 123));
+}
