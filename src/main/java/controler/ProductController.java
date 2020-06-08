@@ -1,24 +1,43 @@
 package controler;
 
 import ModelPackage.Maps.SellerIntegerMap;
+import ModelPackage.Off.Off;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
-import ModelPackage.System.SortType;
-import ModelPackage.System.exeption.account.ProductNotHaveSellerException;
+import ModelPackage.System.FilterManager;
+import ModelPackage.System.exeption.category.NoSuchACategoryException;
+import ModelPackage.System.exeption.filters.InvalidFilterException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
-import View.PrintModels.CommentPM;
-import View.PrintModels.FullProductPM;
-import View.PrintModels.MiniProductPM;
-import controler.exceptions.NotAvailableSort;
+import View.FilterPackage;
+import View.PrintModels.*;
+import View.SortPackage;
 import controler.exceptions.ProductsNotBelongToUniqueCategoryException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ProductController extends Controller{
+    private static ProductController productController = new ProductController();
+
+    public static ProductController getInstance() {
+        return productController;
+    }
+
+    public List<MiniProductPM> showAllProducts(SortPackage sortPackage, FilterPackage filterPackage) throws NoSuchACategoryException, InvalidFilterException {
+        int[] priceRange = {filterPackage.getDownPriceLimit(),filterPackage.getUpPriceLimit()};
+        ArrayList<Product> products = FilterManager.updateFilterList(filterPackage.getCategoryId(), filterPackage.getActiveFilters(), priceRange);
+        sortManager.sort(products,sortPackage.getSortType());
+        if (!sortPackage.isAscending()) Collections.reverse(products);
+        List<MiniProductPM> toReturn = new ArrayList<>();
+        for (Product product : products) {
+            toReturn.add(createMiniProductPM(product));
+        }
+        return toReturn;
+    }
 
     public void assignComment(String[] data) throws NoSuchAProductException {
         String userId = data[0];
@@ -47,10 +66,10 @@ public class ProductController extends Controller{
         return createFullProductPM(productId);
     }
 
-    public FullProductPM[] compareProducts(String[] data)
+    public FullProductPM[] compareProducts(int[] data)
             throws NoSuchAProductException, ProductsNotBelongToUniqueCategoryException {
-        int firstProductId = Integer.parseInt(data[0]);
-        int secondProductId = Integer.parseInt(data[1]);
+        int firstProductId = data[0];
+        int secondProductId = data[1];
         checkIfTwoProductsDoesNotBelongToUniqueCategory(firstProductId, secondProductId);
         FullProductPM[] fullProductPMs = new FullProductPM[2];
         fullProductPMs[0] = createFullProductPM(firstProductId);
@@ -64,88 +83,13 @@ public class ProductController extends Controller{
     }
 
 
-    /*TODO : Change */
     public void addToCart(String[] data) throws Exception {
         String userName = data[0];
         User user = accountManager.getUserByUsername(userName);
-        if (user.isHasSignedIn()) {
-            int productId = Integer.parseInt(data[1]);
-            String sellerUserName = data[2];
-            int amount = Integer.parseInt(data[3]);
-            cartManager.addProductToCart(user.getCart(), sellerUserName, productId, amount);
-        }
-    }
-
-    public Seller selectSeller(String[] data) throws NoSuchAProductException,
-            ProductNotHaveSellerException {
-        int productId = Integer.parseInt(data[0]);
-        String sellerUserName = data[1];
-        return productManager.showSellerOfProduct(productId, sellerUserName);
-    }
-
-    public String[] showAvailableSorts() {
-        String[] availableSort = new String[7];
-        availableSort[0] = "Name";
-        availableSort[1] = "Time";
-        availableSort[2] = "View";
-        availableSort[3] = "More Price";
-        availableSort[4] = "Less Price";
-        availableSort[5] = "Bought Amount";
-        availableSort[6] = "Score";
-        return availableSort;
-    }
-
-    public List<MiniProductPM> sortProducts(String[] data) throws NotAvailableSort,
-            NoSuchAProductException {
-        String sortName = data[0];
-        checkIfSortIsAvailable(sortName);
-        ArrayList<Product> toSortProducts = new ArrayList<>();
-        for (int i = 1; i < data.length; i++) {
-            toSortProducts.add(productManager.findProductById(Integer.parseInt(data[i])));
-        }
-        SortType sortType = findSortType(data[0]);
-        List<Product> sortedProducts = sortManager.sort(toSortProducts, sortType);
-        return showSortedProducts(sortedProducts);
-    }
-
-    public void disableSortProducts() {
-        sortManager.sort(sortManager.getList(), SortType.VIEW);
-    }
-
-    private List<MiniProductPM> showSortedProducts(List<Product> products) {
-        List<MiniProductPM> miniProductPMs = new ArrayList<>();
-        for (Product product : products) {
-            miniProductPMs.add(createMiniProductPM(product));
-        }
-        return miniProductPMs;
-    }
-
-    private SortType findSortType(String sortType) {
-        switch (sortType) {
-            case "Name" :
-                return SortType.NAME;
-            case "Time" :
-                return SortType.TIME;
-            case "View" :
-                return SortType.VIEW;
-            case "More Price" :
-                return SortType.MORE_PRICE;
-            case "Less Price" :
-                return SortType.LESS_PRICE;
-            case "Bought Amount" :
-                return SortType.BOUGHT_AMOUNT;
-            case "Score" :
-                return SortType.SCORE;
-        }
-        return null;
-    }
-
-    private void checkIfSortIsAvailable(String sortName) throws NotAvailableSort {
-        String[] availableSorts = showAvailableSorts();
-        for (String sort : availableSorts) {
-            if (!sort.equals(sortName))
-                throw new NotAvailableSort(sortName);
-        }
+        int productId = Integer.parseInt(data[1]);
+        String sellerUserName = data[2];
+        int amount = Integer.parseInt(data[3]);
+        cartManager.addProductToCart(user.getCart(), sellerUserName, productId, amount);
     }
 
     private void checkIfTwoProductsDoesNotBelongToUniqueCategory(int firstProductId, int secondProductId)
@@ -167,6 +111,33 @@ public class ProductController extends Controller{
                 product.getCategory().getName(),
                 product.getStock(), product.getPrices(), product.getCompany(),
                 product.getTotalScore(), product.getDescription());
+    }
+
+    public List<ProductsOnOffPM> showOffs(SortPackage sortPackage,FilterPackage filterPackage){
+        List<Product> products = productManager.getAllOffFromActiveProducts();
+        int[] priceRange = {filterPackage.getDownPriceLimit(),filterPackage.getUpPriceLimit()};
+        List<Product> filtered = FilterManager.filterList(products,filterPackage.getActiveFilters(),priceRange);
+        sortManager.sort(filtered,sortPackage.getSortType());
+        if (!sortPackage.isAscending())Collections.reverse(filtered);
+        List<ProductsOnOffPM> toReturn = new ArrayList<>();
+        for (Product product : filtered) {
+            toReturn.add(new ProductsOnOffPM(product.getId(),
+                    product.getName(),
+                    product.getLeastPrice(),
+                    calculatePriceAfterOff(product))
+            );
+        }
+        return toReturn;
+    }
+
+    private int calculatePriceAfterOff(Product product){
+        Off off = product.getOff();
+        int percant = off.getOffPercentage();
+        Seller seller = off.getSeller();
+        for (SellerIntegerMap map : product.getPrices()) {
+            if (map.getSeller().equals(seller)) return (int)((100-percant)/100.0)*map.getInteger();
+        }
+        return 0;
     }
 
 }

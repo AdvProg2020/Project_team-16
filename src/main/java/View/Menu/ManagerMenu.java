@@ -35,7 +35,7 @@ public class ManagerMenu extends Menu {
     @Override
     void executeValidCommand(String command) throws InvalidCommandException {
         if (command.trim().equalsIgnoreCase("create discount code")){
-            CommandProcessor.createDiscountCode(command);
+            CommandProcessor.createDiscountCode();
         }
         else throw new InvalidCommandException();
     }

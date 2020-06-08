@@ -6,7 +6,6 @@ import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
-import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
@@ -14,22 +13,31 @@ import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.AlreadyASeller;
+import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
 import View.PrintModels.*;
+import View.SortPackage;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 public class ManagerController extends Controller {
+    private static ManagerController managerController = new ManagerController();
+
+    public static ManagerController getInstance() {
+        return managerController;
+    }
 
     public List<UserMiniPM> manageUsers () {
         List<User> users = DBManager.loadAllData(User.class);
+        sortManager.sortUser(users);
         ArrayList<UserMiniPM> userMiniPMS = new ArrayList<>();
 
         for (User user : users) {
@@ -58,11 +66,11 @@ public class ManagerController extends Controller {
         );
     }
 
-    public void deleteUser(String username){
+    public void deleteUser(String username) throws UserNotAvailableException {
         managerManager.deleteUser(username);
     }
 
-    public void createManagerProfile(String[] info){
+    public void createManagerProfile(String[] info) {
         managerManager.createManagerProfile(info);
     }
 
@@ -92,20 +100,26 @@ public class ManagerController extends Controller {
 
     public void removeProduct(int productId) throws NoSuchACategoryException,
             NoSuchAProductInCategoryException, NoSuchAProductException {
-        productManager.deleteProduct(productId);
+        try {
+            productManager.deleteProduct(productId,"MAN@GER");
+        } catch (EditorIsNotSellerException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createDiscount(String[] data) throws ParseException,
-            NotValidPercentageException, StartingDateIsAfterEndingDate {
-        Date startTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[0]);
-        Date endTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[1]);
+            NotValidPercentageException, StartingDateIsAfterEndingDate, AlreadyExistCodeException {
+        Date startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(data[0]);
+        Date endTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(data[1]);
         int offPercentage = Integer.parseInt(data[2]);
         long maxDiscount = Long.parseLong(data[3]);
         discountManager.createDiscountCode(data[4],startTime, endTime, offPercentage, maxDiscount);
     }
 
-    public List<DiscountMiniPM> viewDiscountCodes(){
+    public List<DiscountMiniPM> viewDiscountCodes(SortPackage sortPackage){
         List<DiscountCode> discountCodes = DBManager.loadAllData(DiscountCode.class);
+        sortManager.sortDiscountCodes(discountCodes,sortPackage.getSortType());
+        if (!sortPackage.isAscending()) Collections.reverse(discountCodes);
         ArrayList<DiscountMiniPM> disCodeManagerPMS = new ArrayList<>();
 
         for (DiscountCode discountCode : discountCodes) {
@@ -144,23 +158,28 @@ public class ManagerController extends Controller {
         discountManager.editDiscountCode(code, editAttributes);
     }
 
-    private void removeUserFromDiscountCodeUsers(String code, String username) throws UserNotExistedInDiscountCodeException, NoSuchADiscountCodeException, UserNotAvailableException {
+    public void removeUserFromDiscountCodeUsers(String code, String username) throws UserNotExistedInDiscountCodeException, NoSuchADiscountCodeException, UserNotAvailableException {
         User user = accountManager.getUserByUsername(username);
         discountManager.removeUserFromDiscountCodeUsers(code, user);
+    }
+
+    public void addUserToDiscountCode(String code,String username,int time) throws UserNotAvailableException, UserExistedInDiscountCodeException, NoSuchADiscountCodeException {
+        User user = accountManager.getUserByUsername(username);
+        discountManager.addUserToDiscountCodeUsers(code,user,time);
     }
 
     public void removeDiscountCode(String code) throws NoSuchADiscountCodeException {
         discountManager.removeDiscount(code);
     }
 
-    public List<RequestPM> manageRequests(){
+    public List<RequestPM> manageRequests(SortPackage sortPackage){
         List<Request> requests = DBManager.loadAllData(Request.class);
+        sortManager.sortRequests(requests,sortPackage.getSortType());
+        if (!sortPackage.isAscending()) Collections.reverse(requests);
         ArrayList<RequestPM> requestPMS = new ArrayList<>();
-
         for (Request request : requests) {
             requestPMS.add(createRequestPM(request));
         }
-
         return requestPMS;
     }
 
@@ -183,7 +202,7 @@ public class ManagerController extends Controller {
         );
     }
 
-    public void acceptRequest(int id) throws NoSuchARequestException, AlreadyASeller, NoSuchAProductException {
+    public void acceptRequest(int id) throws NoSuchARequestException, NoSuchAProductException {
         requestManager.accept(id);
     }
 
@@ -192,21 +211,28 @@ public class ManagerController extends Controller {
     }
 
     public List<CategoryPM> manageCategories(){
-        List<Category> categories = DBManager.loadAllData(Category.class);
-        ArrayList<CategoryPM> categoryPMS = new ArrayList<>();
-
-        for (Category category : categories) {
-            categoryPMS.add(createCategoryPM(category));
+        List<Category> cats = categoryManager.getBaseCats();
+        System.out.println(cats.size());
+        sortManager.sortCategories(cats);
+        List<CategoryPM> toReturn = new ArrayList<>();
+        for (Category cat : cats) {
+            toReturn.addAll(getAllCategoriesIn(0,cat));
         }
-
-        return categoryPMS;
+        return toReturn;
     }
 
-    private CategoryPM createCategoryPM(Category category){
-        return new CategoryPM(
-                category.getName(),
-                category.getId()
-        );
+    private List<CategoryPM> getAllCategoriesIn(int currentIndent,Category category){
+        List<CategoryPM> toReturn = new ArrayList<>();
+        toReturn.add(createCatPM(category,currentIndent));
+        if (!category.getSubCategories().isEmpty())
+            for (Category subCategory : category.getSubCategories()) {
+                toReturn.addAll(getAllCategoriesIn(currentIndent+1,subCategory));
+            }
+        return toReturn;
+    }
+
+    private CategoryPM createCatPM(Category category,int indent){
+        return new CategoryPM(category.getName(),category.getId(),indent);
     }
 
     public void editCategory(int id, CategoryEditAttribute editAttribute)
@@ -214,8 +240,8 @@ public class ManagerController extends Controller {
         categoryManager.editCategory(id, editAttribute);
     }
 
-    public void addCategory(String name, int parentId) throws RepeatedNameInParentCategoryExeption, NoSuchACategoryException {
-        categoryManager.createCategory(name, parentId);
+    public void addCategory(String name, int parentId,List<String> features) throws RepeatedNameInParentCategoryExeption, NoSuchACategoryException {
+        categoryManager.createCategory(name, parentId,features);
     }
 
     public void removeCategory(int id) throws NoSuchACategoryException {

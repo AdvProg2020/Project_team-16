@@ -15,6 +15,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 @Data
@@ -44,13 +45,21 @@ public class ProductManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-    public void editProduct(ProductEditAttribute edited, String editor) throws NoSuchAProductException {
+    public void editProduct(ProductEditAttribute edited, String editor) throws NoSuchAProductException, EditorIsNotSellerException {
         String requestStr = String.format("%s has requested to edit Product \"%s\" with id %s",edited,edited.getName(),edited.getId());
         Product product = findProductById(edited.getSourceId());
+        checkIfEditorIsASeller(editor,product);
         allProductsActive.remove(product);
         product.setProductStatus(ProductStatus.UNDER_EDIT);
         Request request = new Request(editor,RequestType.CHANGE_PRODUCT,requestStr,edited);
         RequestManager.getInstance().addRequest(request);
+    }
+
+    private void checkIfEditorIsASeller(String username,Product product) throws EditorIsNotSellerException {
+        for (Seller seller : product.getAllSellers()) {
+            if (seller.getUsername().equals(username)) return;
+        }
+        throw new EditorIsNotSellerException();
     }
 
     public void changeAmountOfStock(int productId, String sellerId, int amount){
@@ -166,9 +175,10 @@ public class ProductManager {
         throw new ProductNotHaveSellerException(productId, sellerUserName);
     }
 
-    public void deleteProduct(int productId)
-            throws NoSuchACategoryException, NoSuchAProductInCategoryException, NoSuchAProductException {
+    public void deleteProduct(int productId,String remover)
+            throws NoSuchACategoryException, NoSuchAProductInCategoryException, NoSuchAProductException, EditorIsNotSellerException {
         Product product = findProductById(productId);
+        if (!remover.equals("MAN@GER"))checkIfEditorIsASeller(remover,product);
         CategoryManager.getInstance().removeProductFromCategory(productId,product.getId());
         CSCLManager.getInstance().removeProductFromCompany(product);
         DBManager.delete(product);
@@ -198,6 +208,18 @@ public class ProductManager {
         DBManager.save(product);
     }
 
+    public Seller bestSellerOf(Product product){
+        Seller seller = new Seller();
+        int pricy = 2000000000;
+        for (SellerIntegerMap price : product.getPrices()) {
+            if (pricy < price.getInteger()){
+                pricy = price.getInteger();
+                seller = price.getSeller();
+            }
+        }
+        return seller;
+    }
+
     private void addAmountToProductForNewSeller(Seller seller,Product product,int amount){
         SellerIntegerMap newStock = new SellerIntegerMap(seller,amount);
         DBManager.save(newStock);
@@ -220,5 +242,13 @@ public class ProductManager {
 
     public void addToActive(Product product){
         allProductsActive.add(product);
+    }
+
+    public List<Product> getAllOffFromActiveProducts(){
+        List<Product> toReturn = new ArrayList<>();
+        for (Product product : allProductsActive) {
+            if (product.isOnOff())toReturn.add(product);
+        }
+        return toReturn;
     }
 }

@@ -18,7 +18,7 @@ public class Company {
     @Id @GeneratedValue
     private int id;
 
-    @Column(name = "NAME_OF_COMPANY")
+    @Column(name = "NAME_OF_COMPANY",unique = true)
     private String name;
 
     @Column(name = "PHONE")

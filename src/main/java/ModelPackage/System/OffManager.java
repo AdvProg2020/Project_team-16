@@ -6,6 +6,7 @@ import ModelPackage.Off.OffStatus;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
+import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
@@ -13,6 +14,8 @@ import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 public class OffManager {
     private static OffManager offManager;
@@ -41,72 +44,24 @@ public class OffManager {
         return off;
     }
 
-    public void editStartTimeOfOff(User editor, int id, Date newDate)
-            throws NoSuchAOffException, InvalidTimes {
+    public void editOff(OffChangeAttributes changeAttributes,String editor) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {
+        Off off = findOffById(changeAttributes.getSourceId());
+        checkIfThisSellerCreatedTheOff(off,editor);
+        off.setOffStatus(OffStatus.EDIT);
+        /* TODO : Alert Time manager to remove off */
+        String strRequest = String.format("%s requested to edit an off with id %d",editor,off.getOffId());
+        Request request = new Request(editor, RequestType.EDIT_OFF,strRequest,changeAttributes);
+        RequestManager.getInstance().addRequest(request);
+    }
+
+    public void deleteOff(int id,String remover) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {
         Off off = findOffById(id);
-        if (off.getEndTime().before(newDate)) throw new InvalidTimes();
-        OffChangeAttributes edit = new OffChangeAttributes();
-        edit.setStart(newDate);
-        edit.setSourceId(id);
-        DBManager.save(edit);
-        String strRequest = String.format("%s requested to change start time of off (%d) to %s",editor.getUsername(),id,newDate);
-        Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
-        RequestManager.getInstance().addRequest(request);
-    }
-
-    public void editEndTimeOfOff(User editor, int id, Date newDate)
-            throws NoSuchAOffException, InvalidTimes {
-        Off off = findOffById(id);
-        if (off.getStartTime().after(newDate)) throw new InvalidTimes();
-        OffChangeAttributes edit = new OffChangeAttributes();
-        edit.setEnd(newDate);
-        edit.setSourceId(id);
-        DBManager.save(edit);
-        String strRequest = String.format("%s requested to change end time of off (%d) to %s",editor.getUsername(),id,newDate);
-        Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
-        RequestManager.getInstance().addRequest(request);
-    }
-
-    public void editPercentageOfOff(User editor, int id, int percentage)
-            throws NoSuchAOffException {
-        findOffById(id);
-        OffChangeAttributes edit = new OffChangeAttributes();
-        edit.setPercentage(percentage);
-        edit.setSourceId(id);
-        DBManager.save(edit);
-        String strRequest = String.format("%s requested to change percentage of off (%d) to %d",editor.getUsername(),id,percentage);
-        Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
-        RequestManager.getInstance().addRequest(request);
-    }
-
-    public void addProductToOff(User editor, int id, int newProduct)
-            throws NoSuchAOffException, NoSuchAProductException {
-        findOffById(id);
-        ProductManager.getInstance().findProductById(id);
-        OffChangeAttributes edit = new OffChangeAttributes();
-        edit.setProductIdToAdd(newProduct);
-        edit.setSourceId(id);
-        DBManager.save(edit);
-        String strRequest = String.format("%s requested to add product (%d) to off (%d)",editor.getUsername(),newProduct,id);
-        Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
-        RequestManager.getInstance().addRequest(request);
-    }
-
-    public void deleteProductFromOff(User editor, int id, int toDelete)
-            throws NoSuchAOffException, NoSuchAProductException {
-        findOffById(id);
-        ProductManager.getInstance().findProductById(id);
-        OffChangeAttributes edit = new OffChangeAttributes();
-        edit.setSourceId(id);
-        edit.setProductIdToRemove(toDelete);
-        DBManager.save(edit);
-        String strRequest = String.format("%s requested to add product (%d) to off (%d)",editor.getUsername(),toDelete,id);
-        Request request = new Request(editor.getUsername(),RequestType.EDIT_OFF,strRequest,edit);
-        RequestManager.getInstance().addRequest(request);
-    }
-
-    public void deleteOff(int id) throws NoSuchAOffException {
-        Off off = findOffById(id);
+        checkIfThisSellerCreatedTheOff(off,remover);
+        /* TODO : Notify Time manager to remove off */
         DBManager.delete(off);
+    }
+
+    public void checkIfThisSellerCreatedTheOff(Off off,String viwer) throws ThisOffDoesNotBelongssToYouException {
+        if (!off.getSeller().getUsername().equals(viwer))throw new ThisOffDoesNotBelongssToYouException();
     }
 }

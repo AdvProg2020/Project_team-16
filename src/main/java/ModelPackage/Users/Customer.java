@@ -45,4 +45,9 @@ public class Customer extends User {
         this.purchaseLogs = new ArrayList<PurchaseLog>();
         this.discountCodes = new ArrayList<>();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }

@@ -12,7 +12,6 @@ public class Controller {
     protected CSCLManager csclManager = CSCLManager.getInstance();
     protected CustomerManager customerManager = CustomerManager.getInstance();
     protected DiscountManager discountManager = DiscountManager.getInstance();
-    protected FilterManager filterManager = FilterManager.getInstance();
     protected ManagerManager managerManager = ManagerManager.getInstance();
     protected OffManager offManager = OffManager.getInstance();
     protected ProductManager productManager = ProductManager.getInstance();

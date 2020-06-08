@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/src/test" includeSubdirectories="true" />
+    </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
@@ -10,5 +13,8 @@
         <module name="Project_team-16" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Project_team-16" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
