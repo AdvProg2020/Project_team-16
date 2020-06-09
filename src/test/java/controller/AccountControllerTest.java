@@ -2,21 +2,19 @@ package controller;
 
 import ModelPackage.Product.Company;
 import ModelPackage.System.AccountManager;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
-import ModelPackage.Users.Cart;
-import ModelPackage.Users.Manager;
-import ModelPackage.Users.Seller;
-import ModelPackage.Users.User;
+import ModelPackage.Users.*;
+import View.PrintModels.UserFullPM;
 import controler.AccountController;
-import mockit.Expectations;
 import mockit.Mock;
 import mockit.MockUp;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AccountControllerTest {
     AccountController accountController = new AccountController();
@@ -25,17 +23,18 @@ public class AccountControllerTest {
     private Manager hatam;
     private Seller sapa;
     private Company adidas;
-
-    ArrayList<User> users;
+    private ArrayList<User> users;
+    private UserFullPM marmofPM;
 
     {
-        marmof = new User("marmofayezi",
+        marmof = new Customer("marmofayezi",
                 "marmof.ir",
                 "Mohamadreza",
                 "Mofayezi",
                 "marmof@gmail.com",
                 "09121232222",
-                new Cart()
+                new Cart(),
+                10000
         );
         hatam = new Manager(
                 "hatam008",
@@ -62,16 +61,26 @@ public class AccountControllerTest {
         );
 
         users = new ArrayList<>();
+
+        marmofPM = new UserFullPM(
+                "marmofayezi",
+                "Mohamadreza",
+                "Mofayezi",
+                "marmof@gmail.com",
+                "09121232222",
+                "Customer"
+        );
+    }
+
+    @Before
+    public void initialize(){
+        DBManager.save(marmof);
+        DBManager.save(hatam);
+        DBManager.save(sapa);
     }
 
     @Test
     public void usernameInitialCheck() throws UserNotAvailableException {
-        new MockUp<AccountManager>(){
-            @Mock
-            public boolean isUsernameAvailable(String username){
-                return false;
-            }
-        };
         accountController.usernameInitialCheck("marmof");
     }
 
@@ -121,5 +130,14 @@ public class AccountControllerTest {
         String actual =  accountController.login("sapa", "sapa.pak");
 
         Assert.assertEquals("Seller", actual);
+    }
+
+    @Test
+    public void viewPersonalInfo() throws UserNotAvailableException {
+        marmof.setHasSignedIn(true);
+
+        UserFullPM actual = accountController.viewPersonalInfo("marmofayezi");
+
+        Assert.assertEquals(marmofPM, actual);
     }
 }

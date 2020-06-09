@@ -56,6 +56,8 @@ public class CustomerManager {
         }
 
         productChangeInPurchase(customer);
+
+        DBManager.save(customer);
     }
 
     public void checkIfThereIsEnoughAmount(Customer customer) throws NotEnoughAmountOfProductException, NoSuchAProductException {
@@ -91,7 +93,6 @@ public class CustomerManager {
                     -subCart.getAmount()
             );
         }
-
     }
 
     public long getTotalPrice(DiscountCode discountCode, Customer customer) {
