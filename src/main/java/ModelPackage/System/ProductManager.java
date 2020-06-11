@@ -56,22 +56,17 @@ public class ProductManager {
     }
 
     private void checkIfEditorIsASeller(String username,Product product) throws EditorIsNotSellerException {
-        for (Seller seller : product.getAllSellers()) {
-            if (seller.getUsername().equals(username)) return;
-        }
-        throw new EditorIsNotSellerException();
+        if (!product.hasSeller(username))throw new EditorIsNotSellerException();
     }
 
-    public void changeAmountOfStock(int productId, String sellerId, int amount){
+    public void changeAmountOfStock(int productId, String sellerId, int amount) throws NoSuchSellerException {
         Product product = DBManager.load(Product.class,productId);
-        List<SellerIntegerMap> list = product.getStock();
-        for (SellerIntegerMap map : list) {
-            if(map.thisIsTheMapKey(sellerId)){
-                map.setInteger(map.getInteger()+amount);
-                break;
-            }
-        }
-        DBManager.save(product);
+        SellPackage sellPackage = product.findPackageBySeller(sellerId);
+        int stock = sellPackage.getStock();
+        stock += amount;
+        if (stock < 0) stock = 0;
+        sellPackage.setStock(stock);
+        DBManager.save(sellPackage);
     }
 
     public Product findProductById(int id) throws NoSuchAProductException {
@@ -156,23 +151,13 @@ public class ProductManager {
 
     public int leastPriceOf(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
-        List<SellerIntegerMap> prices = product.getPrices();
-        int leastPrice = 2147483647;
-        for (SellerIntegerMap map : prices) {
-            int value = map.getInteger();
-            if(leastPrice > value) leastPrice = value;
-        }
-        return leastPrice;
+        return product.getLeastPrice();
     }
 
-    public Seller showSellerOfProduct(int productId, String sellerUserName)
-            throws NoSuchAProductException, ProductNotHaveSellerException {
+    public Seller getSellerOfProduct(int productId, String sellerUserName)
+            throws NoSuchAProductException, NoSuchSellerException {
         Product product = findProductById(productId);
-        for (Seller seller : product.getAllSellers()) {
-            if (sellerUserName.equals(seller.getUsername()))
-                return seller;
-        }
-        throw new ProductNotHaveSellerException(productId, sellerUserName);
+        return product.findPackageBySeller(sellerUserName).getSeller();
     }
 
     public void deleteProduct(int productId,String remover)
@@ -194,46 +179,26 @@ public class ProductManager {
         return allFeatures;
     }
 
-    public void addASellerToProduct(Product product,Seller seller,int amount,int price)
-            throws NoSuchAProductException, AlreadyASeller {
-        List<Seller> sellers = product.getAllSellers();
-        if (!sellers.contains(seller)){
-            sellers.add(seller);
-            addAmountToProductForNewSeller(seller,product,amount);
-            addPriceToProductForNewSeller(seller,product,price);
-        }
-        else{
-            throw new AlreadyASeller(seller.getUsername());
-        }
+    public void addASellerToProduct(Product product,Seller seller,int amount,int price) {
+        SellPackage sellPackage = new SellPackage(product,seller,price,amount,null, false,true);
+        DBManager.save(sellPackage);
+        product.getPackages().add(sellPackage);
+        seller.getPackages().add(sellPackage);
+        DBManager.save(seller);
         DBManager.save(product);
     }
 
     public Seller bestSellerOf(Product product){
         Seller seller = new Seller();
         int pricy = 2000000000;
-        for (SellerIntegerMap price : product.getPrices()) {
-            if (pricy < price.getInteger()){
-                pricy = price.getInteger();
-                seller = price.getSeller();
+        for (SellPackage aPackage : product.getPackages()) {
+            int price = aPackage.getPrice();
+            if (price < pricy){
+                seller = aPackage.getSeller();
+                pricy = price;
             }
         }
         return seller;
-    }
-
-    private void addAmountToProductForNewSeller(Seller seller,Product product,int amount){
-        SellerIntegerMap newStock = new SellerIntegerMap(seller,amount);
-        DBManager.save(newStock);
-        List<SellerIntegerMap> stocks = product.getStock();
-        stocks.add(newStock);
-        product.setStock(stocks);
-    }
-
-    private void addPriceToProductForNewSeller(Seller seller,Product product,int price){
-        SellerIntegerMap newPrice = new SellerIntegerMap(seller,price);
-        DBManager.save(newPrice);
-        List<SellerIntegerMap> prices = product.getPrices();
-        prices.add(newPrice);
-        product.setStock(prices);
     }
 
     public void clear(){

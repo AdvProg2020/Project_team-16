@@ -8,6 +8,7 @@ import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
 import ModelPackage.System.exeption.clcsmanager.NotABuyer;
@@ -93,19 +94,14 @@ public class CSCLManager {
         RequestManager.getInstance().addRequest(request);
     }
 
-    public boolean doesThisCommentExists(int commentId) {
-        Comment comment = DBManager.load(Comment.class,commentId);
-        return comment != null;
-    }
-
     public void createScore(String userId, int productId, int score)
-            throws NoSuchAProductException, NotABuyer {
+            throws NoSuchAProductException, NotABuyer, NoSuchACustomerException {
         if (!boughtThisProduct(productId,userId)) throw new NotABuyer();
         Score SCORE = new Score(userId,productId,score);
         ProductManager.getInstance().assignAScore(productId,SCORE);
     }
 
-    public void createSellLog(SubCart subCart, String buyerId, int discount) {
+    public void createSellLog(SubCart subCart, String buyerId, int discount) throws NoSuchSellerException {
         Product product = subCart.getProduct();
         int moneyGotten = findPrice(subCart);
         User user = DBManager.load(User.class,buyerId);
@@ -117,7 +113,7 @@ public class CSCLManager {
         SellerManager.getInstance().addASellLog(log,subCart.getSeller());
     }
 
-    public void createPurchaseLog(Cart cart, int discount,Customer customer) {
+    public void createPurchaseLog(Cart cart, int discount,Customer customer) throws NoSuchSellerException {
         List<SoldProductSellerMap> map = new ArrayList<>();
         int pricePaid = 0;
         for (SubCart subCart : cart.getSubCarts()) {
@@ -137,16 +133,9 @@ public class CSCLManager {
         CustomerManager.getInstance().addPurchaseLog(log,customer);
     }
 
-    int findPrice(SubCart subCart){
-        int price = 0;
-        String sellerId = subCart.getSeller().getUsername();
-        for (SellerIntegerMap map : subCart.getProduct().getPrices()) {
-            if (map.thisIsTheMapKey(sellerId)) {
-                price = map.getInteger();
-                break;
-            }
-        }
-        return price;
+    int findPrice(SubCart subCart) throws NoSuchSellerException {
+        String username = subCart.getSeller().getUsername();
+        return subCart.getProduct().findPackageBySeller(username).getPrice();
     }
 
     public Log getLogById(int id) throws NoSuchALogException {
@@ -157,34 +146,11 @@ public class CSCLManager {
         return log;
     }
 
-    public List<User> allBuyers(int productId,Seller seller){
-        List<SellLog> logs = seller.getSellLogs();
-        List<User> toReturn = new ArrayList<>();
-        for (SellLog log : logs) {
-            if (log.getProduct().getSourceId() == productId){
-                toReturn.add(log.getBuyer());
-            }
+    public boolean boughtThisProduct(int productId, String probableBuyerId) throws NoSuchACustomerException {
+        Customer customer = CustomerManager.getInstance().findCustomerById(probableBuyerId);
+        for (PurchaseLog log : customer.getPurchaseLogs()) {
+            if (log.containsProduct(productId))return true;
         }
-        return toReturn;
-    }
-
-    public void checkIfIsASellerOFProduct(Product product,String username) throws YouAreNotASellerException {
-        for (Seller seller : product.getAllSellers()) {
-            if (seller.getUsername().equals(username)) return;
-        }
-        throw new YouAreNotASellerException();
-    }
-
-    public boolean boughtThisProduct(int productId, String probableBuyerId) throws NoSuchAProductException {
-        Product product = ProductManager.getInstance().findProductById(productId);
-        List<User> allBuyers = new ArrayList<>();
-        for (Seller seller : product.getAllSellers()) {
-            allBuyers.addAll(allBuyers(productId, seller));
-        }
-        for (User buyer : allBuyers) {
-            if (buyer.getUsername().equals(probableBuyerId))
-                return true;
-        }
-        return false;
+        return true;
     }
 }

@@ -2,10 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.Off.Off;
 import ModelPackage.Off.OffStatus;
-import ModelPackage.Product.Comment;
-import ModelPackage.Product.CommentStatus;
-import ModelPackage.Product.Product;
-import ModelPackage.Product.ProductStatus;
+import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.editPackage.OffChangeAttributes;
@@ -80,7 +77,8 @@ public class RequestManager {
         DBManager.save(product);
         CategoryManager.getInstance().addProductToCategory(product,product.getCategory());
         Seller seller = request.getSeller();
-        seller.getProducts().add(product);
+        SellPackage sellPackage = product.getPackages().get(0);
+        seller.getPackages().add(sellPackage);
         DBManager.save(seller);
         DBManager.delete(request);
     }
@@ -141,10 +139,14 @@ public class RequestManager {
     }
 
     private void addOffToProducts(Off off){
+        String seller = off.getSeller().getUsername();
         for (Product product : off.getProducts()) {
-            product.setOff(off);
-            product.setOnOff(true);
-            DBManager.save(product);
+            try {
+                SellPackage sellPackage = product.findPackageBySeller(seller);
+                sellPackage.setOff(off);
+                sellPackage.setOnOff(true);
+                DBManager.save(sellPackage);
+            } catch (NoSuchSellerException ignore) {}
         }
     }
 

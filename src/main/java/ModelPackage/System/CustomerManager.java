@@ -4,7 +4,9 @@ package ModelPackage.System;
 import ModelPackage.Log.PurchaseLog;
 import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Off.DiscountCode;
+import ModelPackage.Product.NoSuchSellerException;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.NotEnoughMoneyException;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
@@ -29,6 +31,13 @@ public class CustomerManager {
     private SellerManager sellerManager = SellerManager.getInstance();
     private CSCLManager csclManager = CSCLManager.getInstance();
 
+    public Customer findCustomerById(String id) throws NoSuchACustomerException {
+        Customer customer = DBManager.load(Customer.class,id);
+        if (customer != null)
+            return customer;
+        else throw new NoSuchACustomerException();
+    }
+
     public List<PurchaseLog> viewOrders(String username){
         Customer customer = DBManager.load(Customer.class, username);
         return customer.getPurchaseLogs();
@@ -40,7 +49,7 @@ public class CustomerManager {
     }
 
     public void purchase(String username, CustomerInformation customerInformation, DiscountCode discountCode)
-            throws NotEnoughAmountOfProductException, NoSuchAProductException {
+            throws NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException {
         Customer customer = DBManager.load(Customer.class, username);
 
         checkIfThereIsEnoughAmount(customer);
@@ -58,7 +67,7 @@ public class CustomerManager {
         productChangeInPurchase(customer);
     }
 
-    public void checkIfThereIsEnoughAmount(Customer customer) throws NotEnoughAmountOfProductException, NoSuchAProductException {
+    public void checkIfThereIsEnoughAmount(Customer customer) throws NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException {
         Cart cart = customer.getCart();
 
         for (SubCart subCart : cart.getSubCarts()) {

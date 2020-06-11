@@ -53,8 +53,7 @@ public class Seller extends User {
         return verified;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public boolean equals(Seller seller) {
+        return this.username.equals(seller.username);
     }
 }

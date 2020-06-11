@@ -3,6 +3,7 @@ package ModelPackage.System;
 
 import ModelPackage.Log.SellLog;
 import ModelPackage.Product.Company;
+import ModelPackage.Product.NoSuchSellerException;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
@@ -11,6 +12,7 @@ import ModelPackage.Users.Cart;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.SubCart;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SellerManager {
@@ -45,16 +47,20 @@ public class SellerManager {
         if (seller == null) {
             throw new UserNotAvailableException();
         }
-        return seller.getProducts();
+        List<Product> toReturn = new ArrayList<>();
+        seller.getPackages().forEach(sellPackage -> toReturn.add(sellPackage.getProduct()));
+        return toReturn;
     }
 
     public List<Seller> viewSellersOfProduct (int productId)
             throws NoSuchAProductException {
         Product product = productManager.findProductById(productId);
-        return product.getAllSellers();
+        List<Seller> sellers = new ArrayList<>();
+        product.getPackages().forEach(sellPackage -> sellers.add(sellPackage.getSeller()));
+        return sellers;
     }
 
-    public void getMoneyFromSale(Cart cart){
+    public void getMoneyFromSale(Cart cart) throws NoSuchSellerException {
         Seller seller;
         long price;
         for (SubCart subCart : cart.getSubCarts()) {

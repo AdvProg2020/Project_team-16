@@ -107,10 +107,24 @@ public class Product {
         this.allComments = new ArrayList<>();
     }
 
-    public SellPackage findPackageBySeller(String username){
+    public SellPackage findPackageBySeller(String username) throws NoSuchSellerException{
         for (SellPackage sellPackage : packages) {
             if (sellPackage.getSeller().getUsername().equals(username))return sellPackage;
         }
-        return null;
+        throw new NoSuchSellerException();
+    }
+
+    public boolean hasSeller(Seller seller){
+        for (SellPackage sellPackage : packages) {
+            if (sellPackage.getSeller().equals(seller))return true;
+        }
+        return false;
+    }
+
+    public boolean hasSeller(String username){
+        for (SellPackage sellPackage : packages) {
+            if (sellPackage.getSeller().getUsername().equals(username))return true;
+        }
+        return false;
     }
 }

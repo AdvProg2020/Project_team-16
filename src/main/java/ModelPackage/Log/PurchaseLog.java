@@ -38,4 +38,11 @@ public class PurchaseLog extends Log {
     public PurchaseLog(){
         this.productsAndItsSellers = new ArrayList<>();
     }
+
+    public boolean containsProduct(int id){
+        for (SoldProductSellerMap map : productsAndItsSellers) {
+            if (map.isProduct(id)) return true;
+        }
+        return false;
+    }
 }
