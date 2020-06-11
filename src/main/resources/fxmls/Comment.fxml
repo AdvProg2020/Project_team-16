@@ -13,7 +13,7 @@
 <?import javafx.scene.text.TextFlow?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="250.0" prefWidth="562.0" stylesheets="@CSSs/button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.Comment">
+<AnchorPane prefHeight="250.0" prefWidth="562.0" stylesheets="@../CSSs/button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.Comment">
    <children>
       <VBox layoutX="11.0" layoutY="8.0" prefHeight="233.0" prefWidth="538.0" style="-fx-background-color: #f1f2f6;">
          <children>

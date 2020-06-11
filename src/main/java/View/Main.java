@@ -69,8 +69,8 @@ public class Main extends Application {
         window.setScene(scene);
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource(fxml + ".fxml"));
+    public static Parent loadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource("/fxmls/"+ fxml + ".fxml"));
         return fxmlLoader.load();
     }
 }

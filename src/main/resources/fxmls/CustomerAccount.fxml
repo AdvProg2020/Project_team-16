@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="593.0" prefWidth="960.0" stylesheets="@CSSs/button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.CustomerAccount">
+<AnchorPane prefHeight="593.0" prefWidth="960.0" stylesheets="@../CSSs/button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.CustomerAccount">
    <children>
       <BorderPane prefHeight="594.0" prefWidth="960.0">
          <top>
@@ -50,14 +50,14 @@
             </HBox>
          </top>
          <left>
-            <VBox alignment="TOP_CENTER" prefHeight="562.0" prefWidth="278.0" spacing="30.0" styleClass="shadeGray50" stylesheets="@CSSs/gradient.css" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" prefHeight="562.0" prefWidth="278.0" spacing="30.0" styleClass="shadeGray50" stylesheets="@../CSSs/gradient.css" BorderPane.alignment="CENTER">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
                </padding>
                <children>
                   <ImageView fx:id="image" fitHeight="196.0" fitWidth="196.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Images/user-png-icon-male-user-icon-512.png" />
+                        <Image url="@../Images/user-png-icon-male-user-icon-512.png" />
                      </image>
                   </ImageView>
                   <JFXButton fx:id="ordesButt" buttonType="RAISED" focusTraversable="false" prefHeight="46.0" prefWidth="205.0" text="Orders" textFill="WHITE">

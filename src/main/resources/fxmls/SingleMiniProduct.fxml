@@ -7,14 +7,14 @@
 <?import javafx.scene.text.Font?>
 
 
-<Pane prefHeight="200.0" prefWidth="140.0" styleClass="productPane" stylesheets="@CSSs/button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.SingleMiniProduct">
+<Pane prefHeight="200.0" prefWidth="140.0" styleClass="productPane" stylesheets="@../CSSs/button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.SingleMiniProduct">
    <children>
-      <Pane prefHeight="200.0" prefWidth="140.0" styleClass="productSubPane" stylesheets="@CSSs/button.css">
+      <Pane prefHeight="200.0" prefWidth="140.0" styleClass="productSubPane" stylesheets="@../CSSs/button.css">
          <children>
             <ImageView fx:id="productPreViewImage" fitHeight="115.0" fitWidth="120.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="specialOffer" fitHeight="50.0" fitWidth="51.0" layoutX="10.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@Images/dicount.png" />
+                  <Image url="@../Images/dicount.png" />
                </image>
             </ImageView>
             <Label fx:id="productName" alignment="CENTER" layoutX="10.0" layoutY="129.0" prefHeight="36.0" prefWidth="120.0" textAlignment="CENTER">

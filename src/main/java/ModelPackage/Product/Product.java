@@ -1,12 +1,6 @@
 package ModelPackage.Product;
-
-import ModelPackage.Maps.SellerIntegerMap;
-import ModelPackage.Off.Off;
-import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.Users.Seller;
 import lombok.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
@@ -78,9 +72,10 @@ public class Product {
     @Column(name = "LEAST_PRICE")
     private int leastPrice;
 
-    // TODO: 6/8/2020 DataBAse
-    private ArrayList<SellPackage> packages;
+    @OneToMany
+    private List<SellPackage> packages;
 
+    @Column
     private boolean isOnOff = false;
 
     public Product(int id){this.id = id;}

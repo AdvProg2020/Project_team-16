@@ -56,6 +56,7 @@ public class HibernateUtil {
                     .addAnnotatedClass(OffChangeAttributes.class)
                     .addAnnotatedClass(ProductEditAttribute.class)
                     .addAnnotatedClass(UserEditAttributes.class)
+                    .addAnnotatedClass(SellPackage.class)
                     .buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);

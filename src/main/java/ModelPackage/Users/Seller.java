@@ -30,9 +30,11 @@ public class Seller extends User {
     @ElementCollection(targetClass = SellLog.class)
         @OneToMany(cascade = CascadeType.ALL)
     private List<SellLog> sellLogs;
-    // TODO: 6/8/2020 DB
-    private ArrayList<SellPackage> packages;
 
+    @OneToMany
+    private List<SellPackage> packages;
+
+    @Column
     private boolean verified;
 
     public Seller(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart, Company company, long balance) {
