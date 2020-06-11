@@ -90,7 +90,7 @@ public class CustomerManager {
         customer.getCustomerInformation().add(customerInformation);
     }
 
-    public void productChangeInPurchase(Customer customer){
+    public void productChangeInPurchase(Customer customer) throws NoSuchSellerException {
         Cart cart = customer.getCart();
 
         for (SubCart subCart : cart.getSubCarts()) {

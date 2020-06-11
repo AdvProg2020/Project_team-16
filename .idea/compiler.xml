@@ -3,6 +3,9 @@
   <component name="CompilerConfiguration">
     <excludeFromCompile>
       <directory url="file://$PROJECT_DIR$/src/test" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/src/main/java/View/Menu" includeSubdirectories="true" />
+      <file url="file://$PROJECT_DIR$/src/main/java/View/Data.java" />
+      <file url="file://$PROJECT_DIR$/src/main/java/View/Scan.java" />
     </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
