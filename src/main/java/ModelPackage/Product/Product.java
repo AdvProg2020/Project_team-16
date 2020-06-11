@@ -85,7 +85,7 @@ public class Product {
 
     public Product(int id){this.id = id;}
 
-    public Product(String name, String company, Category category, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description) {
+    public Product(String name, String company, Category category, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description,SellPackage sellPackage) {
         this.name = name;
         this.company = company;
         this.category = category;
@@ -100,6 +100,7 @@ public class Product {
         this.boughtAmount = 0;
         this.totalScore = 0;
         this.packages = new ArrayList<>();
+        this.packages.add(sellPackage);
     }
 
     public Product() {
@@ -107,10 +108,31 @@ public class Product {
         this.allComments = new ArrayList<>();
     }
 
-    public SellPackage findPackageBySeller(String username){
+    public SellPackage findPackageBySeller(String username) throws NoSuchSellerException{
         for (SellPackage sellPackage : packages) {
             if (sellPackage.getSeller().getUsername().equals(username))return sellPackage;
         }
-        return null;
+        throw new NoSuchSellerException();
+    }
+
+    public SellPackage findPackageBySeller(Seller seller) throws NoSuchSellerException{
+        for (SellPackage sellPackage : packages) {
+            if (sellPackage.getSeller().equals(seller))return sellPackage;
+        }
+        throw new NoSuchSellerException();
+    }
+
+    public boolean hasSeller(Seller seller){
+        for (SellPackage sellPackage : packages) {
+            if (sellPackage.getSeller().equals(seller))return true;
+        }
+        return false;
+    }
+
+    public boolean hasSeller(String username){
+        for (SellPackage sellPackage : packages) {
+            if (sellPackage.getSeller().getUsername().equals(username))return true;
+        }
+        return false;
     }
 }

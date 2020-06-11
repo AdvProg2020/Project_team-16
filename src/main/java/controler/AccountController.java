@@ -2,7 +2,6 @@ package controler;
 
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
-import ModelPackage.System.AccountManager;
 import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.SecondManagerByUserException;

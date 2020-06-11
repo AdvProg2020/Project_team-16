@@ -36,7 +36,7 @@ public class SortManager {
             case TIME:
                 sortByTime(list);
                 break;
-            case DEAFAULT:
+            case DEFAULT:
             case VIEW:
                 sortByView(list);
                 break;
@@ -74,14 +74,14 @@ public class SortManager {
     public void sortDiscountCodes(List<DiscountCode> list,SortType sortType){
         switch (sortType){
             case NAME:sortDiscountByCode(list);break;
-            case DEAFAULT:
+            case DEFAULT:
             case TIME:sortDiscountByStartTime(list);break;
         }
     }
 
     public void sortDiscountIntegers(List<DiscountcodeIntegerMap> list,SortType sortType){
         switch (sortType){
-            case DEAFAULT: sortDiscountIntegersByAmount(list);break;
+            case DEFAULT: sortDiscountIntegersByAmount(list);break;
             case NAME: sortDiscountIntegersByName(list);break;
         }
     }
@@ -104,7 +104,7 @@ public class SortManager {
 
     public void sortRequests(List<Request> list,SortType sortType){
         switch (sortType){
-            case DEAFAULT:
+            case DEFAULT:
             case CATEGORIZED_REQUESTS:sortRequestsCategorized(list);break;
             case NAME:sortRequestsByName(list);break;
             case TIME:default:break;

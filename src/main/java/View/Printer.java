@@ -1,4 +1,4 @@
-package View;
+/*package View;
 
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Maps.UserIntegerMap;
@@ -97,7 +97,7 @@ public class Printer {
         }
     }
 
-    public void usersPrinter(List<UserMiniPM> users){
+    public static void usersPrinter(List<UserMiniPM> users){
         System.out.println(lineMedium);
         System.out.printf("|%s|%s|\n",
                 StringUtils.center("Username",24),
@@ -547,3 +547,4 @@ public class Printer {
         }
     }
 }
+*/

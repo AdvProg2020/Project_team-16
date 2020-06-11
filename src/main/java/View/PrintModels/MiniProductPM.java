@@ -1,31 +1,27 @@
 package View.PrintModels;
 
-import ModelPackage.Maps.SellerIntegerMap;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.HashMap;
 import java.util.List;
 
-@Data @Builder
+@Getter @Setter
 public class MiniProductPM {
     private String name;
     private int id;
     private String categoryName;
-    private List<SellerIntegerMap> sellers;
-    private List<SellerIntegerMap> prices;
+    private List<SellPackagePM> sellPackagePMs;
     private String brand;
     private double score;
     private String description;
 
-    public MiniProductPM(String name, int id, String categoryName, List<SellerIntegerMap> sellers, List<SellerIntegerMap> prices, String brand, double score, String description) {
+    public MiniProductPM(String name, int id, String categoryName, String brand, double score, String description, List<SellPackagePM> sellPackages) {
         this.name = name;
         this.id = id;
         this.categoryName = categoryName;
-        this.sellers = sellers;
-        this.prices = prices;
         this.brand = brand;
         this.score = score;
         this.description = description;
+        sellPackagePMs = sellPackages;
     }
 }

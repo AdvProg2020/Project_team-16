@@ -1,7 +1,9 @@
 package ModelPackage.System;
 
 import ModelPackage.Maps.SellerIntegerMap;
+import ModelPackage.Product.NoSuchSellerException;
 import ModelPackage.Product.Product;
+import ModelPackage.Product.SellPackage;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
@@ -25,7 +27,7 @@ public class CartManager {
     private CartManager() {}
 
     public void addProductToCart(Cart cart, String sellerId, int productId, int amount)
-            throws ProductExistedInCart, NotEnoughAmountOfProductException, NoSuchAProductException, UserNotAvailableException, NotTheSellerException {
+            throws ProductExistedInCart, NotEnoughAmountOfProductException, NoSuchAProductException, UserNotAvailableException, NotTheSellerException, NoSuchSellerException {
         checkIfProductExistsInCart(cart, productId);
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, amount);
         Product product = ProductManager.getInstance().findProductById(productId);
@@ -46,10 +48,10 @@ public class CartManager {
     }
 
     private void checkIfIsTheSellerOfThisProduct(Product product,Seller seller) throws NotTheSellerException {
-        if (!product.getAllSellers().contains(seller))throw new NotTheSellerException();
+        if (!product.hasSeller(seller))throw new NotTheSellerException();
     }
 
-    private long calculateTotalPrice(Cart cart) {
+    private long calculateTotalPrice(Cart cart) throws NoSuchSellerException {
         long total = 0;
         CSCLManager csclManager = CSCLManager.getInstance();
         for (SubCart subCart : cart.getSubCarts()) {
@@ -59,13 +61,10 @@ public class CartManager {
     }
 
     void checkIfThereIsEnoughAmountOfProduct(int productId, String sellerId, int amount)
-            throws NotEnoughAmountOfProductException, NoSuchAProductException {
+            throws NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException {
         Product product = ProductManager.getInstance().findProductById(productId);
-        for (SellerIntegerMap map : product.getStock()) {
-            if (map.thisIsTheMapKey(sellerId)){
-                if (map.getInteger()<amount) throw new NotEnoughAmountOfProductException(map.getInteger());
-            }
-        }
+        int stock = product.findPackageBySeller(sellerId).getStock();
+        if (amount > stock) throw new NotEnoughAmountOfProductException(amount);
     }
 
     private void checkIfProductExistsInCart(Cart cart, int productId) throws ProductExistedInCart {

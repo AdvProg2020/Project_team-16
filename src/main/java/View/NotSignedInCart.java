@@ -14,9 +14,9 @@ public class NotSignedInCart {
     }
 
     public void addToCart(){
-        Printer.printMessage("Enter Amount : ");
+        /*Printer.printMessage("Enter Amount : ");
         String amount = Scan.getInstance().getInteger();
-        subCarts.add(new SubCart(View.Data.getInstance().getProductSeeingInId(),Integer.parseInt(amount)));
+        subCarts.add(new SubCart(View.Data.getInstance().getProductSeeingInId(),Integer.parseInt(amount)));*/
     }
 
     public boolean isEmpty(){
