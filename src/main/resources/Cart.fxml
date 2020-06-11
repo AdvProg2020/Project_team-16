@@ -48,7 +48,7 @@
             </HBox>
          </top>
          <left>
-            <VBox alignment="TOP_CENTER" prefHeight="560.0" prefWidth="304.0" spacing="10.0" styleClass="unknown2" stylesheets="@../CSSs/gradient.css" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" prefHeight="560.0" prefWidth="304.0" spacing="10.0" styleClass="unknown2" stylesheets="@CSSs/gradient.css" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets />
                </BorderPane.margin>
@@ -58,7 +58,7 @@
                <children>
                   <ImageView fitHeight="278.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/cart.png" />
+                        <Image url="@Images/cart.png" />
                      </image>
                   </ImageView>
                   <Label text="Cart">

@@ -38,11 +38,11 @@
                      </padding>
                   </HBox>
                   <Separator prefWidth="200.0" />
-                  <HBox alignment="CENTER_LEFT" prefHeight="89.0" prefWidth="960.0" spacing="10.0" stylesheets="@../CSSs/gradient.css">
+                  <HBox alignment="CENTER_LEFT" prefHeight="89.0" prefWidth="960.0" spacing="10.0" stylesheets="@CSSs/gradient.css">
                      <children>
                         <ImageView fitHeight="52.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Images/logo2.png" />
+                              <Image url="@Images/logo2.png" />
                            </image>
                         </ImageView>
                         <Separator orientation="VERTICAL" prefHeight="67.0" prefWidth="6.0" visible="false" />
@@ -101,6 +101,6 @@
             <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
-      <Pane fx:id="categories" layoutX="90.0" layoutY="96.0" prefHeight="442.0" prefWidth="843.0" styleClass="Kyoota" stylesheets="@../CSSs/gradient.css" visible="false" />
+      <Pane fx:id="categories" layoutX="90.0" layoutY="96.0" prefHeight="442.0" prefWidth="843.0" styleClass="Kyoota" stylesheets="@CSSs/gradient.css" visible="false" />
    </children>
 </AnchorPane>

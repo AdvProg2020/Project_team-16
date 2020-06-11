@@ -25,7 +25,7 @@
 
 <AnchorPane prefHeight="593.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.ProductDigest">
    <children>
-      <BorderPane prefHeight="594.0" prefWidth="960.0" styleClass="unknown" stylesheets="@../CSSs/gradient.css">
+      <BorderPane prefHeight="594.0" prefWidth="960.0" styleClass="unknown" stylesheets="@CSSs/gradient.css">
          <top>
             <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="960.0" styleClass="transparentFadeForProduct" BorderPane.alignment="CENTER">
                <children>
@@ -55,8 +55,8 @@
                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                </padding>
                <stylesheets>
-                  <URL value="@../CSSs/gradient.css" />
-                  <URL value="@../CSSs/button.css" />
+                  <URL value="@CSSs/gradient.css" />
+                  <URL value="@CSSs/button.css" />
                </stylesheets>
             </HBox>
          </top>
@@ -70,7 +70,7 @@
                               <Reflection fraction="0.31" />
                            </effect>
                         </ImageView>
-                        <VBox alignment="TOP_CENTER" layoutX="15.0" layoutY="30.0" prefHeight="244.0" prefWidth="86.0" spacing="15.0" styleClass="transparentFadeForProduct" stylesheets="@../CSSs/button.css">
+                        <VBox alignment="TOP_CENTER" layoutX="15.0" layoutY="30.0" prefHeight="244.0" prefWidth="86.0" spacing="15.0" styleClass="transparentFadeForProduct" stylesheets="@CSSs/button.css">
                            <children>
                               <JFXButton fx:id="video" contentDisplay="GRAPHIC_ONLY" disable="true" focusTraversable="false" ripplerFill="BLACK" text=" ">
                                  <graphic>
@@ -104,13 +104,13 @@
                         </VBox>
                      </children>
                   </AnchorPane>
-                  <Label fx:id="productName" alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="324.0" stylesheets="@../CSSs/gradient.css" text="Product Name" textFill="WHITE">
+                  <Label fx:id="productName" alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="324.0" stylesheets="@CSSs/gradient.css" text="Product Name" textFill="WHITE">
                      <font>
                         <Font name="Cookie-Regular" size="53.0" />
                      </font>
                   </Label>
                   <Label fx:id="company" prefHeight="18.0" prefWidth="260.0" text="Company" textFill="WHITE" />
-                  <HBox alignment="CENTER" prefHeight="68.0" prefWidth="358.0" spacing="10.0" stylesheets="@../CSSs/gradient.css">
+                  <HBox alignment="CENTER" prefHeight="68.0" prefWidth="358.0" spacing="10.0" stylesheets="@CSSs/gradient.css">
                      <children>
                         <FontIcon fx:id="star1" iconColor="#fbff00" iconLiteral="fa-star" iconSize="25" />
                         <FontIcon fx:id="star2" iconColor="#fbff00" iconLiteral="fa-star" iconSize="25" layoutX="177.0" layoutY="53.0" />
@@ -132,7 +132,7 @@
             </VBox>
          </left>
          <center>
-            <VBox prefHeight="560.0" prefWidth="550.0" spacing="10.0" styleClass="transparentFade15" stylesheets="@../CSSs/button.css" BorderPane.alignment="CENTER">
+            <VBox prefHeight="560.0" prefWidth="550.0" spacing="10.0" styleClass="transparentFade15" stylesheets="@CSSs/button.css" BorderPane.alignment="CENTER">
                <children>
                   <AnchorPane prefHeight="324.0" prefWidth="606.0">
                      <children>
@@ -146,7 +146,7 @@
                                     <Font name="Mongolian Baiti" size="24.0" />
                                  </font>
                               </Text>
-                              <VBox alignment="TOP_CENTER" prefHeight="276.0" prefWidth="182.0" spacing="22.0" styleClass="transparentFade15" stylesheets="@../CSSs/button.css">
+                              <VBox alignment="TOP_CENTER" prefHeight="276.0" prefWidth="182.0" spacing="22.0" styleClass="transparentFade15" stylesheets="@CSSs/button.css">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -159,7 +159,7 @@
                                           <Font name="Perpetua" size="17.0" />
                                        </font>
                                     </Label>
-                                    <SplitMenuButton fx:id="buyButon" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="168.0" styleClass="mainPageMenuButtons" stylesheets="@../CSSs/button.css" text="Add to Cart">
+                                    <SplitMenuButton fx:id="buyButon" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="168.0" styleClass="mainPageMenuButtons" stylesheets="@CSSs/button.css" text="Add to Cart">
                                        <items>
                                           <RadioMenuItem mnemonicParsing="false" selected="true" text="Seller1">
                                              <toggleGroup>
@@ -185,7 +185,7 @@
                                           <Font name="Ravie" size="31.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="compare" focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="159.0" stylesheets="@../CSSs/button.css" text="   Compare">
+                                    <Button fx:id="compare" focusTraversable="false" mnemonicParsing="false" prefHeight="26.0" prefWidth="159.0" stylesheets="@CSSs/button.css" text="   Compare">
                                        <graphic>
                                           <FontIcon iconLiteral="fa-pie-chart" iconSize="20" />
                                        </graphic>
@@ -199,7 +199,7 @@
                         </HBox>
                      </children>
                   </AnchorPane>
-                  <JFXTabPane rotateGraphic="true" stylesheets="@../CSSs/tabpane.css" tabClosingPolicy="UNAVAILABLE">
+                  <JFXTabPane rotateGraphic="true" stylesheets="@CSSs/tabpane.css" tabClosingPolicy="UNAVAILABLE">
                      <tabs>
                         <Tab text="Features">
                            <content>

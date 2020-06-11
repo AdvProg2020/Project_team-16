@@ -84,8 +84,8 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
                <stylesheets>
-                  <URL value="@../CSSs/gradient.css" />
-                  <URL value="@../CSSs/button.css" />
+                  <URL value="@CSSs/gradient.css" />
+                  <URL value="@CSSs/button.css" />
                </stylesheets>
                <styleClass>
                   <String fx:value="productPane" />
@@ -94,7 +94,7 @@
             </VBox>
          </left>
          <center>
-            <VBox prefHeight="560.0" prefWidth="523.0" spacing="5.0" stylesheets="@../CSSs/button.css" BorderPane.alignment="CENTER">
+            <VBox prefHeight="560.0" prefWidth="523.0" spacing="5.0" stylesheets="@CSSs/button.css" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets left="15.0" right="15.0" />
                </BorderPane.margin>
@@ -202,7 +202,7 @@
             </VBox>
          </center>
          <right>
-            <ListView fx:id="codes" prefHeight="200.0" prefWidth="200.0" stylesheets="@../CSSs/button.css" BorderPane.alignment="CENTER" />
+            <ListView fx:id="codes" prefHeight="200.0" prefWidth="200.0" stylesheets="@CSSs/button.css" BorderPane.alignment="CENTER" />
          </right>
       </BorderPane>
    </children>
