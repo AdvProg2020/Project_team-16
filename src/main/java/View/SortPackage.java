@@ -9,7 +9,7 @@ public class SortPackage {
     private SortType sortType;
 
     public void reset(){
-        sortType = SortType.DEAFAULT;
+        sortType = SortType.DEFAULT;
         isAscending = true;
     }
 }

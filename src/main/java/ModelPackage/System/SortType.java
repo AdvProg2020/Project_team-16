@@ -9,5 +9,5 @@ public enum SortType {
     TIME,
     SCORE,
     CATEGORIZED_REQUESTS,
-    DEAFAULT;
+    DEFAULT;
 }

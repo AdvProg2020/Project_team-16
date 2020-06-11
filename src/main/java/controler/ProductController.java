@@ -6,6 +6,7 @@ import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.System.FilterManager;
+import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.filters.InvalidFilterException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
@@ -39,7 +40,7 @@ public class ProductController extends Controller{
         return toReturn;
     }
 
-    public void assignComment(String[] data) throws NoSuchAProductException {
+    public void assignComment(String[] data) throws NoSuchAProductException, NoSuchACustomerException {
         String userId = data[0];
         String commentTitle = data[1];
         String commentText = data[2];
@@ -107,37 +108,32 @@ public class ProductController extends Controller{
     }
 
     private MiniProductPM createMiniProductPM(Product product) {
-        return new MiniProductPM(product.getName(), product.getId(),
+        List<SellPackagePM> sellPackagePMs = new ArrayList<>();
+        product.getPackages().forEach(sellPackage -> {
+            int offPercent = sellPackage.isOnOff()? sellPackage.getOff().getOffPercentage() : 0;
+            sellPackagePMs.add(new SellPackagePM(offPercent,
+                    sellPackage.getPrice(),
+                    sellPackage.getStock(),
+                    sellPackage.getSeller().getUsername(),
+                    sellPackage.isAvailable()));
+        });
+        return new MiniProductPM(product.getName(),
+                product.getId(),
                 product.getCategory().getName(),
-                product.getStock(), product.getPrices(), product.getCompany(),
-                product.getTotalScore(), product.getDescription());
+                product.getCompanyClass().getName(),
+                product.getTotalScore(),
+                product.getDescription(),
+                sellPackagePMs);
     }
 
-    public List<ProductsOnOffPM> showOffs(SortPackage sortPackage,FilterPackage filterPackage){
+    public List<MiniProductPM> showOffs(SortPackage sortPackage,FilterPackage filterPackage){
         List<Product> products = productManager.getAllOffFromActiveProducts();
         int[] priceRange = {filterPackage.getDownPriceLimit(),filterPackage.getUpPriceLimit()};
         List<Product> filtered = FilterManager.filterList(products,filterPackage.getActiveFilters(),priceRange);
         sortManager.sort(filtered,sortPackage.getSortType());
         if (!sortPackage.isAscending())Collections.reverse(filtered);
-        List<ProductsOnOffPM> toReturn = new ArrayList<>();
-        for (Product product : filtered) {
-            toReturn.add(new ProductsOnOffPM(product.getId(),
-                    product.getName(),
-                    product.getLeastPrice(),
-                    calculatePriceAfterOff(product))
-            );
-        }
+        List<MiniProductPM> toReturn = new ArrayList<>();
+        filtered.forEach(product -> toReturn.add(createMiniProductPM(product)));
         return toReturn;
     }
-
-    private int calculatePriceAfterOff(Product product){
-        Off off = product.getOff();
-        int percant = off.getOffPercentage();
-        Seller seller = off.getSeller();
-        for (SellerIntegerMap map : product.getPrices()) {
-            if (map.getSeller().equals(seller)) return (int)((100-percant)/100.0)*map.getInteger();
-        }
-        return 0;
-    }
-
 }

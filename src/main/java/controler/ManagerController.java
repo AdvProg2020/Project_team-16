@@ -86,16 +86,22 @@ public class ManagerController extends Controller {
     }
 
     private MiniProductPM createMiniProductPM(Product product){
-        return new MiniProductPM(
-                product.getName(),
+        List<SellPackagePM> sellPackagePMs = new ArrayList<>();
+        product.getPackages().forEach(sellPackage -> {
+            int offPercent = sellPackage.isOnOff()? sellPackage.getOff().getOffPercentage() : 0;
+            sellPackagePMs.add(new SellPackagePM(offPercent,
+                    sellPackage.getPrice(),
+                    sellPackage.getStock(),
+                    sellPackage.getSeller().getUsername(),
+                    sellPackage.isAvailable()));
+        });
+        return new MiniProductPM(product.getName(),
                 product.getId(),
                 product.getCategory().getName(),
-                product.getStock(),
-                product.getPrices(),
-                product.getCompany(),
+                product.getCompanyClass().getName(),
                 product.getTotalScore(),
-                product.getDescription()
-        );
+                product.getDescription(),
+                sellPackagePMs);
     }
 
     public void removeProduct(int productId) throws NoSuchACategoryException,

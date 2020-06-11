@@ -6,6 +6,7 @@ import ModelPackage.Off.Off;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
+import ModelPackage.Product.SellPackage;
 import ModelPackage.System.CategoryManager;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.ProductEditAttribute;
@@ -69,6 +70,8 @@ public class SellerController extends Controller{
          return miniProductPMs;
     }
 
+    // TODO: 6/11/2020 If Is needed later will be impl
+    /*
     public List<UserMiniPM> viewAllBuyersOfProduct(int productId,String viwer,SortPackage sortPackage) throws NoSuchAProductException, YouAreNotASellerException {
         List<UserMiniPM> userMiniPMs = new ArrayList<>();
         Product product = productManager.findProductById(productId);
@@ -81,7 +84,7 @@ public class SellerController extends Controller{
             userMiniPMs.add(createUserMiniPM(buyer));
         }
         return userMiniPMs;
-    }
+    }*/
 
     public FullProductPM viewProduct(int productId) throws NoSuchAProductException {
          Product product = productManager.findProductById(productId);
@@ -152,15 +155,15 @@ public class SellerController extends Controller{
         String categoryId = data[3];
         Category category = categoryManager.getCategoryById(Integer.parseInt(categoryId));
         String description = data[4];
+        Seller seller = DBManager.load(Seller.class,sellerUserName);
+        if (seller == null) throw new UserNotAvailableException();
         int amountOfProduct = Integer.parseInt(data[5]);
         int priceOfProduct = Integer.parseInt(data[6]);
-        ArrayList<Seller> sellers = addSellerToNewProduct(sellerUserName);
-        List<SellerIntegerMap> stock = addStockToNewProduct(sellers.get(0), amountOfProduct);
-        List<SellerIntegerMap> prices = addPriceToNewProduct(sellers.get(0), priceOfProduct);
-        Product product = new Product(productName, companyName, sellers, category,
+        SellPackage sellPackage = new SellPackage(null,seller,priceOfProduct,amountOfProduct,null,false,true);
+        Product product = new Product(productName, companyName, category,
                 publicFeaturesOf(productPublicFeatures),
                 specialFeaturesOf(productSpecialFeatures),
-                description, stock, prices);
+                description,sellPackage);
         productManager.createProduct(product, sellerUserName);
     }
 
@@ -224,20 +227,21 @@ public class SellerController extends Controller{
     }
 
     private MiniProductPM createMiniProductPM(Product product) {
+        List<SellPackagePM> sellPackagePMs = new ArrayList<>();
+        product.getPackages().forEach(sellPackage -> {
+            int offPercent = sellPackage.isOnOff()? sellPackage.getOff().getOffPercentage() : 0;
+            sellPackagePMs.add(new SellPackagePM(offPercent,
+                    sellPackage.getPrice(),
+                    sellPackage.getStock(),
+                    sellPackage.getSeller().getUsername(),
+                    sellPackage.isAvailable()));
+        });
         return new MiniProductPM(product.getName(),
                 product.getId(),
                 product.getCategory().getName(),
-                product.getStock(),
-                product.getPrices(),
-                product.getCompany(),
+                product.getCompanyClass().getName(),
                 product.getTotalScore(),
-                product.getDescription());
+                product.getDescription(),
+                sellPackagePMs);
     }
-
-    private UserMiniPM createUserMiniPM(User user) {
-        return new UserMiniPM(user.getUsername(), "buyer");
-    }
-
-
-
 }

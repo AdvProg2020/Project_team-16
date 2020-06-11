@@ -6,8 +6,10 @@ import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Off.Off;
+import ModelPackage.Product.NoSuchSellerException;
 import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
@@ -29,7 +31,7 @@ public class CustomerController extends Controller {
         return customerController;
     }
 
-    public CartPM viewCart(String username) throws UserNotAvailableException {
+    public CartPM viewCart(String username) throws UserNotAvailableException, NoSuchSellerException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         Cart cart = customer.getCart();
         ArrayList<InCartPM> inCartPMS = new ArrayList<>();
@@ -44,18 +46,9 @@ public class CustomerController extends Controller {
         );
     }
 
-    private InCartPM createInCartPM(SubCart subCart){
+    private InCartPM createInCartPM(SubCart subCart) throws NoSuchSellerException {
         Product product = subCart.getProduct();
-        MiniProductPM miniProductPM = new MiniProductPM(
-                product.getName(),
-                product.getId(),
-                product.getCategory().getName(),
-                product.getStock(),
-                product.getPrices(),
-                product.getCompany(),
-                product.getTotalScore(),
-                product.getDescription()
-        );
+        MiniProductPM miniProductPM = createMiniProductPMFrom(product);
 
         return new InCartPM(
                 miniProductPM,
@@ -66,7 +59,7 @@ public class CustomerController extends Controller {
         );
     }
 
-    public List<InCartPM> showProducts(String username) throws UserNotAvailableException {
+    public List<InCartPM> showProducts(String username) throws UserNotAvailableException, NoSuchSellerException {
         ArrayList<InCartPM> inCartPMS = new ArrayList<>();
 
         Customer customer = DBManager.load(Customer.class,username);
@@ -103,7 +96,7 @@ public class CustomerController extends Controller {
     }
 
     public void purchase(String username, String[] customerInfo, String disCode)
-            throws NoSuchADiscountCodeException, NotEnoughAmountOfProductException, NoSuchAProductException {
+            throws NoSuchADiscountCodeException, NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException {
         CustomerInformation customerInformation = new CustomerInformation(
                 customerInfo[0],
                 customerInfo[1],
@@ -131,21 +124,16 @@ public class CustomerController extends Controller {
         return orderMiniLogPMS;
     }
 
-    private double findOffPriceFor(SubCart subCart) {
-        if (!subCart.getProduct().isOnOff())
-            return 0;
-        Off off = subCart.getProduct().getOff();
-        return findPriceForSpecialSeller(subCart.getSeller(), subCart.getProduct()) -
-                (double)(off.getOffPercentage() / 100) *
-                        findPriceForSpecialSeller(subCart.getSeller(), subCart.getProduct());
+    private int findOffPriceFor(SubCart subCart) throws NoSuchSellerException {
+        Off off = subCart.getProduct().findPackageBySeller(subCart.getSeller().getUsername()).getOff();
+        if (off != null) {
+            return off.getOffPercentage();
+        }
+        else return 0;
     }
 
-    private int findPriceForSpecialSeller(Seller seller, Product product) {
-        for (SellerIntegerMap sellerIntegerMap : product.getPrices()) {
-            if (sellerIntegerMap.getSeller().equals(seller))
-                return sellerIntegerMap.getInteger();
-        }
-        return 0;
+    private int findPriceForSpecialSeller(Seller seller, Product product) throws NoSuchSellerException {
+        return product.findPackageBySeller(seller).getPrice();
     }
 
     private OrderMiniLogPM createOrderMiniLog(PurchaseLog purchaseLog){
@@ -179,23 +167,10 @@ public class CustomerController extends Controller {
         for (SoldProductSellerMap productSellerMap : productSellerMaps) {
             int id = productSellerMap.getSoldProduct().getSourceId();
             Product product = productManager.findProductById(id);
-            miniProductPMS.add(addMiniProductPM(product));
+            miniProductPMS.add(createMiniProductPMFrom(product));
         }
 
         return miniProductPMS;
-    }
-
-    private MiniProductPM addMiniProductPM(Product product){
-        return new MiniProductPM(
-                product.getName(),
-                product.getId(),
-                product.getCategory().getName(),
-                product.getStock(),
-                product.getPrices(),
-                product.getCompany(),
-                product.getTotalScore(),
-                product.getDescription()
-        );
     }
 
     public long viewBalance(String username) throws UserNotAvailableException {
@@ -229,7 +204,26 @@ public class CustomerController extends Controller {
         );
     }
 
-    public void assignAScore(String username,int prosuctId,int score) throws NoSuchAProductException, NotABuyer {
+    public void assignAScore(String username,int prosuctId,int score) throws NoSuchAProductException, NotABuyer, NoSuchACustomerException {
         csclManager.createScore(username,prosuctId,score);
+    }
+
+    private MiniProductPM createMiniProductPMFrom(Product product){
+        List<SellPackagePM> sellPackagePMs = new ArrayList<>();
+        product.getPackages().forEach(sellPackage -> {
+            int offPercent = sellPackage.isOnOff()? sellPackage.getOff().getOffPercentage() : 0;
+            sellPackagePMs.add(new SellPackagePM(offPercent,
+                    sellPackage.getPrice(),
+                    sellPackage.getStock(),
+                    sellPackage.getSeller().getUsername(),
+                    sellPackage.isAvailable()));
+        });
+        return new MiniProductPM(product.getName(),
+                product.getId(),
+                product.getCategory().getName(),
+                product.getCompanyClass().getName(),
+                product.getTotalScore(),
+                product.getDescription(),
+                sellPackagePMs);
     }
 }
