@@ -30,7 +30,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         window = stage;
-        scene = new Scene(loadFXML("MainPage"));
+        scene = new Scene(loadFXML("SignInUp"));
         stage.setScene(scene);
         scene.setOnMousePressed(e -> {
             xOffset = e.getSceneX();
@@ -60,7 +60,7 @@ public class Main extends Application {
     }
 
     public static void close(){
-        // TODO: 02/06/2020 everything before being closed
+        HibernateUtil.shutdown();
         window.close();
     }
 

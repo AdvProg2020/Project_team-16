@@ -67,7 +67,7 @@ public class AccountManager {
         );
     }
 
-    public String login(String username,String password) throws NotVerifiedSeller, UserNotAvailableException {
+    public String login(String username,String password) throws NotVerifiedSeller, UserNotAvailableException, WrongPasswordException {
         User user = getUserByUsername(username);
 
         if (isCorrectPassword(user, password)){
