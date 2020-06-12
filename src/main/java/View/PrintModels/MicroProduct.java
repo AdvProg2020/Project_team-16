@@ -2,21 +2,18 @@ package View.PrintModels;
 
 import lombok.Data;
 
-
 @Data
-public class CategoryPM {
+public class MicroProduct {
     private String name;
-    private int indent;
     private int id;
 
-    public CategoryPM(String name, int id,int indent) {
+    public MicroProduct(String name, int id) {
         this.name = name;
         this.id = id;
-        this.indent = indent;
     }
 
     @Override
     public String toString() {
-        return ".".repeat(Math.max(0, indent)) + name;
+        return name;
     }
 }

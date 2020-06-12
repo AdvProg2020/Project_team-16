@@ -11,6 +11,7 @@ import ModelPackage.System.exeption.product.*;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
+import View.PrintModels.MicroProduct;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -77,14 +78,13 @@ public class ProductManager {
         return product;
     }
 
-    public Product[] findProductByName(String name){
-        List<Product> list = new ArrayList<>();
+    public ArrayList<MicroProduct> findProductByName(String name){
+        ArrayList<MicroProduct> list = new ArrayList<>();
         for (Product product : allProductsActive) {
-            if(product.getName().toLowerCase().contains(name.toLowerCase()))list.add(product);
+            if(product.getName().toLowerCase().contains(name.toLowerCase()))
+                list.add(new MicroProduct(product.getName(),product.getId()));
         }
-        Product[] toReturn = new Product[list.size()];
-        list.toArray(toReturn);
-        return toReturn;
+        return list;
     }
 
     public void addView(int productId) throws NoSuchAProductException {

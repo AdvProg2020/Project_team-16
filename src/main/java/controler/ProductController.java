@@ -136,4 +136,8 @@ public class ProductController extends Controller{
         filtered.forEach(product -> toReturn.add(createMiniProductPM(product)));
         return toReturn;
     }
+
+    public ArrayList<MicroProduct> findSimilarProductsByName(String name){
+        return productManager.findProductByName(name);
+    }
 }

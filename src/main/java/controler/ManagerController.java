@@ -216,11 +216,11 @@ public class ManagerController extends Controller {
         requestManager.decline(id);
     }
 
-    public List<CategoryPM> manageCategories(){
+    public ArrayList<CategoryPM> getAllCategories(){
         List<Category> cats = categoryManager.getBaseCats();
         System.out.println(cats.size());
         sortManager.sortCategories(cats);
-        List<CategoryPM> toReturn = new ArrayList<>();
+        ArrayList<CategoryPM> toReturn = new ArrayList<>();
         for (Category cat : cats) {
             toReturn.addAll(getAllCategoriesIn(0,cat));
         }

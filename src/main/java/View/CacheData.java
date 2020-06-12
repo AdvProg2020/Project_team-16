@@ -18,6 +18,7 @@ public class CacheData {
     private String role;
     private int companyID;
     private int selectedProductId;
+    private int productId;
     private String[] signUpData;
     private NotSignedInCart cart;
     private FilterPackage filters;

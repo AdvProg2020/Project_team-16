@@ -592,7 +592,7 @@ public class CommandProcessor {
     }
 
     public static void showCategories(){
-        Printer.printAllCategories(managerController.manageCategories());
+        Printer.printAllCategories(managerController.getAllCategories());
     }
 
     public static void viewBalanceSeller(){

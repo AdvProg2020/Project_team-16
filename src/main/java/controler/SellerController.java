@@ -54,6 +54,14 @@ public class SellerController extends Controller{
         return sellLogPMs;
     }
 
+    public void becomeSellerOfExistingProgram(int[] info,String sellerUsername) throws NoSuchAProductException, UserNotAvailableException {
+        Product product = productManager.findProductById(info[0]);
+        Seller seller = DBManager.load(Seller.class,sellerUsername);
+        if (seller != null) {
+            productManager.addASellerToProduct(product,seller,info[1],info[2]);
+        }else throw new UserNotAvailableException();
+    }
+
     public long viewBalance(String sellerUserName) throws UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
         return seller.getBalance();
@@ -167,8 +175,10 @@ public class SellerController extends Controller{
         productManager.createProduct(product, sellerUserName);
     }
 
-    public List<String> getSpecialFeaturesOfCat(int catId) throws NoSuchACategoryException {
-        return categoryManager.getAllSpecialFeaturesFromCategory(catId);
+    public ArrayList<String> getSpecialFeaturesOfCat(int catId) throws NoSuchACategoryException {
+        ArrayList<String> features = CategoryManager.getPublicFeatures();
+        features.addAll(categoryManager.getAllSpecialFeaturesFromCategory(catId));
+        return features;
     }
 
     public List<String> getPublicFeatures(){
@@ -178,28 +188,6 @@ public class SellerController extends Controller{
     public void editProduct(String sellerUserName, ProductEditAttribute editAttribute)
             throws NoSuchAProductException, EditorIsNotSellerException {
         productManager.editProduct(editAttribute, sellerUserName);
-    }
-
-    private ArrayList<Seller> addSellerToNewProduct(String sellerUserName) throws UserNotAvailableException {
-        Seller seller = DBManager.load(Seller.class,sellerUserName);
-        if (seller == null) {
-            throw new UserNotAvailableException();
-        }
-        ArrayList<Seller> sellers = new ArrayList<>();
-        sellers.add(seller);
-        return sellers;
-    }
-
-    private List<SellerIntegerMap> addStockToNewProduct(Seller seller, int amountOfProduct) {
-        List<SellerIntegerMap> stock = new ArrayList<>();
-        stock.add(new SellerIntegerMap(seller, amountOfProduct));
-        return stock;
-    }
-
-    private List<SellerIntegerMap> addPriceToNewProduct(Seller seller, int newPrice) {
-        List<SellerIntegerMap> prices = new ArrayList<>();
-        prices.add(new SellerIntegerMap(seller, newPrice));
-        return prices;
     }
 
     private HashMap<String,String> publicFeaturesOf(String[] publicFeatureData) {

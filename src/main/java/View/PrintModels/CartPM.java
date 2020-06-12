@@ -15,4 +15,7 @@ public class CartPM {
         this.totalPrice = totalPrice;
         this.purchases = purchases;
     }
+
+    public CartPM() {
+    }
 }
