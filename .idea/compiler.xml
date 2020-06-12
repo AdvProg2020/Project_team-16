@@ -6,6 +6,7 @@
       <directory url="file://$PROJECT_DIR$/src/main/java/View/Menu" includeSubdirectories="true" />
       <file url="file://$PROJECT_DIR$/src/main/java/View/Data.java" />
       <file url="file://$PROJECT_DIR$/src/main/java/View/Scan.java" />
+      <file url="file://$PROJECT_DIR$/src/main/java/View/CommandProcessor.java" />
     </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />

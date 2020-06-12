@@ -1,4 +1,4 @@
-/*package View;
+package View;
 
 import ModelPackage.System.editPackage.*;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
@@ -1038,4 +1038,3 @@ public class CommandProcessor {
         return pattern.matcher(input);
     }
 }
-*/

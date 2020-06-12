@@ -6,6 +6,7 @@ import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.SecondManagerByUserException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
+import ModelPackage.System.exeption.account.WrongPasswordException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
 import ModelPackage.Users.SubCart;
@@ -42,7 +43,7 @@ public class AccountController extends Controller {
         }
     }
 
-    public String login(String username, String password) throws NotVerifiedSeller, UserNotAvailableException {
+    public String login(String username, String password) throws NotVerifiedSeller, UserNotAvailableException, WrongPasswordException {
         return accountManager.login(username, password);
     }
 
