@@ -148,7 +148,7 @@ public class SignInUp {
             return false;
         } else if (!email.getText().matches(("\\S+@\\S+\\.(org|net|ir|com|uk|site)"))) {
             errorField(email,"Wrong Email Format");
-            return true;
+            return false;
         } else if (phone.getText().isEmpty()){
             errorField(phone,"Phone Number Is Required");
             return false;

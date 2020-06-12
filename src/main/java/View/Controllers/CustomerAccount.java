@@ -1,17 +1,20 @@
 package View.Controllers;
 
+import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import View.CacheData;
 import View.Main;
 import View.PrintModels.UserFullPM;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import controler.AccountController;
 import controler.CustomerController;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Paint;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -35,6 +38,13 @@ public class CustomerAccount {
     public Label lName;
     public Label email;
     public Label phone;
+    public JFXTextField fNameText;
+    public JFXTextField lNameText;
+    public JFXTextField emailText;
+    public JFXTextField phoneText;
+    public JFXButton cancelButt;
+    public JFXButton confirmButt;
+    private static final Paint redColor = Paint.valueOf("#c0392b");
 
     private CustomerController customerController = CustomerController.getInstance();
     private AccountController accountController = AccountController.getInstance();
@@ -42,11 +52,9 @@ public class CustomerAccount {
 
     private UserFullPM userFullPM;
 
-
     @FXML
     public void initialize(){
         handleButtons();
-
         setLabels();
     }
 
@@ -78,9 +86,8 @@ public class CustomerAccount {
         editLNameButt.setOnAction(event -> handleEditLName());
         editEMailButt.setOnAction(event -> handleEditEmail());
         editPhoneButt.setOnAction(event -> handleEditPhone());
-    }
-
-    private void handleMessages() {
+        confirmButt.setOnAction(event -> handleConfirm());
+        cancelButt.setOnAction(event -> handleCancel());
     }
 
     private void handleBack() {
@@ -91,35 +98,128 @@ public class CustomerAccount {
         }
     }
 
-    private void handleCartButton() {
+    private void handleMessages() {
+        try {
+            Main.setRoot("MessageMenu");
+        } catch (IOException e) {
+            System.out.println("");
+        }
+    }
 
+    private void handleCartButton() {
+        try {
+            Main.setRoot("Cart");
+        } catch (IOException e) {
+            System.out.println("");
+        }
     }
 
     private void handleOrders() {
-
+        try {
+            Main.setRoot("OrderHistory");
+        } catch (IOException e) {
+            System.out.println("");
+        }
     }
 
     private void handleDiscount() {
-
+        try {
+            Main.setRoot("DiscountCodeCustomer");
+        } catch (IOException e) {
+            System.out.println("");
+        }
     }
 
     private void handleEditPhone() {
+        enableEditFields(phoneText, phone);
+        enableEditButts();
     }
 
     private void handleEditEmail() {
+        enableEditFields(emailText, email);
+        enableEditButts();
     }
 
     private void handleEditLName() {
+        enableEditFields(lNameText, lName);
+        enableEditButts();
     }
 
     private void handleEditFName() {
+        enableEditFields(fNameText, fName);
+        enableEditButts();
     }
 
     private void handleLogout() {
+        // TODO : logout should be implemented!!!
+    }
+
+    private void enableEditFields(JFXTextField field, Label label) {
+        label.setVisible(false);
+        field.setVisible(true);
+        field.setPromptText(label.getText());
+    }
+
+    private void disableEditFields(JFXTextField field, Label label) {
+        label.setVisible(true);
+        field.setVisible(false);
+    }
+
+    private void enableEditButts() {
+        confirmButt.setVisible(true);
+        cancelButt.setVisible(true);
     }
 
     private void handleChangePass() {
+        EditPassDialog editPassDialog = new EditPassDialog();
+        editPassDialog.show();
     }
 
+    private void handleCancel() {
+        disableEditFields(phoneText, phone);
+        disableEditFields(emailText, email);
+        disableEditFields(fNameText, fName);
+        disableEditFields(lNameText, lName);
+    }
+
+    private void handleConfirm() {
+        UserEditAttributes attributes = new UserEditAttributes();
+        updateEditAttributes(attributes);
+        try {
+            accountController.editPersonalInfo(cacheData.getUsername(), attributes);
+        } catch (UserNotAvailableException e) {
+            System.out.println("User Not Found!!!");
+        }
+    }
+
+    private void updateEditAttributes(UserEditAttributes attributes) {
+        if (phoneText.isVisible() && !checkInput(phoneText)) {
+            if (phoneText.getText().matches("\\d+")) {
+                attributes.setNewPhone(phoneText.getText());
+            } else {
+                errorField(phoneText,"Wrong Phone Number Format");
+            }
+        } else if (emailText.isVisible() && !checkInput(emailText)) {
+            if (emailText.getText().matches(("\\S+@\\S+\\.(org|net|ir|com|uk|site)"))){
+                attributes.setNewEmail(emailText.getText());
+            } else {
+                errorField(emailText,"Wrong Email Format");
+            }
+        } else if (fNameText.isVisible() && !checkInput(fNameText)) {
+            attributes.setNewFirstName(fNameText.getText());
+        } else if (lNameText.isVisible() && !checkInput(lNameText)) {
+            attributes.setNewLastName(lNameText.getText());
+        }
+    }
+
+    private boolean checkInput(JFXTextField field) {
+        return field.getText().isEmpty();
+    }
+
+    private void errorField(JFXTextField field,String prompt){
+        field.setPromptText(prompt);
+        field.setFocusColor(redColor);
+        field.requestFocus();
+    }
 
 }
