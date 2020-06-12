@@ -97,6 +97,163 @@ public class SellerAccount {
         newProduct.setOnAction(event -> handleNewProduct());
     }
 
+    private void handleNewProduct() {
+        try {
+            Main.setRoot("newProduct");
+        } catch (IOException e) {
+            System.out.println("");
+        }
+    }
+
+    private void handleSellHistory() {
+        try {
+            Main.setRoot("SaleHistory");
+        } catch (IOException e) {
+            System.out.println("");
+        }
+    }
+
+    private void handleMessage() {
+        try {
+            Main.setRoot("Message");
+        } catch (IOException e) {
+            System.out.println("");
+        }
+    }
+
+    private void handleProducts() {
+        try {
+            Main.setRoot("productManagePage");
+        } catch (IOException e) {
+            System.out.println("");
+        }
+    }
+
+    private void handleOffs() {
+        try {
+            Main.setRoot("OffManager");
+        } catch (IOException e) {
+            System.out.println("");
+        }
+    }
+
+    private void handleBack() {
+        try {
+            Main.setRoot("MainPage");
+        } catch (IOException e) {
+            System.out.println("Could Not Initialize Main Menu!!!");
+        }
+    }
+
+    private void handleEditPhone() {
+        enableEditFields(phoneText, phone);
+        enableEditButts();
+    }
+
+    private void handleEditEmail() {
+        enableEditFields(emailText, email);
+        enableEditButts();
+    }
+
+    private void handleEditLName() {
+        enableEditFields(lNameText, lName);
+        enableEditButts();
+    }
+
+    private void handleEditFName() {
+        enableEditFields(fNameText, fName);
+        enableEditButts();
+    }
+
+    private void handleLogout() {
+        // TODO : logout should be implemented!!!
+    }
+
+    private void enableEditFields(JFXTextField field, Label label) {
+        label.setVisible(false);
+        field.setVisible(true);
+        field.setPromptText(label.getText());
+    }
+
+    private void disableEditFields(JFXTextField field, Label label) {
+        label.setVisible(true);
+        field.setVisible(false);
+    }
+
+    private void enableEditButts() {
+        confirmButt.setVisible(true);
+        cancelButt.setVisible(true);
+    }
+
+    private void handleChangePass() {
+        EditPassDialog editPassDialog = new EditPassDialog();
+        editPassDialog.show();
+    }
+
+    private void handleCancel() {
+        disableEditFields(phoneText, phone);
+        disableEditFields(emailText, email);
+        disableEditFields(fNameText, fName);
+        disableEditFields(lNameText, lName);
+
+        resetSettingForFields(phoneText, phone.getText());
+        resetSettingForFields(emailText, email.getText());
+        resetSettingForFields(lNameText, lName.getText());
+        resetSettingForFields(fNameText, fName.getText());
+
+        confirmButt.setVisible(false);
+        cancelButt.setVisible(false);
+    }
+
+    private void handleConfirm() {
+        UserEditAttributes attributes = new UserEditAttributes();
+        updateEditAttributes(attributes);
+        try {
+            accountController.editPersonalInfo(cacheData.getUsername(), attributes);
+        } catch (UserNotAvailableException e) {
+            System.out.println("User Not Found!!!");
+        }
+
+        confirmButt.setVisible(false);
+        cancelButt.setVisible(false);
+    }
+
+    private void updateEditAttributes(UserEditAttributes attributes) {
+        if (phoneText.isVisible() && !checkInput(phoneText)) {
+            if (phoneText.getText().matches("\\d+")) {
+                attributes.setNewPhone(phoneText.getText());
+            } else {
+                errorField(phoneText,"Wrong Phone Number Format");
+            }
+        } else if (emailText.isVisible() && !checkInput(emailText)) {
+            if (emailText.getText().matches(("\\S+@\\S+\\.(org|net|ir|com|uk|site)"))){
+                attributes.setNewEmail(emailText.getText());
+            } else {
+                errorField(emailText,"Wrong Email Format");
+            }
+        } else if (fNameText.isVisible() && !checkInput(fNameText)) {
+            attributes.setNewFirstName(fNameText.getText());
+        } else if (lNameText.isVisible() && !checkInput(lNameText)) {
+            attributes.setNewLastName(lNameText.getText());
+        }
+    }
+
+    private boolean checkInput(JFXTextField field) {
+        return field.getText().isEmpty();
+    }
+
+    private void errorField(JFXTextField field,String prompt){
+        field.setPromptText(prompt);
+        field.setFocusColor(redColor);
+        field.requestFocus();
+    }
+
+    private void resetSettingForFields(JFXTextField field,String prompt){
+        field.textProperty().addListener(e->{
+            field.setFocusColor(blueColor);
+            field.setPromptText(prompt);
+        });
+    }
 
 
 }

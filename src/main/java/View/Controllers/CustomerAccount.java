@@ -185,6 +185,9 @@ public class CustomerAccount {
         resetSettingForFields(emailText, email.getText());
         resetSettingForFields(lNameText, lName.getText());
         resetSettingForFields(fNameText, fName.getText());
+
+        confirmButt.setVisible(false);
+        cancelButt.setVisible(false);
     }
 
     private void handleConfirm() {
@@ -195,6 +198,9 @@ public class CustomerAccount {
         } catch (UserNotAvailableException e) {
             System.out.println("User Not Found!!!");
         }
+
+        confirmButt.setVisible(false);
+        cancelButt.setVisible(false);
     }
 
     private void updateEditAttributes(UserEditAttributes attributes) {
