@@ -69,7 +69,7 @@ public class Main extends Application {
         window.setScene(scene);
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
+    public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
