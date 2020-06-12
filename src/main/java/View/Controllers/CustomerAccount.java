@@ -45,8 +45,8 @@ public class CustomerAccount {
     public JFXButton cancelButt;
     public JFXButton confirmButt;
     private static final Paint redColor = Paint.valueOf("#c0392b");
+    private static final Paint blueColor = Paint.valueOf("#405aa8");
 
-    private CustomerController customerController = CustomerController.getInstance();
     private AccountController accountController = AccountController.getInstance();
     private CacheData cacheData = CacheData.getInstance();
 
@@ -180,6 +180,14 @@ public class CustomerAccount {
         disableEditFields(emailText, email);
         disableEditFields(fNameText, fName);
         disableEditFields(lNameText, lName);
+
+        resetSettingForFields(phoneText, phone.getText());
+        resetSettingForFields(emailText, email.getText());
+        resetSettingForFields(lNameText, lName.getText());
+        resetSettingForFields(fNameText, fName.getText());
+
+        confirmButt.setVisible(false);
+        cancelButt.setVisible(false);
     }
 
     private void handleConfirm() {
@@ -190,6 +198,9 @@ public class CustomerAccount {
         } catch (UserNotAvailableException e) {
             System.out.println("User Not Found!!!");
         }
+
+        confirmButt.setVisible(false);
+        cancelButt.setVisible(false);
     }
 
     private void updateEditAttributes(UserEditAttributes attributes) {
@@ -221,5 +232,13 @@ public class CustomerAccount {
         field.setFocusColor(redColor);
         field.requestFocus();
     }
+
+    private void resetSettingForFields(JFXTextField field,String prompt){
+        field.textProperty().addListener(e->{
+            field.setFocusColor(blueColor);
+            field.setPromptText(prompt);
+        });
+    }
+
 
 }
