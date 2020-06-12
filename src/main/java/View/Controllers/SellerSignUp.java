@@ -23,8 +23,13 @@ public class SellerSignUp {
     @FXML
     public void initialize(){
         info = CacheData.getInstance().getSignUpData();
+        int companyId = CacheData.getInstance().getCompanyID();
+        if (companyId != 0){
+            Company.setText(Integer.toString(companyId));
+        }
         buttonsInitialize();
         fieldInitialize();
+        CacheData.getInstance().setCompanyID(0);
     }
 
     private void fieldInitialize() {
@@ -58,6 +63,7 @@ public class SellerSignUp {
             info[6] = Company.getText();
             info[7] = balance;
             AccountManager.getInstance().createAccount(info,"seller");
+            System.out.println("Done");
         }
     }
 

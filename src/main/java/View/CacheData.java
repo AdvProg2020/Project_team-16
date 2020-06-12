@@ -11,10 +11,12 @@ public class CacheData {
     public CacheData() {
         filters = new FilterPackage();
         sorts = new SortPackage();
+        companyID = 0;
     }
 
     private String username;
     private String role;
+    private int companyID;
     private String[] signUpData;
     private NotSignedInCart cart;
     private FilterPackage filters;
