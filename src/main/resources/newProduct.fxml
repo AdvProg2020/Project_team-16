@@ -19,9 +19,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <AnchorPane prefHeight="593.0" prefWidth="960.0" stylesheets="@CSSs/button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.NewProduct">
    <children>
       <BorderPane prefHeight="594.0" prefWidth="960.0">
@@ -58,6 +60,20 @@
                      </effect>
                   </Label>
                   <Label layoutX="71.0" layoutY="420.0" text="Start A New Way To Expand Your Business" textFill="WHITE" />
+                  <JFXButton fx:id="back" contentDisplay="CENTER" ellipsisString="" focusTraversable="false" layoutX="18.0" layoutY="14.0" prefHeight="11.0" prefWidth="42.0" styleClass="mainPageMenuButtons" text=" ">
+                     <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="fa-arrow-circle-left" iconSize="30" text="" />
+                     </graphic>
+                     <ripplerFill>
+                        <RadialGradient centerX="0.4822222391764323" centerY="0.5" cycleMethod="REFLECT" focusAngle="-31.35" radius="0.7897196172553802">
+                           <stops>
+                              <Stop color="#ccff00" />
+                              <Stop color="#32c2aa" offset="0.49794520547945204" />
+                              <Stop color="#ff4949" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </ripplerFill>
+                  </JFXButton>
                </children>
             </AnchorPane>
          </left>
@@ -70,7 +86,7 @@
                      </padding>
                      <children>
                         <JFXTextField fx:id="productName" labelFloat="true" promptText="Product Name" />
-                        <ComboBox fx:id="Category" prefHeight="26.0" prefWidth="355.0" promptText="Choose Categoty" />
+                        <ComboBox fx:id="category" prefHeight="26.0" prefWidth="355.0" promptText="Choose Categoty" />
                         <JFXTextField fx:id="price" labelFloat="true" promptText="Price" />
                         <JFXTextField fx:id="stock" labelFloat="true" layoutX="25.0" layoutY="108.0" promptText="Stock" />
                         <JFXTextField fx:id="company" labelFloat="true" layoutX="25.0" layoutY="148.0" promptText="Company" />
@@ -85,7 +101,7 @@
                         <JFXButton fx:id="createProduct" buttonType="RAISED" prefHeight="26.0" prefWidth="348.0" text="Create Product" />
                      </children>
                   </VBox>
-                  <VBox alignment="TOP_CENTER" disable="true" layoutX="392.0" layoutY="14.0" prefHeight="562.0" prefWidth="186.0" spacing="5.0" stylesheets="@CSSs/button.css">
+                  <VBox fx:id="sellThisBox" alignment="TOP_CENTER" disable="true" layoutX="392.0" layoutY="14.0" prefHeight="562.0" prefWidth="186.0" spacing="5.0" stylesheets="@CSSs/button.css">
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </padding>

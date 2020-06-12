@@ -172,7 +172,15 @@ public class CustomerAccount {
 
     private void handleChangePass() {
         EditPassDialog editPassDialog = new EditPassDialog();
-        editPassDialog.show();
+        String newPass = editPassDialog.show();
+        UserEditAttributes attributes = new UserEditAttributes();
+        attributes.setNewPassword(newPass);
+
+        try {
+            accountController.editPersonalInfo(cacheData.getUsername(), attributes);
+        } catch (UserNotAvailableException e) {
+            System.out.println("User Not Found!!!");
+        }
     }
 
     private void handleCancel() {
