@@ -46,6 +46,22 @@ public class CustomerAccount {
     @FXML
     public void initialize(){
         handleButtons();
+
+        setLabels();
+    }
+
+    private void setLabels() {
+        try {
+            userFullPM = accountController.viewPersonalInfo(cacheData.getUsername());
+        } catch (UserNotAvailableException e) {
+            System.out.println("User Not Found!!!");
+        }
+
+        username.setText(userFullPM.getUsername());
+        fName.setText(userFullPM.getFirstName());
+        lName.setText(userFullPM.getLastName());
+        email.setText(userFullPM.getEmail());
+        phone.setText(userFullPM.getPhoneNumber());
     }
 
     private void handleButtons() {
