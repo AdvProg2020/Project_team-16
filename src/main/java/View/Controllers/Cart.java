@@ -49,14 +49,18 @@ public class Cart {
     public void initialize() {
         customerController = CustomerController.getInstance();
         cacheData = CacheData.getInstance();
+        buttonInitialize();
+        setDisabilityOfButtons();
         loadCartPM();
         totalPrice.setText(Long.toString(cartPM.getTotalPrice()));
+        loadTable();
+    }
+
+    private void buttonInitialize() {
         close.setOnAction(e -> Main.close());
         minimize.setOnAction(e -> Main.minimize());
         back.setOnAction(e -> handleBackButton());
         purchase.setOnAction(e -> handlePurchaseButton());
-        loadTable();
-        setDisabilityOfButtons();
         delete.setOnAction(e -> handleDeleteButton());
         increase.setOnAction(e -> handleIncreaseDecreaseButton(1));
         decrease.setOnAction(e -> handleIncreaseDecreaseButton(-1));
