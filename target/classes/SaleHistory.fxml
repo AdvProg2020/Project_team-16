@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+
+<AnchorPane prefHeight="593.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.SaleHistory">
+    <BorderPane prefHeight="594.0" prefWidth="960.0">
+        <top>
+            <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="960.0" style="-fx-background-color: #fff;"
+                  BorderPane.alignment="CENTER">
+                <padding>
+                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+                </padding>
+                <JFXButton fx:id="back" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" text=" ">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-arrow-circle-left" iconSize="20"/>
+                    </graphic>
+                </JFXButton>
+                <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
+                <JFXButton fx:id="minimize" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" prefHeight="26.0"
+                           prefWidth="26.0" text=" ">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-window-minimize" iconSize="15"/>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="close" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" prefHeight="26.0"
+                           prefWidth="26.0" ripplerFill="#9f0909" text=" ">
+                    <graphic>
+                        <FontIcon iconLiteral="fa-window-close" iconSize="15"/>
+                    </graphic>
+                </JFXButton>
+            </HBox>
+        </top>
+        <center>
+            <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <VBox prefHeight="200.0" prefWidth="100.0">
+                    <TableView prefHeight="506.0" prefWidth="476.0">
+                        <columns>
+                            <TableColumn fx:id="sellNo" prefWidth="97.59996949434299" text="Sale No."/>
+                            <TableColumn fx:id="product" prefWidth="107.19998168945312" text="Product"/>
+                            <TableColumn fx:id="date" prefWidth="128.79998779296875" text="Date"/>
+                            <TableColumn fx:id="price" prefWidth="128.79998779296875" text="Price"/>
+                            <TableColumn fx:id="off" prefWidth="128.79998779296875" text="Off Price Decreased"/>
+                            <TableColumn fx:id="delStatus" prefWidth="128.79998779296875"
+                                         text="Delivery Status"/>
+                        </columns>
+                    </TableView>
+                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                        <Label text="Total Sell : ">
+                            <font>
+                                <Font size="25.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="totalSell" layoutX="10.0" layoutY="10.0" text="23154654$">
+                            <font>
+                                <Font size="25.0"/>
+                            </font>
+                        </Label>
+                    </HBox>
+                </VBox>
+                <JFXTabPane>
+                    <Tab text="Sell Chart">
+                        <graphic>
+                            <FontIcon iconLiteral="fa-line-chart"/>
+                        </graphic>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <LineChart fx:id="sell" alternativeColumnFillVisible="true" layoutX="11.0"
+                                       layoutY="60.0" prefHeight="400.0" prefWidth="454.0"
+                                       title="Sell Each Month">
+                                <xAxis>
+                                    <CategoryAxis side="BOTTOM"/>
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis side="LEFT"/>
+                                </yAxis>
+                            </LineChart>
+                        </AnchorPane>
+                    </Tab>
+                    <Tab text="Product Chart">
+                        <graphic>
+                            <FontIcon iconLiteral="fa-bar-chart"/>
+                        </graphic>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <BarChart fx:id="barProductChar" alternativeColumnFillVisible="true"
+                                      barGap="10.0" categoryGap="20.0" layoutX="21.0" layoutY="31.0"
+                                      prefHeight="457.0" prefWidth="433.0"
+                                      title="Amount Of Product Sold">
+                                <xAxis>
+                                    <CategoryAxis label="Product" side="BOTTOM"/>
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis label="Amount" side="TOP"/>
+                                </yAxis>
+                            </BarChart>
+                        </AnchorPane>
+                    </Tab>
+                </JFXTabPane>
+            </SplitPane>
+        </center>
+    </BorderPane>
+</AnchorPane>

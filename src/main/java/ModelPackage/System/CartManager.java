@@ -88,7 +88,8 @@ public class CartManager {
     }
 
     public void changeProductAmountInCart(Cart cart, int productId, String sellerId, int change)
-            throws Exception {
+            throws NoSuchAProductInCart, NoSuchAProductException, NoSuchSellerException,
+            NotEnoughAmountOfProductException {
         SubCart subCart = getSubCartByProductId(cart, productId);
         int previousAmount = subCart.getAmount();
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, previousAmount + change);

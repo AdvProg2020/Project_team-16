@@ -11,6 +11,7 @@ import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
+import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
 import ModelPackage.System.exeption.clcsmanager.NotABuyer;
@@ -75,7 +76,10 @@ public class CustomerController extends Controller {
         return inCartPMS;
     }
 
-    public void changeAmount(String username, int id, int change) throws Exception {
+    public void changeAmount(String username, int id, int change)
+            throws UserNotAvailableException, NoSuchAProductInCart,
+            NoSuchAProductException, NoSuchSellerException,
+            NotEnoughAmountOfProductException {
         Customer customer = DBManager.load(Customer.class,username);
         if (customer == null) {
             throw new UserNotAvailableException();
