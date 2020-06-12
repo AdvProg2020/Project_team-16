@@ -101,7 +101,7 @@ public class SellerAccount {
         try {
             Main.setRoot("newProduct");
         } catch (IOException e) {
-            System.out.println("");
+            e.printStackTrace();
         }
     }
 
@@ -109,7 +109,7 @@ public class SellerAccount {
         try {
             Main.setRoot("SaleHistory");
         } catch (IOException e) {
-            System.out.println("");
+            e.printStackTrace();
         }
     }
 
@@ -117,7 +117,7 @@ public class SellerAccount {
         try {
             Main.setRoot("Message");
         } catch (IOException e) {
-            System.out.println("");
+            e.printStackTrace();
         }
     }
 
@@ -125,7 +125,7 @@ public class SellerAccount {
         try {
             Main.setRoot("productManagePage");
         } catch (IOException e) {
-            System.out.println("");
+            e.printStackTrace();
         }
     }
 
@@ -133,7 +133,7 @@ public class SellerAccount {
         try {
             Main.setRoot("OffManager");
         } catch (IOException e) {
-            System.out.println("");
+            e.printStackTrace();
         }
     }
 

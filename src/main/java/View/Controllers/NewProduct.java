@@ -25,7 +25,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -164,10 +163,9 @@ public class NewProduct {
 
     private void handleBack() {
         try {
-            // TODO: 6/12/2020 Changing current scene
-            Main.setRoot("SellerAccount");
+            back.getScene().setRoot(Main.loadFXML("SellerAccount"));
         } catch (IOException e) {
-            System.out.println("Could Not Initialize Main Menu!!!");
+            e.printStackTrace();
         }
     }
 
