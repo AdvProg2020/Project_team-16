@@ -76,7 +76,7 @@ public class NewProduct {
             sellThisBox.setDisable(true);
             similarProduct.setItems(FXCollections.observableArrayList());
         }else {
-            ArrayList<MicroProduct> microProducts = ProductController.getInstance().findSimilarProductsByName(entry);
+            ArrayList<MicroProduct> microProducts = /*loadMicro();*/ProductController.getInstance().findSimilarProductsByName(entry);
             if (microProducts.isEmpty()){
                 sellThisBox.setDisable(true);
             } else {
@@ -89,7 +89,7 @@ public class NewProduct {
 
     private void initCategoryBox() {
         ObservableList<CategoryPM> categories = FXCollections.observableArrayList();
-        ArrayList<CategoryPM> allCats = ManagerController.getInstance().getAllCategories();
+        ArrayList<CategoryPM> allCats = /*load();*/ ManagerController.getInstance().getAllCategories();
         categories.addAll(allCats);
         category.setItems(categories);
     }
@@ -144,7 +144,7 @@ public class NewProduct {
     private void changeFeaturesTable(int categoryId) {
         if (table.isDisable())table.setDisable(false);
         try {
-            ArrayList<String> features = SellerController.getInstance().getSpecialFeaturesOfCat(categoryId);
+            ArrayList<String> features = /*loadFeature();*/SellerController.getInstance().getSpecialFeaturesOfCat(categoryId);
             List<TableFeatureRow> list = new ArrayList<>();
             features.forEach(f -> list.add(new TableFeatureRow(f)));
             ObservableList<TableFeatureRow> data = FXCollections.observableList(list);

@@ -178,10 +178,8 @@ public class ManagerController extends Controller {
         discountManager.removeDiscount(code);
     }
 
-    public List<RequestPM> manageRequests(SortPackage sortPackage){
-        List<Request> requests = DBManager.loadAllData(Request.class);
-        sortManager.sortRequests(requests,sortPackage.getSortType());
-        if (!sortPackage.isAscending()) Collections.reverse(requests);
+    public ArrayList<RequestPM> manageRequests() {
+        ArrayList<Request> requests = (ArrayList<Request>) DBManager.loadAllData(Request.class);
         ArrayList<RequestPM> requestPMS = new ArrayList<>();
         for (Request request : requests) {
             requestPMS.add(createRequestPM(request));
