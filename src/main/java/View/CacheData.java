@@ -15,6 +15,7 @@ public class CacheData {
 
     private String username;
     private String role;
+    private String[] signUpData;
     private NotSignedInCart cart;
     private FilterPackage filters;
     private SortPackage sorts;

@@ -2,6 +2,7 @@ package View.Controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 
 public class SellerSignUp {
@@ -9,7 +10,20 @@ public class SellerSignUp {
     public JFXButton back;
     public JFXTextField Company;
     public JFXButton signUpSubmit;
-    public JFXTextField Balance;
     public JFXButton createCompanyButt;
+
+    @FXML
+    public void initialize(){
+        buttonsInitialize();
+        fieldInitialize();
+    }
+
+    private void fieldInitialize() {
+
+    }
+
+    private void buttonsInitialize() {
+
+    }
 
 }
