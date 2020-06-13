@@ -13,6 +13,7 @@ import controler.SellerController;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -79,8 +80,14 @@ public class SellerAccount {
     }
 
     private void handleButtons() {
-        minimize.setOnAction(event -> Main.minimize());
-        close.setOnAction(event -> Main.close());
+        minimize.setOnAction(e -> {
+            Stage stage = (Stage) minimize.getScene().getWindow();
+            stage.setIconified(true);
+        });
+        close.setOnAction(e -> {
+            Stage stage = (Stage) close.getScene().getWindow();
+            stage.close();
+        });
         back.setOnAction(event -> handleBack());
         offMenuButt.setOnAction(event -> handleOffs());
         productsButt.setOnAction(event -> handleProducts());

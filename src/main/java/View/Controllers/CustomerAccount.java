@@ -73,9 +73,15 @@ public class CustomerAccount {
     }
 
     private void handleButtons() {
+        minimize.setOnAction(e -> {
+            Stage stage = (Stage) minimize.getScene().getWindow();
+            stage.setIconified(true);
+        });
+        close.setOnAction(e -> {
+            Stage stage = (Stage) close.getScene().getWindow();
+            stage.close();
+        });
         cartButt.setOnAction(event -> handleCartButton());
-        minimize.setOnAction(event -> Main.minimize());
-        close.setOnAction(event -> Main.close());
         back.setOnAction(event -> handleBack());
         ordersButt.setOnAction(event -> handleOrders());
         discountButt.setOnAction(event -> handleDiscount());
