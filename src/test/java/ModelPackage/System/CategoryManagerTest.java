@@ -4,7 +4,7 @@ import ModelPackage.Product.Category;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedFeatureException;
-import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
+import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import mockit.*;
 import org.junit.Assert;
@@ -64,7 +64,7 @@ public class CategoryManagerTest {
 
     @Test
     public void createCategoryTest()
-            throws RepeatedNameInParentCategoryExeption, NoSuchACategoryException {
+            throws RepeatedNameInParentCategoryException, NoSuchACategoryException {
         categoryManager.createCategory("women",category1.getCategoryId());
         int countOfSubCats = category1.getSubCategories().size();
         Assert.assertEquals(2,countOfSubCats);
@@ -72,7 +72,7 @@ public class CategoryManagerTest {
 
     @Test
     public void createCategoryRepNameExcTest(){
-        Assert.assertThrows(RepeatedNameInParentCategoryExeption.class,() -> {
+        Assert.assertThrows(RepeatedNameInParentCategoryException.class, () -> {
             categoryManager.createCategory("men",category1.getCategoryId());
         });
     }
@@ -149,7 +149,7 @@ public class CategoryManagerTest {
         Assert.assertEquals("women",actulaName);
     }
 
-    @Test(expected = RepeatedNameInParentCategoryExeption.class)
+    @Test(expected = RepeatedNameInParentCategoryException.class)
     public void editNameRenExcTest() throws Exception {
         categoryManager.editName("mobile",category1.getCategoryId());
     }
@@ -164,7 +164,7 @@ public class CategoryManagerTest {
         Assert.assertEquals(0,countOfCat1Cats);
     }
 
-    @Test(expected = RepeatedNameInParentCategoryExeption.class)
+    @Test(expected = RepeatedNameInParentCategoryException.class)
     public void moveCategoryToAnotherParentRenExcTest() throws Exception{
        category3.setName("cloth");
        categoryManager.moveCategoryToAnotherParent("MNCTCFKala",category3.getCategoryId());

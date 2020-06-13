@@ -31,7 +31,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         window = stage;
         try {
-            scene = new Scene(loadFXML("DiscountManager"));
+            scene = new Scene(loadFXML("CategoryManager"));
         } catch (Exception e) {
             e.printStackTrace();
         }

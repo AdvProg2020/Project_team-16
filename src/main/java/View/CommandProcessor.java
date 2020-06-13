@@ -6,7 +6,7 @@ import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedFeatureException;
-import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
+import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
 import ModelPackage.System.exeption.clcsmanager.NotABuyer;
 import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
@@ -326,7 +326,7 @@ public class CommandProcessor {
             String parentId = scan.getInteger();
             try {
                 managerController.addCategory(name,Integer.parseInt(parentId),getInitialFeaturesForCategory());
-            } catch (RepeatedNameInParentCategoryExeption | NoSuchACategoryException e) {
+            } catch (RepeatedNameInParentCategoryException | NoSuchACategoryException e) {
                 Printer.printMessage(e.getMessage());
             }
         }else
@@ -365,7 +365,7 @@ public class CommandProcessor {
             }
             try {
                 managerController.editCategory(id,editAttribute);
-            } catch (RepeatedNameInParentCategoryExeption | RepeatedFeatureException | NoSuchACategoryException e) {
+            } catch (RepeatedNameInParentCategoryException | RepeatedFeatureException | NoSuchACategoryException e) {
                 Printer.printMessage(e.getMessage());
             }
         } else Printer.printInvalidCommand();
