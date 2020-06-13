@@ -1,18 +1,15 @@
 package View.Controllers;
 
+import ModelPackage.Log.DeliveryStatus;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.CacheData;
-import View.Data;
 import View.Main;
-import View.PrintModels.MiniProductPM;
 import View.PrintModels.OrderLogPM;
-import View.PrintModels.OrderMiniLogPM;
 import View.PrintModels.OrderProductPM;
 import com.jfoenix.controls.JFXButton;
 import controler.CustomerController;
-import controler.ProductController;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,9 +21,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import javax.naming.Binding;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class OrderHistory {
     public JFXButton back;
@@ -34,9 +33,9 @@ public class OrderHistory {
     public JFXButton minimize;
     public JFXButton close;
     public Button viewProduct;
-    public TableView<OrderMiniLogPM> orderTable;
-    public TableColumn<OrderMiniLogPM, Integer> orderNoColumn;
-    public TableColumn<OrderMiniLogPM, Data> dateColumn;
+    public TableView<OrderLogPM> orderTable;
+    public TableColumn<OrderLogPM, Integer> orderNoColumn;
+    public TableColumn<OrderLogPM, String> dateColumn;
     public Label no;
     public Label date;
     public Label price;
@@ -64,17 +63,13 @@ public class OrderHistory {
         orderTable.setItems(getOrders());
 
         orderTable.getSelectionModel().selectedItemProperty().addListener( (v, oldOrder, newOrder) -> {
-            try {
-                changeData(customerController.showOrder(newOrder.getOrderId()), newOrder.getOrderId());
-            } catch (NoSuchAProductException | NoSuchALogException e) {
-                System.out.println("Oops!!!");
-            }
+            changeData(newOrder);
         });
     }
 
-    private void changeData(OrderLogPM order, int orderNo){
-        no.setText(String.valueOf(orderNo));
-        date.setText(order.getDate().toString());
+    private void changeData(OrderLogPM order){
+        no.setText(String.valueOf(order.getOrderId()));
+        date.setText(order.getDate());
         price.setText(String.valueOf(order.getPrice()));
         discount.setText(String.valueOf(order.getDiscount()));
         delStatus.setText(order.getDeliveryStatus());
@@ -95,14 +90,38 @@ public class OrderHistory {
         return products;
     }
 
-    private ObservableList<OrderMiniLogPM> getOrders(){
-        ObservableList<OrderMiniLogPM> orders = FXCollections.observableArrayList();
+    private ObservableList<OrderLogPM> getOrders(){
+        ObservableList<OrderLogPM> orders = FXCollections.observableArrayList();
 
         try {
             orders.addAll(customerController.viewOrders(username));
         } catch (UserNotAvailableException e) {
             System.out.println("User Not Found!!!");
+        } catch (NoSuchALogException | NoSuchAProductException e) {
+            e.printStackTrace();
         }
+
+        //orders.addAll(loadOrders());
+
+        return orders;
+    }
+
+    private ArrayList<OrderProductPM> loadProducts(){
+        ArrayList<OrderProductPM> products = new ArrayList<>();
+        products.add(new OrderProductPM(2, "pashmak", "hatam", 1000));
+        products.add(new OrderProductPM(23, "dullForKimmi", "marmof", 25000));
+        products.add(new OrderProductPM(2, "skirtForKimmi", "sapa", 35000));
+        products.add(new OrderProductPM(2, "sweetForKimmi", "marmof", 500));
+
+        return products;
+    }
+
+    private ArrayList<OrderLogPM> loadOrders(){
+        ArrayList<OrderLogPM> orders = new ArrayList<>();
+        orders.add(new OrderLogPM(1552, "2007-12-14 13:25:44", loadProducts(), DeliveryStatus.DELIVERED.toString(), 150000, 200000, 10));
+        orders.add(new OrderLogPM(1342, "2003-05-16 19:14:45", loadProducts(), DeliveryStatus.DEPENDING.toString(), 20000, 1244, 50));
+        orders.add(new OrderLogPM(1226, "2003-03-23 14:33:03", loadProducts(), DeliveryStatus.DELIVERED.toString(), 32500, 32555, 0));
+        orders.add(new OrderLogPM(2588, "2012-09-12 21:23:22", loadProducts(), DeliveryStatus.DELIVERED.toString(), 13700, 45200, 2));
 
         return orders;
     }
@@ -125,11 +144,9 @@ public class OrderHistory {
     private void handleViewProduct() {
         try {
             Main.setRoot("ProductDigest");
-            int productId = ProductController.getInstance().getProductIdByName(productsTable.getSelectionModel().getSelectedItem().getName());
-            cacheData.setProductId(productId);
-            //TODO: Add Product ID to CacheData!!!
+            cacheData.setProductId(productsTable.getSelectionModel().getSelectedItem().getId());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could Not Initialize Product Menu!!!");
         }
     }
 
@@ -137,7 +154,7 @@ public class OrderHistory {
         try {
             Main.setRoot("Cart");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could Not Initialize Main Menu!!!");
         }
     }
 
@@ -145,7 +162,7 @@ public class OrderHistory {
         try {
             Main.setRoot("CustomerAccount");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could Not Initialize Main Menu!!!");
         }
     }
 

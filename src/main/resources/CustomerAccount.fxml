@@ -127,7 +127,7 @@
                               </Label>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <JFXTextField fx:id="fNameText" prefHeight="26.0" prefWidth="206.0" visible="false">
+                                    <JFXTextField fx:id="fNameText" labelFloat="true" prefHeight="26.0" prefWidth="206.0" visible="false">
                                        <font>
                                           <Font size="15.0" />
                                        </font></JFXTextField>
@@ -167,7 +167,7 @@
                               </Label>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <JFXTextField fx:id="lNameText" visible="false">
+                                    <JFXTextField fx:id="lNameText" labelFloat="true" visible="false">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -208,7 +208,7 @@
                               </Label>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <JFXTextField fx:id="emailText" visible="false">
+                                    <JFXTextField fx:id="emailText" labelFloat="true" visible="false">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -249,7 +249,7 @@
                               </Label>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <JFXTextField fx:id="phoneText" visible="false">
+                                    <JFXTextField fx:id="phoneText" labelFloat="true" visible="false">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
