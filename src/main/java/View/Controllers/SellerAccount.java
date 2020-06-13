@@ -70,6 +70,9 @@ public class SellerAccount {
             System.out.println("User Not Found!!!");
         }
 
+        /*userFullPM = getTestUser();
+        companyPM = gatTestCompany();*/
+
         username.setText(userFullPM.getUsername());
         fName.setText(userFullPM.getFirstName());
         lName.setText(userFullPM.getLastName());
@@ -77,6 +80,25 @@ public class SellerAccount {
         phone.setText(userFullPM.getPhoneNumber());
         companyName.setText(companyPM.getName());
         companyPhone.setText(companyPM.getPhone());
+    }
+
+    private CompanyPM gatTestCompany() {
+        return new CompanyPM(
+                "Apple",
+                "+5 55 22 333",
+                "Digital"
+        );
+    }
+
+    private UserFullPM getTestUser(){
+        return new UserFullPM(
+                "marmof",
+                "Mohamad",
+                "Mofayezi",
+                "marmof@gmail.com",
+                "989132255442",
+                "Customer"
+        );
     }
 
     private void handleButtons() {
@@ -196,13 +218,16 @@ public class SellerAccount {
         EditPassDialog editPassDialog = new EditPassDialog();
         editPassDialog.show();
         String newPass = editPassDialog.show();
-        UserEditAttributes attributes = new UserEditAttributes();
-        attributes.setNewPassword(newPass);
 
-        try {
-            accountController.editPersonalInfo(cacheData.getUsername(), attributes);
-        } catch (UserNotAvailableException e) {
-            System.out.println("User Not Found!!!");
+        if (newPass != null) {
+            UserEditAttributes attributes = new UserEditAttributes();
+            attributes.setNewPassword(newPass);
+
+            try {
+                accountController.editPersonalInfo(cacheData.getUsername(), attributes);
+            } catch (UserNotAvailableException e) {
+                System.out.println("User Not Found!!!");
+            }
         }
     }
 
@@ -223,35 +248,43 @@ public class SellerAccount {
 
     private void handleConfirm() {
         UserEditAttributes attributes = new UserEditAttributes();
-        updateEditAttributes(attributes);
-        try {
-            accountController.editPersonalInfo(cacheData.getUsername(), attributes);
-        } catch (UserNotAvailableException e) {
-            System.out.println("User Not Found!!!");
-        }
+        if (updateEditAttributes(attributes)) {
+            try {
+                accountController.editPersonalInfo(cacheData.getUsername(), attributes);
+            } catch (UserNotAvailableException e) {
+                System.out.println("User Not Found!!!");
+            }
 
-        confirmButt.setVisible(false);
-        cancelButt.setVisible(false);
+            confirmButt.setVisible(false);
+            cancelButt.setVisible(false);
+        }
     }
 
-    private void updateEditAttributes(UserEditAttributes attributes) {
-        if (phoneText.isVisible() && !checkInput(phoneText)) {
+    private boolean updateEditAttributes(UserEditAttributes attributes) {
+        if (fNameText.isVisible() && !checkInput(fNameText)) {
+            attributes.setNewFirstName(fNameText.getText());
+            return true;
+        } else if (lNameText.isVisible() && !checkInput(lNameText)) {
+            attributes.setNewLastName(lNameText.getText());
+            return true;
+        } else if (phoneText.isVisible() && !checkInput(phoneText)) {
             if (phoneText.getText().matches("\\d+")) {
                 attributes.setNewPhone(phoneText.getText());
+                return true;
             } else {
                 errorField(phoneText,"Wrong Phone Number Format");
+                return false;
             }
         } else if (emailText.isVisible() && !checkInput(emailText)) {
             if (emailText.getText().matches(("\\S+@\\S+\\.(org|net|ir|com|uk|site)"))){
                 attributes.setNewEmail(emailText.getText());
+                return true;
             } else {
                 errorField(emailText,"Wrong Email Format");
+                return false;
             }
-        } else if (fNameText.isVisible() && !checkInput(fNameText)) {
-            attributes.setNewFirstName(fNameText.getText());
-        } else if (lNameText.isVisible() && !checkInput(lNameText)) {
-            attributes.setNewLastName(lNameText.getText());
         }
+        return false;
     }
 
     private boolean checkInput(JFXTextField field) {
