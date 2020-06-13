@@ -129,7 +129,7 @@ public class OrderHistory {
             cacheData.setProductId(productId);
             //TODO: Add Product ID to CacheData!!!
         } catch (IOException e) {
-            System.out.println("Could Not Initialize Main Menu!!!");
+            e.printStackTrace();
         }
     }
 
@@ -137,7 +137,7 @@ public class OrderHistory {
         try {
             Main.setRoot("Cart");
         } catch (IOException e) {
-            System.out.println("Could Not Initialize Main Menu!!!");
+            e.printStackTrace();
         }
     }
 
@@ -145,7 +145,7 @@ public class OrderHistory {
         try {
             Main.setRoot("CustomerAccount");
         } catch (IOException e) {
-            System.out.println("Could Not Initialize Main Menu!!!");
+            e.printStackTrace();
         }
     }
 
