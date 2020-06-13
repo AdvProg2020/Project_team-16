@@ -12,6 +12,7 @@ import View.PrintModels.OrderMiniLogPM;
 import View.PrintModels.OrderProductPM;
 import com.jfoenix.controls.JFXButton;
 import controler.CustomerController;
+import controler.ProductController;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -124,6 +125,8 @@ public class OrderHistory {
     private void handleViewProduct() {
         try {
             Main.setRoot("ProductDigest");
+            int productId = ProductController.getInstance().getProductIdByName(productsTable.getSelectionModel().getSelectedItem().getName());
+            cacheData.setProductId(productId);
             //TODO: Add Product ID to CacheData!!!
         } catch (IOException e) {
             System.out.println("Could Not Initialize Main Menu!!!");
