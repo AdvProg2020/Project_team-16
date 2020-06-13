@@ -13,4 +13,9 @@ public class DisCodeManagerPM extends DiscountPM {
         super(discountCode, startTime, endTime, offPercentage, maxOfPriceDiscounted);
         this.users = users;
     }
+
+    @Override
+    public String toString() {
+        return super.getDiscountCode();
+    }
 }

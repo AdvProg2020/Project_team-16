@@ -2,7 +2,6 @@ package View.PrintModels;
 
 import lombok.Data;
 
-
 @Data
 public class CategoryPM {
     private String name;

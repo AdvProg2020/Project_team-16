@@ -113,16 +113,14 @@ public class ManagerController extends Controller {
         }
     }
 
-    public void createDiscount(String[] data) throws ParseException,
+    public void createDiscount(String[] data, Date startTime, Date endTime) throws
             NotValidPercentageException, StartingDateIsAfterEndingDate, AlreadyExistCodeException {
-        Date startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(data[0]);
-        Date endTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(data[1]);
-        int offPercentage = Integer.parseInt(data[2]);
-        long maxDiscount = Long.parseLong(data[3]);
-        discountManager.createDiscountCode(data[4],startTime, endTime, offPercentage, maxDiscount);
+        int offPercentage = Integer.parseInt(data[1]);
+        long maxDiscount = Long.parseLong(data[2]);
+        discountManager.createDiscountCode(data[0], startTime, endTime, offPercentage, maxDiscount);
     }
 
-    public List<DisCodeManagerPM> viewDiscountCodes() {
+    public ArrayList<DisCodeManagerPM> viewDiscountCodes() {
         List<DiscountCode> discountCodes = DBManager.loadAllData(DiscountCode.class);
         ArrayList<DisCodeManagerPM> disCodeManagerPMS = new ArrayList<>();
         discountCodes.forEach(discountCode -> disCodeManagerPMS.add(createDiscountCodeManagerPM(discountCode)));
