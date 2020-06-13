@@ -29,21 +29,21 @@ public class ProductRowForSM {
     public JFXButton editButt;
     public JFXButton delete;
     private int idProduct;
+    private boolean canEditThis;
 
     private static String nameStr;
     private static int productId;
-    private static boolean canEditThis;
 
-    public static Parent generate(String name, int id, boolean canEdit) throws IOException {
+    public static Parent generate(String name, int id) throws IOException {
         nameStr = name;
         productId = id;
-        canEditThis = canEdit;
         return Main.loadFXML("ProductRow");
     }
 
     @FXML
     public void initialize(){
         // TODO: 6/13/2020 Image
+        canEditThis = CacheData.getInstance().getRole().equals("seller");
         name.setText(nameStr);
         id.setText("" + productId);
         editButt.setDisable(!canEditThis);
