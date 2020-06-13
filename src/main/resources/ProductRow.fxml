@@ -11,7 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="60.0" prefWidth="757.0" style="-fx-background-color: #bdc3c7;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.ProductListForSM">
+<AnchorPane prefHeight="60.0" prefWidth="757.0" style="-fx-background-color: #bdc3c7;"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="View.Controllers.ProductRowForSM">
    <children>
       <HBox alignment="CENTER_LEFT" prefWidth="758.0" spacing="15.0">
          <children>
