@@ -10,21 +10,16 @@ import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedFeatureException;
-import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryExeption;
+import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryException;
 import ModelPackage.System.exeption.discount.*;
-import ModelPackage.System.exeption.product.AlreadyASeller;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
 import View.PrintModels.*;
-import View.SortPackage;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -221,11 +216,11 @@ public class ManagerController extends Controller {
     }
 
     public void editCategory(int id, CategoryEditAttribute editAttribute)
-            throws RepeatedNameInParentCategoryExeption, NoSuchACategoryException, RepeatedFeatureException {
+            throws RepeatedNameInParentCategoryException, NoSuchACategoryException, RepeatedFeatureException {
         categoryManager.editCategory(id, editAttribute);
     }
 
-    public void addCategory(String name, int parentId,List<String> features) throws RepeatedNameInParentCategoryExeption, NoSuchACategoryException {
+    public void addCategory(String name, int parentId, List<String> features) throws RepeatedNameInParentCategoryException, NoSuchACategoryException {
         categoryManager.createCategory(name, parentId,features);
     }
 
