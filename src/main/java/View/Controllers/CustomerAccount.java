@@ -237,13 +237,16 @@ public class CustomerAccount {
     private boolean updateEditAttributes(UserEditAttributes attributes) {
         if (fNameText.isVisible() && !checkInput(fNameText)) {
             attributes.setNewFirstName(fNameText.getText());
+            fName.setText(fNameText.getText());
             return true;
         } else if (lNameText.isVisible() && !checkInput(lNameText)) {
             attributes.setNewLastName(lNameText.getText());
+            lName.setText(lNameText.getText());
             return true;
         } else if (phoneText.isVisible() && !checkInput(phoneText)) {
             if (phoneText.getText().matches("\\d+")) {
                 attributes.setNewPhone(phoneText.getText());
+                phone.setText(phoneText.getText());
                 return true;
             } else {
                 errorField(phoneText,"Wrong Phone Number Format");
@@ -252,6 +255,7 @@ public class CustomerAccount {
         } else if (emailText.isVisible() && !checkInput(emailText)) {
             if (emailText.getText().matches(("\\S+@\\S+\\.(org|net|ir|com|uk|site)"))){
                 attributes.setNewEmail(emailText.getText());
+                email.setText(emailText.getText());
                 return true;
             } else {
                 errorField(emailText,"Wrong Email Format");
