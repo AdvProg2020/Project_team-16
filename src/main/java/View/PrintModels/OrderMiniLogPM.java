@@ -5,8 +5,8 @@ import lombok.Data;
 import java.util.Date;
 
 @Data public class OrderMiniLogPM {
-    private Date date;
     private int orderId;
+    private Date date;
     private long paid;
 
     public OrderMiniLogPM(Date date, int orderId, long paid) {

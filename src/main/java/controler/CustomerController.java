@@ -2,12 +2,12 @@ package controler;
 
 import ModelPackage.Log.PurchaseLog;
 import ModelPackage.Maps.DiscountcodeIntegerMap;
-import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.NoSuchSellerException;
 import ModelPackage.Product.Product;
+import ModelPackage.Product.SellPackage;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
@@ -150,13 +150,13 @@ public class CustomerController extends Controller {
 
     public OrderLogPM showOrder(int id) throws NoSuchAProductException, NoSuchALogException {
         PurchaseLog purchaseLog = (PurchaseLog) csclManager.getLogById(id);
-        ArrayList<MiniProductPM> miniProductPMS = createMiniProductPM(purchaseLog);
+        ArrayList<OrderProductPM> orderProductPMS = createOrderProductPM(purchaseLog);
 
         float realPrice = (float) purchaseLog.getPricePaid() / (1 + (float)purchaseLog.getDiscount()/100);
 
         return new OrderLogPM(
                 purchaseLog.getDate(),
-                miniProductPMS,
+                orderProductPMS,
                 purchaseLog.getDeliveryStatus().toString(),
                 (long)realPrice,
                 purchaseLog.getPricePaid(),
@@ -164,17 +164,29 @@ public class CustomerController extends Controller {
         );
     }
 
-    private ArrayList<MiniProductPM> createMiniProductPM(PurchaseLog purchaseLog) throws NoSuchAProductException {
+    private ArrayList<OrderProductPM> createOrderProductPM(PurchaseLog purchaseLog) throws NoSuchAProductException {
         List<SoldProductSellerMap> productSellerMaps = purchaseLog.getProductsAndItsSellers();
-        ArrayList<MiniProductPM> miniProductPMS = new ArrayList<>();
+        ArrayList<OrderProductPM> orderProductPMS = new ArrayList<>();
 
         for (SoldProductSellerMap productSellerMap : productSellerMaps) {
             int id = productSellerMap.getSoldProduct().getSourceId();
             Product product = productManager.findProductById(id);
-            miniProductPMS.add(createMiniProductPMFrom(product));
+            orderProductPMS.add(createOrderProductPMFrom(product, productSellerMap.getSeller()));
         }
 
-        return miniProductPMS;
+        return orderProductPMS;
+    }
+
+    private OrderProductPM createOrderProductPMFrom(Product product, Seller seller) {
+        OrderProductPM orderProductPM = null;
+
+        for (SellPackage aPackage : product.getPackages()) {
+            if (aPackage.getSeller().equals(seller)){
+                orderProductPM = new OrderProductPM(product.getName(), seller.getUsername(), aPackage.getPrice());
+            }
+        }
+
+        return orderProductPM;
     }
 
     public long viewBalance(String username) throws UserNotAvailableException {
@@ -208,8 +220,8 @@ public class CustomerController extends Controller {
         );
     }
 
-    public void assignAScore(String username,int prosuctId,int score) throws NoSuchAProductException, NotABuyer, NoSuchACustomerException {
-        csclManager.createScore(username,prosuctId,score);
+    public void assignAScore(String username,int productId,int score) throws NoSuchAProductException, NotABuyer, NoSuchACustomerException {
+        csclManager.createScore(username,productId,score);
     }
 
     private MiniProductPM createMiniProductPMFrom(Product product){

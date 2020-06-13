@@ -9,6 +9,7 @@ import View.Main;
 import View.PrintModels.MiniProductPM;
 import View.PrintModels.OrderLogPM;
 import View.PrintModels.OrderMiniLogPM;
+import View.PrintModels.OrderProductPM;
 import com.jfoenix.controls.JFXButton;
 import controler.CustomerController;
 import javafx.beans.binding.Bindings;
@@ -40,10 +41,10 @@ public class OrderHistory {
     public Label price;
     public Label discount;
     public Label delStatus;
-    public TableView<MiniProductPM> productsTable;
-    public TableColumn<MiniProductPM, String> pNameCol;
-    public TableColumn<MiniProductPM, String> pSellerCol;
-    public TableColumn<MiniProductPM, Long> pPriceCol;
+    public TableView<OrderProductPM> productsTable;
+    public TableColumn<OrderProductPM, String> pNameCol;
+    public TableColumn<OrderProductPM, String> pSellerCol;
+    public TableColumn<OrderProductPM, Long> pPriceCol;
 
     private CustomerController customerController = CustomerController.getInstance();
     private CacheData cacheData = CacheData.getInstance();
@@ -79,16 +80,16 @@ public class OrderHistory {
         changeProductTable(order.getProductPMs());
     }
 
-    private void changeProductTable(ArrayList<MiniProductPM> products) {
+    private void changeProductTable(ArrayList<OrderProductPM> products) {
         pNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        pSellerCol.setCellValueFactory(new PropertyValueFactory<>(""));
-        pPriceCol.setCellValueFactory(new PropertyValueFactory<>(""));
+        pSellerCol.setCellValueFactory(new PropertyValueFactory<>("seller"));
+        pPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         productsTable.setItems(getProducts(products));
     }
 
-    private ObservableList<MiniProductPM> getProducts(ArrayList<MiniProductPM> productPMS){
-        ObservableList<MiniProductPM> products = FXCollections.observableArrayList();
+    private ObservableList<OrderProductPM> getProducts(ArrayList<OrderProductPM> productPMS){
+        ObservableList<OrderProductPM> products = FXCollections.observableArrayList();
         products.addAll(productPMS);
         return products;
     }
@@ -123,6 +124,7 @@ public class OrderHistory {
     private void handleViewProduct() {
         try {
             Main.setRoot("ProductDigest");
+            //TODO: Add Product ID to CacheData!!!
         } catch (IOException e) {
             System.out.println("Could Not Initialize Main Menu!!!");
         }
