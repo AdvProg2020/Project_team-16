@@ -18,7 +18,9 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<fx:root prefHeight="593.0" prefWidth="960.0" style="-fx-background-color: white;" type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.OffManager">
+<AnchorPane prefHeight="593.0" prefWidth="960.0" style="-fx-background-color: white;"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="View.Controllers.OffManager">
    <children>
       <BorderPane prefHeight="594.0" prefWidth="960.0">
          <top>
@@ -168,7 +170,7 @@
                               <Button fx:id="deletePRoduct" mnemonicParsing="false" prefHeight="26.0" prefWidth="217.0" text="Delete This Product From Off" />
                               <HBox alignment="CENTER" prefHeight="41.0" prefWidth="202.0" spacing="5.0">
                                  <children>
-                                    <ChoiceBox fx:id="availableProducts" prefWidth="150.0" />
+                                     <ChoiceBox fx:id="availableProducts" prefHeight="26.0" prefWidth="135.0"/>
                                     <Button fx:id="AddProduct" mnemonicParsing="false" text="Add">
                                        <graphic>
                                           <FontIcon iconLiteral="fa-plus-square" />
@@ -206,4 +208,4 @@
          </right>
       </BorderPane>
    </children>
-</fx:root>
+</AnchorPane>

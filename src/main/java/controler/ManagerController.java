@@ -113,48 +113,29 @@ public class ManagerController extends Controller {
         }
     }
 
-    public void createDiscount(String[] data) throws ParseException,
+    public void createDiscount(String[] data, Date startTime, Date endTime) throws
             NotValidPercentageException, StartingDateIsAfterEndingDate, AlreadyExistCodeException {
-        Date startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(data[0]);
-        Date endTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(data[1]);
-        int offPercentage = Integer.parseInt(data[2]);
-        long maxDiscount = Long.parseLong(data[3]);
-        discountManager.createDiscountCode(data[4],startTime, endTime, offPercentage, maxDiscount);
+        int offPercentage = Integer.parseInt(data[1]);
+        long maxDiscount = Long.parseLong(data[2]);
+        discountManager.createDiscountCode(data[0], startTime, endTime, offPercentage, maxDiscount);
     }
 
-    public List<DiscountMiniPM> viewDiscountCodes(SortPackage sortPackage){
+    public ArrayList<DisCodeManagerPM> viewDiscountCodes() {
         List<DiscountCode> discountCodes = DBManager.loadAllData(DiscountCode.class);
-        sortManager.sortDiscountCodes(discountCodes,sortPackage.getSortType());
-        if (!sortPackage.isAscending()) Collections.reverse(discountCodes);
-        ArrayList<DiscountMiniPM> disCodeManagerPMS = new ArrayList<>();
-
-        for (DiscountCode discountCode : discountCodes) {
-            disCodeManagerPMS.add(createDiscountCodePM(discountCode));
-        }
-
+        ArrayList<DisCodeManagerPM> disCodeManagerPMS = new ArrayList<>();
+        discountCodes.forEach(discountCode -> disCodeManagerPMS.add(createDiscountCodeManagerPM(discountCode)));
         return disCodeManagerPMS;
     }
 
-    private DiscountMiniPM createDiscountCodePM(DiscountCode discountCode){
-        return new DiscountMiniPM(
-                discountCode.getCode(),
-                discountCode.getOffPercentage()
-        );
-    }
-
-    public DisCodeManagerPM viewDiscountCode(String code) throws NoSuchADiscountCodeException {
-        DiscountCode discountCode = discountManager.showDiscountCode(code);
-        return createDiscountCodeManagerPM(discountCode);
-    }
-
     private DisCodeManagerPM createDiscountCodeManagerPM(DiscountCode discountCode){
+        ArrayList<UserIntegerPM> list = new ArrayList<>();
+        discountCode.getUsers().forEach(map -> list.add(new UserIntegerPM(map.getUser().getUsername(), map.getInteger())));
         return new DisCodeManagerPM(
                 discountCode.getCode(),
                 discountCode.getStartTime(),
                 discountCode.getEndTime(),
                 discountCode.getOffPercentage(),
-                discountCode.getMaxDiscount(),
-                discountCode.getUsers()
+                discountCode.getMaxDiscount(), list
         );
     }
 
