@@ -2,7 +2,6 @@ package View.PrintModels;
 
 import lombok.Data;
 
-
 @Data
 public class CategoryPM {
     private String name;
@@ -17,6 +16,6 @@ public class CategoryPM {
 
     @Override
     public String toString() {
-        return ".".repeat(Math.max(0, indent)) + name;
+        return "  ".repeat(Math.max(0, indent)) + name;
     }
 }

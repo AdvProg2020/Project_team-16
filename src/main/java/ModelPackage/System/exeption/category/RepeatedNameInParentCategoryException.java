@@ -1,7 +1,7 @@
 package ModelPackage.System.exeption.category;
 
-public class RepeatedNameInParentCategoryExeption extends Exception {
-    public RepeatedNameInParentCategoryExeption(String name){
+public class RepeatedNameInParentCategoryException extends Exception {
+    public RepeatedNameInParentCategoryException(String name) {
         super(String.format("Name \"%s\" Already Exist In This Category",name));
     }
 }

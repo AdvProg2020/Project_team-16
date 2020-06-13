@@ -57,7 +57,7 @@ public class EditPassDialog {
         makeFade(0,1).play();
         submitButt.setOnMouseClicked(this::submit);
         cancel.setOnMouseClicked(e->{
-            result  = null;
+            result = null;
             close();
         });
         current.textProperty().addListener(e->{

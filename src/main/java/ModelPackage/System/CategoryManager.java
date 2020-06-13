@@ -40,7 +40,7 @@ public class CategoryManager {
     }
 
     public void createCategory(String name,int parentId,List<String> features)
-            throws RepeatedNameInParentCategoryExeption,NoSuchACategoryException{
+            throws RepeatedNameInParentCategoryException, NoSuchACategoryException {
         Category parent;
         if (parentId != 0)
             parent = getCategoryById(parentId);
@@ -56,7 +56,7 @@ public class CategoryManager {
     }
 
     private void checkIfThisNameIsValidForThisParent(String name,Category parent)
-            throws RepeatedNameInParentCategoryExeption {
+            throws RepeatedNameInParentCategoryException {
         List<Category> subCategories;
         if (parent != null)
             subCategories = parent.getSubCategories();
@@ -64,7 +64,7 @@ public class CategoryManager {
             subCategories = baseCategories;
         for (Category category : subCategories) {
             if (category.getName().equals(name))
-                throw new RepeatedNameInParentCategoryExeption(name);
+                throw new RepeatedNameInParentCategoryException(name);
         }
     }
 
@@ -146,7 +146,7 @@ public class CategoryManager {
     }
 
     public void editCategory(int categoryId, CategoryEditAttribute editAttribute)
-            throws NoSuchACategoryException, RepeatedNameInParentCategoryExeption, RepeatedFeatureException {
+            throws NoSuchACategoryException, RepeatedNameInParentCategoryException, RepeatedFeatureException {
         Category category = getCategoryById(categoryId);
 
         String newName = editAttribute.getName();
@@ -171,7 +171,7 @@ public class CategoryManager {
     }
 
     public void editName(String name,int categoryId) throws
-            NoSuchACategoryException, RepeatedNameInParentCategoryExeption {
+            NoSuchACategoryException, RepeatedNameInParentCategoryException {
         Category category = getCategoryById(categoryId);
         Category parent = category.getParent();
         checkIfThisNameIsValidForThisParent(name,parent);
@@ -180,7 +180,7 @@ public class CategoryManager {
     }
 
     public void moveCategoryToAnotherParent(int newParentId,int categoryId)
-            throws NoSuchACategoryException, RepeatedNameInParentCategoryExeption {
+            throws NoSuchACategoryException, RepeatedNameInParentCategoryException {
         Category category = getCategoryById(categoryId);
         Category currentParent = category.getParent();
         Category  newParent = getCategoryById(newParentId);

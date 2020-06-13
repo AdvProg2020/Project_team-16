@@ -30,7 +30,11 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         window = stage;
-        scene = new Scene(loadFXML("requestManager"));
+        try {
+            scene = new Scene(loadFXML("CategoryManager"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         stage.setScene(scene);
         scene.setOnMousePressed(e -> {
             xOffset = e.getSceneX();
