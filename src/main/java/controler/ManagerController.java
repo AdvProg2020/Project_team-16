@@ -122,39 +122,22 @@ public class ManagerController extends Controller {
         discountManager.createDiscountCode(data[4],startTime, endTime, offPercentage, maxDiscount);
     }
 
-    public List<DiscountMiniPM> viewDiscountCodes(SortPackage sortPackage){
+    public List<DisCodeManagerPM> viewDiscountCodes() {
         List<DiscountCode> discountCodes = DBManager.loadAllData(DiscountCode.class);
-        sortManager.sortDiscountCodes(discountCodes,sortPackage.getSortType());
-        if (!sortPackage.isAscending()) Collections.reverse(discountCodes);
-        ArrayList<DiscountMiniPM> disCodeManagerPMS = new ArrayList<>();
-
-        for (DiscountCode discountCode : discountCodes) {
-            disCodeManagerPMS.add(createDiscountCodePM(discountCode));
-        }
-
+        ArrayList<DisCodeManagerPM> disCodeManagerPMS = new ArrayList<>();
+        discountCodes.forEach(discountCode -> disCodeManagerPMS.add(createDiscountCodeManagerPM(discountCode)));
         return disCodeManagerPMS;
     }
 
-    private DiscountMiniPM createDiscountCodePM(DiscountCode discountCode){
-        return new DiscountMiniPM(
-                discountCode.getCode(),
-                discountCode.getOffPercentage()
-        );
-    }
-
-    public DisCodeManagerPM viewDiscountCode(String code) throws NoSuchADiscountCodeException {
-        DiscountCode discountCode = discountManager.showDiscountCode(code);
-        return createDiscountCodeManagerPM(discountCode);
-    }
-
     private DisCodeManagerPM createDiscountCodeManagerPM(DiscountCode discountCode){
+        ArrayList<UserIntegerPM> list = new ArrayList<>();
+        discountCode.getUsers().forEach(map -> list.add(new UserIntegerPM(map.getUser().getUsername(), map.getInteger())));
         return new DisCodeManagerPM(
                 discountCode.getCode(),
                 discountCode.getStartTime(),
                 discountCode.getEndTime(),
                 discountCode.getOffPercentage(),
-                discountCode.getMaxDiscount(),
-                discountCode.getUsers()
+                discountCode.getMaxDiscount(), list
         );
     }
 
