@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -25,17 +26,21 @@ public class OopsAlert {
 
     private static double xOffset;
     private static double yOffset;
+    private static String message;
 
     @FXML
     public void initialize() {
         fade(0, 1).play();
+        text.setText(message);
         close.setOnAction(e -> close());
     }
 
     public void show(String message) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
+        window.initStyle(StageStyle.UNDECORATED);
         try {
+            OopsAlert.message = message;
             Scene scene = new Scene(Main.loadFXML("OopsAlert"));
             scene.setFill(Color.TRANSPARENT);
             scene.setOnMousePressed(e -> {
@@ -46,7 +51,6 @@ public class OopsAlert {
                 window.setX(e.getScreenX() - xOffset);
                 window.setY(e.getScreenY() - yOffset);
             });
-            text.setText(message);
             window.setScene(scene);
             window.showAndWait();
         } catch (IOException e) {
