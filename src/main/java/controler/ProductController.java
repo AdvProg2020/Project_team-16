@@ -140,8 +140,4 @@ public class ProductController extends Controller{
     public ArrayList<MicroProduct> findSimilarProductsByName(String name){
         return productManager.findProductByName(name);
     }
-
-    public int getProductIdByName(String name){
-        return productManager.getProductIdByName(name);
-    }
 }

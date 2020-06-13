@@ -21,6 +21,7 @@ import ModelPackage.Users.*;
 import View.PrintModels.*;
 import View.SortPackage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -116,46 +117,27 @@ public class CustomerController extends Controller {
         );
     }
 
-    public List<OrderMiniLogPM> viewOrders(String username) throws UserNotAvailableException {
+    public List<OrderLogPM> viewOrders(String username) throws UserNotAvailableException, NoSuchALogException, NoSuchAProductException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         List<PurchaseLog> purchaseLogs = customer.getPurchaseLogs();
-        List<OrderMiniLogPM> orderMiniLogPMS = new ArrayList<>();
+        List<OrderLogPM> orderMiniLogPMS = new ArrayList<>();
 
         for (PurchaseLog purchaseLog : purchaseLogs) {
-            orderMiniLogPMS.add(createOrderMiniLog(purchaseLog));
+            orderMiniLogPMS.add(showOrder(purchaseLog.getLogId()));
         }
 
         return orderMiniLogPMS;
     }
 
-    private int findOffPriceFor(SubCart subCart) throws NoSuchSellerException {
-        Off off = subCart.getProduct().findPackageBySeller(subCart.getSeller().getUsername()).getOff();
-        if (off != null) {
-            return off.getOffPercentage();
-        }
-        else return 0;
-    }
-
-    private int findPriceForSpecialSeller(Seller seller, Product product) throws NoSuchSellerException {
-        return product.findPackageBySeller(seller).getPrice();
-    }
-
-    private OrderMiniLogPM createOrderMiniLog(PurchaseLog purchaseLog){
-        return new OrderMiniLogPM(
-                purchaseLog.getDate(),
-                purchaseLog.getLogId(),
-                purchaseLog.getPricePaid()
-        );
-    }
-
-    public OrderLogPM showOrder(int id) throws NoSuchAProductException, NoSuchALogException {
+    private OrderLogPM showOrder(int id) throws NoSuchAProductException, NoSuchALogException {
         PurchaseLog purchaseLog = (PurchaseLog) csclManager.getLogById(id);
         ArrayList<OrderProductPM> orderProductPMS = createOrderProductPM(purchaseLog);
 
         float realPrice = (float) purchaseLog.getPricePaid() / (1 + (float)purchaseLog.getDiscount()/100);
 
         return new OrderLogPM(
-                purchaseLog.getDate(),
+                purchaseLog.getLogId(),
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(purchaseLog.getDate()),
                 orderProductPMS,
                 purchaseLog.getDeliveryStatus().toString(),
                 (long)realPrice,
@@ -182,11 +164,23 @@ public class CustomerController extends Controller {
 
         for (SellPackage aPackage : product.getPackages()) {
             if (aPackage.getSeller().equals(seller)){
-                orderProductPM = new OrderProductPM(product.getName(), seller.getUsername(), aPackage.getPrice());
+                orderProductPM = new OrderProductPM(product.getId(), product.getName(), seller.getUsername(), aPackage.getPrice());
             }
         }
 
         return orderProductPM;
+    }
+
+    private int findOffPriceFor(SubCart subCart) throws NoSuchSellerException {
+        Off off = subCart.getProduct().findPackageBySeller(subCart.getSeller().getUsername()).getOff();
+        if (off != null) {
+            return off.getOffPercentage();
+        }
+        else return 0;
+    }
+
+    private int findPriceForSpecialSeller(Seller seller, Product product) throws NoSuchSellerException {
+        return product.findPackageBySeller(seller).getPrice();
     }
 
     public long viewBalance(String username) throws UserNotAvailableException {

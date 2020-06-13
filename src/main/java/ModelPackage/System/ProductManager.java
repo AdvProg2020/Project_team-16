@@ -87,15 +87,6 @@ public class ProductManager {
         return list;
     }
 
-    public int getProductIdByName(String name){
-        for (Product product : allProductsActive) {
-            if (product.getName().equals(name)){
-                return product.getId();
-            }
-        }
-        return -1;
-    }
-
     public void addView(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         product.setView(product.getView()+1);
