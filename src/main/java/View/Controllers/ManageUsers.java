@@ -1,32 +1,31 @@
 package View.Controllers;
 
-import ModelPackage.System.exeption.account.UserNotAvailableException;
 import View.Main;
-import View.PrintModels.UserMiniPM;
+import View.PrintModels.UserFullPM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import controler.ManagerController;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import lombok.Data;
-import org.kordamp.ikonli.fontawesome.FontAwesome;
+
 import java.io.IOException;
-import java.util.Iterator;
 
 public class ManageUsers {
 
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
-    public TableView<RowFactory> table;
-    public TableColumn<RowFactory, String> usernameCol;
-    public TableColumn<RowFactory, ComboBox<String>> roleCol;
+    public TableView<UserFullPM> table;
+    public TableColumn<UserFullPM, String> usernameCol;
+    public TableColumn<UserFullPM, String> roleCol;
     public ImageView userImage;
     public Label username;
     public Label role;
@@ -34,12 +33,8 @@ public class ManageUsers {
     public Label firstname;
     public Label email;
     public Label phone;
-    public JFXComboBox changeRole;
+    public JFXComboBox<String> changeRoleBox;
     public JFXButton deleteBtn;
-
-    // TODO: 6/14/2020 Should Be Deleted
-    public TableColumn<RowFactory, Button> viewUserCol;
-    public TableColumn<RowFactory, Button> deleteUserCol;
 
     private ManagerController managerController = ManagerController.getInstance();
 
@@ -47,6 +42,14 @@ public class ManageUsers {
     public void initialize(){
         initButtons();
         initUsersTable();
+        initChangeRole();
+    }
+
+    private void initChangeRole() {
+        changeRoleBox.getItems().addAll("Customer", "Seller", "Manager");
+        //changeRoleBox.getSelectionModel().selectedItemProperty().addListener((v, oldRole, newRole) -> changeRole(newRole));
+        //TODO: change Role in Manager!!!
+
     }
 
     private void initButtons() {
@@ -59,6 +62,8 @@ public class ManageUsers {
             stage.close();
         });
         back.setOnAction(event -> handleBack());
+        deleteBtn.setOnAction(event -> handleDeleteUser());
+        deleteBtn.disableProperty().bind(Bindings.isEmpty(table.getSelectionModel().getSelectedItems()));
     }
 
     private void handleBack() {
@@ -72,91 +77,52 @@ public class ManageUsers {
     private void initUsersTable() {
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
-        viewUserCol.setCellValueFactory(new PropertyValueFactory<>("view"));
-        deleteUserCol.setCellValueFactory(new PropertyValueFactory<>("delete"));
 
-        table.setItems(getUsers());
-        //table.setItems(getTestUsers());
+        // table.setItems(getUsers());
+        table.setItems(getTestUsers());
+
+        table.getSelectionModel().selectedItemProperty().addListener( (v, oldUser, newUser) -> changeData(newUser));
     }
 
-    private ObservableList<RowFactory> getUsers() {
-        ObservableList<RowFactory> users = FXCollections.observableArrayList();
-        for (UserMiniPM user : managerController.manageUsers()) {
-            users.add(new RowFactory(user.getUsername(), getRolesBox(user.getRole()), getViewButton(), getDeleteButton(user.getUsername())));
-        }
+    private ObservableList<UserFullPM> getUsers() {
+        ObservableList<UserFullPM> users = FXCollections.observableArrayList();
+        users.addAll(managerController.manageUsers());
 
         return users;
     }
 
-    private ObservableList<RowFactory> getTestUsers(){
-        ObservableList<RowFactory> users = FXCollections.observableArrayList();
-        users.add(new RowFactory("sapa", getRolesBox("Seller"), getViewButton(), getDeleteButton("sapa")));
-        users.add(new RowFactory("marmof", getRolesBox("Manager"), getViewButton(), getDeleteButton("marmof")));
-        users.add(new RowFactory("kimi", getRolesBox("Customer"), getViewButton(), getDeleteButton("kimi")));
-        users.add(new RowFactory("hatam", getRolesBox("Customer"), getViewButton(), getDeleteButton("hatam")));
+    private ObservableList<UserFullPM> getTestUsers(){
+        ObservableList<UserFullPM> users = FXCollections.observableArrayList();
+
+        users.add(new UserFullPM("marmof", "Mohamad", "Mofi", "mofi@gmail.com", "98 913 255 2322", "Seller"));
+        users.add(new UserFullPM("hatam", "Ali", "Hata", "hatam@gmail.com", "98 912 342 2156", "Manager"));
+        users.add(new UserFullPM("sapa", "Sajad", "Paki", "sapa@gmail.com", "98 920 156 7894", "Seller"));
+        users.add(new UserFullPM("kimmi", "Kimmi", "idontknow", "kimmi@gmail.com", "98 913 442 4653", "Customer"));
+        users.add(new UserFullPM("memo", "Mehran", "Montaz", "memo@gmail.com", "98 919 111 1600", "Customer"));
 
         return users;
     }
 
-    private ComboBox<String> getRolesBox(String role) {
-        ComboBox<String> roles = new ComboBox<>();
-        roles.setPromptText(role);
-        roles.getItems().addAll("Customer", "Seller", "Manager");
-
-        return roles;
+    private void changeData(UserFullPM newUser) {
+        username.setText(newUser.getUsername());
+        role.setText(newUser.getRole());
+        firstname.setText(newUser.getFirstName());
+        lastname.setText(newUser.getLastName());
+        email.setText(newUser.getEmail());
+        phone.setText(newUser.getPhoneNumber());
+        changeRoleBox.getSelectionModel().select(newUser.getRole());
+        //TODO: Update Prof Pic!!!
     }
 
-    private Button getViewButton() {
-        Button view = new Button("View User");
-        view.setOnAction(event -> handleViewUser());
-
-        return view;
-    }
-
-    private void handleViewUser() {
-        //TODO : View User Should Be Implemented!!!
-    }
-
-    private Button getDeleteButton(String username) {
-        Button delete = new Button("Delete User");
-        delete.setOnAction(event -> handleDeleteUser(username, delete));
-        //delete.setFont(Font.loadFont(String.valueOf(FontAwesome.TRASH), 10));
-        //TODO: Add Trash Icon To Delete!!!
-
-        return delete;
-    }
-
-    private void handleDeleteUser(String username, Button button) {
-        ObservableList<RowFactory> users = table.getItems();
-        try {
-            managerController.deleteUser(username);
+    private void handleDeleteUser() {
+        UserFullPM user = table.getSelectionModel().getSelectedItem();
+        /*try {
+            managerController.deleteUser(user.getUsername());
         } catch (UserNotAvailableException e) {
             e.printStackTrace();
-        }
+        }*/
 
-        Iterator iterator = users.iterator();
-        while (iterator.hasNext()){
-            RowFactory user = (RowFactory) iterator.next();
-            if (user.delete.equals(button)) {
-                table.getItems().remove(user);
-                break;
-            }
-        }
+        ObservableList<UserFullPM> users = table.getItems();
+        users.remove(user);
     }
-
-    @Data
-    public class RowFactory{
-        private String username;
-        private ComboBox<String> role;
-        private Button view;
-        private Button delete;
-
-        public RowFactory(String username, ComboBox<String> role, Button view, Button delete) {
-            this.username = username;
-            this.role = role;
-            this.view = view;
-            this.delete = delete;
-        }
-    }
-
 }
