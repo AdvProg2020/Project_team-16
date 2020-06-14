@@ -8,16 +8,16 @@ import java.util.ArrayList;
 @Data
 public class OffPM {
     private int offId;
-    private ArrayList<Integer> productIds;
+    private ArrayList<MiniProductPM> products;
     private String seller;
     private Date startTime;
     private Date endTime;
     private int offPercentage;
     private String status;
 
-    public OffPM(int offId, ArrayList<Integer> productIds, String seller, Date startTime, Date endTime, int offPercentage, String status) {
+    public OffPM(int offId, ArrayList<MiniProductPM> products, String seller, Date startTime, Date endTime, int offPercentage, String status) {
         this.offId = offId;
-        this.productIds = productIds;
+        this.products = products;
         this.seller = seller;
         this.startTime = startTime;
         this.endTime = endTime;

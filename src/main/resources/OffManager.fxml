@@ -62,7 +62,7 @@
                    <DatePicker fx:id="crEndDate" prefHeight="26.0" prefWidth="333.0" />
                   <Region VBox.vgrow="ALWAYS" />
                   <Label prefHeight="18.0" prefWidth="266.0" text="You Can Add Products After Your Off is Accepted" />
-                  <JFXButton prefHeight="26.0" prefWidth="306.0" text="Create Off">
+                  <JFXButton fx:id="create" prefHeight="26.0" prefWidth="306.0" text="Create Off">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -131,7 +131,7 @@
                               </Label>
                                <DatePicker fx:id="endDate" />
                               <Region prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                              <JFXButton prefHeight="26.0" prefWidth="198.0" text="Confirm Changes">
+                              <JFXButton fx:id="confirm" prefHeight="26.0" prefWidth="198.0" text="Confirm Changes">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
@@ -139,7 +139,7 @@
                                     <FontIcon iconLiteral="fa-edit" />
                                  </graphic>
                               </JFXButton>
-                              <JFXButton layoutX="25.0" layoutY="464.0" prefHeight="26.0" prefWidth="198.0" text="Reset Changes">
+                              <JFXButton fx:id="reset" layoutX="25.0" layoutY="464.0" prefHeight="26.0" prefWidth="198.0" text="Reset Changes">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
@@ -155,7 +155,7 @@
                         <VBox layoutX="10.0" layoutY="10.0" prefHeight="462.0" prefWidth="222.0" spacing="5.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="171.0" text="Products On This Off" />
-                              <ListView fx:id="products" prefHeight="405.0" prefWidth="202.0" />
+                              <ListView fx:id="productsList" prefHeight="405.0" prefWidth="202.0" />
                                <Button fx:id="deleteProduct" mnemonicParsing="false" prefHeight="26.0" prefWidth="217.0" text="Delete This Product From Off" />
                               <HBox alignment="CENTER" prefHeight="41.0" prefWidth="202.0" spacing="5.0">
                                  <children>
@@ -193,7 +193,7 @@
             </VBox>
          </center>
          <right>
-            <ListView fx:id="offs" prefHeight="200.0" prefWidth="200.0" stylesheets="@CSSs/button.css" BorderPane.alignment="CENTER" />
+            <ListView fx:id="offsList" prefHeight="200.0" prefWidth="200.0" stylesheets="@CSSs/button.css" BorderPane.alignment="CENTER" />
          </right>
       </BorderPane>
    </children>

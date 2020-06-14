@@ -1,7 +1,6 @@
 package controler;
 
 import ModelPackage.Log.SellLog;
-import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Company;
@@ -14,14 +13,12 @@ import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
-import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
 import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
-import ModelPackage.Users.User;
 import View.PrintModels.*;
 import View.SortPackage;
 
@@ -116,7 +113,7 @@ public class SellerController extends Controller{
         List<OffPM> offPMs = new ArrayList<>();
         for (Off off : offs) {
             offPMs.add(new OffPM(off.getOffId(),
-                    addProductIdsToOffPM(off),
+                    addProductToOffPM(off),
                     off.getSeller().getUsername(),
                     off.getStartTime(),
                     off.getEndTime(),
@@ -126,24 +123,20 @@ public class SellerController extends Controller{
         return offPMs;
     }
 
-    public void addOff(String[] data, String sellerUserName) throws ParseException, InvalidTimes, UserNotAvailableException {
+    public void addOff(Date start, Date end, int percentage, String sellerUserName) throws ParseException, InvalidTimes, UserNotAvailableException {
         Seller seller = (Seller) accountManager.getUserByUsername(sellerUserName);
-        Date startTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[0]);
-        Date endTime = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data[1]);
         Date[] dates = new Date[2];
-        dates[0] = startTime;
-        dates[1] = endTime;
-        int offPercentage = Integer.parseInt(data[2]);
-        offManager.createOff(seller, dates, offPercentage);
+        dates[0] = start;
+        dates[1] = end;
+        offManager.createOff(seller, dates, percentage);
     }
 
     public void editOff(String seller, OffChangeAttributes editAttributes) throws ThisOffDoesNotBelongssToYouException, NoSuchAOffException {
         offManager.editOff(editAttributes,seller);
     }
 
-    public void deleteOff(String data,String remover) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {
-        int offId = Integer.parseInt(data);
-        offManager.deleteOff(offId,remover);
+    public void deleteOff(int id, String remover) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {
+        offManager.deleteOff(id,remover);
     }
 
     public void addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures)
@@ -197,12 +190,12 @@ public class SellerController extends Controller{
         return specialFeatures;
     }
 
-    private ArrayList<Integer> addProductIdsToOffPM(Off off) {
-        ArrayList<Integer> productIds = new ArrayList<>();
+    private ArrayList<MiniProductPM> addProductToOffPM(Off off) {
+        ArrayList<MiniProductPM> products = new ArrayList<>();
         for (Product product : off.getProducts()) {
-            productIds.add(product.getId());
+            products.add(createMiniProductPM(product));
         }
-        return productIds;
+        return products;
     }
 
     private MiniProductPM createMiniProductPM(Product product) {

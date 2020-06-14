@@ -61,7 +61,7 @@ public class OffManager {
         DBManager.delete(off);
     }
 
-    public void checkIfThisSellerCreatedTheOff(Off off,String viwer) throws ThisOffDoesNotBelongssToYouException {
-        if (!off.getSeller().getUsername().equals(viwer))throw new ThisOffDoesNotBelongssToYouException();
+    public void checkIfThisSellerCreatedTheOff(Off off,String viewer) throws ThisOffDoesNotBelongssToYouException {
+        if (!off.getSeller().getUsername().equals(viewer))throw new ThisOffDoesNotBelongssToYouException();
     }
 }
