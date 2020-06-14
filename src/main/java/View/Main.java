@@ -3,6 +3,7 @@ package View;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.database.HibernateUtil;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -77,5 +78,11 @@ public class Main extends Application {
     public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource(fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        HibernateUtil.shutdown();
+        super.stop();
     }
 }
