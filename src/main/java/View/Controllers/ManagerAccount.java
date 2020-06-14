@@ -11,16 +11,15 @@ import controler.AccountController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class ManagerAccount {
-    public ImageView image;
     public JFXButton chooseProf;
 
     public JFXButton back;
@@ -34,6 +33,7 @@ public class ManagerAccount {
     public JFXButton requestButt;
     public JFXButton changePassButt;
     public JFXButton logoutButt;
+    public Circle imageCircle;
 
     public Label username;
     public Label fName;
@@ -54,32 +54,41 @@ public class ManagerAccount {
 
     private static final Paint redColor = Paint.valueOf("#c0392b");
     private static final Paint blueColor = Paint.valueOf("#405aa8");
+    private static final String userPhoto = "/Images/user-png-icon-male-user-icon-512.png";
+
 
     private AccountController accountController = AccountController.getInstance();
     private CacheData cacheData = CacheData.getInstance();
-
-    private UserFullPM userFullPM;
 
     @FXML
     public void initialize(){
         handleButtons();
         setLabels();
+        loadImage();
+    }
+
+    private void loadImage() {
+        Image image = accountController.userImage(username.getText());
+        if (image == null) {
+            image = new Image(userPhoto);
+        }
+        imageCircle.setFill(new ImagePattern(image));
     }
 
     private void setLabels() {
         try {
-            userFullPM = accountController.viewPersonalInfo(cacheData.getUsername());
+            UserFullPM userFullPM = accountController.viewPersonalInfo(cacheData.getUsername());
+
+            //UserFullPM userFullPM = getTestUser();
+
+            username.setText(userFullPM.getUsername());
+            fName.setText(userFullPM.getFirstName());
+            lName.setText(userFullPM.getLastName());
+            email.setText(userFullPM.getEmail());
+            phone.setText(userFullPM.getPhoneNumber());
         } catch (UserNotAvailableException e) {
             System.out.println("User Not Found!!!");
         }
-
-        //userFullPM = getTestUser();
-
-        username.setText(userFullPM.getUsername());
-        fName.setText(userFullPM.getFirstName());
-        lName.setText(userFullPM.getLastName());
-        email.setText(userFullPM.getEmail());
-        phone.setText(userFullPM.getPhoneNumber());
     }
 
     private UserFullPM getTestUser(){
@@ -125,12 +134,16 @@ public class ManagerAccount {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.jpeg", "*.png", "*.jpg"));
-        File selected = fileChooser.showOpenDialog(image.getScene().getWindow());
-
+        File selected = fileChooser.showOpenDialog(back.getScene().getWindow());
         if (selected != null) {
             Image toImage = new Image(String.valueOf(selected.toURI()));
-            image.setImage(toImage);
-            //TODO : Add image to User!!!
+            imageCircle.setFill(new ImagePattern(toImage));
+            try {
+                InputStream inputStream = new FileInputStream(selected);
+                accountController.saveNewImage(inputStream, username.getText());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -322,6 +335,4 @@ public class ManagerAccount {
             field.setPromptText(prompt);
         });
     }
-
-
 }
