@@ -26,28 +26,27 @@ public class Request {
     @Column(name = "REQUEST")
     String request;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
         @JoinColumn(name = "OFF")
     Off off;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
         @JoinColumn(name = "OFF_EDIT")
     OffChangeAttributes offEdit;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
         @JoinColumn(name = "PRODUCT")
     Product product;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "PRODUCT_EDIT")
     ProductEditAttribute productEditAttribute;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
         @JoinColumn(name = "COMMENT")
     Comment comment;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-        @JoinColumn(name = "SELLER")
+    @OneToOne
     Seller seller;
 
     private boolean done;
