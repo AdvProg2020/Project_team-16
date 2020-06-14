@@ -39,6 +39,7 @@ public class AccountManager {
                 new Cart(),
                 csclManager.getCompanyById(Integer.parseInt(info[6])),
                 Long.parseLong(info[7]));
+        DBManager.save(seller);
         String requestStr = String.format("%s has requested to create a seller with email %s", info[0], info[4]);
         requestManager.addRequest(new Request(info[0],RequestType.REGISTER_SELLER,requestStr,seller));
     }
@@ -90,7 +91,6 @@ public class AccountManager {
 
     public User viewPersonalInfo(String username) throws UserNotAvailableException {
         User user = getUserByUsername(username);
-        checkIfUserHasLoggedIn(user);
         return user;
     }
 
@@ -125,8 +125,6 @@ public class AccountManager {
 
     public void logout(String username) throws UserNotAvailableException {
         User user = getUserByUsername(username);
-        checkIfUserHasLoggedIn(user);
-        user.setHasSignedIn(false);
         DBManager.save(user);
     }
 
@@ -144,12 +142,6 @@ public class AccountManager {
     public boolean isUsernameAvailable(String username){
         User user = DBManager.load(User.class,username);
         return user != null;
-    }
-
-    private void checkIfUserHasLoggedIn(User user){
-        if (!user.isHasSignedIn()){
-            throw new UserNotLoggedInException();
-        }
     }
 
 }

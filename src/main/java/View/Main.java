@@ -32,7 +32,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         window = stage;
         try {
-            scene = new Scene(loadFXML("ManageUsers"));
+            scene = new Scene(loadFXML("newProduct"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,17 +55,7 @@ public class Main extends Application {
         window.setIconified(true);
     }
 
-    public static void maximize(){
-        if (window.isMaximized()){
-            window.setMaximized(false);
-        }
-        else {
-            window.setMaximized(true);
-        }
-    }
-
     public static void close(){
-        HibernateUtil.shutdown();
         window.close();
     }
 
@@ -77,5 +67,11 @@ public class Main extends Application {
     public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource(fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        HibernateUtil.shutdown();
+        super.stop();
     }
 }

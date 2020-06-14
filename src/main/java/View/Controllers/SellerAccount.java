@@ -13,12 +13,13 @@ import controler.SellerController;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class SellerAccount {
     public JFXButton back;
@@ -49,10 +50,11 @@ public class SellerAccount {
     public JFXButton cancelButt;
     public JFXButton confirmButt;
     public JFXButton chooseProf;
-    public ImageView image;
+    public Circle imageCircle;
 
     private static final Paint redColor = Paint.valueOf("#c0392b");
     private static final Paint blueColor = Paint.valueOf("#405aa8");
+    private static final String userPhoto = "/Images/user-png-icon-male-user-icon-512.png";
 
     private AccountController accountController = AccountController.getInstance();
     private SellerController sellerController = SellerController.getInstance();
@@ -64,6 +66,15 @@ public class SellerAccount {
     public void initialize(){
         handleButtons();
         setLabels();
+        loadImage();
+    }
+
+    private void loadImage() {
+        Image image = accountController.userImage(username.getText());
+        if (image == null) {
+            image = new Image(userPhoto);
+        }
+        imageCircle.setFill(new ImagePattern(image));
     }
 
     private void setLabels() {
@@ -135,12 +146,17 @@ public class SellerAccount {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.jpeg", "*.png", "*.jpg"));
-        File selected = fileChooser.showOpenDialog(image.getScene().getWindow());
+        File selected = fileChooser.showOpenDialog(back.getScene().getWindow());
 
         if (selected != null) {
             Image toImage = new Image(String.valueOf(selected.toURI()));
-            image.setImage(toImage);
-            //TODO : Add image to User!!!
+            imageCircle.setFill(new ImagePattern(toImage));
+            try {
+                InputStream inputStream = new FileInputStream(selected);
+                accountController.saveNewImage(inputStream, username.getText());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
