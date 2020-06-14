@@ -33,7 +33,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         window = stage;
         try {
-            scene = new Scene(loadFXML("requestManager"));
+            scene = new Scene(loadFXML("ManagerAccount"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,17 +56,7 @@ public class Main extends Application {
         window.setIconified(true);
     }
 
-    public static void maximize(){
-        if (window.isMaximized()){
-            window.setMaximized(false);
-        }
-        else {
-            window.setMaximized(true);
-        }
-    }
-
     public static void close(){
-        HibernateUtil.shutdown();
         window.close();
     }
 

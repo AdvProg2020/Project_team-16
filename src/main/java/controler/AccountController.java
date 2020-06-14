@@ -11,9 +11,12 @@ import ModelPackage.Users.Cart;
 import ModelPackage.Users.Customer;
 import ModelPackage.Users.SubCart;
 import ModelPackage.Users.User;
+import View.Main;
 import View.PrintModels.UserFullPM;
 import controler.exceptions.ManagerExist;
+import javafx.scene.image.Image;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,5 +96,23 @@ public class AccountController extends Controller {
     public int createCompany(String[] info){
         Company company = new Company(info[0],info[1],info[2]);
         return csclManager.createCompany(company);
+    }
+
+    public Image userImage(String username) {
+        File file = new File("src\\main\\resources\\db\\images\\users\\" + username + ".jpg");
+        if (file.exists()) {
+            return new Image(String.valueOf(file.toURI()));
+        }
+        return null;
+    }
+
+    public void saveNewImage(InputStream inputStream, String username) throws IOException {
+        File file = new File("src\\main\\resources\\db\\images\\users\\" + username + ".jpg");
+        byte[] buffer = new byte[inputStream.available()];
+        if (!file.exists()) file.createNewFile();
+        inputStream.read(buffer);
+        OutputStream outStream = new FileOutputStream(file);
+        outStream.write(buffer);
+        outStream.close();
     }
 }
