@@ -34,9 +34,6 @@ public class User {
         @JoinColumn(name = "CART")
     protected Cart cart;
 
-    @Transient
-    private boolean hasSignedIn;
-
     @OneToMany
     private List<Message> messages;
 
@@ -48,7 +45,6 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.cart = cart;
-        this.hasSignedIn = false;
         this.messages = new ArrayList<>();
     }
     public User(){
