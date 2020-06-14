@@ -10,6 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageController extends Controller {
+    private static MessageController messageController = new MessageController();
+
+    private MessageController() {}
+
+    public static MessageController getInstance() {
+        return messageController;
+    }
+
     public List<MessagePM> getMessagesForUser(String username) throws UserNotAvailableException {
         User user = accountManager.getUserByUsername(username);
         List<Message> list = MessageManager.getInstance().getAllMesagesOfThisUser(user);

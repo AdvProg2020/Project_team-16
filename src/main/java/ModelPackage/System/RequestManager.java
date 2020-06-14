@@ -28,11 +28,9 @@ import java.util.List;
 import java.util.Map;
 
 public class RequestManager {
-    private List<Request> requests;
     private static RequestManager requestManager = null;
 
-    private RequestManager(){
-        requests =  new ArrayList<>();
+    private RequestManager() {
     }
 
     public void addRequest(Request request){
@@ -206,6 +204,7 @@ public class RequestManager {
         Seller seller = request.getSeller();
         seller.setVerified(true);
         DBManager.save(seller);
+        DBManager.delete(request);
     }
 
     public void decline(int requestId) throws NoSuchARequestException {
@@ -219,18 +218,5 @@ public class RequestManager {
             requestManager = new RequestManager();
         }
         return requestManager;
-    }
-
-    public List<Request> getAllRequestsWithoutObjectsInside(){
-        Session session = HibernateUtil.getSession();
-        Criteria criteria = session.createCriteria(Request.class)
-                .setProjection(Projections.projectionList()
-                    .add(Projections.property("requestId"))
-                    .add(Projections.property("userHasRequested"))
-                    .add(Projections.property("requestType"))
-                    .add(Projections.property("request"))
-                );
-
-        return criteria.list();
     }
 }
