@@ -75,7 +75,7 @@ public class Purchase {
     private static final String CVV2_REGEX = "\\d{3}\\d?";
     private static final String MONTH_REGEX = "(0[1-9]|1[012])";
     private static final String YEAR_REGEX = "\\d{2}";
-    private static final String CARDPASS_REGEX = "\\d{5,64}";
+    private static final String CARD_PASS_REGEX = "\\d{5,64}";
     private static final Paint redColor = Paint.valueOf("#c0392b");
 
     private final CacheData cacheData = CacheData.getInstance();
@@ -248,7 +248,7 @@ public class Purchase {
         if (pass.getText().isEmpty()) {
             new OopsAlert().show("Enter Your Card Password, please!!");
             return false;
-        } else if (!pass.getText().matches(CARDPASS_REGEX)) {
+        } else if (!pass.getText().matches(CARD_PASS_REGEX)) {
             new OopsAlert().show("Invalid Card Password!!");
             return false;
         }
