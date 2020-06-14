@@ -11,11 +11,14 @@ import controler.AccountController;
 import controler.CustomerController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class CustomerAccount {
@@ -32,6 +35,7 @@ public class CustomerAccount {
     public JFXButton editLNameButt;
     public JFXButton editEMailButt;
     public JFXButton editPhoneButt;
+    public JFXButton chooseProf;
     public ImageView image;
     public Label username;
     public Label fName;
@@ -107,6 +111,20 @@ public class CustomerAccount {
         editPhoneButt.setOnAction(event -> handleEditPhone());
         confirmButt.setOnAction(event -> handleConfirm());
         cancelButt.setOnAction(event -> handleCancel());
+        chooseProf.setOnAction(event -> handleChooseProf());
+    }
+
+    private void handleChooseProf() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.jpeg", "*.png", "*.jpg"));
+        File selected = fileChooser.showOpenDialog(image.getScene().getWindow());
+
+        if (selected != null) {
+            Image toImage = new Image(String.valueOf(selected.toURI()));
+            image.setImage(toImage);
+            //TODO : Add image to User!!!
+        }
     }
 
     private void handleBack() {

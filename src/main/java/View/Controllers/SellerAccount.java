@@ -11,10 +11,13 @@ import com.jfoenix.controls.JFXTextField;
 import controler.AccountController;
 import controler.SellerController;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class SellerAccount {
@@ -45,6 +48,7 @@ public class SellerAccount {
     public JFXTextField phoneText;
     public JFXButton cancelButt;
     public JFXButton confirmButt;
+    public JFXButton chooseProf;
     public ImageView image;
 
     private static final Paint redColor = Paint.valueOf("#c0392b");
@@ -124,6 +128,20 @@ public class SellerAccount {
         confirmButt.setOnAction(event -> handleConfirm());
         cancelButt.setOnAction(event -> handleCancel());
         newProduct.setOnAction(event -> handleNewProduct());
+        chooseProf.setOnAction(event -> handleChooseProf());
+    }
+
+    private void handleChooseProf() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.jpeg", "*.png", "*.jpg"));
+        File selected = fileChooser.showOpenDialog(image.getScene().getWindow());
+
+        if (selected != null) {
+            Image toImage = new Image(String.valueOf(selected.toURI()));
+            image.setImage(toImage);
+            //TODO : Add image to User!!!
+        }
     }
 
     private void handleNewProduct() {

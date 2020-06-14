@@ -10,14 +10,18 @@ import com.jfoenix.controls.JFXTextField;
 import controler.AccountController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ManagerAccount {
     public ImageView image;
+    public JFXButton chooseProf;
 
     public JFXButton back;
     public JFXButton minimize;
@@ -107,6 +111,7 @@ public class ManagerAccount {
         changePassButt.setOnAction(event -> handleChangePass());
         logoutButt.setOnAction(event -> handleLogout());
         addManagerButt.setOnAction(event -> handleAddManager());
+        chooseProf.setOnAction(event -> handleChooseProf());
 
         editFNameButt.setOnAction(event -> handleEditFName());
         editLNameButt.setOnAction(event -> handleEditLName());
@@ -114,6 +119,19 @@ public class ManagerAccount {
         editPhoneButt.setOnAction(event -> handleEditPhone());
         confirmButt.setOnAction(event -> handleConfirm());
         cancelButt.setOnAction(event -> handleCancel());
+    }
+
+    private void handleChooseProf() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.jpeg", "*.png", "*.jpg"));
+        File selected = fileChooser.showOpenDialog(image.getScene().getWindow());
+
+        if (selected != null) {
+            Image toImage = new Image(String.valueOf(selected.toURI()));
+            image.setImage(toImage);
+            //TODO : Add image to User!!!
+        }
     }
 
     private void handleAddManager() {
