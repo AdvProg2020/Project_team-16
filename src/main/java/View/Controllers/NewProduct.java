@@ -23,8 +23,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,9 @@ public class NewProduct {
     public Button sellThis;
     public VBox sellThisBox;
     public ListView<MicroProduct> similarProduct;
+    public ListView<File> pictureList;
+    public JFXButton pickPic;
+    public JFXButton reset;
 
     private static final Paint redColor = Paint.valueOf("#c0392b");
     private static final Paint blueColor = Paint.valueOf("#405aa8");
@@ -69,6 +75,8 @@ public class NewProduct {
         });
         sellThis.disableProperty().bind(Bindings.isEmpty(similarProduct.getSelectionModel().getSelectedItems()));
         view.disableProperty().bind(Bindings.isEmpty(similarProduct.getSelectionModel().getSelectedItems()));
+        createProduct.disableProperty().bind(Bindings.isEmpty(pictureList.getSelectionModel().getSelectedItems()));
+        reset.disableProperty().bind(Bindings.isEmpty(pictureList.getSelectionModel().getSelectedItems()));
     }
 
     private void fullSellThis(String entry){
@@ -159,6 +167,20 @@ public class NewProduct {
         view.setOnAction(event -> handleView());
         sellThis.setOnAction(event -> handleSellThis());
         back.setOnAction(event -> handleBack());
+        pickPic.setOnAction(event -> pickPictures());
+        reset.setOnAction(event -> deleteSelectedImage());
+    }
+
+    private void deleteSelectedImage() {
+        pictureList.getItems().remove(pictureList.getSelectionModel().getSelectedItem());
+    }
+
+    private void pickPictures() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image", "*.jpg"));
+        List<File> files = fileChooser.showOpenMultipleDialog(null);
+        ObservableList<File> data = FXCollections.observableArrayList(files);
+        pictureList.getItems().addAll(data);
     }
 
     private void handleBack() {

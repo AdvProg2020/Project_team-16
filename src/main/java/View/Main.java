@@ -3,7 +3,6 @@ package View;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.database.HibernateUtil;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,7 +32,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         window = stage;
         try {
-            scene = new Scene(loadFXML("ManagerAccount"));
+            scene = new Scene(loadFXML("newProduct"));
         } catch (Exception e) {
             e.printStackTrace();
         }
