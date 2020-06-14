@@ -4,15 +4,14 @@ import ModelPackage.System.exeption.account.UserNotAvailableException;
 import View.Main;
 import View.PrintModels.UserMiniPM;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import controler.ManagerController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lombok.Data;
@@ -28,6 +27,17 @@ public class ManageUsers {
     public TableView<RowFactory> table;
     public TableColumn<RowFactory, String> usernameCol;
     public TableColumn<RowFactory, ComboBox<String>> roleCol;
+    public ImageView userImage;
+    public Label username;
+    public Label role;
+    public Label lastname;
+    public Label firstname;
+    public Label email;
+    public Label phone;
+    public JFXComboBox changeRole;
+    public JFXButton deleteBtn;
+
+    // TODO: 6/14/2020 Should Be Deleted
     public TableColumn<RowFactory, Button> viewUserCol;
     public TableColumn<RowFactory, Button> deleteUserCol;
 

@@ -187,11 +187,11 @@ public class SignInUp {
 
     private void sendSignInRequest() {
         try {
-            accountController.login(usernameIn.getText(),passwordIn.getText());
+            CacheData.getInstance().setRole(accountController.login(usernameIn.getText(), passwordIn.getText()));
+            CacheData.getInstance().setUsername(usernameIn.getText());
             // TODO: 6/12/2020 Success Message
-            System.out.println("Successful");
         } catch (NotVerifiedSeller e) {
-            // TODO: 6/12/2020 Alert "Your Account Isn't Verified by Manager Yet"
+            new OopsAlert().show("Your Account Isn't Verified Yet");
         } catch (UserNotAvailableException e) {
             errorField(usernameIn,"Username Not Exist");
         } catch (WrongPasswordException e){

@@ -20,6 +20,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         //DBManager.initialLoad();
+        HibernateUtil.getSession();
         try {
             launch(args);
         }catch (Exception e){
@@ -31,7 +32,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         window = stage;
         try {
-            scene = new Scene(loadFXML("CategoryManager"));
+            scene = new Scene(loadFXML("ManageUsers"));
         } catch (Exception e) {
             e.printStackTrace();
         }
