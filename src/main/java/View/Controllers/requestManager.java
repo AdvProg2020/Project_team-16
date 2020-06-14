@@ -56,18 +56,22 @@ public class requestManager {
     }
 
     private void declineRequest() {
-        int id = table.getSelectionModel().getSelectedItem().getRequestId();
+        RequestPM selected = table.getSelectionModel().getSelectedItem();
+        int id = selected.getRequestId();
         try {
             managerController.declineRequest(id);
+            table.getItems().remove(selected);
         } catch (NoSuchARequestException e) {
             e.printStackTrace();
         }
     }
 
     private void acceptRequest() {
-        int id = table.getSelectionModel().getSelectedItem().getRequestId();
+        RequestPM selected = table.getSelectionModel().getSelectedItem();
+        int id = selected.getRequestId();
         try {
             managerController.acceptRequest(id);
+            table.getItems().remove(selected);
         } catch (NoSuchARequestException | NoSuchAProductException e) {
             e.printStackTrace();
         }

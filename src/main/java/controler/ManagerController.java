@@ -30,27 +30,19 @@ public class ManagerController extends Controller {
         return managerController;
     }
 
-    public List<UserMiniPM> manageUsers () {
+    public List<UserFullPM> manageUsers () {
         List<User> users = DBManager.loadAllData(User.class);
         sortManager.sortUser(users);
-        ArrayList<UserMiniPM> userMiniPMS = new ArrayList<>();
+        ArrayList<UserFullPM> userMiniPMS = new ArrayList<>();
 
         for (User user : users) {
-            userMiniPMS.add(createUserMiniPM(user));
+            userMiniPMS.add(createUserFullPM(user));
         }
 
         return userMiniPMS;
     }
 
-    private UserMiniPM createUserMiniPM(User user){
-        return new UserMiniPM(
-                user.getUsername(),
-                user.getClass().getName()
-        );
-    }
-
-    public UserFullPM viewUser(String username) throws UserNotAvailableException {
-        User user = accountManager.getUserByUsername(username);
+    public UserFullPM createUserFullPM(User user) {
         return new UserFullPM(
                 user.getUsername(),
                 user.getFirstName(),

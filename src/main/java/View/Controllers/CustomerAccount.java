@@ -11,11 +11,14 @@ import controler.AccountController;
 import controler.CustomerController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class CustomerAccount {
@@ -32,6 +35,7 @@ public class CustomerAccount {
     public JFXButton editLNameButt;
     public JFXButton editEMailButt;
     public JFXButton editPhoneButt;
+    public JFXButton chooseProf;
     public ImageView image;
     public Label username;
     public Label fName;
@@ -107,6 +111,20 @@ public class CustomerAccount {
         editPhoneButt.setOnAction(event -> handleEditPhone());
         confirmButt.setOnAction(event -> handleConfirm());
         cancelButt.setOnAction(event -> handleCancel());
+        chooseProf.setOnAction(event -> handleChooseProf());
+    }
+
+    private void handleChooseProf() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.jpeg", "*.png", "*.jpg"));
+        File selected = fileChooser.showOpenDialog(image.getScene().getWindow());
+
+        if (selected != null) {
+            Image toImage = new Image(String.valueOf(selected.toURI()));
+            image.setImage(toImage);
+            //TODO : Add image to User!!!
+        }
     }
 
     private void handleBack() {
@@ -237,13 +255,16 @@ public class CustomerAccount {
     private boolean updateEditAttributes(UserEditAttributes attributes) {
         if (fNameText.isVisible() && !checkInput(fNameText)) {
             attributes.setNewFirstName(fNameText.getText());
+            fName.setText(fNameText.getText());
             return true;
         } else if (lNameText.isVisible() && !checkInput(lNameText)) {
             attributes.setNewLastName(lNameText.getText());
+            lName.setText(lNameText.getText());
             return true;
         } else if (phoneText.isVisible() && !checkInput(phoneText)) {
             if (phoneText.getText().matches("\\d+")) {
                 attributes.setNewPhone(phoneText.getText());
+                phone.setText(phoneText.getText());
                 return true;
             } else {
                 errorField(phoneText,"Wrong Phone Number Format");
@@ -252,6 +273,7 @@ public class CustomerAccount {
         } else if (emailText.isVisible() && !checkInput(emailText)) {
             if (emailText.getText().matches(("\\S+@\\S+\\.(org|net|ir|com|uk|site)"))){
                 attributes.setNewEmail(emailText.getText());
+                email.setText(emailText.getText());
                 return true;
             } else {
                 errorField(emailText,"Wrong Email Format");
