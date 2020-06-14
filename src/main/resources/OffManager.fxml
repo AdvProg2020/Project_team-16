@@ -6,7 +6,7 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -18,9 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="593.0" prefWidth="960.0" style="-fx-background-color: white;"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="View.Controllers.OffManager">
+<AnchorPane prefHeight="593.0" prefWidth="960.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.OffManager">
    <children>
       <BorderPane prefHeight="594.0" prefWidth="960.0">
          <top>
@@ -65,15 +63,15 @@
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Label>
-                   <DatePicker fx:id="crStartDt" prefHeight="26.0" prefWidth="325.0"/>
+                   <DatePicker fx:id="crStartDt" prefHeight="26.0" prefWidth="325.0" />
                   <Label layoutX="25.0" layoutY="112.0" prefHeight="18.0" prefWidth="294.0" text="End Date">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Label>
-                   <DatePicker fx:id="crEndDate" prefHeight="26.0" prefWidth="333.0"/>
+                   <DatePicker fx:id="crEndDate" prefHeight="26.0" prefWidth="333.0" />
                   <Region VBox.vgrow="ALWAYS" />
                   <Label prefHeight="18.0" prefWidth="266.0" text="You Can Add Products After Your Off is Accepted" />
-                  <JFXButton prefHeight="26.0" prefWidth="306.0" text="Create Off">
+                  <JFXButton fx:id="create" prefHeight="26.0" prefWidth="306.0" text="Create Off">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -118,7 +116,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="Off Status" textFill="WHITE">
+                              <Label fx:id="offStatus" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="17.0" />
                                  </font>
@@ -134,15 +132,15 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                               <DatePicker fx:id="startDate" prefHeight="26.0" prefWidth="218.0"/>
+                               <DatePicker fx:id="startDate" prefHeight="26.0" prefWidth="218.0" />
                               <Label layoutX="25.0" layoutY="92.0" text="End Date" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                               <DatePicker fx:id="endDate"/>
+                               <DatePicker fx:id="endDate" />
                               <Region prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                              <JFXButton prefHeight="26.0" prefWidth="198.0" text="Confirm Changes">
+                              <JFXButton fx:id="confirm" prefHeight="26.0" prefWidth="198.0" text="Confirm Changes">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
@@ -150,7 +148,7 @@
                                     <FontIcon iconLiteral="fa-edit" />
                                  </graphic>
                               </JFXButton>
-                              <JFXButton layoutX="25.0" layoutY="464.0" prefHeight="26.0" prefWidth="198.0" text="Reset Changes">
+                              <JFXButton fx:id="reset" layoutX="25.0" layoutY="464.0" prefHeight="26.0" prefWidth="198.0" text="Reset Changes">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
@@ -166,13 +164,12 @@
                         <VBox layoutX="10.0" layoutY="10.0" prefHeight="462.0" prefWidth="222.0" spacing="5.0">
                            <children>
                               <Label prefHeight="18.0" prefWidth="171.0" text="Products On This Off" />
-                              <ListView fx:id="products" prefHeight="405.0" prefWidth="202.0" />
-                               <Button fx:id="deleteProduct" mnemonicParsing="false" prefHeight="26.0" prefWidth="217.0"
-                                       text="Delete This Product From Off"/>
+                              <ListView fx:id="productsList" prefHeight="405.0" prefWidth="202.0" />
+                               <Button fx:id="deleteProduct" mnemonicParsing="false" prefHeight="26.0" prefWidth="217.0" text="Delete This Product From Off" />
                               <HBox alignment="CENTER" prefHeight="41.0" prefWidth="202.0" spacing="5.0">
                                  <children>
-                                     <ChoiceBox fx:id="availableProducts" prefHeight="26.0" prefWidth="135.0"/>
-                                    <Button fx:id="AddProduct" mnemonicParsing="false" text="Add">
+                                    <ComboBox fx:id="availableProducts" prefHeight="26.0" prefWidth="142.0" promptText="Choose Product" />
+                                    <Button fx:id="addProduct" mnemonicParsing="false" text="Add">
                                        <graphic>
                                           <FontIcon iconLiteral="fa-plus-square" />
                                        </graphic>
@@ -205,7 +202,7 @@
             </VBox>
          </center>
          <right>
-            <ListView fx:id="codes" prefHeight="200.0" prefWidth="200.0" stylesheets="@CSSs/button.css" BorderPane.alignment="CENTER" />
+            <ListView fx:id="offsList" prefHeight="200.0" prefWidth="200.0" stylesheets="@CSSs/button.css" BorderPane.alignment="CENTER" />
          </right>
       </BorderPane>
    </children>
