@@ -1,9 +1,9 @@
 package View.Controllers;
 
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import View.Main;
 import View.PrintModels.UserFullPM;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import controler.ManagerController;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -33,7 +33,6 @@ public class ManageUsers {
     public Label firstname;
     public Label email;
     public Label phone;
-    public JFXComboBox<String> changeRoleBox;
     public JFXButton deleteBtn;
 
     private ManagerController managerController = ManagerController.getInstance();
@@ -42,14 +41,6 @@ public class ManageUsers {
     public void initialize(){
         initButtons();
         initUsersTable();
-        initChangeRole();
-    }
-
-    private void initChangeRole() {
-        changeRoleBox.getItems().addAll("Customer", "Seller", "Manager");
-        //changeRoleBox.getSelectionModel().selectedItemProperty().addListener((v, oldRole, newRole) -> changeRole(newRole));
-        //TODO: change Role in Manager!!!
-
     }
 
     private void initButtons() {
@@ -78,8 +69,8 @@ public class ManageUsers {
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
 
-        // table.setItems(getUsers());
-        table.setItems(getTestUsers());
+        table.setItems(getUsers());
+        //table.setItems(getTestUsers());
 
         table.getSelectionModel().selectedItemProperty().addListener( (v, oldUser, newUser) -> changeData(newUser));
     }
@@ -110,17 +101,16 @@ public class ManageUsers {
         lastname.setText(newUser.getLastName());
         email.setText(newUser.getEmail());
         phone.setText(newUser.getPhoneNumber());
-        changeRoleBox.getSelectionModel().select(newUser.getRole());
         //TODO: Update Prof Pic!!!
     }
 
     private void handleDeleteUser() {
         UserFullPM user = table.getSelectionModel().getSelectedItem();
-        /*try {
+        try {
             managerController.deleteUser(user.getUsername());
         } catch (UserNotAvailableException e) {
             e.printStackTrace();
-        }*/
+        }
 
         ObservableList<UserFullPM> users = table.getItems();
         users.remove(user);
