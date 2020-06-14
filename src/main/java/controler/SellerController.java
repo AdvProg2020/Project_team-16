@@ -105,7 +105,7 @@ public class SellerController extends Controller{
          productManager.deleteProduct(productId,editor);
     }
 
-    public List<MiniOffPM> viewAllOffs(String sellerUserName,SortPackage sortPackage) throws UserNotAvailableException {
+    public List<OffPM> viewAllOffs(String sellerUserName,SortPackage sortPackage) throws UserNotAvailableException {
         Seller seller = DBManager.load(Seller.class,sellerUserName);
         if (seller == null) {
             throw new UserNotAvailableException();
@@ -113,26 +113,17 @@ public class SellerController extends Controller{
         List<Off> offs = seller.getOffs();
         sortManager.sortOff(offs);
         if (!sortPackage.isAscending()) Collections.reverse(offs);
-        List<MiniOffPM> offPMs = new ArrayList<>();
+        List<OffPM> offPMs = new ArrayList<>();
         for (Off off : offs) {
-            offPMs.add(new MiniOffPM(off.getOffId(),
+            offPMs.add(new OffPM(off.getOffId(),
+                    addProductIdsToOffPM(off),
                     off.getSeller().getUsername(),
                     off.getStartTime(),
                     off.getEndTime(),
-                    off.getOffPercentage()));
+                    off.getOffPercentage(),
+                    off.getOffStatus().toString()));
         }
         return offPMs;
-    }
-
-    public OffPM viewOff(int offId,String viewer) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {
-        Off off = offManager.findOffById(offId);
-        offManager.checkIfThisSellerCreatedTheOff(off,viewer);
-        return new OffPM(off.getOffId(),
-                addProductIdsToOffPM(off),
-                off.getSeller().getUsername(),
-                off.getStartTime(),
-                off.getEndTime(),
-                off.getOffPercentage());
     }
 
     public void addOff(String[] data, String sellerUserName) throws ParseException, InvalidTimes, UserNotAvailableException {

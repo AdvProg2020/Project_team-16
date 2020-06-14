@@ -62,9 +62,7 @@ public class OrderHistory {
 
         orderTable.setItems(getOrders());
 
-        orderTable.getSelectionModel().selectedItemProperty().addListener( (v, oldOrder, newOrder) -> {
-            changeData(newOrder);
-        });
+        orderTable.getSelectionModel().selectedItemProperty().addListener( (v, oldOrder, newOrder) -> changeData(newOrder) );
     }
 
     private void changeData(OrderLogPM order){

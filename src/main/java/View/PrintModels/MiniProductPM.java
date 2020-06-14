@@ -24,4 +24,9 @@ public class MiniProductPM {
         this.description = description;
         sellPackagePMs = sellPackages;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
