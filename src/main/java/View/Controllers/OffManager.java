@@ -1,5 +1,6 @@
 package View.Controllers;
 
+import ModelPackage.Off.OffStatus;
 import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.off.InvalidTimes;
@@ -12,8 +13,12 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import controler.SellerController;
 import javafx.beans.InvalidationListener;
+import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableStringValue;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -24,6 +29,9 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
+import static ModelPackage.Off.OffStatus.*;
 
 public class OffManager {
     public JFXButton back;
@@ -40,7 +48,7 @@ public class OffManager {
     public Label offStatus;
 
     public ListView<MiniProductPM> productsList;
-    public ChoiceBox<MiniProductPM> availableProducts;
+    public ComboBox<MiniProductPM> availableProducts;
     public Button deleteProduct;
     public Button addProduct;
 
@@ -75,13 +83,16 @@ public class OffManager {
         removeOff.disableProperty().bind(Bindings.isEmpty(offsList.getSelectionModel().getSelectedItems()));
 
         confirm.setOnAction(event -> handleConfirm());
+        confirm.setDisable(true);
+
         reset.setOnAction(event -> handleReset());
+        reset.setDisable(true);
 
         deleteProduct.setOnAction(event -> handleDeleteProduct());
         deleteProduct.disableProperty().bind(Bindings.isEmpty(productsList.getSelectionModel().getSelectedItems()));
 
         addProduct.setOnAction(event -> handleAddProduct());
-        addProduct.disableProperty().bind(Bindings.isEmpty(availableProducts.getItems()));
+        addProduct.disableProperty().bind(availableProducts.valueProperty().isNull());
 
         create.setOnAction(event -> handleCreate());
     }
@@ -127,13 +138,66 @@ public class OffManager {
     }
 
     private void initOffList() {
+        offsList.getItems().addAll(getOffs());
+
+        //offsList.getItems().addAll(getTestOffs());
+
+        offsList.getSelectionModel().selectedItemProperty().addListener( (v, oldOff, newOff) -> changeData(newOff));
+    }
+
+    private ObservableList<OffPM> getOffs(){
+        ObservableList<OffPM> offs = FXCollections.observableArrayList();
+
         try {
-            offsList.getItems().addAll(sellerController.viewAllOffs(username, cacheData.getSorts()));
+            offs.addAll(sellerController.viewAllOffs(username, cacheData.getSorts()));
         } catch (UserNotAvailableException e) {
             e.printStackTrace();
         }
 
-        offsList.getSelectionModel().selectedItemProperty().addListener( (v, oldOff, newOff) -> changeData(newOff));
+        return offs;
+    }
+
+    private ObservableList<OffPM> getTestOffs() {
+        ObservableList<OffPM> offs = FXCollections.observableArrayList();
+        offs.add(new OffPM(
+                12456,
+                getTestProducts(),
+                "marmof",
+                new Date(2001, 12, 22),
+                new Date(2002, 11, 30),
+                50,
+                EDIT.toString()
+        ));
+        offs.add(new OffPM(
+                48662,
+                getTestProducts(),
+                "sapa",
+                new Date(2012, 3, 13),
+                new Date(2022, 6, 22),
+                0,
+                CREATION.toString()
+        ));
+        offs.add(new OffPM(
+                21556,
+                getTestProducts(),
+                "memo",
+                new Date(2021, 12, 22),
+                new Date(2044, 6, 4),
+                2,
+                ACCEPTED.toString()
+        ));
+
+        return offs;
+    }
+
+    private ArrayList<MiniProductPM> getTestProducts() {
+        ArrayList<MiniProductPM> products = new ArrayList<>();
+        products.add(new MiniProductPM("asus rog g512", 112, "Laptop", "Asus", 5.42, null, null));
+        products.add(new MiniProductPM("skirt for kimmi", 245, "Clothes", "Adidas", 5.42, null, null));
+        products.add(new MiniProductPM("asus zenbook e333", 230, "Laptop", "Asus", 5.42, null, null));
+        products.add(new MiniProductPM("asus vivobook d551", 7885, "Laptop", "Asus", 5.42, null, null));
+
+        return products;
     }
 
     private void changeData(OffPM off) {
@@ -141,13 +205,20 @@ public class OffManager {
         percent.setValue(off.getOffPercentage());
         startDate.setValue(LocalDate.parse(off.getStartTime().toString()));
         endDate.setValue(LocalDate.parse(off.getEndTime().toString()));
+
+        productsList.getItems().clear();
         productsList.getItems().addAll(off.getProducts());
+
+        availableProducts.getItems().clear();
         try {
             availableProducts.getItems().addAll(sellerController.manageProducts(username, cacheData.getSorts()));
         } catch (UserNotAvailableException e) {
             e.printStackTrace();
         }
+
         initListeners();
+        confirm.setDisable(true);
+        reset.setDisable(true);
     }
 
     private void handleRemoveOff() {
@@ -189,8 +260,8 @@ public class OffManager {
         }
 
         productsList.getItems().add(selected);
+        availableProducts.getItems().remove(selected);
     }
-
 
     private void handleConfirm() {
         OffChangeAttributes attributes = new OffChangeAttributes();
@@ -201,6 +272,9 @@ public class OffManager {
         } catch (ThisOffDoesNotBelongssToYouException | NoSuchAOffException e) {
             e.printStackTrace();
         }
+
+        confirm.setDisable(true);
+        reset.setDisable(true);
     }
 
     private void addAttributes(OffChangeAttributes attributes) {
@@ -221,5 +295,8 @@ public class OffManager {
         percent.setValue(off.getOffPercentage());
         startDate.setValue(LocalDate.parse(off.getStartTime().toString()));
         endDate.setValue(LocalDate.parse(off.getEndTime().toString()));
+
+        confirm.setDisable(true);
+        reset.setDisable(true);
     }
 }
