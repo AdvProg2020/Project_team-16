@@ -26,7 +26,7 @@ public class Request {
     @Column(name = "REQUEST")
     String request;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
         @JoinColumn(name = "OFF")
     Off off;
 
@@ -34,7 +34,7 @@ public class Request {
         @JoinColumn(name = "OFF_EDIT")
     OffChangeAttributes offEdit;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
         @JoinColumn(name = "PRODUCT")
     Product product;
 
@@ -42,19 +42,21 @@ public class Request {
     @JoinColumn(name = "PRODUCT_EDIT")
     ProductEditAttribute productEditAttribute;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
         @JoinColumn(name = "COMMENT")
     Comment comment;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
         @JoinColumn(name = "SELLER")
     Seller seller;
+
+    private boolean done;
 
     public Request(String usernameHasRequested, RequestType requestType, String request,Object toChange) {
         this.userHasRequested = usernameHasRequested;
         this.requestType = requestType;
         this.request = request;
-
+        done = false;
         String className = toChange.getClass().getName();
 
         switch (className) {
@@ -73,5 +75,8 @@ public class Request {
                 seller = (Seller) toChange;
                 break;
         }
+    }
+
+    public Request() {
     }
 }

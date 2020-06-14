@@ -80,7 +80,6 @@ public class RequestManager {
         SellPackage sellPackage = product.getPackages().get(0);
         seller.getPackages().add(sellPackage);
         DBManager.save(seller);
-        DBManager.delete(request);
     }
 
     private void acceptEditProduct(Request request) throws NoSuchAProductException {
