@@ -9,7 +9,7 @@ public class MessagePM {
     private int id;
     private String subject;
     private String message;
-    private boolean isRead;
+    private Boolean isRead;
     private Date date;
 
     public MessagePM(int id,String subject, String message, boolean isRead, Date date) {

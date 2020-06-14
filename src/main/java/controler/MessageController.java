@@ -18,10 +18,10 @@ public class MessageController extends Controller {
         return messageController;
     }
 
-    public List<MessagePM> getMessagesForUser(String username) throws UserNotAvailableException {
+    public ArrayList<MessagePM> getMessagesForUser(String username) throws UserNotAvailableException {
         User user = accountManager.getUserByUsername(username);
         List<Message> list = MessageManager.getInstance().getAllMesagesOfThisUser(user);
-        List<MessagePM> toReturn = new ArrayList<>();
+        ArrayList<MessagePM> toReturn = new ArrayList<>();
         for (Message message : list) {
             toReturn.add(new MessagePM(message.getId(),message.getSubject(),message.getMessage(),message.getIsRead(),message.getDate()));
         }

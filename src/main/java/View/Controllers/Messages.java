@@ -35,54 +35,53 @@ public class Messages {
     public TableColumn<MessagePM, Date> dateColumn;
     public TableColumn<MessagePM, Boolean> readColumn;
 
-    private final CacheData cacheData = CacheData.getInstance();
     private final MessageController messageController = MessageController.getInstance();
-    private List<MessagePM> messages;
 
     @FXML
     public void initialize() {
         initButtons();
-        loadMessagesForUser();
         loadTable();
-        handleSelectedItem();
+        listeners();
     }
 
-    public List<MessagePM> messageTest() {
+    private void listeners() {
+        listTable.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+            if (newValue != null) {
+                loadMessage(newValue);
+            }
+        });
+    }
+
+    private void loadMessage(MessagePM pm) {
+        messageController.openMessage(pm.getId());
+        subject.setText(pm.getSubject());
+        date.setText(pm.getDate().toString());
+        message.setText(pm.getMessage());
+    }
+
+
+    public ArrayList<MessagePM> messageTest() {
         ArrayList<MessagePM> messagePMS = new ArrayList<>();
         MessagePM messagePM = new MessagePM(1, "Kala",
-                "Very Good", false, new Date(2018, Calendar.MARCH, 12));
-        MessagePM messagePM1 = new MessagePM(1, "Purchase",
-                "Very Bad", false, new Date(2020, Calendar.MARCH, 12));
+                "Very Good", false, new Date(654561321));
+        MessagePM messagePM1 = new MessagePM(2, "Purchase",
+                "Very Bad", false, new Date(321564651));
         messagePMS.add(messagePM); messagePMS.add(messagePM1);
         return messagePMS;
     }
 
-    private void handleSelectedItem() {
-        MessagePM messagePM = listTable.getSelectionModel().getSelectedItem();
-        if (messagePM != null) {
-            subject.setText(messagePM.getSubject());
-            date.setText(messagePM.getDate().toString());
-            message.setText(messagePM.getMessage());
-            messageController.openMessage(messagePM.getId());
-        }
-
-    }
-
     private void loadTable() {
-        subjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        readColumn.setCellValueFactory(new PropertyValueFactory<>("isRead"));
-        listTable.setItems(getObservableList());
-    }
-
-    private ObservableList<MessagePM> getObservableList() {
-        return FXCollections.observableArrayList(messages);
-    }
-
-    private void loadMessagesForUser() {
         try {
-            messages = messageController.getMessagesForUser(cacheData.getUsername());
-        } catch (UserNotAvailableException ignore) {}
+            ArrayList<MessagePM> list = /*messageTest();*/ messageController.getMessagesForUser(CacheData.getInstance().getUsername());
+            ObservableList<MessagePM> data = FXCollections.observableArrayList(list);
+            subjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
+            dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+            readColumn.setCellValueFactory(new PropertyValueFactory<>("isRead"));
+            listTable.setItems(data);
+            if (false) throw new UserNotAvailableException();
+        } catch (UserNotAvailableException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initButtons() {
@@ -109,6 +108,7 @@ public class Messages {
     }
 
     private void handleBackButton() {
+        // TODO: 6/14/2020 Change
         try {
             Main.setRoot("CustomerAccount");
         } catch (IOException ignore) {}
