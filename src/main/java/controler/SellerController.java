@@ -42,9 +42,11 @@ public class SellerController extends Controller{
         List<SellLog> sellLogs = sellerManager.viewSalesHistory(sellerUserName);
         ArrayList<SellLogPM> sellLogPMs = new ArrayList<>();
         for (SellLog sellLog : sellLogs) {
-            sellLogPMs.add(new SellLogPM(sellLog.getProduct().getId(),
+            sellLogPMs.add(new SellLogPM(sellLog.getLogId(),
+                    sellLog.getProduct().getId(),
                     sellLog.getMoneyGotten(),
                     sellLog.getDiscount(),
+                    sellLog.getDate(),
                     sellLog.getBuyer().getUsername(),
                     sellLog.getDeliveryStatus()));
         }
