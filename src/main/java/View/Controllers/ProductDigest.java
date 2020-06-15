@@ -1,10 +1,35 @@
 package View.Controllers;
 
+import ModelPackage.System.exeption.product.NoSuchAProductException;
+import View.CacheData;
+import View.Main;
+import View.PrintModels.CommentPM;
+import View.PrintModels.FullProductPM;
+import View.PrintModels.MiniProductPM;
+import View.PrintModels.SellPackagePM;
 import com.jfoenix.controls.JFXButton;
+import controler.ProductController;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import org.kordamp.ikonli.javafx.FontIcon;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class ProductDigest {
     public JFXButton back;
@@ -25,9 +50,161 @@ public class ProductDigest {
     public FontIcon star4;
     public FontIcon star5;
     public Text description;
-    public SplitMenuButton buyButon;
-    public ToggleGroup sellers;
+    public ComboBox<SellPackagePM> sellerBox;
+    public Button addToCart;
     public Label price;
+    public Label offPrice;
     public Button compare;
+    public TableView<Map.Entry<String, String>> features;
+    public VBox commentVBox;
+    public JFXButton addComment;
+
+    private int id;
+    private static final ProductController productController = ProductController.getInstance();
+    private ArrayList<Image> images;
+
+    @FXML
+    public void initialize() {
+        id = CacheData.getInstance().getProductId();
+        listeners();
+        loadProduct();
+        buttonInit();
+        commentSection();
+    }
+
+    private void buttonInit() {
+        upBarButtons();
+        /*photoButtons();
+        productButtons();
+        commentButton();*/
+    }
+
+    private void upBarButtons() {
+        Stage stage = (Stage) close.getScene().getWindow();
+        back.setOnAction(event -> backHandle());
+        close.setOnAction(event -> stage.close());
+        minimize.setOnAction(event -> stage.setIconified(true));
+        cartButt.setOnAction(event -> gotoCart());
+    }
+
+    private void gotoCart() {
+        Stage stage = new Stage();
+        try {
+            Scene scene = new Scene(Main.loadFXML("Cart"));
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            Main.moveSceneOnMouse(scene, stage);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void backHandle() {
+        // TODO: 6/15/2020
+    }
+
+    private void commentSection() {
+        try {
+            List<CommentPM> comments = productController.viewProductComments(id);
+            loadComments(comments);
+        } catch (NoSuchAProductException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadComments(List<CommentPM> comments) {
+        for (CommentPM comment : comments) {
+            Parent parent = loadComment(comment);
+            if (parent != null) {
+                commentVBox.getChildren().add(parent);
+            }
+        }
+    }
+
+    private Parent loadComment(CommentPM comment) {
+        try {
+            return Comment.generateComment(comment);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void listeners() {
+        sellerBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> loadPricing(newValue));
+    }
+
+    private void loadPricing(SellPackagePM pm) {
+        if (pm.getOffPercent() != 0) {
+            double price = pm.getPrice() * (pm.getOffPercent() / 100.0);
+            this.price.setText("" + price);
+            offPrice.setText("" + pm.getPrice());
+            offPrice.setVisible(true);
+        } else {
+            price.setText("" + pm.getPrice());
+            offPrice.setVisible(false);
+        }
+    }
+
+    private void loadProduct() {
+        try {
+            FullProductPM pm = productController.viewAttributes(id);
+            loadInformation(pm.getProduct());
+            loadImage();
+            initialFeatures(pm.getFeatures());
+        } catch (NoSuchAProductException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initialFeatures(Map<String, String> features) {
+        TableColumn<Map.Entry<String, String>, String> featureCol = new TableColumn<>("Features");
+        featureCol.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
+        TableColumn<Map.Entry<String, String>, String> valueCol = new TableColumn<>("Features");
+        valueCol.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue()));
+        featureCol.setMinWidth(288);
+        valueCol.setMinWidth(288);
+        ObservableList<Map.Entry<String, String>> data = FXCollections.observableArrayList(features.entrySet());
+        this.features.setItems(data);
+        this.features.getColumns().setAll(featureCol, valueCol);
+    }
+
+    private void loadImage() {
+        images = productController.loadImage(id);
+        mainImage.setImage(images.get(0));
+    }
+
+    private void loadInformation(MiniProductPM product) {
+        productName.setText(product.getName());
+        company.setText(product.getBrand());
+        initStars(product.getScore());
+        description.setText(product.getDescription());
+        loadSellers(product.getSellPackagePMs());
+    }
+
+    private void loadSellers(List<SellPackagePM> pms) {
+        ObservableList<SellPackagePM> data = FXCollections.observableArrayList(pms);
+        sellerBox.setItems(data);
+        sellerBox.getSelectionModel().selectFirst();
+    }
+
+    private void initStars(double score) {
+        if (score < 1) {
+            star1.setIconLiteral("fa-star-o");
+        }
+        if (score < 2) {
+            star2.setIconLiteral("fa-star-o");
+        }
+        if (score < 3) {
+            star3.setIconLiteral("fa-star-o");
+        }
+        if (score < 4) {
+            star4.setIconLiteral("fa-star-o");
+        }
+        if (score < 5) {
+            star5.setIconLiteral("fa-star-o");
+        }
+    }
 
 }

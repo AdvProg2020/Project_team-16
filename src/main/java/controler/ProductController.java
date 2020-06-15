@@ -16,6 +16,7 @@ import View.FilterPackage;
 import View.PrintModels.*;
 import View.SortPackage;
 import controler.exceptions.ProductsNotBelongToUniqueCategoryException;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -139,5 +140,9 @@ public class ProductController extends Controller{
 
     public ArrayList<MicroProduct> findSimilarProductsByName(String name){
         return productManager.findProductByName(name);
+    }
+
+    public ArrayList<Image> loadImage(int id) {
+        return null;
     }
 }
