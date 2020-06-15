@@ -22,6 +22,7 @@ import ModelPackage.Users.Seller;
 import View.PrintModels.*;
 import View.SortPackage;
 
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -217,5 +218,9 @@ public class SellerController extends Controller{
                 product.getTotalScore(),
                 product.getDescription(),
                 sellPackagePMs);
+    }
+
+    public void saveImagesForProduct(int id, ArrayList<InputStream> files) {
+
     }
 }

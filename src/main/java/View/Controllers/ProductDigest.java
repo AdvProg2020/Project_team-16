@@ -29,4 +29,5 @@ public class ProductDigest {
     public ToggleGroup sellers;
     public Label price;
     public Button compare;
+
 }

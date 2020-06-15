@@ -18,9 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class Messages {
     public JFXButton back;
@@ -58,7 +56,6 @@ public class Messages {
         date.setText(pm.getDate().toString());
         message.setText(pm.getMessage());
     }
-
 
     public ArrayList<MessagePM> messageTest() {
         ArrayList<MessagePM> messagePMS = new ArrayList<>();

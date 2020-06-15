@@ -181,6 +181,7 @@ public class NewProduct {
         List<File> files = fileChooser.showOpenMultipleDialog(null);
         ObservableList<File> data = FXCollections.observableArrayList(files);
         pictureList.getItems().addAll(data);
+        // TODO: 6/15/2020 Save
     }
 
     private void handleBack() {
@@ -250,6 +251,8 @@ public class NewProduct {
                 sellerController.addProduct(productInfo,puFeature,prFeature);
             } catch (NoSuchACategoryException | UserNotAvailableException ignore) {}
         }
+
+
     }
 
     private boolean checkForEmptyValues(){
