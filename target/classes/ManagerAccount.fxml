@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-
 
 <AnchorPane prefHeight="593.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.ManagerAccount">
    <children>
@@ -50,11 +50,12 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
                </padding>
                <children>
-                  <ImageView fx:id="image" fitHeight="196.0" fitWidth="196.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Images/user-png-icon-male-user-icon-512.png" />
-                     </image>
-                  </ImageView>
+                  <Circle fx:id="imageCircle" fill="WHITE" radius="64.0" stroke="BLACK" strokeType="INSIDE"/>
+                  <JFXButton fx:id="chooseProf" buttonType="RAISED" focusTraversable="false" prefHeight="46.0" prefWidth="205.0" text="Choose Profile" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </JFXButton>
                   <JFXButton fx:id="usersButt" buttonType="RAISED" focusTraversable="false" layoutX="47.0" layoutY="375.0" prefHeight="46.0" prefWidth="205.0" text="Users" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="21.0" />
@@ -80,6 +81,7 @@
                         <Font name="System Bold" size="21.0" />
                      </font>
                   </JFXButton>
+                  <Region VBox.vgrow="ALWAYS"/>
                   <Label alignment="CENTER" prefHeight="56.0" prefWidth="272.0" text="Manager" textFill="WHITE">
                      <font>
                         <Font name="Limelight Regular" size="42.0" />
@@ -102,7 +104,7 @@
                         <FontIcon iconLiteral="fa-unlock-alt" iconSize="15" />
                      </graphic>
                   </JFXButton>
-                  <VBox layoutX="14.0" layoutY="14.0" prefHeight="478.0" prefWidth="454.0" spacing="15.0">
+                  <VBox prefHeight="478.0" prefWidth="454.0" spacing="35.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="53.0" prefWidth="242.0" spacing="10.0">
                            <children>
@@ -111,26 +113,11 @@
                                     <Font name="System Bold" size="19.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="username" alignment="CENTER" layoutX="15.0" layoutY="21.0" prefHeight="31.0" prefWidth="214.0" text="Label">
+                              <Label fx:id="username" alignment="CENTER" layoutX="15.0" layoutY="21.0" prefHeight="31.0" prefWidth="197.0" text="Label">
                                  <font>
                                     <Font name="Microsoft JhengHei" size="16.0" />
                                  </font>
                               </Label>
-                              <JFXButton fx:id="changeUsernameButt" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" prefHeight="34.0" prefWidth="51.0" text=" ">
-                                 <graphic>
-                                    <FontIcon iconLiteral="fa-edit" iconSize="25" />
-                                 </graphic>
-                                 <ripplerFill>
-                                    <RadialGradient centerX="0.5133333418104384" centerY="0.5" cycleMethod="REFLECT" radius="0.14485981754053417">
-                                       <stops>
-                                          <Stop color="#59b5b0" />
-                                          <Stop color="#59b5b0" offset="0.007633587786259542" />
-                                          <Stop color="#d6d629" offset="0.6250182996967478" />
-                                          <Stop color="#c26666" offset="1.0" />
-                                       </stops>
-                                    </RadialGradient>
-                                 </ripplerFill>
-                              </JFXButton>
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -143,11 +130,20 @@
                                     <Font name="System Bold" size="19.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="fName" alignment="CENTER" layoutX="15.0" layoutY="21.0" prefHeight="31.0" prefWidth="214.0" text="Label">
-                                 <font>
-                                    <Font name="Microsoft JhengHei" size="16.0" />
-                                 </font>
-                              </Label>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXTextField fx:id="fNameText" labelFloat="true" prefHeight="26.0" prefWidth="206.0" visible="false">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </JFXTextField>
+                                    <Label fx:id="fName" alignment="CENTER" prefHeight="31.0" prefWidth="214.0" text="Label">
+                                       <font>
+                                          <Font name="Microsoft JhengHei" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
                               <JFXButton fx:id="editFNameButt" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" prefHeight="34.0" prefWidth="51.0" text=" ">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-edit" iconSize="25" />
@@ -175,14 +171,23 @@
                                     <Font name="System Bold" size="19.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lName" alignment="CENTER" layoutX="15.0" layoutY="21.0" prefHeight="31.0" prefWidth="214.0" text="Label">
-                                 <font>
-                                    <Font name="Microsoft JhengHei" size="16.0" />
-                                 </font>
-                              </Label>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXTextField fx:id="lNameText" labelFloat="true" visible="false">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </JFXTextField>
+                                    <Label fx:id="lName" alignment="CENTER" prefHeight="31.0" prefWidth="214.0" text="Label">
+                                       <font>
+                                          <Font name="Microsoft JhengHei" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
                               <JFXButton fx:id="editLNameButt" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" prefHeight="34.0" prefWidth="51.0" text=" ">
                                  <graphic>
-                                    <FontIcon iconLiteral="fa-edit" iconSize="25" />
+                                    <FontIcon iconLiteral="fa-edit" iconSize="25" text="" />
                                  </graphic>
                                  <ripplerFill>
                                     <RadialGradient centerX="0.5133333418104384" centerY="0.5" cycleMethod="REFLECT" radius="0.14485981754053417">
@@ -207,11 +212,20 @@
                                     <Font name="System Bold" size="19.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="email" alignment="CENTER" layoutX="15.0" layoutY="21.0" prefHeight="31.0" prefWidth="214.0" text="Label">
-                                 <font>
-                                    <Font name="Microsoft JhengHei" size="16.0" />
-                                 </font>
-                              </Label>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXTextField fx:id="emailText" labelFloat="true" visible="false">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </JFXTextField>
+                                    <Label fx:id="email" alignment="CENTER" prefHeight="31.0" prefWidth="214.0" text="Label">
+                                       <font>
+                                          <Font name="Microsoft JhengHei" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
                               <JFXButton fx:id="editEMailButt" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" prefHeight="34.0" prefWidth="51.0" text=" ">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-edit" iconSize="25" />
@@ -239,11 +253,20 @@
                                     <Font name="System Bold" size="19.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="phone" alignment="CENTER" layoutX="15.0" layoutY="21.0" prefHeight="31.0" prefWidth="214.0" text="Label">
-                                 <font>
-                                    <Font name="Microsoft JhengHei" size="16.0" />
-                                 </font>
-                              </Label>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXTextField fx:id="phoneText" labelFloat="true" visible="false">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </JFXTextField>
+                                    <Label fx:id="phone" alignment="CENTER" prefHeight="31.0" prefWidth="214.0" text="Label">
+                                       <font>
+                                          <Font name="Microsoft JhengHei" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
                               <JFXButton fx:id="editPhoneButt" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" prefHeight="34.0" prefWidth="51.0" text=" ">
                                  <graphic>
                                     <FontIcon iconLiteral="fa-edit" iconSize="25" />
@@ -264,6 +287,26 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </HBox>
+                        <HBox alignment="TOP_RIGHT" prefHeight="38.0" prefWidth="301.0">
+                           <children>
+                              <JFXButton fx:id="cancelButt" focusTraversable="false" prefHeight="38.0" prefWidth="94.0" text="Cancel" visible="false">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontIcon iconLiteral="fa-times" iconSize="15" />
+                                 </graphic>
+                              </JFXButton>
+                              <JFXButton fx:id="confirmButt" focusTraversable="false" layoutX="360.0" layoutY="10.0" prefHeight="38.0" prefWidth="109.0" text="Confrm" visible="false">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontIcon iconLiteral="fa-check" iconSize="15" />
+                                 </graphic>
+                              </JFXButton>
+                           </children>
+                        </HBox>
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -275,6 +318,14 @@
                      </font>
                      <graphic>
                         <FontIcon iconLiteral="fa-user-plus" iconSize="15" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="logoutButt" focusTraversable="false" layoutX="573.0" layoutY="510.0" prefHeight="38.0" prefWidth="94.0" text="Logout">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <graphic>
+                        <FontIcon iconLiteral="fa-sign-out" iconSize="15" />
                      </graphic>
                   </JFXButton>
                </children>

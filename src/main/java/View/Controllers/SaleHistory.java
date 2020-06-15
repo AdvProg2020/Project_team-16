@@ -7,15 +7,16 @@ import View.Main;
 import View.PrintModels.SellLogPM;
 import com.jfoenix.controls.JFXButton;
 import controler.SellerController;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,42 +25,74 @@ import java.util.Date;
 import java.util.List;
 
 public class SaleHistory {
-    @FXML
-    private JFXButton back;
-    @FXML
-    private JFXButton minimize;
-    @FXML
-    private JFXButton close;
-    @FXML
-    private TableView<SellLogPM> listTable;
-    @FXML
-    private TableColumn<SellLogPM, Integer> sellNo;
-    @FXML
-    private TableColumn<SellLogPM, Integer> product;
-    @FXML
-    private TableColumn<SellLogPM, Date> date;
-    @FXML
-    private TableColumn<SellLogPM, Long> price;
-    @FXML
-    private TableColumn<SellLogPM, Integer> discount;
-    @FXML
-    private TableColumn<SellLogPM, DeliveryStatus> delStatus;
-    @FXML
-    private Label totalSell;
-    /*@FXML
-    private LineChart sell;
-    @FXML
-    private BarChart barProductChar;*/
+    public JFXButton back;
+    public JFXButton minimize;
+    public JFXButton close;
+    public TableView<SellLogPM> saleTable;
+    public TableColumn<SellLogPM, Integer> sellNoCol;
+    public TableColumn<SellLogPM, Date> sellDateCol;
+    public Label totalSale;
+    public VBox infoBox;
+    public Label saleId;
+    public Label productId;
+    public JFXButton viewProduct;
+    public Label date;
+    public Label moneyGotten;
+    public Label off;
+    public Label buyer;
+    public Label deliveryStatus;
 
     private final CacheData cacheData = CacheData.getInstance();
     private final SellerController sellerController = SellerController.getInstance();
-    private List<SellLogPM> saleHistories;
 
     @FXML
     public void initialize() {
+        loadInformation();
         initButtons();
-        loadTable();
-        updateTotalSales();
+        listeners();
+        binds();
+    }
+
+    private void binds() {
+        infoBox.disableProperty().bind(Bindings.isEmpty(saleTable.getSelectionModel().getSelectedItems()));
+        viewProduct.disableProperty().bind(Bindings.isEmpty(productId.textProperty()));
+    }
+
+    private void listeners() {
+        saleTable.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+            if (newValue != null) {
+                loadInfoBox(newValue);
+            }
+        });
+    }
+
+    private void loadInfoBox(SellLogPM pm) {
+        saleId.setText("" + pm.getId());
+        productId.setText("" + pm.getProductId());
+        date.setText(pm.getDate().toString());
+        moneyGotten.setText("" + pm.getMoneyGotten() + "$");
+        off.setText("" + pm.getDiscount() + "%");
+        buyer.setText(pm.getBuyer());
+        deliveryStatus.setText(pm.getDeliveryStatus().name());
+    }
+
+    private void loadInformation() {
+        try {
+            List<SellLogPM> list = logTest(); //sellerController.viewSalesHistory(cacheData.getUsername());
+            sellNoCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+            sellDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+            ObservableList<SellLogPM> data = FXCollections.observableArrayList(list);
+            saleTable.setItems(data);
+            loadTotalPrice(list);
+            if (false) throw new UserNotAvailableException();
+        } catch (UserNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadTotalPrice(List<SellLogPM> list) {
+        long total = list.stream().mapToLong(SellLogPM::getMoneyGotten).sum();
+        totalSale.setText("" + total + "$");
     }
 
     private List<SellLogPM> logTest() {
@@ -72,33 +105,25 @@ public class SaleHistory {
         return sellLogPMS;
     }
 
-    private void loadTable() {
-        try {
-            saleHistories = logTest(); //sellerController.viewSalesHistory(cacheData.getUsername());
-            ObservableList<SellLogPM> data = FXCollections.observableArrayList(saleHistories);
-            sellNo.setCellValueFactory(new PropertyValueFactory<>("id"));
-            product.setCellValueFactory(new PropertyValueFactory<>("productId"));
-            date.setCellValueFactory(new PropertyValueFactory<>("date"));
-            price.setCellValueFactory(new PropertyValueFactory<>("moneyGotten"));
-            discount.setCellValueFactory(new PropertyValueFactory<>("discount"));
-            delStatus.setCellValueFactory(new PropertyValueFactory<>("deliveryStatus"));
-            listTable.setItems(data);
-            if (false) throw new UserNotAvailableException();
-        } catch (UserNotAvailableException ignore) {}
-    }
-
-    private void updateTotalSales() {
-        long totalSale = 0L;
-        for (SellLogPM saleHistory : saleHistories) {
-            totalSale += saleHistory.getMoneyGotten();
-        }
-        totalSell.setText(totalSale + "$");
-    }
-
     private void initButtons() {
         back.setOnAction(e -> handleBackButton());
         minimize.setOnAction(e -> minimize());
         close.setOnAction(e -> close());
+        viewProduct.setOnAction(event -> loadProduct());
+    }
+
+    private void loadProduct() {
+        int id = Integer.parseInt(productId.getText());
+        cacheData.setProductId(id);
+        try {
+            Scene scene = new Scene(Main.loadFXML("ProductDigest"));
+            Stage stage = new Stage();
+            Main.moveSceneOnMouse(scene, stage);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void close() {

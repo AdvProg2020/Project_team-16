@@ -32,23 +32,27 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         window = stage;
         try {
-            scene = new Scene(loadFXML("Messages"));
+            scene = new Scene(loadFXML("SaleHistory"));
         } catch (Exception e) {
             e.printStackTrace();
         }
         stage.setScene(scene);
-        scene.setOnMousePressed(e -> {
-            xOffset = e.getSceneX();
-            yOffset = e.getSceneY();
-        });
-        scene.setOnMouseDragged(e ->{
-            stage.setX(e.getScreenX() - xOffset);
-            stage.setY(e.getScreenY() - yOffset);
-        });
+        moveSceneOnMouse(scene, stage);
         scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
         window.setOnCloseRequest(e-> close());
         stage.show();
+    }
+
+    public static void moveSceneOnMouse(Scene scene, Stage stage) {
+        scene.setOnMousePressed(e -> {
+            xOffset = e.getSceneX();
+            yOffset = e.getSceneY();
+        });
+        scene.setOnMouseDragged(e -> {
+            stage.setX(e.getScreenX() - xOffset);
+            stage.setY(e.getScreenY() - yOffset);
+        });
     }
 
     public static void minimize(){
