@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import org.kordamp.ikonli.javafx.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="593.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.OrderHistory">
+<AnchorPane prefHeight="593.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.OrderHistory">
    <children>
       <BorderPane prefHeight="594.0" prefWidth="960.0">
          <top>
@@ -146,8 +155,9 @@
                         <TableColumn fx:id="pPriceCol" prefWidth="121.5999755859375" text="Price" />
                     </columns>
                   </TableView>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="546.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="546.0" spacing="5.0">
                      <children>
+                        <Button fx:id="giveScore" mnemonicParsing="false" text="Give Score"/>
                         <Button fx:id="viewProduct" mnemonicParsing="false" text="View Product">
                            <padding>
                               <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
