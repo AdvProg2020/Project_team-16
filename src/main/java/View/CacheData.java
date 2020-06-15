@@ -12,6 +12,7 @@ public class CacheData {
         filters = new FilterPackage();
         sorts = new SortPackage();
         companyID = 0;
+        username = "seller1";
     }
 
     private String username;

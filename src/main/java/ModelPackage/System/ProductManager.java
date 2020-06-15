@@ -38,12 +38,13 @@ public class ProductManager {
         }
     }
 
-    public void createProduct(Product product,String sellerId){
+    public int createProduct(Product product, String sellerId) {
         DBManager.save(product);
         String requestStr = String.format("%s has requested to create Product \"%s\" with id %s",sellerId,product.getName(),product.getId());
         Seller seller = DBManager.load(Seller.class,sellerId);
         Request request = new Request(seller.getUsername(), RequestType.CREATE_PRODUCT,requestStr,product);
         RequestManager.getInstance().addRequest(request);
+        return product.getId();
     }
 
     public void editProduct(ProductEditAttribute edited, String editor) throws NoSuchAProductException, EditorIsNotSellerException {

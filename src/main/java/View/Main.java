@@ -19,12 +19,12 @@ public class Main extends Application {
     private static double yOffset;
 
     public static void main(String[] args) {
-        //DBManager.initialLoad();
-        HibernateUtil.getSession();
+        HibernateUtil.startUtil();
+        DBManager.initialLoad();
         try {
             launch(args);
         }catch (Exception e){
-            HibernateUtil.shutdown();
+            e.printStackTrace();
         }
     }
 
@@ -32,7 +32,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         window = stage;
         try {
-            scene = new Scene(loadFXML("SaleHistory"));
+            scene = new Scene(loadFXML("newProduct"));
         } catch (Exception e) {
             e.printStackTrace();
         }

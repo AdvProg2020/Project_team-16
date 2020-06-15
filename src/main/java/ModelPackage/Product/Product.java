@@ -33,7 +33,7 @@ public class Product {
     @ManyToOne
     private Company companyClass;
 
-    @Transient
+    @Column
     private String company;
 
     @ManyToOne

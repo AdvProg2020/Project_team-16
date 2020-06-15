@@ -27,8 +27,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +74,7 @@ public class NewProduct {
         });
         sellThis.disableProperty().bind(Bindings.isEmpty(similarProduct.getSelectionModel().getSelectedItems()));
         view.disableProperty().bind(Bindings.isEmpty(similarProduct.getSelectionModel().getSelectedItems()));
-        createProduct.disableProperty().bind(Bindings.isEmpty(pictureList.getSelectionModel().getSelectedItems()));
+        createProduct.disableProperty().bind(Bindings.isEmpty(pictureList.getItems()));
         reset.disableProperty().bind(Bindings.isEmpty(pictureList.getSelectionModel().getSelectedItems()));
     }
 
@@ -181,7 +180,6 @@ public class NewProduct {
         List<File> files = fileChooser.showOpenMultipleDialog(null);
         ObservableList<File> data = FXCollections.observableArrayList(files);
         pictureList.getItems().addAll(data);
-        // TODO: 6/15/2020 Save
     }
 
     private void handleBack() {
@@ -238,7 +236,7 @@ public class NewProduct {
 
     private void handleCreate() {
         if (checkForEmptyValues()){
-            String[] productInfo = new String[5];
+            String[] productInfo = new String[7];
             generateProductInfoPack(productInfo);
             ArrayList<String> publicFeatures = new ArrayList<>();
             ArrayList<String> privateFeatures = new ArrayList<>();
@@ -248,11 +246,31 @@ public class NewProduct {
             String[] prFeature = new String[privateFeatures.size()];
             prFeature = privateFeatures.toArray(prFeature);
             try {
-                sellerController.addProduct(productInfo,puFeature,prFeature);
+                int productId = sellerController.addProduct(productInfo, puFeature, prFeature);
+                savePics(productId);
             } catch (NoSuchACategoryException | UserNotAvailableException ignore) {}
         }
 
 
+    }
+
+    private void savePics(int id) {
+        ArrayList<File> files = new ArrayList<>(pictureList.getItems());
+        try {
+            InputStream main = new FileInputStream(files.get(0));
+            ArrayList<InputStream> otherPics = new ArrayList<>();
+            if (files.size() > 1)
+                files.subList(1, files.size() - 1).forEach(file -> {
+                    try {
+                        otherPics.add(new FileInputStream(file));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                });
+            sellerController.saveImagesForProduct(id, main, otherPics);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean checkForEmptyValues(){
@@ -303,6 +321,8 @@ public class NewProduct {
         infoPack[2] = company.getText();
         infoPack[3] = Integer.toString(category.getSelectionModel().getSelectedItem().getId());
         infoPack[4] = description.getText();
+        infoPack[5] = stock.getText();
+        infoPack[6] = price.getText();
     }
 
     private void generateFeaturePacks(ArrayList<String> publicFeatures,ArrayList<String> privateFeatures){

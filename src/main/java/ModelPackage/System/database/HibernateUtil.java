@@ -18,9 +18,9 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
-    private static final SessionFactory sessionFactory = buildSessionFactory();
-    private static Session session = sessionFactory.openSession();
-    private static Transaction transaction = session.beginTransaction();
+    private static SessionFactory sessionFactory;
+    private static Session session;
+    private static Transaction transaction;
 
     private static SessionFactory buildSessionFactory() {
         try {
@@ -68,6 +68,12 @@ public class HibernateUtil {
         transaction.commit();
         session.close();
         sessionFactory.close();
+    }
+
+    public static void startUtil() {
+        sessionFactory = buildSessionFactory();
+        session = sessionFactory.openSession();
+        transaction = session.beginTransaction();
     }
 
     public static Session getSession() {
