@@ -7,6 +7,7 @@ import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
 import ModelPackage.System.FilterManager;
 import ModelPackage.System.exeption.account.NoSuchACustomerException;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.filters.InvalidFilterException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
@@ -41,7 +42,7 @@ public class ProductController extends Controller{
         return toReturn;
     }
 
-    public void assignComment(String[] data) throws NoSuchAProductException, NoSuchACustomerException {
+    public void assignComment(String[] data) throws NoSuchAProductException, NoSuchACustomerException, UserNotAvailableException {
         String userId = data[0];
         String commentTitle = data[1];
         String commentText = data[2];

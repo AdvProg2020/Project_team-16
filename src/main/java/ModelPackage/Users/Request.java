@@ -51,11 +51,14 @@ public class Request {
 
     private boolean done;
 
+    private boolean accepted;
+
     public Request(String usernameHasRequested, RequestType requestType, String request,Object toChange) {
         this.userHasRequested = usernameHasRequested;
         this.requestType = requestType;
         this.request = request;
         done = false;
+        accepted = false;
         String className = toChange.getClass().getName();
 
         switch (className) {
@@ -77,5 +80,6 @@ public class Request {
     }
 
     public Request() {
+
     }
 }

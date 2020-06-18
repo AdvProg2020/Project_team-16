@@ -44,6 +44,8 @@ public class ProductManager {
         Seller seller = DBManager.load(Seller.class,sellerId);
         Request request = new Request(seller.getUsername(), RequestType.CREATE_PRODUCT,requestStr,product);
         RequestManager.getInstance().addRequest(request);
+        seller.addRequest(request);
+        DBManager.save(request);
         return product.getId();
     }
 
@@ -55,6 +57,11 @@ public class ProductManager {
         product.setProductStatus(ProductStatus.UNDER_EDIT);
         Request request = new Request(editor,RequestType.CHANGE_PRODUCT,requestStr,edited);
         RequestManager.getInstance().addRequest(request);
+        Seller seller = DBManager.load(Seller.class, editor);
+        if (seller != null) {
+            seller.addRequest(request);
+            DBManager.save(seller);
+        }
     }
 
     private void checkIfEditorIsASeller(String username,Product product) throws EditorIsNotSellerException {
