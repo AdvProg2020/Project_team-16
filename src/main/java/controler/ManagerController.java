@@ -147,7 +147,7 @@ public class ManagerController extends Controller {
     }
 
     public ArrayList<RequestPM> manageRequests() {
-        ArrayList<Request> requests = (ArrayList<Request>) DBManager.loadAllData(Request.class);
+        ArrayList<Request> requests = requestManager.getRequestsForManager();
         ArrayList<RequestPM> requestPMS = new ArrayList<>();
         for (Request request : requests) {
             requestPMS.add(createRequestPM(request));

@@ -52,6 +52,4 @@ public class DBManager {
         criteria.from(type);
         return session.createQuery(criteria).getResultList();
     }
-
-
 }

@@ -223,4 +223,12 @@ public class RequestManager {
         }
         return requestManager;
     }
+
+    public ArrayList<Request> getRequestsForManager() {
+        ArrayList<Request> toReturn = new ArrayList<>();
+        DBManager.loadAllData(Request.class).forEach(request -> {
+            if (!request.isDone()) toReturn.add(request);
+        });
+        return toReturn;
+    }
 }
