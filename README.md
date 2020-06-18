@@ -14,3 +14,7 @@ Code genius! Thats all.
 Sajad Paksima [98106286]
 --
 A hard-working member that we appreciate his efforts.
+
+Coach
+--
+And special thanks to our coach "Zumar" :)
