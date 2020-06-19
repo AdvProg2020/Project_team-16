@@ -24,7 +24,6 @@ import View.SortPackage;
 
 import java.io.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class SellerController extends Controller{
@@ -238,21 +237,42 @@ public class SellerController extends Controller{
             }
         }
         try {
-            byte[] buffer = new byte[data.available()];
-            data.read(buffer);
-            OutputStream outStream = new FileOutputStream(image);
-            outStream.write(buffer);
-            outStream.close();
+            saveDataToFile(data, image);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void saveImageForProduct(int id, InputStream data) {
-
+    private void saveDataToFile(InputStream data, File file) throws IOException {
+        byte[] buffer = new byte[data.available()];
+        data.read(buffer);
+        OutputStream outStream = new FileOutputStream(file);
+        outStream.write(buffer);
+        outStream.close();
     }
 
-    public void addVideo(int id, InputStream file) {
+    private void saveImageForProduct(int id, InputStream data) {
+        File image = new File("src/main/resources/db/images/products/" + id + "/" + generateUniqueFileName() + ".jpg");
+        try {
+            if (image.createNewFile()) {
+                saveDataToFile(data, image);
+            }
+        } catch (IOException ignore) {
+        }
+    }
 
+    public void addVideo(int id, InputStream data) {
+        File video = new File("src/main/resources/db/videos/products/" + id + ".mp4");
+        try {
+            video.createNewFile();
+            saveDataToFile(data, video);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String generateUniqueFileName() {
+        Random random = new Random();
+        return String.format("%s%s", System.currentTimeMillis(), random.nextInt(100000));
     }
 }
