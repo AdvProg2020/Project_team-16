@@ -66,13 +66,7 @@ public class CommandProcessor {
     }
 
     private static void addTempCartToCart(){
-        if (!data.getCart().isEmpty()){
-            String username = data.getUsername();
-            for (SubCart subCart : data.getCart().getSubCarts()) {
-                addToCart(username,"",Integer.toString(subCart.getAmount()),subCart.getProductId());
-            }
-        }
-        data.getCart().clear();
+
     }
 
     private static void getGeneralInformation(String[] info){

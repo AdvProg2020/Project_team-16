@@ -87,7 +87,6 @@ public class ProductController extends Controller{
         return createMiniProductPM(product);
     }
 
-
     public void addToCart(String[] data) throws Exception {
         String userName = data[0];
         User user = accountManager.getUserByUsername(userName);
