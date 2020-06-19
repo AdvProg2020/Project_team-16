@@ -60,25 +60,25 @@
                 </ImageView>
             </children>
         </Pane>
-        <Pane fx:id="signUpPage" layoutX="593.0" prefHeight="593.0" prefWidth="367.0"
+        <Pane layoutX="593.0" prefHeight="593.0" prefWidth="367.0"
               style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@CSSs/button.css">
             <children>
                 <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefWidth="340.0" spacing="27.0"
                       style="-fx-background-color: white;">
                     <children>
-                        <JFXTextField fx:id="usernameUp" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
+                        <JFXTextField fx:id="username" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
                                       prefWidth="270.0" promptText="Username">
                             <font>
                                 <Font size="15.0"/>
                             </font>
                         </JFXTextField>
-                        <JFXPasswordField fx:id="passwordUp" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
+                        <JFXPasswordField fx:id="password" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
                                           prefWidth="270.0" promptText="Password">
                             <font>
                                 <Font size="15.0"/>
                             </font>
                         </JFXPasswordField>
-                        <JFXPasswordField fx:id="rePasswordUp" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
+                        <JFXPasswordField fx:id="rePassword" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
                                           prefWidth="270.0" promptText="Repeat Password">
                             <font>
                                 <Font size="15.0"/>
