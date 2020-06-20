@@ -65,7 +65,8 @@
                             </left>
                             <bottom>
                                 <HBox alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="960.0" spacing="10.0"
-                                      styleClass="Green" stylesheets="@CSSs/gradient.css" BorderPane.alignment="CENTER">
+                                      styleClass="Green" stylesheets="@../CSSs/gradient.css"
+                                      BorderPane.alignment="CENTER">
                                     <children>
                                         <Label prefHeight="2.0" text="Total Sale : " textFill="WHITE">
                                             <font>

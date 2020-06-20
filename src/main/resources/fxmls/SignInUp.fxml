@@ -17,12 +17,14 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="593.0" prefWidth="960.0" style="-fx-background-color: transparent;" styleClass="shadow" stylesheets="@CSSs/button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.SignInUp">
+<AnchorPane prefHeight="593.0" prefWidth="960.0" style="-fx-background-color: transparent;" styleClass="shadow"
+            stylesheets="@../CSSs/button.css" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.SignInUp">
    <children>
       <Pane prefHeight="593.0" prefWidth="593.0">
          <stylesheets>
-            <URL value="@CSSs/button.css" />
-            <URL value="@CSSs/gradient.css" />
+             <URL value="@../CSSs/button.css"/>
+             <URL value="@../CSSs/gradient.css"/>
          </stylesheets>
          <styleClass>
             <String fx:value="roudPaneLeft" />
@@ -45,22 +47,25 @@
             </JFXButton>
             <ImageView fitHeight="331.0" fitWidth="496.0" layoutX="50.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Images/signIn.png" />
+                   <Image url="@../Images/signIn.png"/>
                </image>
             </ImageView>
-            <JFXButton fx:id="signInButton" focusTraversable="false" layoutX="215.0" layoutY="393.0" prefHeight="60.0" prefWidth="164.0" styleClass="signIButton" stylesheets="@CSSs/button.css" text="Sign In">
+             <JFXButton fx:id="signInButton" focusTraversable="false" layoutX="215.0" layoutY="393.0" prefHeight="60.0"
+                        prefWidth="164.0" styleClass="signIButton" stylesheets="@../CSSs/button.css" text="Sign In">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="signUpButton" focusTraversable="false" layoutX="215.0" layoutY="459.0" prefHeight="60.0" prefWidth="164.0" styleClass="signUpButton" stylesheets="@CSSs/button.css" text="Sign Up">
+             <JFXButton fx:id="signUpButton" focusTraversable="false" layoutX="215.0" layoutY="459.0" prefHeight="60.0"
+                        prefWidth="164.0" styleClass="signUpButton" stylesheets="@../CSSs/button.css" text="Sign Up">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
             </JFXButton>
          </children>
       </Pane>
-      <Pane fx:id="signInPage" layoutX="594.0" prefHeight="593.0" prefWidth="367.0" style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@CSSs/button.css">
+       <Pane fx:id="signInPage" layoutX="594.0" prefHeight="593.0" prefWidth="367.0"
+             style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@../CSSs/button.css">
          <children>
             <JFXTextField fx:id="usernameIn" focusColor="#405aa8" labelFloat="true" layoutX="49.0" layoutY="91.0" prefHeight="45.0" prefWidth="270.0" promptText="Username">
                <font>
@@ -79,7 +84,9 @@
             </JFXButton>
          </children>
       </Pane>
-      <Pane fx:id="signUpPage" layoutX="594.0" prefHeight="593.0" prefWidth="367.0" style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@CSSs/button.css" visible="false">
+       <Pane fx:id="signUpPage" layoutX="594.0" prefHeight="593.0" prefWidth="367.0"
+             style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@../CSSs/button.css"
+             visible="false">
          <children>
             <ScrollPane hbarPolicy="NEVER" prefHeight="510.0" prefWidth="367.0" style="-fx-background-color: white;" vbarPolicy="ALWAYS">
                <content>
