@@ -37,4 +37,8 @@ public class SellPackage {
         this.isOnOff = isOnOff;
         this.isAvailable = isAvailable;
     }
+
+    public boolean isForProductWithId(int id) {
+        return product.getId() == id;
+    }
 }

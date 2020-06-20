@@ -1,5 +1,7 @@
 package View.Controllers;
 
+import ModelPackage.System.exeption.account.NoSuchACustomerException;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.CacheData;
 import View.Main;
@@ -7,10 +9,10 @@ import View.PrintModels.CommentPM;
 import View.PrintModels.FullProductPM;
 import View.PrintModels.MiniProductPM;
 import View.PrintModels.SellPackagePM;
+import View.exceptions.CanceledException;
 import com.jfoenix.controls.JFXButton;
 import controler.ProductController;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,7 +25,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
@@ -60,8 +61,10 @@ public class ProductDigest {
     public JFXButton addComment;
 
     private int id;
+    private static final CacheData cacheData = CacheData.getInstance();
     private static final ProductController productController = ProductController.getInstance();
     private ArrayList<Image> images;
+    private FullProductPM fullProductPM;
 
     @FXML
     public void initialize() {
@@ -74,17 +77,103 @@ public class ProductDigest {
 
     private void buttonInit() {
         upBarButtons();
-        /*photoButtons();
+        photoButtons();
         productButtons();
-        commentButton();*/
+        commentButton();
+        /*
+            videoSection()
+        */
+    }
+
+    private void commentButton() {
+        addComment.setOnAction(event -> handleCreateComment());
+    }
+
+    private void handleCreateComment() {
+        try {
+            String[] comment = new CommentGetter().returnAComment();
+            String[] info = {cacheData.getUsername(), comment[0], comment[1], "" + id};
+            productController.assignComment(info);
+        } catch (UserNotAvailableException | NoSuchAProductException | NoSuchACustomerException e) {
+            new OopsAlert().show(e.getMessage());
+        } catch (CanceledException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void productButtons() {
+        compare.setOnAction(event -> gotoCompare());
+        addToCart.setOnAction(event -> handleAdd());
+    }
+
+    private void handleAdd() {
+        String role = cacheData.getRole();
+        String sellerId = sellerBox.getSelectionModel().getSelectedItem().getSellerUsername();
+        if (role.equals("customer")) {
+            String[] info = {cacheData.getUsername(), "" + id, sellerId, "1"};
+            try {
+                productController.addToCart(info);
+            } catch (Exception e) {
+                new OopsAlert().show(e.getMessage());
+            }
+        } else if (role.isEmpty()) {
+            cacheData.getCart().addToCart(fullProductPM.getProduct(), sellerBox.getSelectionModel().getSelectedItem());
+        } else {
+            new OopsAlert().show("You must be A Customer To Buy");
+        }
+    }
+
+    private void gotoCompare() {
+        // TODO: 6/19/2020
+    }
+
+    private void photoButtons() {
+        firstPhoto.setOnAction(event -> goToFirstPhoto());
+        lastPhoto.setOnAction(event -> goToLastPhoto());
+        nextPhoto.setOnAction(event -> gotoNextPhoto());
+        prePhoto.setOnAction(event -> gotoPrePhoto());
+    }
+
+    private void gotoPrePhoto() {
+        Image current = mainImage.getImage();
+        int currentIndex = images.indexOf(current);
+        if (currentIndex > 0) {
+            mainImage.setImage(images.get(currentIndex - 1));
+        }
+    }
+
+    private void gotoNextPhoto() {
+        Image current = mainImage.getImage();
+        int currentIndex = images.indexOf(current);
+        int lastIndex = images.size() - 1;
+        if (currentIndex < lastIndex) {
+            mainImage.setImage(images.get(currentIndex + 1));
+        }
+    }
+
+    private void goToLastPhoto() {
+        mainImage.setImage(images.get(images.size() - 1));
+    }
+
+    private void goToFirstPhoto() {
+        mainImage.setImage(images.get(0));
     }
 
     private void upBarButtons() {
-        Stage stage = (Stage) close.getScene().getWindow();
         back.setOnAction(event -> backHandle());
-        close.setOnAction(event -> stage.close());
-        minimize.setOnAction(event -> stage.setIconified(true));
+        close.setOnAction(event -> handleClose());
+        minimize.setOnAction(event -> handleMinimize());
         cartButt.setOnAction(event -> gotoCart());
+    }
+
+    private void handleClose() {
+        Stage stage = (Stage) close.getScene().getWindow();
+        stage.close();
+    }
+
+    private void handleMinimize() {
+        Stage stage = (Stage) close.getScene().getWindow();
+        stage.setIconified(true);
     }
 
     private void gotoCart() {
@@ -150,6 +239,7 @@ public class ProductDigest {
     private void loadProduct() {
         try {
             FullProductPM pm = productController.viewAttributes(id);
+            fullProductPM = pm;
             loadInformation(pm.getProduct());
             loadImage();
             initialFeatures(pm.getFeatures());

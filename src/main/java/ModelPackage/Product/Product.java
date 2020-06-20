@@ -14,7 +14,9 @@ import java.util.*;
 @Table(name = "t_product")
 @Indexed
 public class Product {
-    @Id @GeneratedValue @Column(name = "ID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
 
     @Enumerated(EnumType.STRING)
@@ -80,9 +82,9 @@ public class Product {
 
     public Product(int id){this.id = id;}
 
-    public Product(String name, String company, Category category, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description,SellPackage sellPackage) {
+    public Product(String name, Company company, Category category, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, SellPackage sellPackage) {
         this.name = name;
-        this.company = company;
+        this.companyClass = company;
         this.category = category;
         this.publicFeatures = publicFeatures;
         this.specialFeatures = specialFeatures;

@@ -19,7 +19,9 @@ import View.SortPackage;
 import controler.exceptions.ProductsNotBelongToUniqueCategoryException;
 import javafx.scene.image.Image;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,7 +62,8 @@ public class ProductController extends Controller{
         for (Comment comment : comments) {
             commentPMs.add(new CommentPM(comment.getUserId(),
                     comment.getTitle(),
-                    comment.getText(), comment.isBoughtThisProduct()));
+                    comment.getText(),
+                    comment.isBoughtThisProduct()));
         }
         return commentPMs;
     }
@@ -84,7 +87,6 @@ public class ProductController extends Controller{
         Product product = productManager.findProductById(productId);
         return createMiniProductPM(product);
     }
-
 
     public void addToCart(String[] data) throws Exception {
         String userName = data[0];
@@ -144,6 +146,28 @@ public class ProductController extends Controller{
     }
 
     public ArrayList<Image> loadImage(int id) {
+        ArrayList<Image> images = new ArrayList<>();
+        File mainImageFile = new File("src/main/resources/db/images/products/" + id + "/main.jpg");
+        File otherImagesDirectory = new File("src/main/resources/db/images/products/" + id);
+        Image main = createImageFromFile(mainImageFile);
+        if (main != null)
+            images.add(main);
+        File[] otherImages = otherImagesDirectory.listFiles();
+        if (otherImages != null) {
+            List<File> files = Arrays.asList(otherImages);
+            files.forEach(file -> {
+                Image image = createImageFromFile(file);
+                if (image != null)
+                    images.add(image);
+            });
+        }
+        return images;
+    }
+
+    private Image createImageFromFile(File file) {
+        if (file.exists()) {
+            return new Image(String.valueOf(file.toURI()));
+        }
         return null;
     }
 }

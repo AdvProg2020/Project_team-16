@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Data
 public class ProductManager {
@@ -109,10 +110,11 @@ public class ProductManager {
 
     public void assignAComment(int productId, Comment comment) throws NoSuchAProductException {
         Product product = findProductById(productId);
-        ArrayList<Comment> comments = (ArrayList<Comment>) product.getAllComments();
+        List<Comment> comments = product.getAllComments();
         comments.add(comment);
         product.setAllComments(comments);
         DBManager.save(product);
+        DBManager.save(comment);
     }
 
     public void assignAScore(int productId, Score score) throws NoSuchAProductException {
@@ -127,7 +129,12 @@ public class ProductManager {
 
     public Comment[] showComments(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
-        ArrayList<Comment> comments = (ArrayList<Comment>) product.getAllComments();
+        List<Comment> comments = new CopyOnWriteArrayList<>(product.getAllComments());
+        Iterator<Comment> iterator = comments.iterator();
+        while (iterator.hasNext()) {
+            Comment comment = iterator.next();
+            if (!comment.getStatus().equals(CommentStatus.VERIFIED)) comments.remove(comment);
+        }
         Comment[] toReturn = new Comment[comments.size()];
         comments.toArray(toReturn);
         return toReturn;

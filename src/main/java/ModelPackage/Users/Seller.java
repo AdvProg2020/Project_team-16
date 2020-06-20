@@ -6,6 +6,7 @@ import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.SellPackage;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import com.sun.xml.bind.v2.runtime.reflect.Lister;
 import lombok.*;
 
@@ -48,7 +49,7 @@ public class Seller extends User {
         this.balance = balance;
         this.offs = new ArrayList<>();
         this.sellLogs = new ArrayList<>();
-        packages = new ArrayList<>();
+        this.packages = new ArrayList<>();
         this.requests = new ArrayList<>();
     }
     public Seller(){
@@ -67,6 +68,15 @@ public class Seller extends User {
     }
 
     public void addRequest(Request request) {
+        DBManager.save(request);
         requests.add(request);
+        DBManager.save(this);
+    }
+
+    public SellPackage findPackageByProductId(int id) throws NoSuchAPackageException {
+        for (SellPackage aPackage : packages) {
+            if (aPackage.isForProductWithId(id)) return aPackage;
+        }
+        throw new NoSuchAPackageException();
     }
 }

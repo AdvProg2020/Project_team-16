@@ -24,7 +24,6 @@ import View.SortPackage;
 
 import java.io.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class SellerController extends Controller{
@@ -69,8 +68,9 @@ public class SellerController extends Controller{
 
     public List<MiniProductPM> manageProducts(String sellerUserName, SortPackage sort) throws UserNotAvailableException {
          List<Product> sellerProducts = sellerManager.viewProducts(sellerUserName);
-         sortManager.sort(sellerProducts,sort.getSortType());
-         if (!sort.isAscending()) Collections.reverse(sellerProducts);
+        // TODO: 6/20/2020
+        //sortManager.sort(sellerProducts,sort.getSortType());
+        //if (!sort.isAscending()) Collections.reverse(sellerProducts);
          ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
          for (Product sellerProduct : sellerProducts) {
              miniProductPMs.add(createMiniProductPM(sellerProduct));
@@ -146,7 +146,7 @@ public class SellerController extends Controller{
             throws NoSuchACategoryException, UserNotAvailableException {
         String sellerUserName = data[0];
         String productName = data[1];
-        String companyName = data[2];
+        int companyName = Integer.parseInt(data[2]);
         String categoryId = data[3];
         Category category = categoryManager.getCategoryById(Integer.parseInt(categoryId));
         String description = data[4];
@@ -156,7 +156,8 @@ public class SellerController extends Controller{
         int priceOfProduct = Integer.parseInt(data[6]);
         SellPackage sellPackage = new SellPackage(null,seller,priceOfProduct,amountOfProduct,null,false,true);
         DBManager.save(sellPackage);
-        Product product = new Product(productName, companyName, category,
+        Company company = DBManager.load(Company.class, companyName);
+        Product product = new Product(productName, company, category,
                 publicFeaturesOf(productPublicFeatures),
                 specialFeaturesOf(productSpecialFeatures),
                 description,sellPackage);
@@ -238,21 +239,42 @@ public class SellerController extends Controller{
             }
         }
         try {
-            byte[] buffer = new byte[data.available()];
-            data.read(buffer);
-            OutputStream outStream = new FileOutputStream(image);
-            outStream.write(buffer);
-            outStream.close();
+            saveDataToFile(data, image);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void saveImageForProduct(int id, InputStream data) {
-
+    private void saveDataToFile(InputStream data, File file) throws IOException {
+        byte[] buffer = new byte[data.available()];
+        data.read(buffer);
+        OutputStream outStream = new FileOutputStream(file);
+        outStream.write(buffer);
+        outStream.close();
     }
 
-    public void addVideo(int id, InputStream file) {
+    private void saveImageForProduct(int id, InputStream data) {
+        File image = new File("src/main/resources/db/images/products/" + id + "/" + generateUniqueFileName() + ".jpg");
+        try {
+            if (image.createNewFile()) {
+                saveDataToFile(data, image);
+            }
+        } catch (IOException ignore) {
+        }
+    }
 
+    public void addVideo(int id, InputStream data) {
+        File video = new File("src/main/resources/db/videos/products/" + id + ".mp4");
+        try {
+            video.createNewFile();
+            saveDataToFile(data, video);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String generateUniqueFileName() {
+        Random random = new Random();
+        return String.format("%s%s", System.currentTimeMillis(), random.nextInt(100000));
     }
 }

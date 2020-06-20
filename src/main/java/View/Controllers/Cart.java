@@ -25,6 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 
 public class Cart {
+    // TODO: 6/20/2020 Fucking Full Of Problems !!!!!!!!!!!!!!!!!!!!!!! Need A ReProgram
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
@@ -57,7 +58,7 @@ public class Cart {
     }
 
     private void buttonInitialize() {
-        close.setOnAction(e -> Main.close());
+        close.setOnAction(e -> handleClose());
         minimize.setOnAction(e -> Main.minimize());
         back.setOnAction(e -> handleBackButton());
         purchase.setOnAction(e -> handlePurchaseButton());
@@ -65,6 +66,10 @@ public class Cart {
         increase.setOnAction(e -> handleIncreaseDecreaseButton(1));
         decrease.setOnAction(e -> handleIncreaseDecreaseButton(-1));
         goToProduct.setOnAction(e -> handleGoToProductButton());
+    }
+
+    private void handleClose() {
+
     }
 
     private void setDisabilityOfButtons() {
@@ -78,9 +83,7 @@ public class Cart {
         try {
             Main.setRoot("ProductDigest");
         } catch (IOException e) {
-            /*OopsAlert ioException  = new OopsAlert();
-            ioException.initialize();
-            ioException.getText().setText(e.getMessage());*/
+            e.printStackTrace();
         }
     }
 
@@ -88,11 +91,10 @@ public class Cart {
         InCartPM purchase = tableView.getSelectionModel().getSelectedItem();
         try {
             customerController.changeAmount(cacheData.getUsername(), purchase.getProduct().getId(), change);
+            tableView.refresh();
         } catch (UserNotAvailableException | NotEnoughAmountOfProductException |
                 NoSuchSellerException | NoSuchAProductException | NoSuchAProductInCart e) {
-            /*OopsAlert ioException  = new OopsAlert();
-            ioException.initialize();
-            ioException.getText().setText(e.getMessage());*/
+            new OopsAlert().show(e.getMessage());
         }
     }
 
@@ -100,15 +102,14 @@ public class Cart {
         ObservableList<InCartPM> purchase = tableView.getItems();
         ObservableList<InCartPM> selected = tableView.getSelectionModel().getSelectedItems();
         selected.forEach(purchase::remove);
+        // TODO: 6/20/2020
     }
 
     private void loadCartPM() {
         try {
             cartPM = customerController.viewCart(cacheData.getUsername());
         } catch (UserNotAvailableException | NoSuchSellerException e) {
-            /*OopsAlert ioException  = new OopsAlert();
-            ioException.initialize();
-            ioException.getText().setText(e.getMessage());*/
+            e.printStackTrace();
         }
     }
 
@@ -116,9 +117,7 @@ public class Cart {
         try {
             Main.setRoot("CustomerAccount");
         } catch (IOException e) {
-            /*OopsAlert ioException  = new OopsAlert();
-            ioException.initialize();
-            ioException.getText().setText(e.getMessage());*/
+            e.printStackTrace();
         }
     }
 
@@ -126,9 +125,7 @@ public class Cart {
         try {
             Main.setRoot("Purchase");
         } catch (IOException e) {
-            /*OopsAlert ioException  = new OopsAlert();
-            ioException.initialize();
-            ioException.getText().setText(e.getMessage());*/
+            e.printStackTrace();
         }
     }
 

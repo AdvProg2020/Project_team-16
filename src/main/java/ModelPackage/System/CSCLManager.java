@@ -90,7 +90,7 @@ public class CSCLManager {
         DBManager.save(comment);
         String requestStr = String.format("User (%s) has requested to assign a comment on product (%d) :\n" +
                 "Title : %s\n" +
-                "Text : %s",comment.getUserId(),comment.getProduct().getId(),comment.getTitle(),comment.getText());
+                "Text : %20s ...", comment.getUserId(), comment.getProduct().getId(), comment.getTitle(), comment.getText());
         Request request = new Request(comment.getUserId(), RequestType.ASSIGN_COMMENT, requestStr, comment);
         RequestManager.getInstance().addRequest(request);
         Customer customer = DBManager.load(Customer.class, comment.getUserId());
@@ -157,6 +157,6 @@ public class CSCLManager {
         for (PurchaseLog log : customer.getPurchaseLogs()) {
             if (log.containsProduct(productId))return true;
         }
-        return true;
+        return false;
     }
 }

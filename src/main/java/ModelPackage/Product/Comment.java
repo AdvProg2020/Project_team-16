@@ -21,7 +21,7 @@ public class Comment {
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "TEXT")
+    @Column(name = "TEXT", columnDefinition = "TEXT")
     private String text;
 
     @Enumerated(EnumType.STRING)
@@ -41,5 +41,4 @@ public class Comment {
         this.status = status;
         this.boughtThisProduct = boughtThisProduct;
     }
-
 }
