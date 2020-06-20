@@ -1,10 +1,10 @@
 package View.Controllers;
 
-import ModelPackage.Product.Product;
-import ModelPackage.Product.SellPackage;
 import ModelPackage.System.SortType;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.filters.InvalidFilterException;
+import View.CacheData;
 import View.FilterPackage;
 import View.Main;
 import View.PrintModels.MiniProductPM;
@@ -12,13 +12,11 @@ import View.SortPackage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXSlider;
+import controler.ManagerController;
 import controler.ProductController;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
+import controler.SellerController;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -46,16 +44,17 @@ public class ProductPage {
     }
 
     private void loadProducts() {
+        loadInformation();
         ADOrder.selectedToggleProperty().addListener((v, oldValue, newValue) ->
-                sendAndReceiveListFromController());
+                loadInformation());
         type.selectedToggleProperty().addListener((v, oldValue, newValue) ->
-                sendAndReceiveListFromController());
-        minPrice.setOnMouseDragged(mouseEvent -> sendAndReceiveListFromController());
-        minPrice.setOnMousePressed(mouseEvent -> sendAndReceiveListFromController());
-        maxPrice.setOnMousePressed(mouseEvent -> sendAndReceiveListFromController());
-        maxPrice.setOnMouseDragged(mouseEvent -> sendAndReceiveListFromController());
+                loadInformation());
+        minPrice.setOnMouseDragged(mouseEvent -> loadInformation());
+        minPrice.setOnMousePressed(mouseEvent -> loadInformation());
+        maxPrice.setOnMousePressed(mouseEvent -> loadInformation());
+        maxPrice.setOnMouseDragged(mouseEvent -> loadInformation());
         color.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) ->
-                sendAndReceiveListFromController());
+                loadInformation());
     }
 
     private void createListsOfProductsInVBox(List<MiniProductPM> products) {
@@ -66,15 +65,24 @@ public class ProductPage {
         }
     }
 
-    private void sendAndReceiveListFromController() {
+    private void loadInformation() {
         SortPackage sortPackage = makeSortPackage();
         FilterPackage filterPackage = makeFilterPackage();
+        CacheData cacheData = CacheData.getInstance();
         try {
-            List<MiniProductPM> productPMS = productController.showAllProducts(sortPackage, filterPackage);
-            createListsOfProductsInVBox(productPMS);
-        } catch (NoSuchACategoryException | InvalidFilterException e) {
-            new OopsAlert().show(e.getMessage());
+            switch (cacheData.getRole()) {
+                case "seller":
+                    List<MiniProductPM> productPMS = SellerController.getInstance().manageProducts(cacheData.getUsername(), sortPackage);
+                    createListsOfProductsInVBox(productPMS);
+                    break;
+                case "manager":
+                    List<MiniProductPM> productPMSManager = ManagerController.getInstance().manageProducts();
+                    createListsOfProductsInVBox(productPMSManager);
+                    break;
+            }
 
+        } catch (UserNotAvailableException e) {
+            new OopsAlert().show(e.getMessage());
         }
     }
 
@@ -97,8 +105,6 @@ public class ProductPage {
         filterPackage.setCategoryId(0);
         filterPackage.setUpPriceLimit((int)maxPrice.getValue());
         filterPackage.setDownPriceLimit((int)minPrice.getValue());
-        filterPackage.getActiveFilters().put("Min Price", Integer.toString((int)minPrice.getValue()));
-        filterPackage.getActiveFilters().put("Max Price", Integer.toString((int)maxPrice.getValue()));
         return filterPackage;
     }
 

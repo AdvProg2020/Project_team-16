@@ -53,8 +53,12 @@ public class ProductRowForSM {
 
     private void buttonInitialize() {
         showBut.setOnAction(e -> show());
-        editButt.setOnAction(event -> {/*TODO: 6/13/2020*/});
+        editButt.setOnAction(event -> editButtHandle());
         delete.setOnAction(event -> sendDeleteRequest());
+    }
+
+    private void editButtHandle() {
+
     }
 
     private void sendDeleteRequest() {

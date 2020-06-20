@@ -172,7 +172,7 @@ public class ProductManager {
             throws NoSuchACategoryException, NoSuchAProductInCategoryException, NoSuchAProductException, EditorIsNotSellerException {
         Product product = findProductById(productId);
         if (!remover.equals("MAN@GER"))checkIfEditorIsASeller(remover,product);
-        CategoryManager.getInstance().removeProductFromCategory(productId,product.getId());
+        CategoryManager.getInstance().removeProductFromCategory(productId, product.getCategory().getId());
         CSCLManager.getInstance().removeProductFromCompany(product);
         DBManager.delete(product);
     }
