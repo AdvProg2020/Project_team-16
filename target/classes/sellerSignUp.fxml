@@ -49,7 +49,7 @@
       </Pane>
       <Pane layoutX="594.0" prefHeight="593.0" prefWidth="367.0" style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@CSSs/button.css">
          <children>
-            <JFXTextField fx:id="Company" focusColor="#405aa8" labelFloat="true" layoutX="49.0" layoutY="91.0" prefHeight="45.0" prefWidth="270.0" promptText="Company Name">
+            <JFXTextField fx:id="Company" focusColor="#405aa8" labelFloat="true" layoutX="49.0" layoutY="91.0" prefHeight="45.0" prefWidth="270.0" promptText="Company ID">
                <font>
                   <Font size="15.0" />
                </font>
@@ -59,11 +59,6 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXTextField fx:id="Balance" focusColor="#405aa8" labelFloat="true" layoutX="49.0" layoutY="203.0" prefHeight="45.0" prefWidth="270.0" promptText="Balance">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </JFXTextField>
             <Label layoutX="49.0" layoutY="153.0" prefHeight="17.0" prefWidth="201.0" text="Not Exist ? Create One Now ..." textFill="#828282" />
             <JFXButton fx:id="signUpSubmit" layoutX="224.0" layoutY="516.0" prefHeight="45.0" prefWidth="122.0" ripplerFill="#fd7272" text="Sign Up">
                <font>

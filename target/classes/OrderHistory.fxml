@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 
-
-<AnchorPane prefHeight="593.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.OrderHistory">
+<AnchorPane prefHeight="593.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.OrderHistory">
    <children>
       <BorderPane prefHeight="594.0" prefWidth="960.0">
          <top>
@@ -52,13 +43,12 @@
          <left>
             <VBox alignment="TOP_RIGHT" prefHeight="560.0" prefWidth="399.0" spacing="15.0" BorderPane.alignment="TOP_LEFT">
                <children>
-                  <TableView prefHeight="502.0" prefWidth="399.0">
+                  <TableView fx:id="orderTable" prefHeight="502.0" prefWidth="399.0">
                     <columns>
-                      <TableColumn fx:id="orderNno" prefWidth="184.00000017881393" text="Order No." />
+                      <TableColumn fx:id="orderNoColumn" prefWidth="184.00000017881393" text="Order No." />
                       <TableColumn fx:id="dateColumn" prefWidth="169.60003662109375" text="Date" />
                     </columns>
                   </TableView>
-                  <Button fx:id="view" mnemonicParsing="false" text="View" />
                </children>
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -76,7 +66,7 @@
                            </font>
                         </Label>
                         <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                        <Label fx:id="no" text="321654">
+                        <Label fx:id="no">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -95,7 +85,7 @@
                            </font>
                         </Label>
                         <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                        <Label fx:id="date" text="321654">
+                        <Label fx:id="date">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -114,7 +104,7 @@
                            </font>
                         </Label>
                         <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                        <Label fx:id="price" text="321654">
+                        <Label fx:id="price">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -133,7 +123,7 @@
                            </font>
                         </Label>
                         <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                        <Label fx:id="discount" text="321654">
+                        <Label fx:id="discount">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -149,11 +139,11 @@
                         <Font size="17.0" />
                      </font>
                   </Label>
-                  <TableView prefHeight="155.0" prefWidth="546.0">
+                  <TableView fx:id="productsTable" prefHeight="155.0" prefWidth="546.0">
                     <columns>
-                      <TableColumn prefWidth="115.20001524686813" text="Product" />
-                      <TableColumn prefWidth="121.5999755859375" text="Seller" />
-                        <TableColumn prefWidth="121.5999755859375" text="Price" />
+                      <TableColumn fx:id="pNameCol" prefWidth="115.20001524686813" text="Product" />
+                      <TableColumn fx:id="pSellerCol" prefWidth="121.5999755859375" text="Seller" />
+                        <TableColumn fx:id="pPriceCol" prefWidth="121.5999755859375" text="Price" />
                     </columns>
                   </TableView>
                   <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="546.0">
@@ -177,7 +167,7 @@
                            </font>
                         </Label>
                         <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                        <Label fx:id="delStatus" text="321654">
+                        <Label fx:id="delStatus">
                            <font>
                               <Font size="20.0" />
                            </font>

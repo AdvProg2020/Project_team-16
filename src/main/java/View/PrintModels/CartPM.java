@@ -17,5 +17,18 @@ public class CartPM {
     }
 
     public CartPM() {
+        purchases = new ArrayList<>();
+    }
+
+    public void addInCart(MiniProductPM miniProductPM, String sellerId, int price, int offPrice, int amount) {
+        // TODO: 6/19/2020
+    }
+
+    public void increase() {
+
+    }
+
+    public void decrease() {
+
     }
 }

@@ -66,6 +66,9 @@ public class RequestManager {
                 acceptSeller(request);
                 break;
         }
+        request.setDone(true);
+        request.setAccepted(true);
+        DBManager.save(request);
     }
 
     private void acceptCreateProduct(Request request){
@@ -204,13 +207,14 @@ public class RequestManager {
         Seller seller = request.getSeller();
         seller.setVerified(true);
         DBManager.save(seller);
-        DBManager.delete(request);
     }
 
     public void decline(int requestId) throws NoSuchARequestException {
         Request request = findRequestById(requestId);
         /* TODO : DELETE Extra Data from DB */
-        DBManager.delete(request);
+        request.setDone(true);
+        request.setAccepted(false);
+        DBManager.save(request);
     }
 
     public static RequestManager getInstance(){
@@ -218,5 +222,13 @@ public class RequestManager {
             requestManager = new RequestManager();
         }
         return requestManager;
+    }
+
+    public ArrayList<Request> getRequestsForManager() {
+        ArrayList<Request> toReturn = new ArrayList<>();
+        DBManager.loadAllData(Request.class).forEach(request -> {
+            if (!request.isDone()) toReturn.add(request);
+        });
+        return toReturn;
     }
 }

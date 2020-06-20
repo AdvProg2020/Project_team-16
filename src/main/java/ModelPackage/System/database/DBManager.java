@@ -35,11 +35,11 @@ public class DBManager {
 
     public static void initialLoad(){
         List<Product> list = loadAllData(Product.class);
-        Iterator<Product> iterator = list.iterator();
+        /*Iterator<Product> iterator = list.iterator();
         while (iterator.hasNext()){
             Product toRemove = iterator.next();
             if (!(toRemove.getProductStatus() == ProductStatus.VERIFIED)) list.remove(toRemove);
-        }
+        }*/
         ProductManager.getInstance().setAllProductsActive(list);
         CategoryManager.getInstance().setAllCategories(loadAllData(Category.class));
         CategoryManager.getInstance().initialBaseCategories();
@@ -52,6 +52,4 @@ public class DBManager {
         criteria.from(type);
         return session.createQuery(criteria).getResultList();
     }
-
-
 }

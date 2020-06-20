@@ -22,6 +22,7 @@ import ModelPackage.Users.Seller;
 import View.PrintModels.*;
 import View.SortPackage;
 
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -141,7 +142,7 @@ public class SellerController extends Controller{
         offManager.deleteOff(id,remover);
     }
 
-    public void addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures)
+    public int addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures)
             throws NoSuchACategoryException, UserNotAvailableException {
         String sellerUserName = data[0];
         String productName = data[1];
@@ -154,11 +155,12 @@ public class SellerController extends Controller{
         int amountOfProduct = Integer.parseInt(data[5]);
         int priceOfProduct = Integer.parseInt(data[6]);
         SellPackage sellPackage = new SellPackage(null,seller,priceOfProduct,amountOfProduct,null,false,true);
+        DBManager.save(sellPackage);
         Product product = new Product(productName, companyName, category,
                 publicFeaturesOf(productPublicFeatures),
                 specialFeaturesOf(productSpecialFeatures),
                 description,sellPackage);
-        productManager.createProduct(product, sellerUserName);
+        return productManager.createProduct(product, sellerUserName);
     }
 
     public ArrayList<String> getSpecialFeaturesOfCat(int catId) throws NoSuchACategoryException {
@@ -217,5 +219,40 @@ public class SellerController extends Controller{
                 product.getTotalScore(),
                 product.getDescription(),
                 sellPackagePMs);
+    }
+
+    public void saveImagesForProduct(int id, InputStream mainImage, ArrayList<InputStream> files) {
+        File directory = new File("src/main/resources/db/images/products/" + id);
+        if (!directory.exists()) directory.mkdirs();
+        saveMainImage(id, mainImage);
+        files.forEach(file -> saveImageForProduct(id, file));
+    }
+
+    private void saveMainImage(int id, InputStream data) {
+        File image = new File("src/main/resources/db/images/products/" + id + "/main.jpg");
+        if (!image.exists()) {
+            try {
+                image.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            byte[] buffer = new byte[data.available()];
+            data.read(buffer);
+            OutputStream outStream = new FileOutputStream(image);
+            outStream.write(buffer);
+            outStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveImageForProduct(int id, InputStream data) {
+
+    }
+
+    public void addVideo(int id, InputStream file) {
+
     }
 }

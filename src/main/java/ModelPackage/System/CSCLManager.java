@@ -9,6 +9,7 @@ import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.NoSuchACustomerException;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
 import ModelPackage.System.exeption.clcsmanager.NotABuyer;
@@ -85,13 +86,18 @@ public class CSCLManager {
         DBManager.save(company);
     }
 
-    public void createComment(Comment comment) {
+    public void createComment(Comment comment) throws UserNotAvailableException {
         DBManager.save(comment);
         String requestStr = String.format("User (%s) has requested to assign a comment on product (%d) :\n" +
                 "Title : %s\n" +
                 "Text : %s",comment.getUserId(),comment.getProduct().getId(),comment.getTitle(),comment.getText());
         Request request = new Request(comment.getUserId(), RequestType.ASSIGN_COMMENT, requestStr, comment);
         RequestManager.getInstance().addRequest(request);
+        Customer customer = DBManager.load(Customer.class, comment.getUserId());
+        if (customer != null) {
+            customer.addRequest(request);
+            DBManager.save(customer);
+        } else throw new UserNotAvailableException();
     }
 
     public void createScore(String userId, int productId, int score)

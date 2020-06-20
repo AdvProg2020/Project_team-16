@@ -39,9 +39,12 @@ public class AccountManager {
                 new Cart(),
                 csclManager.getCompanyById(Integer.parseInt(info[6])),
                 Long.parseLong(info[7]));
-        DBManager.save(seller);
+
         String requestStr = String.format("%s has requested to create a seller with email %s", info[0], info[4]);
-        requestManager.addRequest(new Request(info[0],RequestType.REGISTER_SELLER,requestStr,seller));
+        Request request = new Request(info[0], RequestType.REGISTER_SELLER, requestStr, seller);
+        requestManager.addRequest(request);
+        seller.addRequest(request);
+        DBManager.save(seller);
     }
 
     public Manager createManager(String[] info){

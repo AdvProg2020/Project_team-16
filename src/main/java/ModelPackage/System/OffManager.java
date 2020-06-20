@@ -36,6 +36,8 @@ public class OffManager {
         String strRequest = String.format("%s requested to create an off with percentage %d",seller.getUsername(),percentage);
         Request request = new Request(seller.getUsername(), RequestType.CREATE_OFF,strRequest,off);
         RequestManager.getInstance().addRequest(request);
+        seller.addRequest(request);
+        DBManager.save(seller);
     }
 
     public Off findOffById(int id) throws NoSuchAOffException {
@@ -52,6 +54,11 @@ public class OffManager {
         String strRequest = String.format("%s requested to edit an off with id %d",editor,off.getOffId());
         Request request = new Request(editor, RequestType.EDIT_OFF,strRequest,changeAttributes);
         RequestManager.getInstance().addRequest(request);
+        Seller seller = DBManager.load(Seller.class, editor);
+        if (seller != null) {
+            seller.addRequest(request);
+            DBManager.save(seller);
+        }
     }
 
     public void deleteOff(int id,String remover) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {

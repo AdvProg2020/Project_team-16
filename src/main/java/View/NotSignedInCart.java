@@ -1,5 +1,9 @@
 package View;
 
+import View.PrintModels.CartPM;
+import View.PrintModels.InCartPM;
+import View.PrintModels.MiniProductPM;
+import View.PrintModels.SellPackagePM;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -7,24 +11,14 @@ import java.util.List;
 
 @Data
 public class NotSignedInCart {
-    List<SubCart> subCarts;
+    CartPM cart;
 
     public NotSignedInCart(){
-        subCarts = new ArrayList<>();
+        cart = new CartPM();
     }
 
-    public void addToCart(){
-        /*Printer.printMessage("Enter Amount : ");
-        String amount = Scan.getInstance().getInteger();
-        subCarts.add(new SubCart(View.Data.getInstance().getProductSeeingInId(),Integer.parseInt(amount)));*/
-    }
-
-    public boolean isEmpty(){
-        return subCarts.isEmpty();
-    }
-
-    void clear(){
-        subCarts.clear();
+    public void addToCart(MiniProductPM miniProductPM, SellPackagePM pm) {
+        // TODO: 6/19/2020
     }
 }
 

@@ -62,7 +62,8 @@
          <left>
             <HBox prefHeight="560.0" prefWidth="423.0" BorderPane.alignment="CENTER">
                <children>
-                  <TreeView prefHeight="560.0" prefWidth="210.0" styleClass="water_fire" stylesheets="@CSSs/gradient.css" />
+                   <TreeView prefHeight="560.0" prefWidth="210.0" styleClass="water_fire"
+                             stylesheets="@../CSSs/gradient.css"/>
                   <ScrollPane prefHeight="560.0" prefWidth="213.0">
                      <content>
                         <VBox prefWidth="210.0">

@@ -19,12 +19,12 @@ public class Main extends Application {
     private static double yOffset;
 
     public static void main(String[] args) {
-        //DBManager.initialLoad();
-        HibernateUtil.getSession();
+        HibernateUtil.startUtil();
+        DBManager.initialLoad();
         try {
             launch(args);
         }catch (Exception e){
-            HibernateUtil.shutdown();
+            e.printStackTrace();
         }
     }
 
@@ -32,23 +32,27 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         window = stage;
         try {
-            scene = new Scene(loadFXML("Messages"));
+            scene = new Scene(loadFXML("MainPage"));
         } catch (Exception e) {
             e.printStackTrace();
         }
         stage.setScene(scene);
-        scene.setOnMousePressed(e -> {
-            xOffset = e.getSceneX();
-            yOffset = e.getSceneY();
-        });
-        scene.setOnMouseDragged(e ->{
-            stage.setX(e.getScreenX() - xOffset);
-            stage.setY(e.getScreenY() - yOffset);
-        });
+        moveSceneOnMouse(scene, stage);
         scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
         window.setOnCloseRequest(e-> close());
         stage.show();
+    }
+
+    public static void moveSceneOnMouse(Scene scene, Stage stage) {
+        scene.setOnMousePressed(e -> {
+            xOffset = e.getSceneX();
+            yOffset = e.getSceneY();
+        });
+        scene.setOnMouseDragged(e -> {
+            stage.setX(e.getScreenX() - xOffset);
+            stage.setY(e.getScreenY() - yOffset);
+        });
     }
 
     public static void minimize(){
@@ -65,7 +69,7 @@ public class Main extends Application {
     }
 
     public static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource("./fxmls/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 

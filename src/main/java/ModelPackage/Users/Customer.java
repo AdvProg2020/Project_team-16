@@ -32,22 +32,32 @@ public class Customer extends User {
             @JoinTable(name = "t_customer_discount_map")
     private List<DiscountcodeIntegerMap> discountCodes;
 
+    @ElementCollection
+    @OneToMany
+    private List<Request> requests;
+
     public Customer(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart, long balance) {
         super(username, password, firstName, lastName, email, phoneNumber, cart);
         this.balance = balance;
         this.customerInformation = new ArrayList<>();
-        this.purchaseLogs = new ArrayList<PurchaseLog>();
+        this.purchaseLogs = new ArrayList<>();
         this.discountCodes = new ArrayList<>();
+        this.requests = new ArrayList<>();
     }
 
     public Customer(){
         this.customerInformation = new ArrayList<>();
-        this.purchaseLogs = new ArrayList<PurchaseLog>();
+        this.purchaseLogs = new ArrayList<>();
         this.discountCodes = new ArrayList<>();
+        this.requests = new ArrayList<>();
     }
 
     @Override
     public boolean equals(Object o) {
         return super.equals(o);
+    }
+
+    public void addRequest(Request request) {
+        requests.add(request);
     }
 }

@@ -1,8 +1,10 @@
 package View.Controllers;
 
 import ModelPackage.Log.DeliveryStatus;
+import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
+import ModelPackage.System.exeption.clcsmanager.NotABuyer;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.CacheData;
 import View.Main;
@@ -30,6 +32,7 @@ public class OrderHistory {
     public JFXButton minimize;
     public JFXButton close;
     public Button viewProduct;
+    public Button giveScore;
     public TableView<OrderLogPM> orderTable;
     public TableColumn<OrderLogPM, Integer> orderNoColumn;
     public TableColumn<OrderLogPM, String> dateColumn;
@@ -42,6 +45,7 @@ public class OrderHistory {
     public TableColumn<OrderProductPM, String> pNameCol;
     public TableColumn<OrderProductPM, String> pSellerCol;
     public TableColumn<OrderProductPM, Long> pPriceCol;
+
 
     private CustomerController customerController = CustomerController.getInstance();
     private CacheData cacheData = CacheData.getInstance();
@@ -134,6 +138,20 @@ public class OrderHistory {
         cartButt.setOnAction(event -> handleCart());
         viewProduct.setOnAction(event -> handleViewProduct());
         viewProduct.disableProperty().bind(Bindings.isEmpty(productsTable.getSelectionModel().getSelectedCells()));
+        giveScore.setOnAction(event -> giveScoreToProduct());
+        giveScore.disableProperty().bind(Bindings.isEmpty(productsTable.getSelectionModel().getSelectedCells()));
+    }
+
+    private void giveScoreToProduct() {
+        int score = new ScoreGetter().show();
+        int productId = productsTable.getSelectionModel().getSelectedItem().getId();
+        if (score != 0) {
+            try {
+                customerController.assignAScore(cacheData.getUsername(), productId, score);
+            } catch (NoSuchAProductException | NotABuyer | NoSuchACustomerException e) {
+                new OopsAlert().show(e.getMessage());
+            }
+        }
     }
 
     private void handleViewProduct() {
@@ -160,5 +178,4 @@ public class OrderHistory {
             System.out.println("Could Not Initialize Main Menu!!!");
         }
     }
-
 }
