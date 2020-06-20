@@ -82,9 +82,9 @@ public class Product {
 
     public Product(int id){this.id = id;}
 
-    public Product(String name, String company, Category category, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description,SellPackage sellPackage) {
+    public Product(String name, Company company, Category category, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, SellPackage sellPackage) {
         this.name = name;
-        this.company = company;
+        this.companyClass = company;
         this.category = category;
         this.publicFeatures = publicFeatures;
         this.specialFeatures = specialFeatures;

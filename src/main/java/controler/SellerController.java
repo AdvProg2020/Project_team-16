@@ -145,7 +145,7 @@ public class SellerController extends Controller{
             throws NoSuchACategoryException, UserNotAvailableException {
         String sellerUserName = data[0];
         String productName = data[1];
-        String companyName = data[2];
+        int companyName = Integer.parseInt(data[2]);
         String categoryId = data[3];
         Category category = categoryManager.getCategoryById(Integer.parseInt(categoryId));
         String description = data[4];
@@ -155,7 +155,8 @@ public class SellerController extends Controller{
         int priceOfProduct = Integer.parseInt(data[6]);
         SellPackage sellPackage = new SellPackage(null,seller,priceOfProduct,amountOfProduct,null,false,true);
         DBManager.save(sellPackage);
-        Product product = new Product(productName, companyName, category,
+        Company company = DBManager.load(Company.class, companyName);
+        Product product = new Product(productName, company, category,
                 publicFeaturesOf(productPublicFeatures),
                 specialFeaturesOf(productSpecialFeatures),
                 description,sellPackage);
