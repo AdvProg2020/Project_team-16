@@ -29,6 +29,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 import static ModelPackage.Off.OffStatus.*;
@@ -103,8 +104,8 @@ public class OffManager {
         } else {
             try {
                 sellerController.addOff(
-                        Date.from(Instant.from(crStartDt.getValue())),
-                        Date.from(Instant.from(crEndDate.getValue())),
+                        convertToDateViaInstant(crStartDt.getValue()),
+                        convertToDateViaInstant(crEndDate.getValue()),
                         (int) createPercentage.getValue(),
                         username
                 );
@@ -112,6 +113,12 @@ public class OffManager {
                 e.printStackTrace();
             }
         }
+    }
+
+    private java.util.Date convertToDateViaInstant(LocalDate dateToConvert) {
+        return java.util.Date.from(dateToConvert.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
     }
 
     private void initListeners() {
@@ -253,10 +260,11 @@ public class OffManager {
         MiniProductPM selected = availableProducts.getSelectionModel().getSelectedItem();
         OffChangeAttributes attributes = new OffChangeAttributes();
         attributes.setProductIdToAdd(selected.getId());
+        attributes.setSourceId(offsList.getSelectionModel().getSelectedItem().getOffId());
         try {
             sellerController.editOff(username, attributes);
         } catch (ThisOffDoesNotBelongssToYouException | NoSuchAOffException e) {
-            e.printStackTrace();
+            new OopsAlert().show(e.getMessage());
         }
 
         productsList.getItems().add(selected);

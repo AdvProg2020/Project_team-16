@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class OffManager {
-    private static OffManager offManager;
+    private static OffManager offManager = new OffManager();
 
     public static OffManager getInstance() {
         return offManager;

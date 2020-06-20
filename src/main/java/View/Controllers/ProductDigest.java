@@ -1,5 +1,7 @@
 package View.Controllers;
 
+import ModelPackage.System.exeption.account.NoSuchACustomerException;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.CacheData;
 import View.Main;
@@ -7,6 +9,7 @@ import View.PrintModels.CommentPM;
 import View.PrintModels.FullProductPM;
 import View.PrintModels.MiniProductPM;
 import View.PrintModels.SellPackagePM;
+import View.exceptions.CanceledException;
 import com.jfoenix.controls.JFXButton;
 import controler.ProductController;
 import javafx.beans.property.SimpleStringProperty;
@@ -68,17 +71,34 @@ public class ProductDigest {
         id = CacheData.getInstance().getProductId();
         listeners();
         loadProduct();
-        //buttonInit();
-        //commentSection();
+        buttonInit();
+        commentSection();
     }
 
     private void buttonInit() {
         upBarButtons();
         photoButtons();
         productButtons();
-        /*
         commentButton();
-        videoSection()*/
+        /*
+            videoSection()
+        */
+    }
+
+    private void commentButton() {
+        addComment.setOnAction(event -> handleCreateComment());
+    }
+
+    private void handleCreateComment() {
+        try {
+            String[] comment = new CommentGetter().returnAComment();
+            String[] info = {cacheData.getUsername(), comment[0], comment[1], "" + id};
+            productController.assignComment(info);
+        } catch (UserNotAvailableException | NoSuchAProductException | NoSuchACustomerException e) {
+            new OopsAlert().show(e.getMessage());
+        } catch (CanceledException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void productButtons() {
@@ -140,11 +160,20 @@ public class ProductDigest {
     }
 
     private void upBarButtons() {
-        Stage stage = (Stage) close.getScene().getWindow();
         back.setOnAction(event -> backHandle());
-        close.setOnAction(event -> stage.close());
-        minimize.setOnAction(event -> stage.setIconified(true));
+        close.setOnAction(event -> handleClose());
+        minimize.setOnAction(event -> handleMinimize());
         cartButt.setOnAction(event -> gotoCart());
+    }
+
+    private void handleClose() {
+        Stage stage = (Stage) close.getScene().getWindow();
+        stage.close();
+    }
+
+    private void handleMinimize() {
+        Stage stage = (Stage) close.getScene().getWindow();
+        stage.setIconified(true);
     }
 
     private void gotoCart() {

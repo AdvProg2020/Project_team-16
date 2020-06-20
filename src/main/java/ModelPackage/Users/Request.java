@@ -23,7 +23,7 @@ public class Request {
     @Enumerated(EnumType.STRING)
     RequestType requestType;
 
-    @Column(name = "REQUEST")
+    @Column(name = "REQUEST", length = 4096)
     String request;
 
     @OneToOne
@@ -67,6 +67,7 @@ public class Request {
                 break;
             case "ModelPackage.Off.Off" :
                 off = (Off) toChange;
+                break;
             case "ModelPackage.Product.Comment":
                 comment = (Comment) toChange;
                 break;

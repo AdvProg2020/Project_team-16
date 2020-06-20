@@ -24,3 +24,7 @@
 .unknown3{
     -fx-background-color: linear-gradient(from 10% 26% to 100% 67%, rgb(12, 133, 75), rgb(125, 214, 123));
 }
+
+.comment {
+    -fx-background-color: linear-gradient(from 5% 40% to 100% 100%, #cfcc3c, #fdff58, #cfcc3c, #fdff58, #cfcc3c, #fdff58);
+}

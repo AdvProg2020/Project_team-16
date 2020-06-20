@@ -62,7 +62,8 @@ public class ProductController extends Controller{
         for (Comment comment : comments) {
             commentPMs.add(new CommentPM(comment.getUserId(),
                     comment.getTitle(),
-                    comment.getText(), comment.isBoughtThisProduct()));
+                    comment.getText(),
+                    comment.isBoughtThisProduct()));
         }
         return commentPMs;
     }

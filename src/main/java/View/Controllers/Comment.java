@@ -26,7 +26,6 @@ public class Comment {
         titleStr = pm.getTitle();
         commentStr = pm.getComment();
         bought = pm.isBoughThis();
-
         return Main.loadFXML("Comment");
     }
 

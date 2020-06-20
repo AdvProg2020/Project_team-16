@@ -11,6 +11,7 @@ import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
 import ModelPackage.System.exeption.product.AlreadyASeller;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
 import ModelPackage.Users.Request;
@@ -60,6 +61,7 @@ public class RequestManager {
                 break;
             case EDIT_OFF:
                 acceptEditOff(request);
+                break;
             case ASSIGN_COMMENT:
                 acceptAssignComment(request);
                 break;
@@ -181,9 +183,20 @@ public class RequestManager {
 
     private void addProductToOff(Off off,OffChangeAttributes changeAttributes){
         try {
+            // TODO: 6/20/2020 Diagnosis The Problem
             Product product = ProductManager.getInstance().findProductById(changeAttributes.getProductIdToAdd());
             off.getProducts().add(product);
             DBManager.save(product);
+            Seller seller = off.getSeller();
+            try {
+                SellPackage sellPackage = seller.findPackageByProductId(product.getId());
+                sellPackage.setOnOff(true);
+                sellPackage.setOff(off);
+                DBManager.save(sellPackage);
+            } catch (NoSuchAPackageException e) {
+                e.printStackTrace();
+            }
+            DBManager.save(seller);
         } catch (NoSuchAProductException e) {
 
         }
@@ -202,7 +215,7 @@ public class RequestManager {
     private void acceptAssignComment(Request request) throws NoSuchAProductException {
         Comment comment = request.getComment();
         comment.setStatus(CommentStatus.VERIFIED);
-        ProductManager.getInstance().assignAComment(comment.getId(),comment);
+        ProductManager.getInstance().assignAComment(comment.getProduct().getId(), comment);
     }
 
     private void acceptSeller(Request request) {
