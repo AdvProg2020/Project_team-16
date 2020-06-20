@@ -32,7 +32,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         window = stage;
         try {
-            scene = new Scene(loadFXML("MainPage"));
+            scene = new Scene(loadFXML("ProductDigest"));
         } catch (Exception e) {
             e.printStackTrace();
         }

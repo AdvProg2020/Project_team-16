@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DBManager {
     public static <T> T load(Class<T> type, Serializable serializable){
@@ -34,12 +35,12 @@ public class DBManager {
     }
 
     public static void initialLoad(){
-        List<Product> list = loadAllData(Product.class);
-        /*Iterator<Product> iterator = list.iterator();
+        List<Product> list = new CopyOnWriteArrayList<>(loadAllData(Product.class));
+        Iterator<Product> iterator = list.iterator();
         while (iterator.hasNext()){
             Product toRemove = iterator.next();
             if (!(toRemove.getProductStatus() == ProductStatus.VERIFIED)) list.remove(toRemove);
-        }*/
+        }
         ProductManager.getInstance().setAllProductsActive(list);
         CategoryManager.getInstance().setAllCategories(loadAllData(Category.class));
         CategoryManager.getInstance().initialBaseCategories();

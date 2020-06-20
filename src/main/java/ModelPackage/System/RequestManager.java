@@ -51,6 +51,7 @@ public class RequestManager {
         switch (type){
             case CREATE_PRODUCT:
                 acceptCreateProduct(request);
+                break;
             case CHANGE_PRODUCT:
                 acceptEditProduct(request);
                 break;
@@ -77,7 +78,8 @@ public class RequestManager {
         ProductManager.getInstance().addToActive(product);
         DBManager.save(product);
         CategoryManager.getInstance().addProductToCategory(product,product.getCategory());
-        Seller seller = request.getSeller();
+        Seller seller = DBManager.load(Seller.class, request.getUserHasRequested());
+        // TODO: 6/20/2020 Filling request Field
         SellPackage sellPackage = product.getPackages().get(0);
         seller.getPackages().add(sellPackage);
         DBManager.save(seller);

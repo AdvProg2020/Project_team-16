@@ -13,6 +13,8 @@ public class CacheData {
         sorts = new SortPackage();
         companyID = 0;
         username = "seller1";
+        role = "seller";
+        productId = 1;
     }
 
     private String username;

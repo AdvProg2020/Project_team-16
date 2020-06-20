@@ -123,7 +123,7 @@ public class ProductController extends Controller{
         return new MiniProductPM(product.getName(),
                 product.getId(),
                 product.getCategory().getName(),
-                product.getCompanyClass().getName(),
+                "564654",
                 product.getTotalScore(),
                 product.getDescription(),
                 sellPackagePMs);

@@ -17,4 +17,9 @@ public class SellPackagePM {
         this.sellerUsername = sellerUsername;
         this.isAvailable = isAvailable;
     }
+
+    @Override
+    public String toString() {
+        return sellerUsername;
+    }
 }

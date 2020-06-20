@@ -68,8 +68,8 @@ public class ProductDigest {
         id = CacheData.getInstance().getProductId();
         listeners();
         loadProduct();
-        buttonInit();
-        commentSection();
+        //buttonInit();
+        //commentSection();
     }
 
     private void buttonInit() {

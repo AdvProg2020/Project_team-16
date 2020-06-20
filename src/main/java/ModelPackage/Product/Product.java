@@ -14,7 +14,9 @@ import java.util.*;
 @Table(name = "t_product")
 @Indexed
 public class Product {
-    @Id @GeneratedValue @Column(name = "ID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
 
     @Enumerated(EnumType.STRING)

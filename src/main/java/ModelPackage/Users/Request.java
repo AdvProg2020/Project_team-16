@@ -34,7 +34,7 @@ public class Request {
         @JoinColumn(name = "OFF_EDIT")
     OffChangeAttributes offEdit;
 
-    @OneToOne
+    @ManyToOne
         @JoinColumn(name = "PRODUCT")
     Product product;
 

@@ -48,7 +48,7 @@ public class Seller extends User {
         this.balance = balance;
         this.offs = new ArrayList<>();
         this.sellLogs = new ArrayList<>();
-        packages = new ArrayList<>();
+        this.packages = new ArrayList<>();
         this.requests = new ArrayList<>();
     }
     public Seller(){

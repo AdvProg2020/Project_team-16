@@ -1,5 +1,8 @@
 package View;
 
+import View.PrintModels.CartPM;
+import View.PrintModels.MiniProductPM;
+import View.PrintModels.SellPackagePM;
 import lombok.Data;
 
 import java.util.ArrayList;
