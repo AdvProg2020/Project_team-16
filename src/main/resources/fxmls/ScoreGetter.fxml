@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="200.0" prefWidth="356.0" styleClass="Green" stylesheets="@CSSs/gradient.css"
+<AnchorPane fx:id="rootPane" prefHeight="200.0" prefWidth="356.0" styleClass="Green" stylesheets="@../CSSs/gradient.css"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="View.Controllers.ScoreGetter">
     <children>

@@ -24,8 +24,8 @@
     <children>
         <Pane prefHeight="593.0" prefWidth="593.0">
             <stylesheets>
-                <URL value="@CSSs/button.css"/>
-                <URL value="@CSSs/gradient.css"/>
+                <URL value="@../CSSs/button.css"/>
+                <URL value="@../CSSs/gradient.css"/>
             </stylesheets>
             <styleClass>
                 <String fx:value="roudPaneLeft"/>
@@ -52,7 +52,7 @@
                 <ImageView fitHeight="498.0" fitWidth="565.0" layoutX="24.0" layoutY="60.0" pickOnBounds="true"
                            preserveRatio="true">
                     <image>
-                        <Image url="@Images/female-manager.png"/>
+                        <Image url="@../Images/female-manager.png"/>
                     </image>
                     <effect>
                         <ColorAdjust contrast="1.0"/>
@@ -61,7 +61,7 @@
             </children>
         </Pane>
         <Pane layoutX="593.0" prefHeight="593.0" prefWidth="367.0"
-              style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@CSSs/button.css">
+              style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@../CSSs/button.css">
             <children>
                 <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefWidth="340.0" spacing="27.0"
                       style="-fx-background-color: white;">

@@ -26,14 +26,16 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="593.0" prefWidth="960.0" stylesheets="@CSSs/button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.NewProduct">
+<AnchorPane prefHeight="593.0" prefWidth="960.0" stylesheets="@../CSSs/button.css"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="View.Controllers.NewProduct">
    <children>
       <BorderPane prefHeight="594.0" prefWidth="960.0">
          <left>
             <AnchorPane prefHeight="200.0" prefWidth="367.0" BorderPane.alignment="CENTER">
                <stylesheets>
-                  <URL value="@CSSs/gradient.css" />
-                  <URL value="@CSSs/button.css" />
+                  <URL value="@../CSSs/gradient.css"/>
+                  <URL value="@../CSSs/button.css"/>
                </stylesheets>
                <styleClass>
                   <String fx:value="unknown" />
@@ -42,7 +44,7 @@
                <children>
                   <ImageView fitHeight="266.0" fitWidth="298.0" layoutX="39.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Images/product.png" />
+                        <Image url="@../Images/product.png"/>
                      </image>
                      <effect>
                         <GaussianBlur />
@@ -80,7 +82,8 @@
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@CSSs/button.css" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;"
+                        styleClass="roudPaneRight" stylesheets="@../CSSs/button.css" BorderPane.alignment="CENTER">
                <children>
                   <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="564.0" prefWidth="338.0" spacing="15.0">
                      <padding>
@@ -104,7 +107,7 @@
                      </children>
                   </VBox>
                   <VBox fx:id="sellThisBox" alignment="TOP_CENTER" disable="true" layoutX="392.0" layoutY="14.0"
-                        prefHeight="381.0" prefWidth="186.0" spacing="5.0" stylesheets="@CSSs/button.css">
+                        prefHeight="381.0" prefWidth="186.0" spacing="5.0" stylesheets="@../CSSs/button.css">
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </padding>
@@ -131,7 +134,7 @@
                      </styleClass>
                   </VBox>
                   <VBox layoutX="391.0" layoutY="403.0" prefHeight="167.0" prefWidth="188.0" spacing="5.0"
-                        stylesheets="@CSSs/button.css">
+                        stylesheets="@../CSSs/button.css">
                      <children>
                         <Label alignment="CENTER" prefHeight="18.0" prefWidth="218.0" text="Choose At Least One Image">
                            <font>

@@ -25,7 +25,7 @@ public class CacheData {
     private SortPackage sorts;
 
     public void logout(){
-        cart.clear();
+
     }
 
     public void reset(){

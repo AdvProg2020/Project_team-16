@@ -24,7 +24,7 @@
             prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="View.Controllers.EditProduct">
     <children>
-        <BorderPane prefHeight="594.0" prefWidth="960.0" styleClass="unknown2" stylesheets="@CSSs/gradient.css">
+        <BorderPane prefHeight="594.0" prefWidth="960.0" styleClass="unknown2" stylesheets="@../CSSs/gradient.css">
             <top>
                 <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="960.0" style="-fx-background-color: #fff;"
                       BorderPane.alignment="CENTER">
@@ -98,8 +98,8 @@
                         </JFXButton>
                     </children>
                     <stylesheets>
-                        <URL value="@CSSs/gradient.css"/>
-                        <URL value="@CSSs/button.css"/>
+                        <URL value="@../CSSs/gradient.css"/>
+                        <URL value="@../CSSs/button.css"/>
                     </stylesheets>
                     <styleClass>
                         <String fx:value="productPane"/>
@@ -114,8 +114,8 @@
                 <VBox alignment="TOP_CENTER" prefHeight="551.0" prefWidth="349.0" spacing="10.0"
                       BorderPane.alignment="CENTER">
                     <stylesheets>
-                        <URL value="@CSSs/gradient.css"/>
-                        <URL value="@CSSs/button.css"/>
+                        <URL value="@../CSSs/gradient.css"/>
+                        <URL value="@../CSSs/button.css"/>
                     </stylesheets>
                     <styleClass>
                         <String fx:value="productPane"/>
@@ -176,7 +176,7 @@
             </right>
             <center>
                 <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0"
-                      stylesheets="@CSSs/button.css" BorderPane.alignment="CENTER">
+                      stylesheets="@../CSSs/button.css" BorderPane.alignment="CENTER">
                     <styleClass>
                         <String fx:value="productPane"/>
                         <String fx:value="transparentFade15"/>
