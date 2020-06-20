@@ -58,7 +58,7 @@ public class ProductRowForSM {
     }
 
     private void editButtHandle() {
-
+        // TODO: 6/20/2020 Completing
     }
 
     private void sendDeleteRequest() {
@@ -86,6 +86,7 @@ public class ProductRowForSM {
             Scene scene = new Scene(Main.loadFXML("ProductDigest"));
             scene.setFill(Color.TRANSPARENT);
             stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

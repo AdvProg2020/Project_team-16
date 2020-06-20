@@ -35,6 +35,7 @@ public class ProductPage {
     public JFXSlider minPrice;
     public JFXSlider maxPrice;
 
+    // TODO: 6/20/2020 Fucking Full Of Problems Should Be Diagnose
     private final ProductController productController = ProductController.getInstance();
 
     @FXML
@@ -66,6 +67,7 @@ public class ProductPage {
     }
 
     private void loadInformation() {
+        // TODO: 6/20/2020 Reset The Box Not Only Add
         SortPackage sortPackage = makeSortPackage();
         FilterPackage filterPackage = makeFilterPackage();
         CacheData cacheData = CacheData.getInstance();

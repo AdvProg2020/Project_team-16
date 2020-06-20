@@ -42,7 +42,7 @@ public class Request {
     @JoinColumn(name = "PRODUCT_EDIT")
     ProductEditAttribute productEditAttribute;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "COMMENT")
     Comment comment;
 
