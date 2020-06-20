@@ -1,9 +1,30 @@
 package View.Controllers;
 
+import ModelPackage.Product.Product;
+import ModelPackage.Product.SellPackage;
+import ModelPackage.System.SortType;
+import ModelPackage.System.exeption.category.NoSuchACategoryException;
+import ModelPackage.System.exeption.filters.InvalidFilterException;
+import View.FilterPackage;
+import View.Main;
+import View.PrintModels.MiniProductPM;
+import View.SortPackage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXSlider;
+import controler.ProductController;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductPage {
     public ToggleGroup ADOrder;
@@ -12,6 +33,114 @@ public class ProductPage {
     public JFXButton minimize;
     public JFXButton close;
     public VBox panelVbox;
-    public JFXComboBox color;
+    public JFXComboBox<String> color;
+    public JFXSlider minPrice;
+    public JFXSlider maxPrice;
+
+    private final ProductController productController = ProductController.getInstance();
+
+    @FXML
+    public void initialize() {
+        initButtons();
+        loadProducts();
+    }
+
+    private void loadProducts() {
+        ADOrder.selectedToggleProperty().addListener((v, oldValue, newValue) ->
+                sendAndReceiveListFromController());
+        type.selectedToggleProperty().addListener((v, oldValue, newValue) ->
+                sendAndReceiveListFromController());
+        minPrice.setOnMouseDragged(mouseEvent -> sendAndReceiveListFromController());
+        minPrice.setOnMousePressed(mouseEvent -> sendAndReceiveListFromController());
+        maxPrice.setOnMousePressed(mouseEvent -> sendAndReceiveListFromController());
+        maxPrice.setOnMouseDragged(mouseEvent -> sendAndReceiveListFromController());
+        color.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) ->
+                sendAndReceiveListFromController());
+    }
+
+    private void createListsOfProductsInVBox(List<MiniProductPM> products) {
+        for (MiniProductPM product : products) {
+            try {
+                panelVbox.getChildren().add(ProductRowForSM.generate(product.getName(), product.getId()));
+            } catch (IOException ignore) {}
+        }
+    }
+
+    private void sendAndReceiveListFromController() {
+        SortPackage sortPackage = makeSortPackage();
+        FilterPackage filterPackage = makeFilterPackage();
+        try {
+            List<MiniProductPM> productPMS = productController.showAllProducts(sortPackage, filterPackage);
+            createListsOfProductsInVBox(productPMS);
+        } catch (NoSuchACategoryException | InvalidFilterException e) {
+            new OopsAlert().show(e.getMessage());
+
+        }
+    }
+
+    private ArrayList<MiniProductPM> test() {
+        ArrayList<MiniProductPM> productPMS = new ArrayList<>();
+        productPMS.add(new MiniProductPM("Shoe", 12, "Sport", "Adidas", 12, "Good", new ArrayList<>()));
+        productPMS.add(new MiniProductPM("Shirt", 15, "Sports", "Puma", 15, "Awesome", new ArrayList<>()));
+        return productPMS;
+    }
+
+    private FilterPackage makeFilterPackage() {
+        FilterPackage filterPackage = new FilterPackage();
+        if (color.getValue() != null) {
+            filterPackage.getActiveFilters().put("Color", color.getValue());
+        }
+        if (minPrice.getValue() >= maxPrice.getValue()) {
+            new OopsAlert().show("Min Price Can't Be More Than Max Price!!");
+            minPrice.setValue(minPrice.getValue() - 1);
+        }
+        filterPackage.setCategoryId(0);
+        filterPackage.setUpPriceLimit((int)maxPrice.getValue());
+        filterPackage.setDownPriceLimit((int)minPrice.getValue());
+        filterPackage.getActiveFilters().put("Min Price", Integer.toString((int)minPrice.getValue()));
+        filterPackage.getActiveFilters().put("Max Price", Integer.toString((int)maxPrice.getValue()));
+        return filterPackage;
+    }
+
+    private SortPackage makeSortPackage() {
+        SortPackage sortPackage = new SortPackage();
+        sortPackage.setAscending(ADOrder.selectedToggleProperty().toString().contains("Ascending"));
+        if (type.selectedToggleProperty().toString().contains("Price")) {
+            if (sortPackage.isAscending())
+                sortPackage.setSortType(SortType.MORE_PRICE);
+            else sortPackage.setSortType(SortType.LESS_PRICE);
+        } else if (type.selectedToggleProperty().toString().contains("Date Added")) {
+            sortPackage.setSortType(SortType.TIME);
+        } else if (type.selectedToggleProperty().toString().contains("View")) {
+            sortPackage.setSortType(SortType.VIEW);
+        } else if (type.selectedToggleProperty().toString().contains("Bought")) {
+            sortPackage.setSortType(SortType.BOUGHT_AMOUNT);
+        } else if (type.selectedToggleProperty().toString().contains("Name")) {
+            sortPackage.setSortType(SortType.NAME);
+        } else sortPackage.setSortType(SortType.SCORE);
+        return sortPackage;
+    }
+
+    private void initButtons() {
+        back.setOnAction(e -> handleBack());
+        minimize.setOnAction(e -> minimize());
+        close.setOnAction(e -> close());
+    }
+
+    private void close() {
+        Stage window = (Stage) back.getScene().getWindow();
+        window.close();;
+    }
+
+    private void minimize() {
+        Stage window = (Stage) back.getScene().getWindow();
+        window.setIconified(true);
+    }
+
+    private void handleBack() {
+        try {
+            Main.setRoot("ManagerAccount");
+        } catch (IOException ignore) {}
+    }
 
 }
