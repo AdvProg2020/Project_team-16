@@ -95,6 +95,9 @@ public class CreateManager {
     private void handleSubmit() {
         if (checkForEmptyValues()){
             sendSignUpRequest();
+            Notification.show("Successful", "The New Manager was Created!!!", back.getScene().getWindow(), false);
+        } else {
+            Notification.show("Error", "Please Check The Fields.", back.getScene().getWindow(), true);
         }
     }
 
@@ -116,6 +119,10 @@ public class CreateManager {
     private boolean checkForEmptyValues(){
         if (username.getText().isEmpty()){
             errorField(username,"Username Is Required");
+            return false;
+        } else if (password.getText().isEmpty()){
+            return false;
+        } else if (calculatePasswordStrength(password.getText()) < 4){
             return false;
         } else if (!rePassword.getText().equals(password.getText())){
             errorField(rePassword,"Doesn't Match Above");

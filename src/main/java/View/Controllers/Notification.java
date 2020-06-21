@@ -1,10 +1,9 @@
 package View.Controllers;
 
 import javafx.geometry.Pos;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
-
-import java.awt.*;
 
 public class Notification {
     public static void show(String title, String message, Window window, boolean error){

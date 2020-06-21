@@ -143,6 +143,7 @@ public class CustomerAccount {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            Notification.show("Successful", "Your Profile Pic was Updated!!!", back.getScene().getWindow(), false);
         }
     }
 
@@ -237,8 +238,9 @@ public class CustomerAccount {
             try {
                 accountController.editPersonalInfo(cacheData.getUsername(), attributes);
             } catch (UserNotAvailableException e) {
-                System.out.println("User Not Found!!!");
+                e.printStackTrace();
             }
+            Notification.show("Successful", "Your Password was Changed!!!", back.getScene().getWindow(), false);
         }
     }
 
@@ -263,11 +265,13 @@ public class CustomerAccount {
             try {
                 accountController.editPersonalInfo(cacheData.getUsername(), attributes);
             } catch (UserNotAvailableException e) {
-                System.out.println("User Not Found!!!");
+                e.printStackTrace();
             }
 
             confirmButt.setVisible(false);
             cancelButt.setVisible(false);
+
+            Notification.show("Successful", "Your Information was Updated!!!", back.getScene().getWindow(), false);
         }
     }
 

@@ -139,6 +139,9 @@ public class SignInUp {
     private void signUpSubmitRequest() {
         if (checkForEmptyValues()){
             sendSignUpRequest();
+            Notification.show("Successful", "Your Account was Created Successfully!!!", back.getScene().getWindow(), false);
+        }else {
+            Notification.show("Error", "Please Check The Fields.", back.getScene().getWindow(), true);
         }
     }
 
@@ -164,7 +167,9 @@ public class SignInUp {
             return false;
         } else if (passwordUp.getText().isEmpty()){
             return false;
-        } else if (!rePasswordUp.getText().equals(passwordUp.getText())){
+        } else if (calculatePasswordStrength(passwordUp.getText()) < 4){
+            return false;
+        }  else if (!rePasswordUp.getText().equals(passwordUp.getText())){
             errorField(rePasswordUp,"Doesn't Match Above");
             return false;
         } else if (firstName.getText().isEmpty()) {
@@ -219,7 +224,7 @@ public class SignInUp {
         try {
             CacheData.getInstance().setRole(accountController.login(usernameIn.getText(), passwordIn.getText()));
             CacheData.getInstance().setUsername(usernameIn.getText());
-            // TODO: 6/12/2020 Success Message
+            Notification.show("Successful", "Logged In Successfully!!!", back.getScene().getWindow(), false);
         } catch (NotVerifiedSeller e) {
             new OopsAlert().show("Your Account Isn't Verified Yet");
         } catch (UserNotAvailableException e) {

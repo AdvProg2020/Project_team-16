@@ -36,6 +36,7 @@ public class CreateCompany {
         createButt.setOnAction(e -> {
             if (checkForErrors()){
                 sendCompanyRequestSend();
+                Notification.show("Successful", "Your Company was Created!!!", back.getScene().getWindow(), false);
             }
         });
     }
