@@ -21,6 +21,7 @@ import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import View.PrintModels.*;
 import View.SortPackage;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.text.ParseException;
@@ -261,7 +262,18 @@ public class SellerController extends Controller{
             if (image.createNewFile()) {
                 saveDataToFile(data, image);
             }
-        } catch (IOException ignore) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateProductPicture(int id, InputStream mainImage, ArrayList<InputStream> files) {
+        File directory = new File("src/main/resources/db/images/products/" + id);
+        try {
+            FileUtils.cleanDirectory(directory);
+            saveImagesForProduct(id, mainImage, files);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
