@@ -30,7 +30,7 @@ public class Request {
         @JoinColumn(name = "OFF")
     Off off;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "OFF_EDIT")
     OffChangeAttributes offEdit;
 
@@ -38,7 +38,7 @@ public class Request {
         @JoinColumn(name = "PRODUCT")
     Product product;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PRODUCT_EDIT")
     ProductEditAttribute productEditAttribute;
 
@@ -76,6 +76,9 @@ public class Request {
                 break;
             case "ModelPackage.Users.Seller":
                 seller = (Seller) toChange;
+                break;
+            case "ModelPackage.System.editPackage.ProductEditAttribute":
+                productEditAttribute = (ProductEditAttribute) toChange;
                 break;
         }
     }

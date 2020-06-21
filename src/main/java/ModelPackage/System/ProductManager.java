@@ -53,6 +53,7 @@ public class ProductManager {
     public void editProduct(ProductEditAttribute edited, String editor) throws NoSuchAProductException, EditorIsNotSellerException {
         String requestStr = String.format("%s has requested to edit Product \"%s\" with id %s",edited,edited.getName(),edited.getId());
         Product product = findProductById(edited.getSourceId());
+        DBManager.save(edited);
         checkIfEditorIsASeller(editor,product);
         allProductsActive.remove(product);
         product.setProductStatus(ProductStatus.UNDER_EDIT);
@@ -182,6 +183,22 @@ public class ProductManager {
         CategoryManager.getInstance().removeProductFromCategory(productId, product.getCategory().getId());
         CSCLManager.getInstance().removeProductFromCompany(product);
         DBManager.delete(product);
+    }
+
+    public void changePrice(Product product, int newPrice, String username) throws NoSuchSellerException {
+        SellPackage sellPackage = product.findPackageBySeller(username);
+        if (newPrice > 0) {
+            sellPackage.setPrice(newPrice);
+            DBManager.save(sellPackage);
+        }
+    }
+
+    public void changeStock(Product product, int newStock, String username) throws NoSuchSellerException {
+        SellPackage sellPackage = product.findPackageBySeller(username);
+        if (newStock > 0) {
+            sellPackage.setStock(newStock);
+            DBManager.save(sellPackage);
+        }
     }
 
     public void deleteProductCategoryOrder(Product product){

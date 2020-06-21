@@ -1,10 +1,13 @@
 package View.Controllers;
 
+import ModelPackage.System.editPackage.ProductEditAttribute;
+import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.CacheData;
 import View.PrintModels.FullProductPM;
 import View.PrintModels.MiniProductPM;
 import View.PrintModels.SellPackagePM;
+import View.exceptions.NotValidFieldException;
 import com.jfoenix.controls.JFXButton;
 import controler.ProductController;
 import controler.SellerController;
@@ -27,6 +30,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,10 +76,57 @@ public class EditProduct {
         binds();
         upButtons();
         pictureSection();
-        /*
         mainSection();
+        /*
         featureSection();
         */
+    }
+
+    private void mainSection() {
+        submitMain.setOnAction(event -> {
+            try {
+                ProductEditAttribute attribute = createPackageForMain();
+                SellerController.getInstance().editProduct(CacheData.getInstance().getUsername(), attribute);
+                show("Successful", "Request Sent To Manager Successfully",
+                        back.getScene().getWindow(), false);
+            } catch (NoSuchAProductException | EditorIsNotSellerException | NotValidFieldException e) {
+                show("Error", e.getMessage(), back.getScene().getWindow(), true);
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private ProductEditAttribute createPackageForMain() throws NotValidFieldException {
+        ProductEditAttribute attribute = new ProductEditAttribute();
+        attribute.setSourceId(id);
+        Map<String, String> features = new HashMap<>();
+        if (!dimension.getText().isEmpty()) {
+            features.put("Dimension", dimension.getText());
+        }
+        if (!weigh.getText().isEmpty()) {
+            features.put("Weigh", weigh.getText());
+        }
+        if (!price.getText().isEmpty()) {
+            String price = this.price.getText();
+            if (price.matches("\\d{0,9}")) {
+                attribute.setNewPrice(Integer.parseInt(price));
+            } else {
+                throw new NotValidFieldException("price", " positive integer");
+            }
+        }
+        if (!weigh.getText().isEmpty()) {
+            String stock = this.stock.getText();
+            if (stock.matches("\\d{0,9}")) {
+                attribute.setNewStock(Integer.parseInt(stock));
+            } else {
+                throw new NotValidFieldException("stock", " positive integer");
+            }
+        }
+        if (colorBox.isShowing()) {
+            features.put("Color", colorBox.getSelectionModel().getSelectedItem());
+        }
+        attribute.setPublicFeatures(features.size() == 0 ? null : features);
+        return attribute;
     }
 
     private void pictureSection() {
