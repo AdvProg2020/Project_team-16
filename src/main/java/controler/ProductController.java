@@ -130,6 +130,10 @@ public class ProductController extends Controller{
                 sellPackagePMs);
     }
 
+    public List<MicroProduct> getAllProductInCategory(int id) throws NoSuchACategoryException {
+        return categoryManager.allProductsInACategoryList(id);
+    }
+
     public List<MiniProductPM> showOffs(SortPackage sortPackage,FilterPackage filterPackage){
         List<Product> products = productManager.getAllOffFromActiveProducts();
         int[] priceRange = {filterPackage.getDownPriceLimit(),filterPackage.getUpPriceLimit()};

@@ -7,6 +7,7 @@ import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
+import View.PrintModels.MicroProduct;
 import lombok.Data;
 
 import java.util.*;
@@ -70,6 +71,16 @@ public class CategoryManager {
 
     public List<Category> getBaseCats(){
         return baseCategories;
+    }
+
+    public ArrayList<MicroProduct> allProductsInACategoryList(int id) throws NoSuchACategoryException {
+        ArrayList<MicroProduct> list = new ArrayList<>();
+        Category category = getCategoryById(id);
+        for (Product product : category.getAllProducts()) {
+            if (product.getProductStatus().equals(ProductStatus.VERIFIED))
+                list.add(new MicroProduct(product.getName(), product.getId()));
+        }
+        return list;
     }
 
     public void addProductToCategory(Product product,Category toBeAddedTo) {
