@@ -26,6 +26,7 @@ public class CreateManager {
 
     private static final Paint redColor = Paint.valueOf("#c0392b");
     private static final Paint blueColor = Paint.valueOf("#405aa8");
+    private static final Paint greenColor = Paint.valueOf("#BBB529");
 
     @FXML
     public void initialize(){
@@ -41,6 +42,34 @@ public class CreateManager {
         resetSettingForFields(phone,"Phone Number");
         resetSettingForFields(password,"Password");
         resetSettingForFields(rePassword,"Repeat Password");
+
+        bindPassField();
+    }
+
+    private void bindPassField() {
+        password.textProperty().addListener(e ->{
+            if (password.getText().isEmpty()){
+                password.setPromptText("Password is Required");
+                password.setFocusColor(redColor);
+            }
+            int strength = calculatePasswordStrength(password.getText());
+            if (strength == 0) {
+                password.setPromptText("Password must be more than 8 character");
+                password.setFocusColor(redColor);
+            } else if (strength < 4) {
+                password.setPromptText("Password is weak");
+                password.setFocusColor(redColor);
+            } else if (strength < 6) {
+                password.setPromptText("Password is good");
+                password.setFocusColor(greenColor);
+            } else if (strength <= 8) {
+                password.setPromptText("Password is strong");
+                password.setFocusColor(greenColor);
+            } else {
+                password.setPromptText("Password is INSANE! Hey buddy it's not a FBI account :)");
+                password.setFocusColor(greenColor);
+            }
+        });
     }
 
     private void resetSettingForFields(JFXTextField field,String prompt){
@@ -87,12 +116,6 @@ public class CreateManager {
     private boolean checkForEmptyValues(){
         if (username.getText().isEmpty()){
             errorField(username,"Username Is Required");
-            return false;
-        } else if (password.getText().isEmpty()){
-            errorField(password,"Password Is Required");
-            return false;
-        } else if (calculatePasswordStrength(password.getText()) < 8){
-            errorField(password,"Password Is Weak");
             return false;
         } else if (!rePassword.getText().equals(password.getText())){
             errorField(rePassword,"Doesn't Match Above");

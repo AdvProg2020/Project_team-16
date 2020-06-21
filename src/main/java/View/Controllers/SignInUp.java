@@ -9,6 +9,10 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import controler.AccountController;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
@@ -34,8 +38,11 @@ public class SignInUp {
     public JFXButton signInSubmit;
     public JFXTextField usernameIn;
     public JFXPasswordField passwordIn;
+
     private static final Paint redColor = Paint.valueOf("#c0392b");
     private static final Paint blueColor = Paint.valueOf("#405aa8");
+    private static final Paint greenColor = Paint.valueOf("#BBB529");
+
     private static final AccountController accountController = AccountController.getInstance();
 
     @FXML
@@ -60,9 +67,36 @@ public class SignInUp {
         resetSettingForFields(lastName,"Last Name");
         resetSettingForFields(email,"Email");
         resetSettingForFields(phone,"Phone Number");
-        resetSettingForFields(passwordUp,"Password");
         resetSettingForFields(rePasswordUp,"Repeat Password");
         resetSettingForFields(balance,"Balance");
+
+        bindPassField();
+    }
+
+    private void bindPassField() {
+        passwordUp.textProperty().addListener(e ->{
+            if (passwordUp.getText().isEmpty()){
+                passwordUp.setPromptText("Password is Required");
+                passwordUp.setFocusColor(redColor);
+            }
+            int strength = calculatePasswordStrength(passwordUp.getText());
+            if (strength == 0) {
+                passwordUp.setPromptText("Password must be more than 8 character");
+                passwordUp.setFocusColor(redColor);
+            } else if (strength < 4) {
+                passwordUp.setPromptText("Password is weak");
+                passwordUp.setFocusColor(redColor);
+            } else if (strength < 6) {
+                passwordUp.setPromptText("Password is good");
+                passwordUp.setFocusColor(greenColor);
+            } else if (strength <= 8) {
+                passwordUp.setPromptText("Password is strong");
+                passwordUp.setFocusColor(greenColor);
+            } else {
+                passwordUp.setPromptText("Password is INSANE! Hey buddy it's not a FBI account :)");
+                passwordUp.setFocusColor(greenColor);
+            }
+        });
     }
 
     private void resetSettingForFields(JFXTextField field,String prompt){
@@ -129,10 +163,6 @@ public class SignInUp {
             errorField(usernameUp,"Username Is Required");
             return false;
         } else if (passwordUp.getText().isEmpty()){
-            errorField(passwordUp,"Password Is Required");
-            return false;
-        } else if (calculatePasswordStrength(passwordUp.getText()) < 8){
-            errorField(passwordUp,"Password Is Weak");
             return false;
         } else if (!rePasswordUp.getText().equals(passwordUp.getText())){
             errorField(rePasswordUp,"Doesn't Match Above");
