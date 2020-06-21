@@ -25,6 +25,26 @@
     -fx-background-color: linear-gradient(from 10% 26% to 100% 67%, rgb(12, 133, 75), rgb(125, 214, 123));
 }
 
+.unknown4 {
+    -fx-background-color: linear-gradient(to right, #005aa7, #fffde4);
+}
+
 .comment {
     -fx-background-color: linear-gradient(from 5% 40% to 100% 100%, #cfcc3c, #fdff58, #cfcc3c, #fdff58, #cfcc3c, #fdff58);
+}
+
+.table-row-cell :odd {
+    -fx-background-color: rgba(0, 0, 0, 0.24);
+}
+
+.table-row-cell :even {
+    -fx-background-color: rgba(0, 0, 0, 0.48);
+}
+
+.table-row-cell {
+    -fx-background-color: rgba(0, 0, 0, 0.04);
+}
+
+.table-view {
+    -fx-background-color: transparent;
 }
