@@ -151,6 +151,7 @@ public class OrderHistory {
             } catch (NoSuchAProductException | NotABuyer | NoSuchACustomerException e) {
                 new OopsAlert().show(e.getMessage());
             }
+            Notification.show("Successful", "Your Score was Submitted!!!", back.getScene().getWindow(), false);
         }
     }
 

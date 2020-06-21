@@ -63,7 +63,7 @@ public class SellerSignUp {
             info[6] = Company.getText();
             info[7] = balance;
             AccountManager.getInstance().createAccount(info,"seller");
-            System.out.println("Done");
+            Notification.show("Successful", "Your Request was Sent to the Manager!!!", back.getScene().getWindow(), false);
         }
     }
 

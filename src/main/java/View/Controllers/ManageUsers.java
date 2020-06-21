@@ -114,5 +114,7 @@ public class ManageUsers {
 
         ObservableList<UserFullPM> users = table.getItems();
         users.remove(user);
+
+        Notification.show("Successful", "User was Deleted Successfully!!!", back.getScene().getWindow(), false);
     }
 }

@@ -172,6 +172,7 @@ public class NewProduct {
 
     private void deleteSelectedImage() {
         pictureList.getItems().remove(pictureList.getSelectionModel().getSelectedItem());
+        Notification.show("Successful", "The Pics were Successfully Removed from the Product!!!", back.getScene().getWindow(), false);
     }
 
     private void pickPictures() {
@@ -180,6 +181,7 @@ public class NewProduct {
         List<File> files = fileChooser.showOpenMultipleDialog(null);
         ObservableList<File> data = FXCollections.observableArrayList(files);
         pictureList.getItems().addAll(data);
+        Notification.show("Successful", "The Pics were Successfully Added to the Product!!!", back.getScene().getWindow(), false);
     }
 
     private void handleBack() {
@@ -249,6 +251,8 @@ public class NewProduct {
                 int productId = sellerController.addProduct(productInfo, puFeature, prFeature);
                 savePics(productId);
             } catch (NoSuchACategoryException | UserNotAvailableException ignore) {}
+
+            Notification.show("Successful", "Your Product was Registered Successfully!!!", back.getScene().getWindow(), false);
         }
 
 

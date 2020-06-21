@@ -100,7 +100,7 @@ public class OffManager {
 
     private void handleCreate() {
         if (crStartDt.getValue().isAfter(crEndDate.getValue()) || crStartDt.getValue().isEqual(crEndDate.getValue())){
-            //TODO: Show Error!!!
+            Notification.show("Error", "Please Check the Dates!!!", back.getScene().getWindow(), true);
         } else {
             try {
                 sellerController.addOff(
@@ -112,6 +112,7 @@ public class OffManager {
             } catch (ParseException | InvalidTimes | UserNotAvailableException e) {
                 e.printStackTrace();
             }
+            Notification.show("Successful", "Your Request was Sent to The Manager!!!", back.getScene().getWindow(), false);
         }
     }
 
@@ -283,6 +284,8 @@ public class OffManager {
 
         confirm.setDisable(true);
         reset.setDisable(true);
+
+        Notification.show("Successful", "Your Request was Sent to The Manager!!!", back.getScene().getWindow(), false);
     }
 
     private void addAttributes(OffChangeAttributes attributes) {

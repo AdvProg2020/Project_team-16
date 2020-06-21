@@ -25,7 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 
 public class Cart {
-    // TODO: 6/20/2020 Fucking Full Of Problems !!!!!!!!!!!!!!!!!!!!!!! Need A ReProgram
+    // TODO: 6/20/2020 Fu***** Full Of Problems !!!!!!!!!!!!!!!!!!!!!!! Need A ReProgram
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
@@ -103,6 +103,7 @@ public class Cart {
         ObservableList<InCartPM> selected = tableView.getSelectionModel().getSelectedItems();
         selected.forEach(purchase::remove);
         // TODO: 6/20/2020
+        Notification.show(null, "Items were Deleted Successfully!!!", back.getScene().getWindow(), false);
     }
 
     private void loadCartPM() {
