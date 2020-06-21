@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import java.lang.String?>
 <?import java.net.URL?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -18,7 +19,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0"
             prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
@@ -130,7 +130,8 @@
                                 <Font name="System Bold" size="20.0"/>
                             </font>
                         </Label>
-                        <TableView fx:id="featureTable" prefHeight="381.0" prefWidth="320.0">
+                        <TableView fx:id="featureTable" prefHeight="381.0" prefWidth="320.0"
+                                   stylesheets="@../CSSs/gradient.css">
                             <columns>
                                 <TableColumn fx:id="featureCol" prefWidth="93.59998053312302" text="Feature"/>
                                 <TableColumn fx:id="currentValCol" prefWidth="107.99999237060547" text="Current Value"/>
@@ -213,7 +214,22 @@
                                     </font>
                                 </Label>
                                 <Region HBox.hgrow="ALWAYS"/>
-                                <ChoiceBox fx:id="colorBox" prefWidth="200.0"/>
+                                <ChoiceBox fx:id="colorBox" prefWidth="200.0">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value=""/>
+                                            <String fx:value="Black"/>
+                                            <String fx:value="White"/>
+                                            <String fx:value="Red"/>
+                                            <String fx:value="Blue"/>
+                                            <String fx:value="Orange"/>
+                                            <String fx:value="Cyan"/>
+                                            <String fx:value="Gray"/>
+                                            <String fx:value="Brown"/>
+                                            <String fx:value="Violet"/>
+                                        </FXCollections>
+                                    </items>
+                                </ChoiceBox>
                             </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="66.0" prefHeight="58.0" prefWidth="321.0"
