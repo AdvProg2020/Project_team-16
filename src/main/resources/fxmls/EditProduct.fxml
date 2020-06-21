@@ -67,7 +67,7 @@
                             </font>
                         </Label>
                         <Rectangle fx:id="imageViewer" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="200.0"
-                                   stroke="BLACK" strokeType="INSIDE" width="200.0"/>
+                                   stroke="BLACK" strokeType="INSIDE" style="-fx-fill: transparent;" width="200.0"/>
                         <ListView fx:id="imageList" prefHeight="200.0" prefWidth="202.0"/>
                         <JFXButton fx:id="addPicture" prefHeight="26.0" prefWidth="243.0" text="Add Picture"
                                    textFill="WHITE">
@@ -133,9 +133,12 @@
                         <TableView fx:id="featureTable" prefHeight="381.0" prefWidth="320.0"
                                    stylesheets="@../CSSs/gradient.css">
                             <columns>
-                                <TableColumn fx:id="featureCol" prefWidth="93.59998053312302" text="Feature"/>
-                                <TableColumn fx:id="currentValCol" prefWidth="107.99999237060547" text="Current Value"/>
-                                <TableColumn fx:id="EdValCol" prefWidth="107.99999237060547" text="Edited Value"/>
+                                <TableColumn fx:id="featureCol" prefWidth="93.59998053312302"
+                                             style="-fx-text-fill: white;" text="Feature"/>
+                                <TableColumn fx:id="currentValCol" prefWidth="107.99999237060547"
+                                             style="-fx-text-fill: white;" text="Current Value"/>
+                                <TableColumn fx:id="EdValCol" prefWidth="107.99999237060547"
+                                             style="-fx-text-fill: white;" text="Edited Value"/>
                             </columns>
                         </TableView>
                         <TextField fx:id="editVal" promptText="Enter Edit Value"/>

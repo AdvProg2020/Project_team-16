@@ -254,7 +254,9 @@ public class SellerController extends Controller{
     }
 
     private void saveImageForProduct(int id, InputStream data) {
-        File image = new File("src/main/resources/db/images/products/" + id + "/" + generateUniqueFileName() + ".jpg");
+        File directory = new File("src/main/resources/db/images/products/" + id + "/other");
+        directory.mkdirs();
+        File image = new File("src/main/resources/db/images/products/" + id + "/other/" + generateUniqueFileName() + ".jpg");
         try {
             if (image.createNewFile()) {
                 saveDataToFile(data, image);
