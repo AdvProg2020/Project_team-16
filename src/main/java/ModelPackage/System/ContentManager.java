@@ -13,6 +13,12 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ContentManager {
+    private static ContentManager contentManager = new ContentManager();
+
+    public static ContentManager getInstance() {
+        return contentManager;
+    }
+
     public void addContent(String title, String content) {
         MainContent mainContent = new MainContent(title, content);
         DBManager.save(mainContent);
