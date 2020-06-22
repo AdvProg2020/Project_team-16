@@ -156,7 +156,11 @@ public class SellerAccount {
     }
 
     private void loadPopup() {
-        popOver = new PopOver();
+        try {
+            popOver = new PopOver(Main.loadFXML("AddAdPopUp"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         popOver.setArrowLocation(PopOver.ArrowLocation.BOTTOM_CENTER);
     }
 

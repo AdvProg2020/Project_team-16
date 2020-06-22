@@ -35,6 +35,7 @@ public class ContentManager {
         checkIfAdvertisedYet(username);
         Product product = ProductManager.getInstance().findProductById(id);
         Advertise advertise = new Advertise(product, username);
+        DBManager.save(advertise);
         Request request = new Request(username, RequestType.ADVERTISE,
                 username + "has requested to create an ad on product " + product.getId(),
                 advertise);
