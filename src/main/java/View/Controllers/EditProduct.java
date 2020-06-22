@@ -20,7 +20,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -53,7 +52,7 @@ public class EditProduct {
     public TableColumn<FeatureRow, String> EdValCol;
     public TextField editVal;
     public JFXButton editFeatureBtn;
-    public HBox submitFeature;
+    public JFXButton submitFeatures;
     public JFXButton resetTable;
 
     public TextField name;
@@ -63,6 +62,7 @@ public class EditProduct {
     public TextField price;
     public TextField stock;
     public JFXButton submitMain;
+
 
     private int id;
     private FullProductPM pm;
@@ -77,9 +77,49 @@ public class EditProduct {
         upButtons();
         pictureSection();
         mainSection();
-        /*
         featureSection();
-        */
+    }
+
+    private void featureSection() {
+        editFeatureBtn.setOnAction(event -> editFeature());
+        resetTable.setOnAction(event -> resetTableAction());
+        submitFeatures.setOnAction(event -> submitFeaturesAction());
+    }
+
+    private void submitFeaturesAction() {
+        try {
+            ProductEditAttribute attribute = createPackageForFeatures();
+            SellerController.getInstance().editProduct(CacheData.getInstance().getUsername(), attribute);
+            show("Successful", "Request Sent To Manager Successfully",
+                    back.getScene().getWindow(), false);
+        } catch (NoSuchAProductException | EditorIsNotSellerException e) {
+            show("Error", e.getMessage(), back.getScene().getWindow(), true);
+            e.printStackTrace();
+        }
+    }
+
+    private ProductEditAttribute createPackageForFeatures() {
+        ProductEditAttribute attribute = new ProductEditAttribute();
+        attribute.setSourceId(id);
+        Map<String, String> features = new HashMap<>();
+        featureTable.getItems().forEach(featureRow -> {
+            if (!featureRow.getNewValue().isBlank()) {
+                features.put(featureRow.feature, featureRow.newValue);
+            }
+        });
+        attribute.setSpecialFeatures(features.size() == 0 ? null : features);
+        return attribute;
+    }
+
+    private void resetTableAction() {
+        featureTable.getItems().forEach(featureRow -> featureRow.setNewValue(""));
+        featureTable.refresh();
+    }
+
+    private void editFeature() {
+        FeatureRow item = featureTable.getSelectionModel().getSelectedItem();
+        item.setNewValue(editVal.getText());
+        featureTable.refresh();
     }
 
     private void mainSection() {
