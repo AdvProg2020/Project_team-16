@@ -354,6 +354,15 @@
                         <FontIcon iconLiteral="fa-check" iconSize="15" />
                      </graphic>
                   </JFXButton>
+                  <JFXButton fx:id="ad" focusTraversable="false" layoutX="389.0" layoutY="510.0" prefHeight="38.0"
+                             prefWidth="146.0" text="Advertise">
+                     <font>
+                        <Font name="System Bold" size="16.0"/>
+                     </font>
+                     <graphic>
+                        <FontIcon iconLiteral="fa-bullhorn" iconSize="15"/>
+                     </graphic>
+                  </JFXButton>
                </children>
             </AnchorPane>
          </center>

@@ -32,7 +32,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         window = stage;
-        stage.getIcons().add(new Image(Main.class.getClassLoader().getResource("./Images/logo3.1.png").toString()));
+        loadLogo();
         try {
             scene = new Scene(loadFXML("ContentManager"));
         } catch (Exception e) {
@@ -44,6 +44,11 @@ public class Main extends Application {
         stage.initStyle(StageStyle.TRANSPARENT);
         window.setOnCloseRequest(e-> close());
         stage.show();
+    }
+
+    private void loadLogo() {
+        window.getIcons().add(new Image(Main.class.getClassLoader()
+                .getResource("./Images/logo3.1.png").toString()));
     }
 
     public static void moveSceneOnMouse(Scene scene, Stage stage) {
