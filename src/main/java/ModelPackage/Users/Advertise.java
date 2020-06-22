@@ -12,6 +12,7 @@ public class Advertise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @ManyToOne
     private Product product;
     @Column(unique = true)
     private String username;
