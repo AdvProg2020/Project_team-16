@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -31,8 +32,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         window = stage;
+        stage.getIcons().add(new Image(Main.class.getClassLoader().getResource("./Images/logo3.1.png").toString()));
         try {
-            scene = new Scene(loadFXML("ProductManagePage"));
+            scene = new Scene(loadFXML("ContentManager"));
         } catch (Exception e) {
             e.printStackTrace();
         }
