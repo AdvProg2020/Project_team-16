@@ -23,7 +23,7 @@ public class MainPage {
     public JFXButton cart;
     public JFXButton close;
     public JFXButton minimize;
-    public JFXButton Products;
+    public JFXButton products;
     public JFXButton offs;
     public VBox mainBox;
 
@@ -76,6 +76,7 @@ public class MainPage {
         try {
             accountPopOver = new PopOver(Main.loadFXML(fxml));
             accountPopOver.setTitle("Account");
+            accountPopOver.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
         } catch (IOException e) {
             e.printStackTrace();
         }
