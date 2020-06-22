@@ -14,6 +14,7 @@ import ModelPackage.System.exeption.product.AlreadyASeller;
 import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
+import ModelPackage.Users.Advertise;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
@@ -25,6 +26,7 @@ import org.hibernate.criterion.Projections;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -68,10 +70,35 @@ public class RequestManager {
             case REGISTER_SELLER:
                 acceptSeller(request);
                 break;
+            case ADVERTISE:
+                acceptAdvertise(request);
         }
         request.setDone(true);
         request.setAccepted(true);
         DBManager.save(request);
+    }
+
+    private void acceptAdvertise(Request request) {
+        String username = request.getUserHasRequested();
+        Seller seller = DBManager.load(Seller.class, username);
+        if (seller != null) {
+            if (seller.getBalance() > 20) {
+                seller.setBalance(seller.getBalance() - 20);
+                Advertise ad = request.getAdvertise();
+                //todo : Add to Timer
+                ad.setActive(true);
+                ad.setCreated(new Date());
+                DBManager.save(ad);
+                DBManager.save(seller);
+            } else {
+                MessageManager.getInstance().sendMessage(seller, "Ad Request Rejected",
+                        "You Don't Have Enough Money to Create An Advertisement for your product.\n" +
+                                "Refill Your Account Ant Try Late.\n" +
+                                "\n" +
+                                new Date() + "" +
+                                "CFKala Manager");
+            }
+        }
     }
 
     private void acceptCreateProduct(Request request){
@@ -95,38 +122,52 @@ public class RequestManager {
             product.setName(editAttribute.getName());
             DBManager.save(product);
         }
-        if (editAttribute.getPublicFeatureTitle() != null) {
+        if (editAttribute.getPublicFeatures() != null) {
             editPublicFeatureProduct(product,editAttribute);
         }
-        if (editAttribute.getSpecialFeatureTitle() != null) {
+        if (editAttribute.getSpecialFeatures() != null) {
             editSpecialFeatureProduct(product,editAttribute);
         }
         if (editAttribute.getNewCategoryId() != 0){
             try {
                 CategoryManager.getInstance().editProductCategory(product.getId(),product.getCategory().getId(),editAttribute.getNewCategoryId());
-            } catch (Exception e) {}
+            } catch (Exception ignore) {
+            }
+        }
+        if (editAttribute.getNewPrice() != 0) {
+            try {
+                ProductManager.getInstance().changePrice(product, editAttribute.getNewPrice(), request.getUserHasRequested());
+            } catch (NoSuchSellerException ignore) {
+            }
+        }
+        if (editAttribute.getNewStock() != 0) {
+            try {
+                ProductManager.getInstance().changeStock(product, editAttribute.getNewStock(), request.getUserHasRequested());
+            } catch (NoSuchSellerException ignore) {
+            }
         }
         ProductManager.getInstance().addToActive(product);
-        DBManager.delete(editAttribute);
     }
 
     private void editPublicFeatureProduct(Product product,ProductEditAttribute editAttribute){
-        String title = editAttribute.getPublicFeatureTitle();
-        String feature = editAttribute.getPublicFeature();
+        Map<String, String> publicFeatures = editAttribute.getPublicFeatures();
         Map<String, String> features = product.getPublicFeatures();
-        if (features.containsKey(title)){
-            features.replace(title,feature);
-        }
+        publicFeatures.forEach((key, value) -> {
+            if (features.containsKey(key)) {
+                features.replace(key, value);
+            }
+        });
         DBManager.save(product);
     }
 
     private void editSpecialFeatureProduct(Product product,ProductEditAttribute editAttribute){
-        String title = editAttribute.getSpecialFeatureTitle();
-        String feature = editAttribute.getSpecialFeature();
-        Map<String, String> features = product.getSpecialFeatures();
-        if (features.containsKey(title)){
-            features.replace(title,feature);
-        }
+        Map<String, String> specialFeatures = editAttribute.getSpecialFeatures();
+        Map<String, String> features = product.getPublicFeatures();
+        specialFeatures.forEach((key, value) -> {
+            if (features.containsKey(key)) {
+                features.replace(key, value);
+            }
+        });
         DBManager.save(product);
     }
 
@@ -138,6 +179,7 @@ public class RequestManager {
         Seller seller = off.getSeller();
         List<Off> offs = seller.getOffs();
         offs.add(off);
+        // TODO: 6/22/2020 Alert Timer
         seller.setOffs(offs);
         DBManager.save(seller);
     }
@@ -174,10 +216,7 @@ public class RequestManager {
                 removeProductToOff(off,changeAttributes);
             }
             DBManager.save(off);
-        } catch (NoSuchAOffException e) {
-        } finally {
-            DBManager.delete(changeAttributes);
-            DBManager.delete(request);
+        } catch (NoSuchAOffException ignore) {
         }
     }
 

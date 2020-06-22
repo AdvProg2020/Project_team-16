@@ -232,6 +232,12 @@ public class SellerAccount {
 
     private void handleLogout() {
         // TODO : logout should be implemented!!!
+        CacheData.getInstance().logout();
+        try {
+            back.getScene().setRoot(Main.loadFXML("MainPage"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void enableEditFields(JFXTextField field, Label label) {

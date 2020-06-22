@@ -208,7 +208,13 @@ public class CustomerAccount {
     }
 
     private void handleLogout() {
-        // TODO : logout should be implemented!!!
+        // TODO: 6/22/2020
+        CacheData.getInstance().logout();
+        try {
+            back.getScene().setRoot(Main.loadFXML("MainPage"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void enableEditFields(JFXTextField field, Label label) {

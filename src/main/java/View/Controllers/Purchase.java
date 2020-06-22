@@ -208,7 +208,11 @@ public class Purchase {
     }
 
     private void updateTotalPrice() {
-        // TODO : update total price
+        try {
+            totalPrice.setText(String.valueOf(customerController.getPurchaseTotalPrice(selectedDisCode, cacheData.getUsername())));
+        } catch (NoSuchADiscountCodeException | UserNotAvailableException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean isValidDisCode(String disCodeId) {

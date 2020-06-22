@@ -34,8 +34,9 @@ public class ProductController extends Controller{
 
     public List<MiniProductPM> showAllProducts(SortPackage sortPackage, FilterPackage filterPackage) throws NoSuchACategoryException, InvalidFilterException {
         int[] priceRange = {filterPackage.getDownPriceLimit(),filterPackage.getUpPriceLimit()};
-        List<Product> products = productManager.getAllProductsActive(); //FilterManager.updateFilterList(filterPackage.getCategoryId(), filterPackage.getActiveFilters(), priceRange);
-        //sortManager.sort(products,sortPackage.getSortType());
+        List<Product> products = productManager.getAllProductsActive();
+        FilterManager.updateFilterList(filterPackage.getCategoryId(), filterPackage.getActiveFilters(), priceRange);
+        sortManager.sort(products, sortPackage.getSortType());
         if (!sortPackage.isAscending()) Collections.reverse(products);
         List<MiniProductPM> toReturn = new ArrayList<>();
         for (Product product : products) {
@@ -152,7 +153,7 @@ public class ProductController extends Controller{
     public ArrayList<Image> loadImage(int id) {
         ArrayList<Image> images = new ArrayList<>();
         File mainImageFile = new File("src/main/resources/db/images/products/" + id + "/main.jpg");
-        File otherImagesDirectory = new File("src/main/resources/db/images/products/" + id);
+        File otherImagesDirectory = new File("src/main/resources/db/images/products/" + id + "/other");
         Image main = createImageFromFile(mainImageFile);
         if (main != null)
             images.add(main);
