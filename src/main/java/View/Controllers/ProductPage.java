@@ -1,13 +1,22 @@
 package View.Controllers;
 
+import ModelPackage.Off.Off;
+import ModelPackage.Product.Category;
+import ModelPackage.Product.Company;
+import ModelPackage.Product.Product;
+import ModelPackage.Product.SellPackage;
 import ModelPackage.System.SortType;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.filters.InvalidFilterException;
+import ModelPackage.Users.Cart;
+import ModelPackage.Users.Seller;
 import View.CacheData;
 import View.FilterPackage;
 import View.Main;
 import View.PrintModels.MiniProductPM;
+import View.PrintModels.SellPackagePM;
 import View.SortPackage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -22,6 +31,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProductPage {
@@ -35,10 +46,16 @@ public class ProductPage {
     public JFXSlider minPrice;
     public JFXSlider maxPrice;
 
+    Seller seller;
+
     // TODO: 6/20/2020 Fucking Full Of Problems Should Be Diagnose
 
     @FXML
     public void initialize() {
+        seller = new Seller("salam", "123", "Ali", "Alavi",
+                "paksima80@gmail.com", "12345", new Cart(),
+                new Company("Adidas", "1234", "qwe"), 2000);
+        test();
         initButtons();
         loadProducts();
     }
@@ -70,10 +87,12 @@ public class ProductPage {
         SortPackage sortPackage = makeSortPackage();
         FilterPackage filterPackage = makeFilterPackage();
         CacheData cacheData = CacheData.getInstance();
+        cacheData.setRole("seller");
         try {
             switch (cacheData.getRole()) {
                 case "seller":
-                    List<MiniProductPM> productPMS = SellerController.getInstance().manageProducts(cacheData.getUsername(), sortPackage, filterPackage);
+                    List<MiniProductPM> productPMS = SellerController.getInstance().manageProducts(cacheData.getUsername() /*"Ali"*/, sortPackage, filterPackage);
+                    //System.err.println(productPMS);
                     createListsOfProductsInVBox(productPMS);
                     break;
                 case "manager":
@@ -87,11 +106,27 @@ public class ProductPage {
         }
     }
 
-    private ArrayList<MiniProductPM> test() {
-        ArrayList<MiniProductPM> productPMS = new ArrayList<>();
-        productPMS.add(new MiniProductPM("Shoe", 12, "Sport", "Adidas", 12, "Good", new ArrayList<>()));
-        productPMS.add(new MiniProductPM("Shirt", 15, "Sports", "Puma", 15, "Awesome", new ArrayList<>()));
-        return productPMS;
+    private void test() {
+        HashMap<String, String> publicFeatures = new HashMap<>();
+        Product product1 = new Product("Shoe", new Company("Adidas", "dsf", "qwedf"),
+                new Category(), publicFeatures, new HashMap<>(), "Good", new SellPackage()); product1.setId(10);
+                product1.setView(10);
+                product1.setBoughtAmount(4);
+                product1.setTotalScore(4);
+        Product product2 = new Product("Shirt", new Company("Adidas", "dsf", "qwedf"),
+                new Category(), publicFeatures, new HashMap<>(), "Good", new SellPackage()); product2.setId(11);
+                product2.setView(20);
+                product2.setBoughtAmount(2);
+                product2.setTotalScore(2.4);
+        product1.getPackages().add(new SellPackage(product1, seller, 20, 1,
+                new Off(), false, true));
+        product2.getPackages().add(new SellPackage(product2, seller, 30, 2,
+                new Off(), false, true));
+        seller.getPackages().add(new SellPackage(product1, seller, 20, 1,
+                new Off(), false, true));
+        seller.getPackages().add(new SellPackage(product2, seller, 30, 2,
+                new Off(), false, true));
+        DBManager.save(seller); DBManager.save(product1); DBManager.save(product2);
     }
 
     private FilterPackage makeFilterPackage() {
@@ -100,8 +135,7 @@ public class ProductPage {
             filterPackage.getActiveFilters().put("Color", color.getValue());
         }
         if (minPrice.getValue() >= maxPrice.getValue()) {
-            new OopsAlert().show("Min Price Can't Be More Than Max Price!!");
-            minPrice.setValue(minPrice.getValue() - 1);
+            maxPrice.setValue(minPrice.getValue());
         }
         filterPackage.setCategoryId(0);
         filterPackage.setUpPriceLimit((int)maxPrice.getValue());

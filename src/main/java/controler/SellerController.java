@@ -86,8 +86,10 @@ public class SellerController extends Controller{
         int[] priceRange = new int[2];
         priceRange[0] = filterPackage.getDownPriceLimit();
         priceRange[1] = filterPackage.getUpPriceLimit();
+        //System.err.println(sortedSellerProducts);
         List<Product> filteredSellerProducts = FilterManager.filterList(sortedSellerProducts, filterPackage.getActiveFilters(), priceRange);
         ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
+        //System.err.println(filteredSellerProducts);
         filteredSellerProducts.forEach(product -> miniProductPMs.add(createMiniProductPM(product)));
         return miniProductPMs;
     }
