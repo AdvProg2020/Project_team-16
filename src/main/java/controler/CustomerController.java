@@ -117,6 +117,12 @@ public class CustomerController extends Controller {
         );
     }
 
+    public long getPurchaseTotalPrice(String discode, String username) throws NoSuchADiscountCodeException, UserNotAvailableException {
+        DiscountCode discountCode = discountManager.getDiscountByCode(discode);
+        Customer customer = (Customer) accountManager.getUserByUsername(username);
+        customerManager.getTotalPrice(discountCode, customer);
+    }
+
     public List<OrderLogPM> viewOrders(String username) throws UserNotAvailableException, NoSuchALogException, NoSuchAProductException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         List<PurchaseLog> purchaseLogs = customer.getPurchaseLogs();
