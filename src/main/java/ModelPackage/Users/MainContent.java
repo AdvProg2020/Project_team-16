@@ -20,4 +20,11 @@ public class MainContent {
         this.title = title;
         Content = content;
     }
+
+    @Override
+    public String toString() {
+        return "MainContent{" +
+                "title='" + title + '\'' +
+                '}';
+    }
 }

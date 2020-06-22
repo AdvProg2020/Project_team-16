@@ -92,6 +92,13 @@ public class SellerController extends Controller{
         return miniProductPMs;
     }
 
+    public List<MicroProduct> getProductsForSeller(String seller) throws UserNotAvailableException {
+        List<Product> sellerProducts = sellerManager.viewProducts(seller);
+        List<MicroProduct> list = new ArrayList<>();
+        sellerProducts.forEach(product -> list.add(new MicroProduct(product.getName(), product.getId())));
+        return list;
+    }
+
     // TODO: 6/11/2020 If Is needed later will be impl
     /*
     public List<UserMiniPM> viewAllBuyersOfProduct(int productId,String viwer,SortPackage sortPackage) throws NoSuchAProductException, YouAreNotASellerException {
@@ -107,12 +114,6 @@ public class SellerController extends Controller{
         }
         return userMiniPMs;
     }*/
-
-    public FullProductPM viewProduct(int productId) throws NoSuchAProductException {
-         Product product = productManager.findProductById(productId);
-        return new FullProductPM(createMiniProductPM(product),
-                productManager.allFeaturesOf(product));
-    }
 
     public void removeProduct(int productId,String editor) throws NoSuchACategoryException,
             NoSuchAProductInCategoryException, NoSuchAProductException, EditorIsNotSellerException {

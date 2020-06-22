@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import controler.AccountController;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -49,12 +50,14 @@ public class ManagerAccount {
     public JFXButton editEMailButt;
     public JFXButton editPhoneButt;
     public JFXButton addManagerButt;
+    public JFXButton mainContent;
     public JFXButton cancelButt;
     public JFXButton confirmButt;
 
     private static final Paint redColor = Paint.valueOf("#c0392b");
     private static final Paint blueColor = Paint.valueOf("#405aa8");
     private static final String userPhoto = "/Images/user-png-icon-male-user-icon-512.png";
+
 
 
     private AccountController accountController = AccountController.getInstance();
@@ -121,6 +124,7 @@ public class ManagerAccount {
         logoutButt.setOnAction(event -> handleLogout());
         addManagerButt.setOnAction(event -> handleAddManager());
         chooseProf.setOnAction(event -> handleChooseProf());
+        mainContent.setOnAction(event -> handleMainContent());
 
         editFNameButt.setOnAction(event -> handleEditFName());
         editLNameButt.setOnAction(event -> handleEditLName());
@@ -128,6 +132,17 @@ public class ManagerAccount {
         editPhoneButt.setOnAction(event -> handleEditPhone());
         confirmButt.setOnAction(event -> handleConfirm());
         cancelButt.setOnAction(event -> handleCancel());
+    }
+
+    private void handleMainContent() {
+        Stage stage = (Stage) mainContent.getScene().getWindow();
+        try {
+            Scene scene = new Scene(Main.loadFXML("ContentManager"));
+            Main.moveSceneOnMouse(scene, stage);
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleChooseProf() {

@@ -169,6 +169,11 @@ public class ProductController extends Controller{
         return images;
     }
 
+    public Image loadMainImage(int id) {
+        File mainImageFile = new File("src/main/resources/db/images/products/" + id + "/main.jpg");
+        return createImageFromFile(mainImageFile);
+    }
+
     private Image createImageFromFile(File file) {
         if (file.exists()) {
             return new Image(String.valueOf(file.toURI()));
