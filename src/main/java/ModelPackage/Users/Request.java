@@ -47,6 +47,9 @@ public class Request {
     Comment comment;
 
     @OneToOne
+    Advertise advertise;
+
+    @OneToOne
     Seller seller;
 
     private boolean done;
@@ -79,6 +82,9 @@ public class Request {
                 break;
             case "ModelPackage.System.editPackage.ProductEditAttribute":
                 productEditAttribute = (ProductEditAttribute) toChange;
+                break;
+            case "ModelPackage.Users.Advertise":
+                advertise = (Advertise) toChange;
                 break;
         }
     }

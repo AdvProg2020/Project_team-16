@@ -23,6 +23,9 @@ public class MainPage {
     public JFXButton cart;
     public JFXButton close;
     public JFXButton minimize;
+    public JFXButton Products;
+    public JFXButton offs;
+    public VBox mainBox;
 
     private PopOver accountPopOver;
     private static CacheData cacheData = CacheData.getInstance();
@@ -34,10 +37,14 @@ public class MainPage {
         binds();
         listeners();
         /*
+        slider();
         advertising();
         menus();
-        slider();
-         */
+        */
+    }
+
+    private void slider() {
+
     }
 
     private void listeners() {
