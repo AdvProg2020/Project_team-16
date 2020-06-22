@@ -7,6 +7,7 @@ import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.SellPackage;
 import ModelPackage.System.CategoryManager;
+import ModelPackage.System.FilterManager;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
@@ -19,6 +20,7 @@ import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
+import View.FilterPackage;
 import View.PrintModels.*;
 import View.SortPackage;
 
@@ -68,14 +70,25 @@ public class SellerController extends Controller{
 
     public List<MiniProductPM> manageProducts(String sellerUserName, SortPackage sort) throws UserNotAvailableException {
          List<Product> sellerProducts = sellerManager.viewProducts(sellerUserName);
-        // TODO: 6/20/2020
-        //sortManager.sort(sellerProducts,sort.getSortType());
-        //if (!sort.isAscending()) Collections.reverse(sellerProducts);
+         List<Product> sortedSellerProducts = sortManager.sort(sellerProducts,sort.getSortType());
+         if (!sort.isAscending()) Collections.reverse(sortedSellerProducts);
          ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
-         for (Product sellerProduct : sellerProducts) {
+         for (Product sellerProduct : sortedSellerProducts) {
              miniProductPMs.add(createMiniProductPM(sellerProduct));
         }
          return miniProductPMs;
+    }
+
+    public List<MiniProductPM> manageProducts(String sellerUserName, SortPackage sortPackage, FilterPackage filterPackage)
+            throws UserNotAvailableException {
+        List<Product> sortedSellerProducts = sortManager.sort(sellerManager.viewProducts(sellerUserName), sortPackage.getSortType());
+        int[] priceRange = new int[2];
+        priceRange[0] = filterPackage.getDownPriceLimit();
+        priceRange[1] = filterPackage.getUpPriceLimit();
+        List<Product> filteredSellerProducts = FilterManager.filterList(sortedSellerProducts, filterPackage.getActiveFilters(), priceRange);
+        ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
+        filteredSellerProducts.forEach(product -> miniProductPMs.add(createMiniProductPM(product)));
+        return miniProductPMs;
     }
 
     // TODO: 6/11/2020 If Is needed later will be impl

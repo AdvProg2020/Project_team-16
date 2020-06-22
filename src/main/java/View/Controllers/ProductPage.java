@@ -36,7 +36,6 @@ public class ProductPage {
     public JFXSlider maxPrice;
 
     // TODO: 6/20/2020 Fucking Full Of Problems Should Be Diagnose
-    private final ProductController productController = ProductController.getInstance();
 
     @FXML
     public void initialize() {
@@ -67,18 +66,18 @@ public class ProductPage {
     }
 
     private void loadInformation() {
-        // TODO: 6/20/2020 Reset The Box Not Only Add
+        panelVbox.getChildren().clear();
         SortPackage sortPackage = makeSortPackage();
         FilterPackage filterPackage = makeFilterPackage();
         CacheData cacheData = CacheData.getInstance();
         try {
             switch (cacheData.getRole()) {
                 case "seller":
-                    List<MiniProductPM> productPMS = SellerController.getInstance().manageProducts(cacheData.getUsername(), sortPackage);
+                    List<MiniProductPM> productPMS = SellerController.getInstance().manageProducts(cacheData.getUsername(), sortPackage, filterPackage);
                     createListsOfProductsInVBox(productPMS);
                     break;
                 case "manager":
-                    List<MiniProductPM> productPMSManager = ManagerController.getInstance().manageProducts();
+                    List<MiniProductPM> productPMSManager = ManagerController.getInstance().manageProducts(sortPackage, filterPackage);
                     createListsOfProductsInVBox(productPMSManager);
                     break;
             }

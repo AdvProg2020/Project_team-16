@@ -3,6 +3,7 @@ package controler;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
+import ModelPackage.System.FilterManager;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
@@ -17,9 +18,12 @@ import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
+import View.FilterPackage;
 import View.PrintModels.*;
+import View.SortPackage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -61,11 +65,18 @@ public class ManagerController extends Controller {
         managerManager.createManagerProfile(info);
     }
 
-    public List<MiniProductPM> manageProducts(){
-        List<Product> products = DBManager.loadAllData(Product.class);
+    public List<MiniProductPM> manageProducts(SortPackage sortPackage, FilterPackage filterPackage) {
+        List<Product> sortedProducts = sortManager.sort(DBManager.loadAllData(Product.class), sortPackage.getSortType());
+        if (!sortPackage.isAscending()) Collections.reverse(sortedProducts);
+
+        int[] priceRange = new int[2];
+        priceRange[0] = filterPackage.getDownPriceLimit();
+        priceRange[1] = filterPackage.getUpPriceLimit();
+        List<Product> filteredProducts = FilterManager.filterList(sortedProducts, filterPackage.getActiveFilters(), priceRange);
+
         ArrayList<MiniProductPM> miniProductPMS = new ArrayList<>();
 
-        for (Product product : products) {
+        for (Product product : filteredProducts) {
             miniProductPMS.add(createMiniProductPM(product));
         }
 
