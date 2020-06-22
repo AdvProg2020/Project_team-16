@@ -16,7 +16,6 @@ import javafx.stage.Window;
 import org.controlsfx.control.SearchableComboBox;
 
 public class AddAdPopUp {
-
     public SearchableComboBox<MicroProduct> products;
     public Button createAd;
 
@@ -48,6 +47,8 @@ public class AddAdPopUp {
         String username = CacheData.getInstance().getUsername();
         try {
             ContentController.getInstance().addAd(id, username);
+            Stage stage = (Stage) Stage.getWindows().filtered(Window::isFocused).get(0);
+            Notification.show("Successful", "Request Sent To Manager", stage, false);
         } catch (SellerHasActiveAdException | NoSuchAProductException e) {
             Stage stage = (Stage) Stage.getWindows().filtered(Window::isFocused).get(0);
             Notification.show("Error", e.getMessage(), stage, true);
