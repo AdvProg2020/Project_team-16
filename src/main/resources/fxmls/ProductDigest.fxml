@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -66,7 +67,8 @@
                               <Reflection fraction="0.31" />
                            </effect>
                         </ImageView>
-                        <VBox alignment="TOP_CENTER" layoutX="15.0" layoutY="30.0" prefHeight="244.0" prefWidth="86.0" spacing="15.0" styleClass="transparentFadeForProduct" stylesheets="@CSSs/button.css">
+                         <VBox alignment="TOP_CENTER" layoutX="15.0" layoutY="30.0" prefHeight="244.0" prefWidth="86.0"
+                               spacing="15.0" styleClass="transparentFadeForProduct" stylesheets="@../CSSs/button.css">
                            <children>
                               <JFXButton fx:id="video" contentDisplay="GRAPHIC_ONLY" disable="true" focusTraversable="false" ripplerFill="BLACK" text=" ">
                                  <graphic>
@@ -130,7 +132,8 @@
             </VBox>
          </left>
          <center>
-            <VBox prefHeight="560.0" prefWidth="550.0" spacing="10.0" styleClass="transparentFade15" stylesheets="@CSSs/button.css" BorderPane.alignment="CENTER">
+             <VBox prefHeight="560.0" prefWidth="550.0" spacing="10.0" stylesheets="@../CSSs/button.css"
+                   BorderPane.alignment="CENTER">
                <children>
                   <AnchorPane prefHeight="324.0" prefWidth="606.0">
                      <children>
@@ -145,7 +148,7 @@
                                  </font>
                               </Text>
                                <VBox alignment="TOP_CENTER" prefHeight="276.0" prefWidth="182.0" spacing="15.0"
-                                     styleClass="transparentFade15" stylesheets="@../CSSs/button.css">
+                                     stylesheets="@../CSSs/button.css">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -211,6 +214,10 @@
                                        </cursor>
                                     </Button>
                                  </children>
+                                   <styleClass>
+                                       <String fx:value="transparentFade15"/>
+                                       <String fx:value="productPane"/>
+                                   </styleClass>
                               </VBox>
                            </children>
                             <stylesheets>
@@ -262,6 +269,10 @@
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
+                 <styleClass>
+                     <String fx:value="transparentFade15"/>
+                     <String fx:value="productPane"/>
+                 </styleClass>
             </VBox>
          </center>
       </BorderPane>
