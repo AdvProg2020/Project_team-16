@@ -29,4 +29,11 @@ public class MiniProductPM {
     public String toString() {
         return name;
     }
+
+    public SellPackagePM findPackageForSeller(String username) {
+        for (SellPackagePM sellPackagePM : sellPackagePMs) {
+            if (sellPackagePM.getSellerUsername().equals(username)) return sellPackagePM;
+        }
+        return null;
+    }
 }

@@ -152,7 +152,7 @@ public class ProductController extends Controller{
     public ArrayList<Image> loadImage(int id) {
         ArrayList<Image> images = new ArrayList<>();
         File mainImageFile = new File("src/main/resources/db/images/products/" + id + "/main.jpg");
-        File otherImagesDirectory = new File("src/main/resources/db/images/products/" + id);
+        File otherImagesDirectory = new File("src/main/resources/db/images/products/" + id + "/other");
         Image main = createImageFromFile(mainImageFile);
         if (main != null)
             images.add(main);

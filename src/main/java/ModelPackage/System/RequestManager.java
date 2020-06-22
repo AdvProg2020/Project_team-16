@@ -95,38 +95,52 @@ public class RequestManager {
             product.setName(editAttribute.getName());
             DBManager.save(product);
         }
-        if (editAttribute.getPublicFeatureTitle() != null) {
+        if (editAttribute.getPublicFeatures() != null) {
             editPublicFeatureProduct(product,editAttribute);
         }
-        if (editAttribute.getSpecialFeatureTitle() != null) {
+        if (editAttribute.getSpecialFeatures() != null) {
             editSpecialFeatureProduct(product,editAttribute);
         }
         if (editAttribute.getNewCategoryId() != 0){
             try {
                 CategoryManager.getInstance().editProductCategory(product.getId(),product.getCategory().getId(),editAttribute.getNewCategoryId());
-            } catch (Exception e) {}
+            } catch (Exception ignore) {
+            }
+        }
+        if (editAttribute.getNewPrice() != 0) {
+            try {
+                ProductManager.getInstance().changePrice(product, editAttribute.getNewPrice(), request.getUserHasRequested());
+            } catch (NoSuchSellerException ignore) {
+            }
+        }
+        if (editAttribute.getNewStock() != 0) {
+            try {
+                ProductManager.getInstance().changeStock(product, editAttribute.getNewStock(), request.getUserHasRequested());
+            } catch (NoSuchSellerException ignore) {
+            }
         }
         ProductManager.getInstance().addToActive(product);
-        DBManager.delete(editAttribute);
     }
 
     private void editPublicFeatureProduct(Product product,ProductEditAttribute editAttribute){
-        String title = editAttribute.getPublicFeatureTitle();
-        String feature = editAttribute.getPublicFeature();
+        Map<String, String> publicFeatures = editAttribute.getPublicFeatures();
         Map<String, String> features = product.getPublicFeatures();
-        if (features.containsKey(title)){
-            features.replace(title,feature);
-        }
+        publicFeatures.forEach((key, value) -> {
+            if (features.containsKey(key)) {
+                features.replace(key, value);
+            }
+        });
         DBManager.save(product);
     }
 
     private void editSpecialFeatureProduct(Product product,ProductEditAttribute editAttribute){
-        String title = editAttribute.getSpecialFeatureTitle();
-        String feature = editAttribute.getSpecialFeature();
-        Map<String, String> features = product.getSpecialFeatures();
-        if (features.containsKey(title)){
-            features.replace(title,feature);
-        }
+        Map<String, String> specialFeatures = editAttribute.getSpecialFeatures();
+        Map<String, String> features = product.getPublicFeatures();
+        specialFeatures.forEach((key, value) -> {
+            if (features.containsKey(key)) {
+                features.replace(key, value);
+            }
+        });
         DBManager.save(product);
     }
 
@@ -174,10 +188,7 @@ public class RequestManager {
                 removeProductToOff(off,changeAttributes);
             }
             DBManager.save(off);
-        } catch (NoSuchAOffException e) {
-        } finally {
-            DBManager.delete(changeAttributes);
-            DBManager.delete(request);
+        } catch (NoSuchAOffException ignore) {
         }
     }
 

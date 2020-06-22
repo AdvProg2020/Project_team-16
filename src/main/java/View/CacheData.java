@@ -14,6 +14,7 @@ public class CacheData {
         companyID = 0;
         username = "seller2";
         role = "seller";
+        productId = 2;
     }
 
     private String username;

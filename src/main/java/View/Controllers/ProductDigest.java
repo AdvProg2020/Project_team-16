@@ -80,6 +80,9 @@ public class ProductDigest {
         photoButtons();
         productButtons();
         commentButton();
+        if (!cacheData.getRole().equals("manager")) {
+            cartButt.setDisable(true);
+        }
         /*
             videoSection()
         */

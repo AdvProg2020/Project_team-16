@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import java.lang.String?>
 <?import java.net.URL?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -18,7 +19,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0"
             prefWidth="960.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
@@ -67,7 +67,7 @@
                             </font>
                         </Label>
                         <Rectangle fx:id="imageViewer" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="200.0"
-                                   stroke="BLACK" strokeType="INSIDE" width="200.0"/>
+                                   stroke="BLACK" strokeType="INSIDE" style="-fx-fill: transparent;" width="200.0"/>
                         <ListView fx:id="imageList" prefHeight="200.0" prefWidth="202.0"/>
                         <JFXButton fx:id="addPicture" prefHeight="26.0" prefWidth="243.0" text="Add Picture"
                                    textFill="WHITE">
@@ -132,10 +132,17 @@
                         </Label>
                         <TableView fx:id="featureTable" prefHeight="381.0" prefWidth="320.0">
                             <columns>
-                                <TableColumn fx:id="featureCol" prefWidth="93.59998053312302" text="Feature"/>
-                                <TableColumn fx:id="currentValCol" prefWidth="107.99999237060547" text="Current Value"/>
-                                <TableColumn fx:id="EdValCol" prefWidth="107.99999237060547" text="Edited Value"/>
+                                <TableColumn fx:id="featureCol" prefWidth="93.59998053312302"
+                                             style="-fx-text-fill: white;" text="Feature"/>
+                                <TableColumn fx:id="currentValCol" prefWidth="107.99999237060547"
+                                             style="-fx-text-fill: white;" text="Current Value"/>
+                                <TableColumn fx:id="EdValCol" prefWidth="107.99999237060547"
+                                             style="-fx-text-fill: white;" text="Edited Value"/>
                             </columns>
+                            <stylesheets>
+                                <URL value="@../CSSs/gradient.css"/>
+                                <URL value="@../CSSs/tabel.css"/>
+                            </stylesheets>
                         </TableView>
                         <TextField fx:id="editVal" promptText="Enter Edit Value"/>
                         <JFXButton fx:id="editFeatureBtn" prefHeight="26.0" prefWidth="375.0" text="Edit"
@@ -147,7 +154,7 @@
                                 <Font name="System Bold" size="12.0"/>
                             </font>
                         </JFXButton>
-                        <HBox fx:id="submitFeature" prefHeight="21.0" prefWidth="320.0" spacing="10.0">
+                        <HBox prefHeight="21.0" prefWidth="320.0" spacing="10.0">
                             <children>
                                 <JFXButton fx:id="resetTable" prefHeight="26.0" prefWidth="153.0" text="Reset Changes"
                                            textFill="WHITE">
@@ -158,7 +165,8 @@
                                         <Font name="System Bold" size="12.0"/>
                                     </font>
                                 </JFXButton>
-                                <JFXButton prefHeight="26.0" prefWidth="138.0" text="Submit Changes" textFill="WHITE">
+                                <JFXButton fx:id="submitFeatures" prefHeight="26.0" prefWidth="138.0"
+                                           text="Submit Changes" textFill="WHITE">
                                     <graphic>
                                         <FontIcon iconColor="WHITE" iconLiteral="fa-save" iconSize="15"/>
                                     </graphic>
@@ -213,7 +221,22 @@
                                     </font>
                                 </Label>
                                 <Region HBox.hgrow="ALWAYS"/>
-                                <ChoiceBox fx:id="colorBox" prefWidth="200.0"/>
+                                <ChoiceBox fx:id="colorBox" prefWidth="200.0">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value=""/>
+                                            <String fx:value="Black"/>
+                                            <String fx:value="White"/>
+                                            <String fx:value="Red"/>
+                                            <String fx:value="Blue"/>
+                                            <String fx:value="Orange"/>
+                                            <String fx:value="Cyan"/>
+                                            <String fx:value="Gray"/>
+                                            <String fx:value="Brown"/>
+                                            <String fx:value="Violet"/>
+                                        </FXCollections>
+                                    </items>
+                                </ChoiceBox>
                             </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="66.0" prefHeight="58.0" prefWidth="321.0"

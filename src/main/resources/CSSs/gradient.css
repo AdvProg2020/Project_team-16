@@ -33,18 +33,3 @@
     -fx-background-color: linear-gradient(from 5% 40% to 100% 100%, #cfcc3c, #fdff58, #cfcc3c, #fdff58, #cfcc3c, #fdff58);
 }
 
-.table-row-cell :odd {
-    -fx-background-color: rgba(0, 0, 0, 0.24);
-}
-
-.table-row-cell :even {
-    -fx-background-color: rgba(0, 0, 0, 0.48);
-}
-
-.table-row-cell {
-    -fx-background-color: rgba(0, 0, 0, 0.04);
-}
-
-.table-view {
-    -fx-background-color: transparent;
-}
