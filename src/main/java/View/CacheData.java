@@ -13,6 +13,7 @@ public class CacheData {
     public CacheData() {
         filters = new FilterPackage();
         sorts = new SortPackage();
+        cart = new NotSignedInCart();
         roleProperty = new SimpleStringProperty("");
         companyID = 0;
         username = "";

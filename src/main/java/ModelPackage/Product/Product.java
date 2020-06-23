@@ -28,7 +28,7 @@ public class Product {
     @Field
     private String name;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DATE_ADDED",updatable = false)
     private Date dateAdded;
 

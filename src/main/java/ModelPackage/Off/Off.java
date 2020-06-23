@@ -31,10 +31,10 @@ public class Off {
     @Enumerated(EnumType.STRING)
     private OffStatus offStatus;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
 
     @Column(name = "OFF_PERCENTAGE")

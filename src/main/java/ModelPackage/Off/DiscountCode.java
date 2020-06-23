@@ -19,10 +19,10 @@ public class DiscountCode {
     @Column(name = "CODE",unique = true)
     private String code;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
 
     private int offPercentage;

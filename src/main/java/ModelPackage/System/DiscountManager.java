@@ -48,12 +48,16 @@ public class DiscountManager {
     }
 
     void removeDiscount(DiscountCode discountCode) {
-
+        deleteMapsForUsers(discountCode);
         DBManager.delete(discountCode);
     }
 
-    private void deleteMapsForUsers() {
+    private void deleteMapsForUsers(DiscountCode discountCode) {
+        discountCode.getUsers().forEach(userIntegerMap -> deleteMapForUser(userIntegerMap, discountCode));
+    }
 
+    private void deleteMapForUser(UserIntegerMap map, DiscountCode code) {
+        // TODO: 6/23/2020
     }
 
     public void editDiscountCode(String code, DiscountCodeEditAttributes editAttributes)

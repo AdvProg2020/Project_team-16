@@ -1,5 +1,6 @@
 package View;
 
+import ModelPackage.System.TimeMachine;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.database.HibernateUtil;
 import javafx.animation.FadeTransition;
@@ -21,10 +22,13 @@ public class Main extends Application {
     private static Scene scene;
     private static double xOffset;
     private static double yOffset;
+    private static TimeMachine timeMachine;
 
     public static void main(String[] args) {
         HibernateUtil.startUtil();
         DBManager.initialLoad();
+        //timeMachine = new TimeMachine();
+        //new Thread(timeMachine).start();
         try {
             launch(args);
         }catch (Exception e){
@@ -90,6 +94,7 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         HibernateUtil.shutdown();
+        //timeMachine.stop();
         super.stop();
     }
 
