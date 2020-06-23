@@ -86,6 +86,7 @@ public class ProductRowForSM {
             Scene scene = new Scene(Main.loadFXML("ProductDigest"));
             scene.setFill(Color.TRANSPARENT);
             stage.initStyle(StageStyle.TRANSPARENT);
+            Main.moveSceneOnMouse(scene, stage);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

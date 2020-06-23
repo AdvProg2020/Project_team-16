@@ -29,6 +29,7 @@ import javafx.stage.StageStyle;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class NewProduct {
@@ -240,22 +241,16 @@ public class NewProduct {
         if (checkForEmptyValues()){
             String[] productInfo = new String[7];
             generateProductInfoPack(productInfo);
-            ArrayList<String> publicFeatures = new ArrayList<>();
-            ArrayList<String> privateFeatures = new ArrayList<>();
-            generateFeaturePacks(publicFeatures,privateFeatures);
-            String[] puFeature = new String[publicFeatures.size()];
-            puFeature = publicFeatures.toArray(puFeature);
-            String[] prFeature = new String[privateFeatures.size()];
-            prFeature = privateFeatures.toArray(prFeature);
+            HashMap<String, String> publicFeatures = new HashMap<>();
+            HashMap<String, String> specialFeatures = new HashMap<>();
+            generateFeaturePacks(publicFeatures, specialFeatures);
             try {
-                int productId = sellerController.addProduct(productInfo, puFeature, prFeature);
+                int productId = sellerController.addProduct(productInfo, publicFeatures, specialFeatures);
                 savePics(productId);
             } catch (NoSuchACategoryException | UserNotAvailableException ignore) {}
 
             Notification.show("Successful", "Your Product was Registered Successfully!!!", back.getScene().getWindow(), false);
         }
-
-
     }
 
     private void savePics(int id) {
@@ -329,19 +324,19 @@ public class NewProduct {
         infoPack[6] = price.getText();
     }
 
-    private void generateFeaturePacks(ArrayList<String> publicFeatures,ArrayList<String> privateFeatures){
+    private void generateFeaturePacks(HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures) {
         ArrayList<TableFeatureRow> list = new ArrayList<>(table.getItems());
-        ArrayList<String> pubTitle = (ArrayList<String>) SellerController.getInstance().getPublicFeatures();
+        ArrayList<String> publicTitles = (ArrayList<String>) SellerController.getInstance().getPublicFeatures();
+        int index;
         for (TableFeatureRow row : list) {
             String title = row.feature;
             String feature = row.value.getText();
-            if (pubTitle.contains(title)){
-                publicFeatures.add(title);
-                publicFeatures.add(feature);
-                pubTitle.remove(title);
+            index = publicTitles.indexOf(title);
+            if (index != -1) {
+                publicFeatures.put(title, feature);
+                publicTitles.remove(index);
             }else {
-                privateFeatures.add(title);
-                privateFeatures.add(feature);
+                specialFeatures.put(title, feature);
             }
         }
     }

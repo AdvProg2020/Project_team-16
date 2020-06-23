@@ -158,7 +158,7 @@ public class SellerController extends Controller{
         offManager.deleteOff(id,remover);
     }
 
-    public int addProduct(String[] data, String[] productPublicFeatures, String[] productSpecialFeatures)
+    public int addProduct(String[] data, HashMap<String, String> publicFeature, HashMap<String, String> specialFeature)
             throws NoSuchACategoryException, UserNotAvailableException {
         String sellerUserName = data[0];
         String productName = data[1];
@@ -174,9 +174,12 @@ public class SellerController extends Controller{
         DBManager.save(sellPackage);
         Company company = DBManager.load(Company.class, companyName);
         Product product = new Product(productName, company, category,
-                publicFeaturesOf(productPublicFeatures),
-                specialFeaturesOf(productSpecialFeatures),
+                publicFeature,
+                specialFeature,
                 description,sellPackage);
+        product.setLeastPrice(priceOfProduct);
+        sellPackage.setProduct(product);
+        DBManager.save(sellPackage);
         return productManager.createProduct(product, sellerUserName);
     }
 
@@ -193,22 +196,6 @@ public class SellerController extends Controller{
     public void editProduct(String sellerUserName, ProductEditAttribute editAttribute)
             throws NoSuchAProductException, EditorIsNotSellerException {
         productManager.editProduct(editAttribute, sellerUserName);
-    }
-
-    private HashMap<String,String> publicFeaturesOf(String[] publicFeatureData) {
-        HashMap<String,String> publicFeatures = new HashMap<>();
-        for (int i = 0; i < publicFeatureData.length; i += 2) {
-            publicFeatures.put(publicFeatureData[i], publicFeatureData[i + 1]);
-        }
-        return publicFeatures;
-    }
-
-    private HashMap<String,String> specialFeaturesOf(String[] specialFeatureData) {
-        HashMap<String,String> specialFeatures = new HashMap<>();
-        for (int i = 0; i < specialFeatureData.length; i += 2) {
-            specialFeatures.put(specialFeatureData[i], specialFeatureData[i + 1]);
-        }
-        return specialFeatures;
     }
 
     private ArrayList<MiniProductPM> addProductToOffPM(Off off) {

@@ -206,7 +206,7 @@ public class CSCLManagerTest {
         csclManager.createScore("ali110", 13, 2);
     }
     @Test
-    public void createSellLogTest(@Mocked ProductManager productManager) throws NoSuchAProductException {
+    public void createSellLogTest(@Mocked ProductManager productManager) throws NoSuchAProductException, NoSuchSellerException {
         new Expectations(){{
             DBManager.load(User.class, customer.getUsername());
             csclManager.findPrice(subCart);
