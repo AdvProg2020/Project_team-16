@@ -1,6 +1,9 @@
 package ModelPackage.System;
 
 import ModelPackage.Off.Off;
+import ModelPackage.Product.NoSuchSellerException;
+import ModelPackage.Product.Product;
+import ModelPackage.Product.SellPackage;
 import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.Off.OffStatus;
 import ModelPackage.System.database.DBManager;
@@ -50,7 +53,6 @@ public class OffManager {
         Off off = findOffById(changeAttributes.getSourceId());
         checkIfThisSellerCreatedTheOff(off,editor);
         off.setOffStatus(OffStatus.EDIT);
-        /* TODO : Alert Time manager to remove off */
         String strRequest = String.format("%s requested to edit an off with id %d",editor,off.getOffId());
         Request request = new Request(editor, RequestType.EDIT_OFF,strRequest,changeAttributes);
         RequestManager.getInstance().addRequest(request);
@@ -64,7 +66,22 @@ public class OffManager {
     public void deleteOff(int id,String remover) throws NoSuchAOffException, ThisOffDoesNotBelongssToYouException {
         Off off = findOffById(id);
         checkIfThisSellerCreatedTheOff(off,remover);
-        /* TODO : Notify Time manager to remove off */
+        deleteOff(off);
+    }
+
+    private void deleteOff(Product product, Seller remover) {
+        try {
+            SellPackage sellPackage = product.findPackageBySeller(remover);
+            sellPackage.setOnOff(false);
+            sellPackage.setOff(null);
+            DBManager.save(sellPackage);
+        } catch (NoSuchSellerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void deleteOff(Off off) {
+        off.getProducts().forEach(product -> deleteOff(product, off.getSeller()));
         DBManager.delete(off);
     }
 

@@ -28,7 +28,7 @@ public class Product {
     @Field
     private String name;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DATE_ADDED",updatable = false)
     private Date dateAdded;
 
@@ -76,9 +76,6 @@ public class Product {
 
     @OneToMany
     private List<SellPackage> packages;
-
-    @Column
-    private boolean isOnOff = false;
 
     public Product(int id){this.id = id;}
 
@@ -129,6 +126,13 @@ public class Product {
     public boolean hasSeller(String username){
         for (SellPackage sellPackage : packages) {
             if (sellPackage.getSeller().getUsername().equals(username))return true;
+        }
+        return false;
+    }
+
+    public boolean isOnOff() {
+        for (SellPackage sellPackage : packages) {
+            if (sellPackage.isOnOff()) return true;
         }
         return false;
     }
