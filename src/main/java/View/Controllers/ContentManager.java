@@ -89,7 +89,7 @@ public class ContentManager {
     }
 
     private void handleSubmit() {
-        contentController.addContent(title.getText(), content.getText());
+        contentController.addContent(crTitle.getText(), crContent.getText());
         show("Successful", "Done! Reload To See It",
                 close.getScene().getWindow(), false);
     }

@@ -1,13 +1,16 @@
 package View.Controllers;
 
+import ModelPackage.Users.MainContent;
 import View.CacheData;
 import View.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import controler.ContentController;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -15,6 +18,8 @@ import javafx.stage.Stage;
 import org.controlsfx.control.PopOver;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static View.Controllers.Notification.show;
 
@@ -36,15 +41,24 @@ public class MainPage {
         popOver();
         binds();
         listeners();
-        /*
         slider();
+        /*
         advertising();
         menus();
         */
     }
 
     private void slider() {
-
+        List<Node> nodes = new ArrayList<>();
+        List<MainContent> contents = ContentController.getInstance().getMainContents();
+        contents.forEach(content -> {
+            Parent parent = Content.createContent(content);
+            if (parent != null) {
+                nodes.add(parent);
+            }
+        });
+        Parent slideshow = SlideShow.makeSlideShow(nodes);
+        mainBox.getChildren().add(slideshow);
     }
 
     private void listeners() {
