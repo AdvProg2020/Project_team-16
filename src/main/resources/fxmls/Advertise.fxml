@@ -39,7 +39,6 @@
                 </VBox>
             </children>
         </HBox>
-        <Button fx:id="button" layoutX="845.0" layoutY="321.0" mnemonicParsing="false" text="Button" visible="true"/>
     </children>
     <cursor>
         <Cursor fx:constant="HAND"/>
