@@ -194,7 +194,7 @@ public class ProductDigest extends BackAbleController {
 
     private void backHandle() {
         try {
-            Scene scene = new Scene(Main.loadFXML(backFxml));
+            Scene scene = new Scene(Main.loadFXML(back()));
             Stage stage = (Stage) back.getScene().getWindow();
             Main.moveSceneOnMouse(scene, stage);
             stage.setScene(scene);

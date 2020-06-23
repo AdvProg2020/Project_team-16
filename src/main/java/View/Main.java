@@ -16,6 +16,8 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main extends Application {
     private static Stage window;
@@ -84,11 +86,19 @@ public class Main extends Application {
         return fxmlLoader.load();
     }
 
-    public static Parent loadFXML(String fxml, String backFxml) throws IOException {
+    public static Parent loadFXML(String fxml, String... backFxml) throws IOException {
         FXMLLoader loader = getFXMLLoader(fxml);
         Parent parent = loader.load();
         BackAbleController controller = loader.getController();
-        controller.setBackFxml(backFxml);
+        controller.setBackFxmlS(Arrays.asList(backFxml));
+        return parent;
+    }
+
+    public static Parent loadFXML(String fxml, List<String> bax) throws IOException {
+        FXMLLoader loader = getFXMLLoader(fxml);
+        Parent parent = loader.load();
+        BackAbleController controller = loader.getController();
+        controller.setBackFxmlS(bax);
         return parent;
     }
 
