@@ -77,9 +77,6 @@ public class Product {
     @OneToMany
     private List<SellPackage> packages;
 
-    @Column
-    private boolean isOnOff = false;
-
     public Product(int id){this.id = id;}
 
     public Product(String name, Company company, Category category, HashMap<String, String> publicFeatures, HashMap<String, String> specialFeatures, String description, SellPackage sellPackage) {
@@ -129,6 +126,13 @@ public class Product {
     public boolean hasSeller(String username){
         for (SellPackage sellPackage : packages) {
             if (sellPackage.getSeller().getUsername().equals(username))return true;
+        }
+        return false;
+    }
+
+    public boolean isOnOff() {
+        for (SellPackage sellPackage : packages) {
+            if (sellPackage.isOnOff()) return true;
         }
         return false;
     }

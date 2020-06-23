@@ -175,25 +175,11 @@ public class RequestManager {
         Off off = request.getOff();
         off.setOffStatus(OffStatus.ACCEPTED);
         DBManager.save(off);
-        addOffToProducts(off);
         Seller seller = off.getSeller();
         List<Off> offs = seller.getOffs();
         offs.add(off);
-        // TODO: 6/22/2020 Alert Timer
         seller.setOffs(offs);
         DBManager.save(seller);
-    }
-
-    private void addOffToProducts(Off off){
-        String seller = off.getSeller().getUsername();
-        for (Product product : off.getProducts()) {
-            try {
-                SellPackage sellPackage = product.findPackageBySeller(seller);
-                sellPackage.setOff(off);
-                sellPackage.setOnOff(true);
-                DBManager.save(sellPackage);
-            } catch (NoSuchSellerException ignore) {}
-        }
     }
 
     private void acceptEditOff(Request request){

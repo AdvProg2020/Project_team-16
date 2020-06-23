@@ -44,7 +44,16 @@ public class DiscountManager {
 
     public void removeDiscount(String code) throws NoSuchADiscountCodeException {
         DiscountCode discountCode = getDiscountByCode(code);
+        removeDiscount(discountCode);
+    }
+
+    void removeDiscount(DiscountCode discountCode) {
+
         DBManager.delete(discountCode);
+    }
+
+    private void deleteMapsForUsers() {
+
     }
 
     public void editDiscountCode(String code, DiscountCodeEditAttributes editAttributes)
@@ -143,10 +152,6 @@ public class DiscountManager {
         DBManager.save(discountCode);
     }
 
-    public DiscountCode showDiscountCode(String code) throws NoSuchADiscountCodeException {
-        return getDiscountByCode(code);
-    }
-
     public void createDiscountCode(String code,Date startTime, Date endTime, int offPercentage, long maxDiscount)
             throws NotValidPercentageException, StartingDateIsAfterEndingDate, AlreadyExistCodeException {
         checkIfStartingDateIsBeforeEndingDate(startTime, endTime);
@@ -166,7 +171,6 @@ public class DiscountManager {
         if (map == null) throw new UserNotExistedInDiscountCodeException(user.getUsername());
         int old = map.getInteger();
         if (old == 0){
-            DBManager.delete(discountCode);
             throw new NoMoreDiscount();
         }
         else

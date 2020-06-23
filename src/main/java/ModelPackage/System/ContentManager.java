@@ -57,4 +57,8 @@ public class ContentManager {
         }
         return advertises;
     }
+
+    void removeAdvertise(Advertise advertise) {
+        DBManager.delete(advertise);
+    }
 }
