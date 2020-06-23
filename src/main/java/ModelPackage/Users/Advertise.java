@@ -25,4 +25,7 @@ public class Advertise {
         this.username = username;
         active = false;
     }
+
+    public Advertise() {
+    }
 }

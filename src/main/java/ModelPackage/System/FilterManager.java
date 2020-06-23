@@ -4,10 +4,8 @@ import ModelPackage.Product.Product;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.filters.InvalidFilterException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 public class FilterManager {
 
     public static ArrayList<Product> updateFilterList(int categoryId, HashMap<String,String> filters,int[] priceRange)
@@ -69,6 +67,6 @@ public class FilterManager {
 
     private static boolean thisProductIsInPriceRange(int lower, int high, int leastPrice){
         if (high == 0) return true;
-        return (leastPrice > lower && leastPrice < high);
+        return (leastPrice >= lower && leastPrice <= high);
     }
 }

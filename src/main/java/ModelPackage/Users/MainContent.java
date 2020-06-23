@@ -21,6 +21,9 @@ public class MainContent {
         Content = content;
     }
 
+    public MainContent() {
+    }
+
     @Override
     public String toString() {
         return "MainContent{" +

@@ -34,7 +34,7 @@ public class Main extends Application {
         window = stage;
         loadLogo();
         try {
-            scene = new Scene(loadFXML("MainPage"));
+            scene = new Scene(loadFXML("ProductManagePage"));
         } catch (Exception e) {
             e.printStackTrace();
         }

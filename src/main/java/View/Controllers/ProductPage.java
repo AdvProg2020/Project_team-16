@@ -45,17 +45,10 @@ public class ProductPage {
     public JFXComboBox<String> color;
     public JFXSlider minPrice;
     public JFXSlider maxPrice;
-
-    Seller seller;
-
     // TODO: 6/20/2020 Fucking Full Of Problems Should Be Diagnose
 
     @FXML
     public void initialize() {
-        seller = new Seller("salam", "123", "Ali", "Alavi",
-                "paksima80@gmail.com", "12345", new Cart(),
-                new Company("Adidas", "1234", "qwe"), 2000);
-        test();
         initButtons();
         loadProducts();
     }
@@ -92,7 +85,6 @@ public class ProductPage {
             switch (cacheData.getRole()) {
                 case "seller":
                     List<MiniProductPM> productPMS = SellerController.getInstance().manageProducts(cacheData.getUsername() /*"Ali"*/, sortPackage, filterPackage);
-                    //System.err.println(productPMS);
                     createListsOfProductsInVBox(productPMS);
                     break;
                 case "manager":
@@ -104,29 +96,6 @@ public class ProductPage {
         } catch (UserNotAvailableException e) {
             new OopsAlert().show(e.getMessage());
         }
-    }
-
-    private void test() {
-        HashMap<String, String> publicFeatures = new HashMap<>();
-        Product product1 = new Product("Shoe", new Company("Adidas", "dsf", "qwedf"),
-                new Category(), publicFeatures, new HashMap<>(), "Good", new SellPackage()); product1.setId(10);
-                product1.setView(10);
-                product1.setBoughtAmount(4);
-                product1.setTotalScore(4);
-        Product product2 = new Product("Shirt", new Company("Adidas", "dsf", "qwedf"),
-                new Category(), publicFeatures, new HashMap<>(), "Good", new SellPackage()); product2.setId(11);
-                product2.setView(20);
-                product2.setBoughtAmount(2);
-                product2.setTotalScore(2.4);
-        product1.getPackages().add(new SellPackage(product1, seller, 20, 1,
-                new Off(), false, true));
-        product2.getPackages().add(new SellPackage(product2, seller, 30, 2,
-                new Off(), false, true));
-        seller.getPackages().add(new SellPackage(product1, seller, 20, 1,
-                new Off(), false, true));
-        seller.getPackages().add(new SellPackage(product2, seller, 30, 2,
-                new Off(), false, true));
-        DBManager.save(seller); DBManager.save(product1); DBManager.save(product2);
     }
 
     private FilterPackage makeFilterPackage() {
