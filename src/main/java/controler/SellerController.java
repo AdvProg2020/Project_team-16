@@ -177,6 +177,7 @@ public class SellerController extends Controller{
                 publicFeaturesOf(productPublicFeatures),
                 specialFeaturesOf(productSpecialFeatures),
                 description,sellPackage);
+        product.setLeastPrice(priceOfProduct);
         return productManager.createProduct(product, sellerUserName);
     }
 
