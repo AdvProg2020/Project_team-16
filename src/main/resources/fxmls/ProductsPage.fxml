@@ -140,9 +140,10 @@
             </HBox>
          </left>
          <center>
-            <ScrollPane fx:id="productVBox" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+             <ScrollPane fx:id="productVBox" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0"
+                         BorderPane.alignment="CENTER">
                <content>
-                  <VBox prefWidth="533.0" />
+                   <VBox prefWidth="520.0" spacing="5.0"/>
                </content>
             </ScrollPane>
          </center>
