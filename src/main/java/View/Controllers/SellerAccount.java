@@ -18,6 +18,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.controlsfx.control.PopOver;
 
 import java.io.*;
 
@@ -50,6 +51,7 @@ public class SellerAccount {
     public JFXButton cancelButt;
     public JFXButton confirmButt;
     public JFXButton chooseProf;
+    public JFXButton ad;
     public Circle imageCircle;
 
     private static final Paint redColor = Paint.valueOf("#c0392b");
@@ -62,6 +64,7 @@ public class SellerAccount {
 
     private UserFullPM userFullPM;
     private CompanyPM companyPM;
+    private PopOver popOver;
 
     public void initialize(){
         handleButtons();
@@ -140,6 +143,25 @@ public class SellerAccount {
         cancelButt.setOnAction(event -> handleCancel());
         newProduct.setOnAction(event -> handleNewProduct());
         chooseProf.setOnAction(event -> handleChooseProf());
+        loadPopup();
+        ad.setOnAction(event -> showPopUp());
+    }
+
+    private void showPopUp() {
+        if (popOver.isShowing()) {
+            popOver.hide();
+        } else {
+            popOver.show(ad);
+        }
+    }
+
+    private void loadPopup() {
+        try {
+            popOver = new PopOver(Main.loadFXML("AddAdPopUp"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        popOver.setArrowLocation(PopOver.ArrowLocation.BOTTOM_CENTER);
     }
 
     private void handleChooseProf() {

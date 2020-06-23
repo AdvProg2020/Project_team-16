@@ -13,6 +13,12 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ContentManager {
+    private static ContentManager contentManager = new ContentManager();
+
+    public static ContentManager getInstance() {
+        return contentManager;
+    }
+
     public void addContent(String title, String content) {
         MainContent mainContent = new MainContent(title, content);
         DBManager.save(mainContent);
@@ -29,6 +35,7 @@ public class ContentManager {
         checkIfAdvertisedYet(username);
         Product product = ProductManager.getInstance().findProductById(id);
         Advertise advertise = new Advertise(product, username);
+        DBManager.save(advertise);
         Request request = new Request(username, RequestType.ADVERTISE,
                 username + "has requested to create an ad on product " + product.getId(),
                 advertise);
