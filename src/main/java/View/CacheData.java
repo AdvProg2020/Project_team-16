@@ -13,10 +13,10 @@ public class CacheData {
     public CacheData() {
         filters = new FilterPackage();
         sorts = new SortPackage();
-        roleProperty = new SimpleStringProperty("seller");
+        roleProperty = new SimpleStringProperty("");
         companyID = 0;
-        username = "seller2";
-        role = "seller";
+        username = "";
+        role = "";
         productId = 2;
     }
 

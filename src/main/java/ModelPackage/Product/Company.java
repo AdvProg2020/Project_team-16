@@ -15,7 +15,8 @@ import java.util.List;
 @Table(name = "t_company")
 public class Company {
     @Setter(AccessLevel.NONE)
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "NAME_OF_COMPANY",unique = true)
