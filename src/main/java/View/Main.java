@@ -2,14 +2,17 @@ package View;
 
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.database.HibernateUtil;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -80,9 +83,20 @@ public class Main extends Application {
         return fxmlLoader.load();
     }
 
+    public static FXMLLoader getFXMLLoader(String fxml) {
+        return new FXMLLoader(Main.class.getClassLoader().getResource("./fxmls/" + fxml + ".fxml"));
+    }
+
     @Override
     public void stop() throws Exception {
         HibernateUtil.shutdown();
         super.stop();
+    }
+
+    public static FadeTransition makeFade(Node node, double from, double to, int duration) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(duration), node);
+        fadeTransition.setToValue(to);
+        fadeTransition.setFromValue(from);
+        return fadeTransition;
     }
 }
