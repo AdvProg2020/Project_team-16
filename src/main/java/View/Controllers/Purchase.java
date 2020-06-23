@@ -9,12 +9,15 @@ import View.CacheData;
 import View.Main;
 import View.PrintModels.CartPM;
 import View.PrintModels.DisCodeUserPM;
+import View.PrintModels.InCartPM;
+import View.PrintModels.MiniProductPM;
 import View.SortPackage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import controler.CustomerController;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -90,6 +93,7 @@ public class Purchase {
     @FXML
     public void initialize() {
         initializeButtons();
+        bindings();
         disableTabs();
         loadComboBox();
         loadCart();
@@ -105,9 +109,9 @@ public class Purchase {
     }
 
     private void disableTabs() {
-        postalInformation.setDisable(true);
+        /*postalInformation.setDisable(true);
         discount.setDisable(true);
-        payment.setDisable(true);
+        payment.setDisable(true);*/
     }
 
     private void loadComboBox() {
@@ -183,6 +187,23 @@ public class Purchase {
         } catch (UserNotAvailableException | NoSuchSellerException e) {
             new OopsAlert().show(e.getMessage());
         }
+        //cartPM = getTestCart();
+    }
+
+    private CartPM getTestCart() {
+        ArrayList<InCartPM> purchases = new ArrayList<>();
+        purchases.add(new InCartPM(
+                new MiniProductPM("dullForKimmi", 123, "Clothes", "Addidas", 1.26, "Hey thats good!!!", null),
+                "12",
+                200000,
+                46,
+                12
+        ));
+
+        return new CartPM(
+               150000,
+                purchases
+        );
     }
 
     private void initializeButtons() {
@@ -194,6 +215,15 @@ public class Purchase {
         nextPageDiscount.setOnAction(e -> tabPane.getSelectionModel().selectNext());
         previousPageDiscount.setOnAction(e -> tabPane.getSelectionModel().selectPrevious());
         useDiscount.setOnAction(e -> handleUseDiscountButt());
+    }
+
+    private void bindings() {
+        nextPagePostalInformation.disableProperty().bind(
+                Bindings.isNull(country.getSelectionModel().selectedItemProperty())
+                .or(Bindings.isNull(city.getSelectionModel().selectedItemProperty()))
+                .or(Bindings.isEmpty(address.textProperty()))
+                .or(Bindings.isEmpty(zipCode.textProperty()))
+        );
     }
 
     private void handleUseDiscountButt() {
@@ -315,6 +345,7 @@ public class Purchase {
 
     private boolean checkCVV2Numbers() {
         if (cvv2.getText().isEmpty()) {
+            Notification.show("Error", "Fill CVV2 field, please!", back.getScene().getWindow(), true);
             new OopsAlert().show("Fill CVV2 field, please!");
             return false;
         }
