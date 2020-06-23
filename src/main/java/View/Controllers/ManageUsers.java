@@ -4,6 +4,7 @@ import ModelPackage.System.exeption.account.UserNotAvailableException;
 import View.Main;
 import View.PrintModels.UserFullPM;
 import com.jfoenix.controls.JFXButton;
+import controler.AccountController;
 import controler.ManagerController;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -101,7 +102,7 @@ public class ManageUsers {
         lastname.setText(newUser.getLastName());
         email.setText(newUser.getEmail());
         phone.setText(newUser.getPhoneNumber());
-        //TODO: Update Prof Pic!!!
+        userImage.setImage(AccountController.getInstance().userImage(newUser.getUsername()));
     }
 
     private void handleDeleteUser() {

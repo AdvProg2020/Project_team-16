@@ -12,4 +12,9 @@ public class DisCodeUserPM extends DiscountPM {
         super(discountCode, startTime, endTime, offPercentage, maxOfPriceDiscounted);
         this.count = count;
     }
+
+    @Override
+    public String toString() {
+        return super.getDiscountCode();
+    }
 }
