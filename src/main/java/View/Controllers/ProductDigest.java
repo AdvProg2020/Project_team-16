@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ProductDigest {
+public class ProductDigest extends BackAbleController {
     public JFXButton back;
     public JFXButton cartButt;
     public JFXButton minimize;
@@ -193,7 +193,14 @@ public class ProductDigest {
     }
 
     private void backHandle() {
-        // TODO: 6/15/2020
+        try {
+            Scene scene = new Scene(Main.loadFXML(backFxml));
+            Stage stage = (Stage) back.getScene().getWindow();
+            Main.moveSceneOnMouse(scene, stage);
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void commentSection() {

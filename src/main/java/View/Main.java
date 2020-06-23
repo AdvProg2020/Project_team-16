@@ -2,6 +2,7 @@ package View;
 
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.database.HibernateUtil;
+import View.Controllers.BackAbleController;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -81,6 +82,14 @@ public class Main extends Application {
     public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource("./fxmls/" + fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+
+    public static Parent loadFXML(String fxml, String backFxml) throws IOException {
+        FXMLLoader loader = getFXMLLoader(fxml);
+        Parent parent = loader.load();
+        BackAbleController controller = loader.getController();
+        controller.setBackFxml(backFxml);
+        return parent;
     }
 
     public static FXMLLoader getFXMLLoader(String fxml) {

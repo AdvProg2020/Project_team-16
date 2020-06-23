@@ -58,7 +58,7 @@ public class Advertise {
     private void gotoProduct(int productId) {
         CacheData.getInstance().setProductId(productId);
         try {
-            Scene scene = new Scene(Main.loadFXML("ProductDigest"));
+            Scene scene = new Scene(Main.loadFXML("ProductDigest", "MainPage"));
             Stage stage = new Stage(StageStyle.UNDECORATED);
             Main.moveSceneOnMouse(scene, stage);
             stage.setScene(scene);
