@@ -45,7 +45,6 @@ public class Content {
             Parent parent = loader.load();
             Content controller = loader.getController();
             controller.initData(content);
-            System.out.println("here");
             return parent;
         } catch (IOException e) {
             e.printStackTrace();

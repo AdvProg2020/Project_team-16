@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
@@ -21,10 +22,12 @@ public class SlideShow {
     public AnchorPane container;
     public JFXButton previous;
     public JFXButton next;
+    public Label noContent;
 
     private List<Node> nodeList;
     private int currentIndex = 0;
     private int total = 0;
+    private Timeline timeline;
 
     public static Parent makeSlideShow(List<Node> nodes) {
         FXMLLoader loader = getFXMLLoader("SlideShow");
@@ -46,8 +49,9 @@ public class SlideShow {
     }
 
     private void timeline() {
-        Timeline automatic = new Timeline(new KeyFrame(Duration.seconds(5), event -> showNext()));
-        automatic.play();
+        timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> showNext()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
     private void buttons() {
@@ -56,6 +60,7 @@ public class SlideShow {
     }
 
     private void showNext() {
+        if (total == -1) return;
         if (currentIndex < total) {
             currentIndex++;
         } else {
@@ -65,6 +70,7 @@ public class SlideShow {
     }
 
     private void showPrevious() {
+        if (total == -1) return;
         if (currentIndex == 0) {
             currentIndex = total;
         } else {
@@ -96,9 +102,12 @@ public class SlideShow {
         if (total != -1) {
             container.getChildren().clear();
             container.getChildren().add(list.get(0));
-        } else {
-
         }
-
+        if (!list.isEmpty()) {
+            noContent.setVisible(false);
+        }
+        if (list.size() == 1 | list.size() == 0) {
+            timeline.stop();
+        }
     }
 }

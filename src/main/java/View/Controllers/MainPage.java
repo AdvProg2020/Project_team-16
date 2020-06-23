@@ -3,6 +3,7 @@ package View.Controllers;
 import ModelPackage.Users.MainContent;
 import View.CacheData;
 import View.Main;
+import View.PrintModels.AdPM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -42,10 +43,23 @@ public class MainPage {
         binds();
         listeners();
         slider();
-        /*
         advertising();
+        /*
         menus();
         */
+    }
+
+    private void advertising() {
+        List<Node> nodes = new ArrayList<>();
+        List<AdPM> pms = ContentController.getInstance().getAds();
+        pms.forEach(pm -> {
+            Parent parent = Advertise.createAdvertise(pm);
+            if (parent != null) {
+                nodes.add(parent);
+            }
+        });
+        Parent slideshow = SlideShow.makeSlideShow(nodes);
+        mainBox.getChildren().add(slideshow);
     }
 
     private void slider() {
