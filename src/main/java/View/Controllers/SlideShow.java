@@ -74,22 +74,31 @@ public class SlideShow {
     }
 
     private void show(Node node) {
-        Node current = container.getChildren().get(0);
-        FadeTransition fadeOut = makeFade(current, 1, 0, 200);
-        fadeOut.setOnFinished(event -> {
-            container.getChildren().clear();
-            FadeTransition fadeIn = makeFade(node, 0, 1, 200);
-            container.getChildren().add(node);
-            fadeIn.play();
-        });
-        fadeOut.play();
+        try {
+            Node current = container.getChildren().get(0);
+            FadeTransition fadeOut = makeFade(current, 1, 0, 200);
+            fadeOut.setOnFinished(event -> {
+                container.getChildren().clear();
+                FadeTransition fadeIn = makeFade(node, 0, 1, 200);
+                container.getChildren().add(node);
+                fadeIn.play();
+            });
+            fadeOut.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initData(List<Node> list) {
         nodeList = list;
         currentIndex = 0;
         total = list.size() - 1;
-        container.getChildren().clear();
-        container.getChildren().add(list.get(0));
+        if (total != -1) {
+            container.getChildren().clear();
+            container.getChildren().add(list.get(0));
+        } else {
+
+        }
+
     }
 }
