@@ -14,5 +14,4 @@ public class DiscountCodeCustomer {
     public TableColumn percent;
     public TableColumn startDate;
     public TableColumn endDate;
-    public ListView codesList;
 }
