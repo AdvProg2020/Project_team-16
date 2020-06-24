@@ -6,10 +6,9 @@ import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Off.DiscountCode;
-import ModelPackage.Product.Company;
-import ModelPackage.Product.Product;
-import ModelPackage.Product.SoldProduct;
+import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.NotEnoughMoneyException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
@@ -25,6 +24,8 @@ import org.junit.Test;
 
 import java.io.Serializable;
 import java.util.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class CustomerManagerTest {
     private CustomerManager customerManager;
@@ -65,7 +66,6 @@ public class CustomerManagerTest {
                 adidas,
                 0
         );
-        dullForKimmi = new Product();
 
         SoldProductSellerMap productSeller = new SoldProductSellerMap();
         productSeller.setSoldProduct(new SoldProduct());
@@ -107,6 +107,10 @@ public class CustomerManagerTest {
         hatamCart = new Cart();
         hatamCart.setDiscountCode(discountCode.getCode());
 
+        SellPackage sellPackage = new SellPackage(dullForKimmi, marmof, 10000, 10, null, false, true);
+        dullForKimmi = new Product("dullForKimmi", adidas, new Category(), new HashMap<>(),
+                new HashMap<>(), "Dull!!!", sellPackage);
+
         SubCart subCart = new SubCart(dullForKimmi, marmof, 2);
         List<SubCart> subCarts = new ArrayList<>();
         subCarts.add(subCart);
@@ -116,13 +120,6 @@ public class CustomerManagerTest {
 
         hatam.setCart(hatamCart);
 
-        SellerIntegerMap sellerIntegerMap = new SellerIntegerMap();
-        sellerIntegerMap.setInteger(10);
-
-        ArrayList<SellerIntegerMap> stock = new ArrayList<>();
-        stock.add(sellerIntegerMap);
-
-        dullForKimmi.setStock(stock);
     }
 
     @Before
@@ -148,6 +145,16 @@ public class CustomerManagerTest {
         };
     }
 
+    @Test
+    public void findCustomerByIdTest() throws NoSuchACustomerException {
+        Customer actual = customerManager.findCustomerById("hatam008");
+        assertEquals(hatam, actual);
+    }
+
+    @Test(expected = NoSuchACustomerException.class)
+    public void findCustomerByIdExcTest() throws NoSuchACustomerException {
+        customerManager.findCustomerById("ali");
+    }
 
     @Test
     public void viewOrders(){
@@ -158,13 +165,14 @@ public class CustomerManagerTest {
 
     @Test
     public void viewDisCodes(){
-        List<DiscountcodeIntegerMap> actualDiscodes = customerManager.viewDiscountCodes("hatam008");
+        List<DiscountcodeIntegerMap> actualDisCodes = customerManager.viewDiscountCodes("hatam008");
 
-        Assert.assertArrayEquals(discounts.toArray(),actualDiscodes.toArray());
+        Assert.assertArrayEquals(discounts.toArray(),actualDisCodes.toArray());
     }
 
     @Test
-    public void purchase() throws NotEnoughAmountOfProductException, NoSuchAProductException {
+    public void purchase() throws NotEnoughAmountOfProductException, NoSuchAProductException,
+            NoSuchSellerException {
         new MockUp<CustomerManager>(){
             @Mock
             public void checkIfThereIsEnoughAmount(Customer customer){}
@@ -186,11 +194,12 @@ public class CustomerManagerTest {
 
         customerManager.purchase("hatam008", customerInformation, discountCode);
 
-        Assert.assertEquals(20000, marmof.getBalance());
+        assertEquals(20000, marmof.getBalance());
     }
 
     @Test
-    public void checkEnoughAmount() throws NotEnoughAmountOfProductException, NoSuchAProductException {
+    public void checkEnoughAmount() throws NotEnoughAmountOfProductException,
+            NoSuchAProductException, NoSuchSellerException {
         new MockUp<CartManager>(){
             @Mock
             public void checkIfThereIsEnoughAmountOfProduct(int productId, String sellerId, int amount){}
@@ -202,35 +211,54 @@ public class CustomerManagerTest {
     public void purchaseForCustomer() {
         customerManager.purchaseForCustomer(hatam, customerInformation, discountCode);
 
-        Assert.assertEquals(2000, hatam.getBalance());
+        assertEquals(2000, hatam.getBalance());
     }
 
     @Test
     public void getTotalPrice() {
         long actual = customerManager.getTotalPrice(discountCode, hatam);
         long expected = 18000;
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void productChangeInPurchase() {
+    public void productChangeInPurchase() throws NoSuchSellerException {
         new MockUp<ProductManager>(){
             @Mock
             public void changeAmountOfStock(int productId, String sellerId, int amount){
-                dullForKimmi.getStock().get(0).setInteger(8);
+                dullForKimmi.getPackages().get(0).setStock(8);
             }
         };
 
         customerManager.productChangeInPurchase(hatam);
 
         int expected = 8;
-        int actual = dullForKimmi.getStock().get(0).getInteger();
+        int actual = dullForKimmi.getPackages().get(0).getStock();
 
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test(expected = NotEnoughMoneyException.class)
     public void checkIfCustomerHasEnoughMoney(){
         customerManager.checkIfCustomerHasEnoughMoney(10);
+    }
+
+    @Test
+    public void addPurchaseLogTest() {
+        SoldProductSellerMap productSeller = new SoldProductSellerMap();
+        productSeller.setSoldProduct(new SoldProduct());
+        productSeller.setSeller(marmof);
+
+        ArrayList<SoldProductSellerMap> productSellerMaps = new ArrayList<>();
+        productSellerMaps.add(productSeller);
+        PurchaseLog purchaseLog = new PurchaseLog(
+                new Date(),
+                DeliveryStatus.DELIVERED,
+                productSellerMaps,
+                20000,
+                10
+        );
+        customerManager.addPurchaseLog(purchaseLog, hatam);
+        assertEquals(hatam.getPurchaseLogs().size(), 2);
     }
 }

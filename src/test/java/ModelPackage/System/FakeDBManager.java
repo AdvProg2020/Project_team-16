@@ -13,6 +13,7 @@ import mockit.Mock;
 import mockit.Mocked;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class FakeDBManager extends MockUp<DBManager> {
 
@@ -32,15 +33,27 @@ public class FakeDBManager extends MockUp<DBManager> {
         if (object instanceof Seller)
             firstSeller = (Seller) object;
         else if (object instanceof Product) {
-            if (((Product) object).getId() == 1)
-                product = ((Product) object);
-            else if (((Product) object).getId() == 2)
-                product1 = ((Product) object);
+            handleSaveProduct(object);
         } else if (object instanceof SubCart)
-            subCart = ((SubCart) object);
+            handleSaveSubCart(object);
         else if (object instanceof Cart)
-            cart = ((Cart) object);
+            handleSaveCart(object);
 
+    }
+
+    private void handleSaveProduct(Object object) {
+        if (((Product) object).getId() == 1)
+            product = ((Product) object);
+        else if (((Product) object).getId() == 2)
+            product1 = ((Product) object);
+    }
+
+    private void handleSaveSubCart(Object object) {
+        subCart = ((SubCart) object);
+    }
+
+    private void handleSaveCart(Object object) {
+        cart = ((Cart) object);
     }
 
     @Mock
