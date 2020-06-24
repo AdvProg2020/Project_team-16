@@ -9,6 +9,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+// TODO: 6/23/2020 Keep SellPackages On Off Instead of Products
 
 @Data
 @Entity
@@ -30,10 +31,10 @@ public class Off {
     @Enumerated(EnumType.STRING)
     private OffStatus offStatus;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
 
     @Column(name = "OFF_PERCENTAGE")

@@ -204,7 +204,7 @@
                                      <Button fx:id="compare" focusTraversable="false" mnemonicParsing="false"
                                              prefHeight="26.0" prefWidth="159.0" text="   Compare">
                                        <graphic>
-                                          <FontIcon iconLiteral="fa-pie-chart" iconSize="20" />
+                                           <FontIcon iconLiteral="fa-balance-scale" iconSize="20"/>
                                        </graphic>
                                        <font>
                                           <Font size="14.0" />

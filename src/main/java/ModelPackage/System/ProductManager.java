@@ -1,10 +1,8 @@
 package ModelPackage.System;
 
-import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.ProductEditAttribute;
-import ModelPackage.System.exeption.account.ProductNotHaveSellerException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.product.*;
@@ -40,6 +38,9 @@ public class ProductManager {
     }
 
     public int createProduct(Product product, String sellerId) {
+        product.setView(0);
+        product.setBoughtAmount(0);
+        product.setTotalScore(0);
         DBManager.save(product);
         String requestStr = String.format("%s has requested to create Product \"%s\" with id %s",sellerId,product.getName(),product.getId());
         Seller seller = DBManager.load(Seller.class,sellerId);
@@ -97,12 +98,14 @@ public class ProductManager {
         return list;
     }
 
+    // TODO: 6/23/2020 Add to Product Digest
     public void addView(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         product.setView(product.getView()+1);
         DBManager.save(product);
     }
 
+    // TODO: 6/23/2020 Add to Purchase
     public void addBought(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         product.setBoughtAmount(product.getBoughtAmount()+1);
@@ -141,14 +144,6 @@ public class ProductManager {
         return toReturn;
     }
 
-    public Score[] showScores(int productId) throws NoSuchAProductException {
-        Product product = findProductById(productId);
-        ArrayList<Score> scores = (ArrayList<Score>)product.getAllScores();
-        Score[] toReturn = new Score[scores.size()];
-        scores.toArray(toReturn);
-        return toReturn;
-    }
-
     public boolean doesThisProductExist(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         return (product != null);
@@ -157,23 +152,6 @@ public class ProductManager {
     public void checkIfThisProductExists(int productId) throws NoSuchAProductException{
         Product product = findProductById(productId);
         if (product == null) throw new NoSuchAProductException(Integer.toString(productId));
-    }
-
-    public boolean isThisProductAvailable(int id) throws NoSuchAProductException {
-        Product product = findProductById(id);
-        ProductStatus productStatus = product.getProductStatus();
-        return productStatus == ProductStatus.VERIFIED;
-    }
-
-    public int leastPriceOf(int productId) throws NoSuchAProductException {
-        Product product = findProductById(productId);
-        return product.getLeastPrice();
-    }
-
-    public Seller getSellerOfProduct(int productId, String sellerUserName)
-            throws NoSuchAProductException, NoSuchSellerException {
-        Product product = findProductById(productId);
-        return product.findPackageBySeller(sellerUserName).getSeller();
     }
 
     public void deleteProduct(int productId,String remover)
@@ -214,6 +192,10 @@ public class ProductManager {
     public void addASellerToProduct(Product product,Seller seller,int amount,int price) {
         SellPackage sellPackage = new SellPackage(product,seller,price,amount,null, false,true);
         DBManager.save(sellPackage);
+        int currentLeast = product.getLeastPrice();
+        if (currentLeast > price) {
+            product.setLeastPrice(price);
+        }
         product.getPackages().add(sellPackage);
         seller.getPackages().add(sellPackage);
         DBManager.save(seller);

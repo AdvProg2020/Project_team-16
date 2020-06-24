@@ -12,12 +12,12 @@ public class Advertise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
+    @OneToOne
     private Product product;
     @Column(unique = true)
     private String username;
     private boolean active;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
     public Advertise(Product product, String username) {

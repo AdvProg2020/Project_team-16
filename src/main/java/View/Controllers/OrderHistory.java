@@ -92,15 +92,14 @@ public class OrderHistory {
     private ObservableList<OrderLogPM> getOrders(){
         ObservableList<OrderLogPM> orders = FXCollections.observableArrayList();
 
-        try {
+        /*try {
             orders.addAll(customerController.viewOrders(username));
-        } catch (UserNotAvailableException e) {
-            System.out.println("User Not Found!!!");
-        } catch (NoSuchALogException | NoSuchAProductException e) {
+        } catch (UserNotAvailableException | NoSuchALogException | NoSuchAProductException e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();
-        }
+        }*/
 
-        //orders.addAll(loadOrders());
+        orders.addAll(loadOrders());
 
         return orders;
     }
@@ -160,7 +159,8 @@ public class OrderHistory {
             Main.setRoot("ProductDigest");
             cacheData.setProductId(productsTable.getSelectionModel().getSelectedItem().getId());
         } catch (IOException e) {
-            System.out.println("Could Not Initialize Product Menu!!!");
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
+            e.printStackTrace();
         }
     }
 
@@ -168,7 +168,8 @@ public class OrderHistory {
         try {
             Main.setRoot("Cart");
         } catch (IOException e) {
-            System.out.println("Could Not Initialize Main Menu!!!");
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
+            e.printStackTrace();
         }
     }
 
@@ -176,7 +177,8 @@ public class OrderHistory {
         try {
             Main.setRoot("CustomerAccount");
         } catch (IOException e) {
-            System.out.println("Could Not Initialize Main Menu!!!");
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
+            e.printStackTrace();
         }
     }
 }

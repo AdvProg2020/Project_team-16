@@ -420,7 +420,7 @@ public class DiscountManager {
     }
 
     private void loadList() {
-        ArrayList<DisCodeManagerPM> list = load();//managerController.viewDiscountCodes();
+        ArrayList<DisCodeManagerPM> list = /*load();*/managerController.viewDiscountCodes();
         ObservableList<DisCodeManagerPM> data = FXCollections.observableArrayList(list);
         codes.setItems(data);
     }

@@ -42,10 +42,11 @@ public class AccountManagerPopUp {
                 case "Customer":
                     scene = new Scene(Main.loadFXML("CustomerAccount"));
                     break;
-                case "seller":
+                case "Seller":
                     scene = new Scene(Main.loadFXML("SellerAccount"));
                     break;
             }
+            Main.moveSceneOnMouse(scene, stage);
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
