@@ -114,6 +114,7 @@ public class Main extends Application {
     public static void setSceneToStage(Stage stage, Scene scene) {
         moveSceneOnMouse(scene, stage);
         stage.setScene(scene);
+        stage.show();
     }
 
     @Override

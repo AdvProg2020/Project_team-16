@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DBManager {
     public static <T> T load(Class<T> type, Serializable serializable){
-         Session session = HibernateUtil.getSession();
+        Session session = HibernateUtil.getSession();
         return session.get(type, serializable);
     }
 
@@ -25,6 +25,7 @@ public class DBManager {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
         session.remove(object);
+        session.getTransaction().commit();
     }
 
     public static <T> List<T> loadAllData(Class<T> type) {

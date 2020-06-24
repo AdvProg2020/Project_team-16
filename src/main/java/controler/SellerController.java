@@ -173,6 +173,9 @@ public class SellerController extends Controller{
         SellPackage sellPackage = new SellPackage(null,seller,priceOfProduct,amountOfProduct,null,false,true);
         DBManager.save(sellPackage);
         Company company = DBManager.load(Company.class, companyName);
+        if (company == null) {
+            throw new RuntimeException("Invalid Company");
+        }
         Product product = new Product(productName, company, category,
                 publicFeature,
                 specialFeature,

@@ -1,8 +1,5 @@
 package View.Controllers;
 
-import ModelPackage.System.exeption.category.NoSuchACategoryException;
-import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
-import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.CacheData;
@@ -11,7 +8,6 @@ import com.jfoenix.controls.JFXButton;
 import controler.ManagerController;
 import controler.ProductController;
 import controler.SellerController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -44,7 +40,8 @@ public class ProductRowForSM {
 
     @FXML
     public void initialize(){
-        canEditThis = CacheData.getInstance().getRole().equals("seller");
+        canEditThis = CacheData.getInstance().getRole().equals("Seller") |
+                CacheData.getInstance().getRole().equals("seller");
         name.setText(nameStr);
         id.setText("" + productId);
         editButt.setDisable(!canEditThis);
@@ -80,7 +77,7 @@ public class ProductRowForSM {
         } else {
             try {
                 ManagerController.getInstance().removeProduct(idProduct);
-            } catch (NoSuchACategoryException | NoSuchAProductInCategoryException | NoSuchAProductException e) {
+            } catch (NoSuchAProductException e) {
                 new OopsAlert().show(e.getMessage());
                 e.printStackTrace();
             }

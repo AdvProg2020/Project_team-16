@@ -140,6 +140,9 @@ public class EditProduct {
         ProductEditAttribute attribute = new ProductEditAttribute();
         attribute.setSourceId(id);
         Map<String, String> features = new HashMap<>();
+        if (!name.getText().isBlank()) {
+            attribute.setName(name.getText());
+        }
         if (!dimension.getText().isEmpty()) {
             features.put("Dimension", dimension.getText());
         }
@@ -154,7 +157,7 @@ public class EditProduct {
                 throw new NotValidFieldException("price", " positive integer");
             }
         }
-        if (!weigh.getText().isEmpty()) {
+        if (!stock.getText().isEmpty()) {
             String stock = this.stock.getText();
             if (stock.matches("\\d{0,9}")) {
                 attribute.setNewStock(Integer.parseInt(stock));
@@ -162,7 +165,7 @@ public class EditProduct {
                 throw new NotValidFieldException("stock", " positive integer");
             }
         }
-        if (colorBox.isShowing()) {
+        if (colorBox.getSelectionModel().getSelectedItem() != null) {
             features.put("Color", colorBox.getSelectionModel().getSelectedItem());
         }
         attribute.setPublicFeatures(features.size() == 0 ? null : features);

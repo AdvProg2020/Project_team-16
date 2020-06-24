@@ -33,7 +33,7 @@ public class Request {
         @JoinColumn(name = "OFF_EDIT")
     OffChangeAttributes offEdit;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "PRODUCT")
     Product product;
 

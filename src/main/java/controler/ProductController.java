@@ -1,7 +1,5 @@
 package controler;
 
-import ModelPackage.Maps.SellerIntegerMap;
-import ModelPackage.Off.Off;
 import ModelPackage.Product.Comment;
 import ModelPackage.Product.CommentStatus;
 import ModelPackage.Product.Product;
@@ -11,7 +9,6 @@ import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.filters.InvalidFilterException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
-import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
 import View.FilterPackage;
 import View.PrintModels.*;
@@ -34,8 +31,7 @@ public class ProductController extends Controller{
 
     public List<MiniProductPM> showAllProducts(SortPackage sortPackage, FilterPackage filterPackage) throws NoSuchACategoryException, InvalidFilterException {
         int[] priceRange = {filterPackage.getDownPriceLimit(),filterPackage.getUpPriceLimit()};
-        List<Product> products = productManager.getAllProductsActive();
-        FilterManager.updateFilterList(filterPackage.getCategoryId(), filterPackage.getActiveFilters(), priceRange, filterPackage.isOffMode());
+        List<Product> products = FilterManager.updateFilterList(filterPackage.getCategoryId(), filterPackage.getActiveFilters(), priceRange, filterPackage.isOffMode());
         sortManager.sort(products, sortPackage.getSortType());
         if (!sortPackage.isAscending()) Collections.reverse(products);
         List<MiniProductPM> toReturn = new ArrayList<>();
@@ -129,10 +125,6 @@ public class ProductController extends Controller{
                 product.getTotalScore(),
                 product.getDescription(),
                 sellPackagePMs);
-    }
-
-    public List<MicroProduct> getAllProductInCategory(int id) throws NoSuchACategoryException {
-        return categoryManager.allProductsInACategoryList(id);
     }
 
     public List<MiniProductPM> showOffs(SortPackage sortPackage,FilterPackage filterPackage){

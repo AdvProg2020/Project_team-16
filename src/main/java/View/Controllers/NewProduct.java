@@ -247,9 +247,11 @@ public class NewProduct {
             try {
                 int productId = sellerController.addProduct(productInfo, publicFeatures, specialFeatures);
                 savePics(productId);
-            } catch (NoSuchACategoryException | UserNotAvailableException ignore) {}
-
-            Notification.show("Successful", "Your Product was Registered Successfully!!!", back.getScene().getWindow(), false);
+                Notification.show("Successful", "Your Product was Registered Successfully!!!",
+                        back.getScene().getWindow(), false);
+            } catch (NoSuchACategoryException | UserNotAvailableException | RuntimeException e) {
+                Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
+            }
         }
     }
 
@@ -259,7 +261,7 @@ public class NewProduct {
             InputStream main = new FileInputStream(files.get(0));
             ArrayList<InputStream> otherPics = new ArrayList<>();
             if (files.size() > 1)
-                files.subList(1, files.size() - 1).forEach(file -> {
+                files.subList(1, files.size()).forEach(file -> {
                     try {
                         otherPics.add(new FileInputStream(file));
                     } catch (FileNotFoundException e) {

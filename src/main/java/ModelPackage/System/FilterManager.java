@@ -47,22 +47,11 @@ public class FilterManager {
 
     private static ArrayList<Product> matchProductsToFilters(List<Product> products,HashMap<String,String> filters,int[] priceRange){
         ArrayList<Product> filteredProducts = new ArrayList<>();
-        ProductManager productManager = ProductManager.getInstance();
         for (Product product : products) {
-            if (thisProductMatchesFilters(productManager.allFeaturesOf(product),filters)
-                    && thisProductIsInPriceRange(priceRange[0],priceRange[1],product.getLeastPrice()))
+            if (doesMatchTheFilters(product, filters, priceRange))
                 filteredProducts.add(product);
         }
         return filteredProducts;
-    }
-
-    private static boolean thisProductMatchesFilters(HashMap<String,String> features,HashMap<String,String> filters){
-        for (String filter : filters.keySet()) {
-            if (!features.get(filter).equals(filters.get(filter))){
-                return false;
-            }
-        }
-        return true;
     }
 
     private static void checkIfFiltersAreAvailable(ArrayList<String> filters,ArrayList<String> features)

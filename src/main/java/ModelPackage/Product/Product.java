@@ -15,7 +15,7 @@ import java.util.*;
 @Data @AllArgsConstructor
 @Entity
 @Table(name = "t_product")
-//@SQLDelete(sql = "UPDATE t_product SET state = 'DELETED' WHERE id = ?", check = ResultCheckStyle.COUNT)
+@SQLDelete(sql = "UPDATE t_product SET state = 'DELETED' WHERE id = ?", check = ResultCheckStyle.COUNT)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,7 +65,7 @@ public class Product {
     private double totalScore;
 
     @ElementCollection(targetClass = Comment.class)
-        @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> allComments;
 
     @Column(name = "VIEW")
@@ -77,7 +77,7 @@ public class Product {
     @Column(name = "LEAST_PRICE")
     private int leastPrice;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SellPackage> packages;
 
     @Column
