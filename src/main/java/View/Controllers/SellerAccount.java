@@ -202,7 +202,7 @@ public class SellerAccount {
 
     private void handleMessage() {
         try {
-            Main.setRoot("Message");
+            Main.setRoot("Messages");
         } catch (IOException e) {
             e.printStackTrace();
         }

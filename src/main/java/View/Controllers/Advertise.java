@@ -8,9 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -20,8 +19,7 @@ import java.util.Random;
 import static View.Controllers.Content.COLORS;
 
 public class Advertise {
-    @FXML
-    private Circle image;
+    public ImageView image;
     @FXML
     private Label name;
     @FXML
@@ -29,7 +27,7 @@ public class Advertise {
     @FXML
     private AnchorPane root;
 
-    public static Parent createAdvertise(AdPM pm) {
+    static Parent createAdvertise(AdPM pm) {
         FXMLLoader loader = Main.getFXMLLoader("Advertise");
         try {
             Parent parent = loader.load();
@@ -51,8 +49,7 @@ public class Advertise {
         name.setText(pm.getName());
         seller.setText(pm.getSeller());
         root.setOnMouseClicked(event -> gotoProduct(pm.getProductId()));
-        // TODO: 6/23/2020 Pic Not Showing
-        image.setFill(new ImagePattern(pm.getImage()));
+        image.setImage(pm.getImage());
     }
 
     private void gotoProduct(int productId) {
