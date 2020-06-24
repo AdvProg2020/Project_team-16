@@ -71,12 +71,12 @@ public class DiscountManager {
         int newMaxDiscount = editAttributes.getMaxDiscount();
 
         if (newStart != null){
-            checkIfNewStartingDateIsBeforeEndingDate(discountCode, newStart);
+            checkIfStartingDateIsBeforeEndingDate(newStart, discountCode.getEndTime());
             discountCode.setStartTime(newStart);
         }
         // TODO : checkIfStartingDateIsBeforeEndingDate(discountCode.getStartTime(), newEnd);
         if (newEnd != null){
-            checkIfNewStartingDateIsBeforeEndingDate(discountCode, newEnd);
+            checkIfStartingDateIsBeforeEndingDate(discountCode.getStartTime(), newEnd);
             discountCode.setEndTime(newEnd);
         }
         if (newOffPercent != 0) {
@@ -188,7 +188,9 @@ public class DiscountManager {
     }
 
     private DiscountcodeIntegerMap findDiscountMap(User user,String code){
+        //System.out.println(user.getUsername());
         Customer customer = DBManager.load(Customer.class,user.getUsername());
+        //System.out.println(customer.getUsername());
         for (DiscountcodeIntegerMap map : customer.getDiscountCodes()) {
             if (map.getDiscountCode().getCode().equals(code)) return map;
         }
