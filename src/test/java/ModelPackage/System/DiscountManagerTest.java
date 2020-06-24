@@ -145,6 +145,7 @@ public class DiscountManagerTest {
         discountManager.addUserToDiscountCodeUsers("Dis#12", sapa, 1);
         discountManager.addUserToDiscountCodeUsers("Dis#12", sapa, 1);
     }
+    // TODO : think having bug
     @Test
     public void deleteUserFromDiscountCodeUsers() throws UserExistedInDiscountCodeException, NoSuchADiscountCodeException, UserNotExistedInDiscountCodeException {
         UserIntegerMap map = new UserIntegerMap();
