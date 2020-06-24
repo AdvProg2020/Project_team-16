@@ -8,6 +8,7 @@ import View.CacheData;
 import View.Main;
 import com.jfoenix.controls.JFXButton;
 import controler.ManagerController;
+import controler.ProductController;
 import controler.SellerController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,12 +43,12 @@ public class ProductRowForSM {
 
     @FXML
     public void initialize(){
-        // TODO: 6/13/2020 Image
         canEditThis = CacheData.getInstance().getRole().equals("seller");
         name.setText(nameStr);
         id.setText("" + productId);
         editButt.setDisable(!canEditThis);
         idProduct = productId;
+        image.setImage(ProductController.getInstance().loadMainImage(idProduct));
         buttonInitialize();
     }
 
@@ -58,7 +59,13 @@ public class ProductRowForSM {
     }
 
     private void editButtHandle() {
-        // TODO: 6/20/2020 Completing
+        try {
+            CacheData.getInstance().setProductId(idProduct);
+            Scene scene = new Scene(Main.loadFXML("EditProduct"));
+            Main.setSceneToStage(new Stage(StageStyle.UNDECORATED), scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void sendDeleteRequest() {

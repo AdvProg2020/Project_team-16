@@ -1,5 +1,6 @@
 package View.Controllers;
 
+import View.CacheData;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public abstract class BackAbleController {
     private List<String> backFxmlS;
+    protected static CacheData cacheData = CacheData.getInstance();
 
     protected List<String> backForForward(String thisFxml) {
         ArrayList<String> bax = new ArrayList<>(backFxmlS);

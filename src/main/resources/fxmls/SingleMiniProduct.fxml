@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="200.0" prefWidth="140.0" styleClass="productPane" stylesheets="@../CSSs/button.css"
+<Pane prefHeight="200.0" prefWidth="130.0" styleClass="productPane" stylesheets="@../CSSs/button.css"
       xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="View.Controllers.SingleMiniProduct">
    <children>
-      <Pane fx:id="pane" prefHeight="200.0" prefWidth="140.0" styleClass="productSubPane"
-            stylesheets="@../CSSs/button.css">
+       <Pane fx:id="pane" prefHeight="200.0" prefWidth="130.0" styleClass="productSubPane"
+             stylesheets="@../CSSs/button.css">
          <children>
-            <ImageView fx:id="productPreViewImage" fitHeight="115.0" fitWidth="120.0" layoutX="10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+             <ImageView fx:id="productPreViewImage" fitHeight="115.0" fitWidth="120.0" layoutX="5.0" layoutY="17.0"
+                        pickOnBounds="true" preserveRatio="true"/>
             <ImageView fx:id="specialOffer" fitHeight="50.0" fitWidth="51.0" layoutX="10.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@../Images/dicount.png"/>
+                   <Image url="@../Images/dicount.png"/>
                </image>
             </ImageView>
-            <Label fx:id="productName" alignment="CENTER" layoutX="10.0" layoutY="129.0" prefHeight="36.0" prefWidth="120.0" textAlignment="CENTER">
+             <Label fx:id="productName" alignment="CENTER" layoutX="5.0" layoutY="129.0" prefHeight="36.0"
+                    prefWidth="120.0" textAlignment="CENTER">
                <font>
                   <Font name="Teko SemiBold" size="22.0" />
                </font>
             </Label>
-            <Label fx:id="price" alignment="CENTER" layoutX="10.0" layoutY="156.0" prefHeight="29.0" prefWidth="120.0" textAlignment="CENTER">
+             <Label fx:id="price" alignment="CENTER" layoutX="5.0" layoutY="156.0" prefHeight="29.0" prefWidth="120.0"
+                    textAlignment="CENTER">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="offPrice" alignment="CENTER" layoutX="10.0" layoutY="156.0" opacity="0.69" prefHeight="29.0" prefWidth="120.0" textAlignment="CENTER" textFill="#981a18">
+             <Label fx:id="offPrice" alignment="CENTER" layoutX="6.0" layoutY="156.0" opacity="0.69" prefHeight="29.0"
+                    prefWidth="120.0" textAlignment="CENTER" textFill="#981a18">
                <font>
                   <Font name="Verdana Bold" size="23.0" />
                </font>
@@ -37,4 +42,7 @@
          </children>
       </Pane>
    </children>
+    <cursor>
+        <Cursor fx:constant="HAND"/>
+    </cursor>
 </Pane>

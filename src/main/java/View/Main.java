@@ -27,7 +27,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         HibernateUtil.startUtil();
-        DBManager.initialLoad();
         try {
             launch(args);
         }catch (Exception e){
@@ -40,7 +39,7 @@ public class Main extends Application {
         window = stage;
         loadLogo();
         try {
-            scene = new Scene(loadFXML("MainPage"));
+            scene = new Scene(loadFXML("CreateManager"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -104,6 +103,17 @@ public class Main extends Application {
 
     public static FXMLLoader getFXMLLoader(String fxml) {
         return new FXMLLoader(Main.class.getClassLoader().getResource("./fxmls/" + fxml + ".fxml"));
+    }
+
+    public static void setSceneToStage(Node node, Scene scene) {
+        Stage stage = (Stage) node.getScene().getWindow();
+        moveSceneOnMouse(scene, stage);
+        stage.setScene(scene);
+    }
+
+    public static void setSceneToStage(Stage stage, Scene scene) {
+        moveSceneOnMouse(scene, stage);
+        stage.setScene(scene);
     }
 
     @Override

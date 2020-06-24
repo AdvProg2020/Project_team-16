@@ -154,7 +154,7 @@ public class CategoryManager {
 
     private void fillFeatureTable(int id) {
         try {
-            ArrayList<String> list = loadFeature();//sellerController.getSpecialFeaturesOfCat(id);
+            ArrayList<String> list = /*loadFeature();*/ sellerController.getSpecialFeaturesOfCat(id);
             ObservableList<String> data = FXCollections.observableArrayList(list);
             featureList.setItems(data);
             if (false) throw new NoSuchACategoryException("");
@@ -164,7 +164,7 @@ public class CategoryManager {
     }
 
     private void loadList() {
-        ArrayList<CategoryPM> categoryPMS = load(); //managerController.getAllCategories();
+        ArrayList<CategoryPM> categoryPMS = /* load(); */managerController.getAllCategories();
         ObservableList<CategoryPM> data = FXCollections.observableArrayList(categoryPMS);
         categoryPMS.add(0, new CategoryPM("---", 0, 0));
         ObservableList<CategoryPM> data1 = FXCollections.observableArrayList(categoryPMS);

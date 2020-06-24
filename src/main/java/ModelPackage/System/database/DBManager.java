@@ -17,20 +17,25 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class DBManager {
     public static <T> T load(Class<T> type, Serializable serializable){
          Session session = HibernateUtil.getSession();
+        session.beginTransaction();
          T object = session.get(type,serializable);
          if (object == null){
 
          }
+        session.getTransaction().commit();
          return object;
     }
 
     public static void save(Object object){
         Session session = HibernateUtil.getSession();
+        session.beginTransaction();
         session.saveOrUpdate(object);
+        session.getTransaction().commit();
     }
 
     public static void delete(Object object){
         Session session = HibernateUtil.getSession();
+        session.beginTransaction();
         session.remove(object);
     }
 
@@ -42,8 +47,6 @@ public class DBManager {
             if (!(toRemove.getProductStatus() == ProductStatus.VERIFIED)) list.remove(toRemove);
         }
         ProductManager.getInstance().setAllProductsActive(list);
-        CategoryManager.getInstance().setAllCategories(loadAllData(Category.class));
-        CategoryManager.getInstance().initialBaseCategories();
     }
 
     public static <T> List<T> loadAllData(Class<T> type) {

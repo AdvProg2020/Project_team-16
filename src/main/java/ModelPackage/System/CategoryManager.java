@@ -14,19 +14,10 @@ import java.util.*;
 
 @Data
 public class CategoryManager {
-    private List<Category> allCategories = new ArrayList<>();
-    private List<Category> baseCategories = new ArrayList<>();
     private static CategoryManager categoryManager = new CategoryManager();
     private static ArrayList<String> publicFeatures = new ArrayList<>(Arrays.asList("Dimension","Weigh","Color")) ;
 
-    private CategoryManager(){
-
-    }
-
-    public void initialBaseCategories(){
-        for (Category category : allCategories) {
-            if (category.getParent() == null) baseCategories.add(category);
-        }
+    private CategoryManager() {
     }
 
     public static CategoryManager getInstance(){
@@ -50,7 +41,6 @@ public class CategoryManager {
         checkIfThisNameIsValidForThisParent(name,parent);
 
         Category toCreate = new Category(name,parent);
-        allCategories.add(toCreate);
         toCreate.setSpecialFeatures(features);
         addToBase(toCreate,parent);
         DBManager.save(toCreate);
@@ -62,15 +52,15 @@ public class CategoryManager {
         if (parent != null)
             subCategories = parent.getSubCategories();
         else
-            subCategories = baseCategories;
+            subCategories = getBaseCats();
         for (Category category : subCategories) {
             if (category.getName().equals(name))
                 throw new RepeatedNameInParentCategoryException(name);
         }
     }
 
-    public List<Category> getBaseCats(){
-        return baseCategories;
+    private List<Category> getBaseCats() {
+        return null;
     }
 
     public ArrayList<MicroProduct> allProductsInACategoryList(int id) throws NoSuchACategoryException {
@@ -229,7 +219,7 @@ public class CategoryManager {
     }
 
     public void removeFeatureInCategory(int categoryId,String removeFeature)
-            throws NoSuchACategoryException, RepeatedFeatureException {
+            throws NoSuchACategoryException {
         Category category = getCategoryById(categoryId);
         checkIfThisFeatureExistInThisCategoryForRemove(category,removeFeature);
         List<String> features = category.getSpecialFeatures();
@@ -293,11 +283,11 @@ public class CategoryManager {
         }
     }
 
-    public ArrayList<Product> getAllProductsInThisCategory(int categoryId)
+    List<Product> getAllProductsInThisCategory(int categoryId)
             throws NoSuchACategoryException {
-        if (categoryId == 0) return (ArrayList<Product>)ProductManager.getInstance().getAllProductsActive();
+        if (categoryId == 0) return ProductManager.getInstance().getAllProductsActive();
         Category category = getCategoryById(categoryId);
-        return (ArrayList<Product>) getAllProductsInThisCategory(category);
+        return getAllProductsInThisCategory(category);
     }
 
     private List<Product> getAllProductsInThisCategory(Category category){
@@ -318,12 +308,12 @@ public class CategoryManager {
         return publicFeatures;
     }
 
-    public void addToBase(Category cat,Category parent){
+    void addToBase(Category cat, Category parent) {
         List<Category> subCategories;
         if (parent != null)
             subCategories = parent.getSubCategories();
         else
-            subCategories = baseCategories;
+            subCategories = getBaseCats();
         subCategories.add(cat);
         if (parent != null){
             parent.setSubCategories(subCategories);

@@ -265,7 +265,6 @@ public class RequestManager {
 
     public void decline(int requestId) throws NoSuchARequestException {
         Request request = findRequestById(requestId);
-        /* TODO : DELETE Extra Data from DB */
         request.setDone(true);
         request.setAccepted(false);
         DBManager.save(request);

@@ -1,6 +1,9 @@
 package ModelPackage.Product;
 import ModelPackage.Users.Seller;
 import lombok.*;
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
@@ -12,7 +15,7 @@ import java.util.*;
 @Data @AllArgsConstructor
 @Entity
 @Table(name = "t_product")
-@Indexed
+@SQLDelete(sql = "UPDATE t_product SET state = 'DELETED' WHERE id = ?", check = ResultCheckStyle.COUNT)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,7 +77,7 @@ public class Product {
     @Column(name = "LEAST_PRICE")
     private int leastPrice;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<SellPackage> packages;
 
     @Column

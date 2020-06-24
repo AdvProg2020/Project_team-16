@@ -24,7 +24,7 @@ import java.util.List;
 
 import static View.Controllers.Notification.show;
 
-public class MainPage {
+public class MainPage extends BackAbleController {
     public JFXButton account;
     public JFXButton cart;
     public JFXButton close;
@@ -44,9 +44,20 @@ public class MainPage {
         listeners();
         slider();
         advertising();
-        /*
         menus();
-        */
+    }
+
+    private void menus() {
+        products.setOnAction(event -> gotoProducts());
+    }
+
+    private void gotoProducts() {
+        try {
+            Scene scene = new Scene(Main.loadFXML("ProductsPage", "MainPage"));
+            Main.setSceneToStage(products, scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void advertising() {
@@ -111,8 +122,9 @@ public class MainPage {
     }
 
     private void binds() {
-        cart.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not());
-        cart.disableProperty().bind(Bindings.isEmpty(cacheData.roleProperty).not());
+        cart.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not().and(
+                Bindings.isEmpty(cacheData.roleProperty).not()
+        ));
     }
 
     private void buttons() {
@@ -132,7 +144,7 @@ public class MainPage {
 
     private void gotoCart() {
         try {
-            Scene scene = new Scene(Main.loadFXML("Cart"));
+            Scene scene = new Scene(Main.loadFXML("Cart", "MainPage"));
             Stage stage = (Stage) cart.getScene().getWindow();
             stage.setScene(scene);
             Main.moveSceneOnMouse(scene, stage);

@@ -195,7 +195,6 @@ public class ManagerController extends Controller {
 
     public ArrayList<CategoryPM> getAllCategories(){
         List<Category> cats = categoryManager.getBaseCats();
-        System.out.println(cats.size());
         sortManager.sortCategories(cats);
         ArrayList<CategoryPM> toReturn = new ArrayList<>();
         for (Category cat : cats) {

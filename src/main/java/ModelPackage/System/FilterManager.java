@@ -5,10 +5,11 @@ import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.filters.InvalidFilterException;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class FilterManager {
 
-    public static ArrayList<Product> updateFilterList(int categoryId, HashMap<String,String> filters,int[] priceRange)
+    public static List<Product> updateFilterList(int categoryId, HashMap<String, String> filters, int[] priceRange, boolean offMode)
             throws NoSuchACategoryException, InvalidFilterException {
         List<Product> allProductsInCategory = CategoryManager.getInstance().getAllProductsInThisCategory(categoryId);
         ArrayList<String>  validFeatures = CategoryManager.getInstance().getAllSpecialFeaturesFromCategory(categoryId);
@@ -16,7 +17,13 @@ public class FilterManager {
         Set<String> filterSet = filters.keySet();
         ArrayList<String> filter = new ArrayList<>(filterSet);
         checkIfFiltersAreAvailable(filter,validFeatures);
-        return matchProductsToFilters(allProductsInCategory,filters,priceRange);
+        List<Product> products = new CopyOnWriteArrayList<>(matchProductsToFilters(allProductsInCategory, filters, priceRange));
+        if (offMode) {
+            for (Product product : products) {
+                if (!product.isOnOff()) products.remove(product);
+            }
+        }
+        return products;
     }
 
     public static List<Product> filterList(List<Product> list,HashMap<String,String> filters,int[] priceRange){

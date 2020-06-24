@@ -35,7 +35,7 @@ public class ProductController extends Controller{
     public List<MiniProductPM> showAllProducts(SortPackage sortPackage, FilterPackage filterPackage) throws NoSuchACategoryException, InvalidFilterException {
         int[] priceRange = {filterPackage.getDownPriceLimit(),filterPackage.getUpPriceLimit()};
         List<Product> products = productManager.getAllProductsActive();
-        FilterManager.updateFilterList(filterPackage.getCategoryId(), filterPackage.getActiveFilters(), priceRange);
+        FilterManager.updateFilterList(filterPackage.getCategoryId(), filterPackage.getActiveFilters(), priceRange, filterPackage.isOffMode());
         sortManager.sort(products, sortPackage.getSortType());
         if (!sortPackage.isAscending()) Collections.reverse(products);
         List<MiniProductPM> toReturn = new ArrayList<>();
