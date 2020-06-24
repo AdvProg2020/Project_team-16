@@ -196,6 +196,10 @@ public class ProductManager {
             sellPackage.setPrice(newPrice);
             DBManager.save(sellPackage);
         }
+        if (newPrice < product.getLeastPrice()) {
+            product.setLeastPrice(newPrice);
+        }
+        DBManager.save(product);
     }
 
     public void changeStock(Product product, int newStock, String username) throws NoSuchSellerException {

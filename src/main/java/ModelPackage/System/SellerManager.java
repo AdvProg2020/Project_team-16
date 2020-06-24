@@ -61,7 +61,7 @@ public class SellerManager {
         SellPackage sellPackage = seller.findPackageByProductId(productId);
         seller.getPackages().remove(sellPackage);
         DBManager.save(seller);
-        Product product = sellPackage.getProduct();
+        /*Product product = sellPackage.getProduct();
         product.getPackages().remove(sellPackage);
         DBManager.save(product);
         if (sellPackage.isOnOff()) {
@@ -71,7 +71,7 @@ public class SellerManager {
         }
         sellPackage.setOff(null);
         sellPackage.setProduct(null);
-        sellPackage.setSeller(null);
+        sellPackage.setSeller(null);*/
         DBManager.delete(sellPackage);
     }
 

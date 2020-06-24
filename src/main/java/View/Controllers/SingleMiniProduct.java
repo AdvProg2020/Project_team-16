@@ -41,7 +41,7 @@ public class SingleMiniProduct {
         offPrice.setText("" + offPrc);
         price.setText("" + prc);
         productName.setText(name);
-        price.setVisible(onOff);
+        offPrice.setVisible(onOff);
         pane.setOnMouseClicked(e -> {
             CacheData.getInstance().setProductId(id);
             try {
