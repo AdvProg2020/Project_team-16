@@ -80,14 +80,15 @@ public class ProductPage {
         SortPackage sortPackage = makeSortPackage();
         FilterPackage filterPackage = makeFilterPackage();
         CacheData cacheData = CacheData.getInstance();
-        cacheData.setRole("seller");
         try {
             switch (cacheData.getRole()) {
+                case "Seller":
                 case "seller":
                     List<MiniProductPM> productPMS = SellerController.getInstance().manageProducts(cacheData.getUsername() /*"Ali"*/, sortPackage, filterPackage);
                     createListsOfProductsInVBox(productPMS);
                     break;
                 case "manager":
+                case "Manager":
                     List<MiniProductPM> productPMSManager = ManagerController.getInstance().manageProducts(sortPackage, filterPackage);
                     createListsOfProductsInVBox(productPMSManager);
                     break;
@@ -152,5 +153,4 @@ public class ProductPage {
             Main.setRoot("ManagerAccount");
         } catch (IOException ignore) {}
     }
-
 }

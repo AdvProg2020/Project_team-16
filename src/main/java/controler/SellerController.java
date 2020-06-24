@@ -18,6 +18,7 @@ import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
 import ModelPackage.System.exeption.off.ThisOffDoesNotBelongssToYouException;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Seller;
 import View.FilterPackage;
@@ -116,9 +117,8 @@ public class SellerController extends Controller{
         return userMiniPMs;
     }*/
 
-    public void removeProduct(int productId,String editor) throws NoSuchACategoryException,
-            NoSuchAProductInCategoryException, NoSuchAProductException, EditorIsNotSellerException {
-         productManager.deleteProduct(productId,editor);
+    public void removeProduct(int productId, String editor) throws NoSuchAPackageException {
+        sellerManager.deleteProductForSeller(editor, productId);
     }
 
     public List<OffPM> viewAllOffs(String sellerUserName,SortPackage sortPackage) throws UserNotAvailableException {

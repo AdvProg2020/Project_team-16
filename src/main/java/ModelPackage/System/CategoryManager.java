@@ -4,12 +4,19 @@ import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.PrintModels.MicroProduct;
 import lombok.Data;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Data
@@ -18,6 +25,7 @@ public class CategoryManager {
     private static ArrayList<String> publicFeatures = new ArrayList<>(Arrays.asList("Dimension","Weigh","Color")) ;
 
     private CategoryManager() {
+
     }
 
     public static CategoryManager getInstance(){
@@ -59,8 +67,17 @@ public class CategoryManager {
         }
     }
 
-    private List<Category> getBaseCats() {
-        return null;
+    public List<Category> getBaseCats() {
+        Session session = HibernateUtil.getSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Category> criteriaQuery = criteriaBuilder.createQuery(Category.class);
+        Root<Category> root = criteriaQuery.from(Category.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.isNull(root.get("parent").as(Category.class))
+        );
+        Query<Category> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
     public ArrayList<MicroProduct> allProductsInACategoryList(int id) throws NoSuchACategoryException {

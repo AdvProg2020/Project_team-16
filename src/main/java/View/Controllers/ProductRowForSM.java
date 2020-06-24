@@ -3,6 +3,7 @@ package View.Controllers;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.CacheData;
 import View.Main;
@@ -72,7 +73,7 @@ public class ProductRowForSM {
         if (canEditThis) {
             try {
                 SellerController.getInstance().removeProduct(idProduct, CacheData.getInstance().getUsername());
-            } catch (NoSuchACategoryException | NoSuchAProductInCategoryException | NoSuchAProductException | EditorIsNotSellerException e) {
+            } catch (NoSuchAPackageException e) {
                 e.printStackTrace();
                 new OopsAlert().show(e.getMessage());
             }

@@ -189,7 +189,7 @@ public class ManagerAccount {
 
     private void handleProducts() {
         try {
-            Main.setRoot("productManagerPage");
+            Main.setRoot("productManagePage");
         } catch (IOException e) {
             e.printStackTrace();
         }
