@@ -112,8 +112,16 @@ public class OffManager {
             } catch (ParseException | InvalidTimes | UserNotAvailableException e) {
                 e.printStackTrace();
             }
+
+            resetFields();
             Notification.show("Successful", "Your Request was Sent to The Manager!!!", back.getScene().getWindow(), false);
         }
+    }
+
+    private void resetFields() {
+        createPercentage.setValue(0);
+        crStartDt.getEditor().clear();
+        crEndDate.getEditor().clear();
     }
 
     private java.util.Date convertToDateViaInstant(LocalDate dateToConvert) {

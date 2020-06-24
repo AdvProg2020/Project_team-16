@@ -193,7 +193,14 @@ public class Purchase {
     private CartPM getTestCart() {
         ArrayList<InCartPM> purchases = new ArrayList<>();
         purchases.add(new InCartPM(
-                new MiniProductPM("dullForKimmi", 123, "Clothes", "Addidas", 1.26, "Hey thats good!!!", null),
+                new MiniProductPM(
+                        "dullForKimmi",
+                        123,
+                        "Clothes",
+                        "Addidas",
+                        1.26,
+                        "Hey thats good!!!",
+                        null),
                 "12",
                 200000,
                 46,
