@@ -197,8 +197,6 @@ public class CustomerController extends Controller {
     public List<DisCodeUserPM> viewDiscountCodes(String username, SortPackage sortPackage) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         List<DiscountcodeIntegerMap> discountCodes = customer.getDiscountCodes();
-        sortManager.sortDiscountIntegers(discountCodes,sortPackage.getSortType());
-        if (!sortPackage.isAscending()) Collections.reverse(discountCodes);
         ArrayList<DisCodeUserPM> disCodeUserPMS = new ArrayList<>();
 
         for (DiscountcodeIntegerMap discountCode : discountCodes) {

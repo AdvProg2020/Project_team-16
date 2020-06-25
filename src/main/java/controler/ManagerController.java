@@ -16,6 +16,7 @@ import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
+import ModelPackage.Users.Customer;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
 import View.FilterPackage;
@@ -144,7 +145,10 @@ public class ManagerController extends Controller {
     }
 
     public void addUserToDiscountCode(String code,String username,int time) throws UserNotAvailableException, UserExistedInDiscountCodeException, NoSuchADiscountCodeException {
-        User user = accountManager.getUserByUsername(username);
+        Customer user = DBManager.load(Customer.class, username);
+        if (user == null) {
+            throw new UserNotAvailableException();
+        }
         discountManager.addUserToDiscountCodeUsers(code,user,time);
     }
 

@@ -114,7 +114,7 @@ public class DiscountManager {
             throw new NegativeMaxDiscountException(newMaxDiscount);
     }
 
-    public void addUserToDiscountCodeUsers(String code, User newUser, int timesToUse)
+    public void addUserToDiscountCodeUsers(String code, Customer newUser, int timesToUse)
             throws NoSuchADiscountCodeException, UserExistedInDiscountCodeException {
         DiscountCode discountCode = getDiscountByCode(code);
         if (checkIfUserExists(newUser, discountCode))throw new UserExistedInDiscountCodeException(newUser.getUsername());
@@ -122,6 +122,13 @@ public class DiscountManager {
         map.setInteger(timesToUse);
         map.setUser(newUser);
         discountCode.getUsers().add(map);
+
+        DiscountcodeIntegerMap discountcodeIntegerMap = new DiscountcodeIntegerMap();
+        discountcodeIntegerMap.setDiscountCode(discountCode);
+        discountcodeIntegerMap.setInteger(timesToUse);
+        newUser.getDiscountCodes().add(discountcodeIntegerMap);
+
+        DBManager.save(newUser);
         DBManager.save(discountCode);
     }
 

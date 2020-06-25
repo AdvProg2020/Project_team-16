@@ -51,9 +51,9 @@ public class DiscountCodeCustomer extends BackAbleController {
         codeCol.setCellValueFactory(new PropertyValueFactory<>("discountCode"));
         countCol.setCellValueFactory(new PropertyValueFactory<>("count"));
 
-        //codesTable.setItems(getDisCodes());
+        codesTable.setItems(getDisCodes());
 
-        codesTable.setItems(getTestDisCodes());
+        //codesTable.setItems(getTestDisCodes());
 
         codesTable.getSelectionModel().selectedItemProperty().addListener((v, oldCode, newCode) -> updateCoupon(newCode));
     }
