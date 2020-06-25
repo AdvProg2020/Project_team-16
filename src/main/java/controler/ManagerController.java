@@ -20,6 +20,7 @@ import View.FilterPackage;
 import View.PrintModels.*;
 import View.SortPackage;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -57,6 +58,14 @@ public class ManagerController extends Controller {
 
     public void deleteUser(String username) throws UserNotAvailableException {
         managerManager.deleteUser(username);
+        deleteProfilePhoto(username);
+    }
+
+    private void deleteProfilePhoto(String username) {
+        File file = new File("src\\main\\resources\\db\\images\\users\\" + username + ".jpg");
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
     public void createManagerProfile(String[] info) {

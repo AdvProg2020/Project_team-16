@@ -16,4 +16,10 @@ public class RequestPM {
         this.requestType = requestType;
         this.request = request;
     }
+
+    public RequestPM(int requestId, String requestType, String request) {
+        this.requestId = requestId;
+        this.requestType = requestType;
+        this.request = request;
+    }
 }
