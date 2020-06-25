@@ -1,8 +1,8 @@
 package View;
 
-import ModelPackage.System.database.DBManager;
 import ModelPackage.System.database.HibernateUtil;
 import View.Controllers.BackAbleController;
+import controler.AccountController;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -39,7 +39,11 @@ public class Main extends Application {
         window = stage;
         loadLogo();
         try {
-            scene = new Scene(loadFXML("CreateManager"));
+            if (AccountController.getInstance().isTheFirstManager()) {
+                scene = new Scene(loadFXML("CreateManager", "MainPage"));
+            } else {
+                scene = new Scene(loadFXML("MainPage"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

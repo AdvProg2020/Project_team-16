@@ -47,6 +47,15 @@ public class AccountController extends Controller {
         }
     }
 
+    public boolean isTheFirstManager() {
+        try {
+            managerManager.checkIfIsTheFirstManager();
+            return true;
+        } catch (SecondManagerByUserException ignore) {
+            return false;
+        }
+    }
+
     public String login(String username, String password) throws NotVerifiedSeller, UserNotAvailableException, WrongPasswordException {
         return accountManager.login(username, password);
     }
