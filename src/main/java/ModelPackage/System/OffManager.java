@@ -1,6 +1,10 @@
 package ModelPackage.System;
 
 import ModelPackage.Off.Off;
+import ModelPackage.Product.Product;
+import ModelPackage.Product.ProductStatus;
+import ModelPackage.Product.SellPackage;
+import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.Off.OffStatus;
 import ModelPackage.System.database.DBManager;
@@ -12,7 +16,12 @@ import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
 import ModelPackage.Users.User;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -70,5 +79,18 @@ public class OffManager {
 
     public void checkIfThisSellerCreatedTheOff(Off off,String viewer) throws ThisOffDoesNotBelongssToYouException {
         if (!off.getSeller().getUsername().equals(viewer))throw new ThisOffDoesNotBelongssToYouException();
+    }
+
+    public List<SellPackage> getAllSellPackagesOnOff() {
+        Session session = HibernateUtil.getSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<SellPackage> criteriaQuery = criteriaBuilder.createQuery(SellPackage.class);
+        Root<SellPackage> root = criteriaQuery.from(SellPackage.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.equal(root.get("isOnOff"), true)
+        );
+        Query<SellPackage> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 }

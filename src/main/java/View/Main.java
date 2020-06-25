@@ -90,6 +90,7 @@ public class Main extends Application {
         Parent parent = loader.load();
         BackAbleController controller = loader.getController();
         controller.setBackFxmlS(Arrays.asList(backFxml));
+        System.out.println(controller.getBackFxmlS());
         return parent;
     }
 

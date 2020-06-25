@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryManager {
+public class CategoryManager extends BackAbleController {
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
@@ -55,7 +55,7 @@ public class CategoryManager {
     private void buttonInitialize() {
         back.setOnAction(event -> {
             try {
-                Scene scene = new Scene(Main.loadFXML("ManagerAccount"));
+                Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
                 Main.setSceneToStage(back, scene);
             } catch (IOException e) {
                 e.printStackTrace();

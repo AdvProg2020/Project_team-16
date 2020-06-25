@@ -126,7 +126,8 @@ public class Cart extends BackAbleController {
 
     private void handlePurchaseButton() {
         try {
-            Main.setRoot("Purchase");
+            Scene scene = new Scene(Main.loadFXML("Purchase", backForForward("Cart")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

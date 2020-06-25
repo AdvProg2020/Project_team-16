@@ -6,6 +6,7 @@ import View.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 
@@ -42,7 +43,8 @@ public class SellerSignUp {
     private void buttonsInitialize() {
         back.setOnAction(e->{
             try {
-                Main.setRoot("SignInUp");
+                Scene scene = new Scene(Main.loadFXML("MainPage"));
+                Main.setSceneToStage(back, scene);
             } catch (IOException ignore) {}
         });
         createCompanyButt.setOnAction(e ->{
@@ -64,7 +66,13 @@ public class SellerSignUp {
             info[7] = balance;
             AccountManager.getInstance().createAccount(info,"seller");
             Notification.show("Successful", "Your Request was Sent to the Manager!!!", back.getScene().getWindow(), false);
+            try {
+                Scene scene = new Scene(Main.loadFXML("MainPage"));
+                Main.setSceneToStage(back, scene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
-
 }

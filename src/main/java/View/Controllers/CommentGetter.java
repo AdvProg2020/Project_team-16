@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -27,7 +28,7 @@ public class CommentGetter {
     private static String commentStr;
 
     public String[] returnAComment() throws CanceledException {
-        Stage stage = new Stage();
+        Stage stage = new Stage(StageStyle.UNDECORATED);
         try {
             Scene scene = new Scene(Main.loadFXML("CommentGetter"));
             scene.setFill(Color.TRANSPARENT);

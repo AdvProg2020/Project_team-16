@@ -13,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -59,7 +58,7 @@ public class ProductRowForSM {
     private void editButtHandle() {
         try {
             CacheData.getInstance().setProductId(idProduct);
-            Scene scene = new Scene(Main.loadFXML("EditProduct"));
+            Scene scene = new Scene(Main.loadFXML("EditProduct", "MainPage", "ProductPage"));
             Main.setSceneToStage(new Stage(StageStyle.UNDECORATED), scene);
         } catch (IOException e) {
             e.printStackTrace();
@@ -72,13 +71,13 @@ public class ProductRowForSM {
                 SellerController.getInstance().removeProduct(idProduct, CacheData.getInstance().getUsername());
             } catch (NoSuchAPackageException e) {
                 e.printStackTrace();
-                new OopsAlert().show(e.getMessage());
+                Notification.show("Error", e.getMessage(), delete.getScene().getWindow(), true);
             }
         } else {
             try {
                 ManagerController.getInstance().removeProduct(idProduct);
             } catch (NoSuchAProductException e) {
-                new OopsAlert().show(e.getMessage());
+                Notification.show("Error", e.getMessage(), delete.getScene().getWindow(), true);
                 e.printStackTrace();
             }
         }
@@ -86,14 +85,9 @@ public class ProductRowForSM {
 
     private void show() {
         CacheData.getInstance().setProductId(idProduct);
-        Stage stage = new Stage();
         try {
-            Scene scene = new Scene(Main.loadFXML("ProductDigest"));
-            scene.setFill(Color.TRANSPARENT);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            Main.moveSceneOnMouse(scene, stage);
-            stage.setScene(scene);
-            stage.show();
+            Scene scene = new Scene(Main.loadFXML("ProductDigest", "MainPage", "ProductPage"));
+            Main.setSceneToStage(new Stage(StageStyle.UNDECORATED), scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

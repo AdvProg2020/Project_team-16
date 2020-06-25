@@ -20,7 +20,7 @@ import java.io.IOException;
 
 import static View.Controllers.Notification.show;
 
-public class ContentManager {
+public class ContentManager extends BackAbleController {
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
@@ -95,11 +95,9 @@ public class ContentManager {
     }
 
     private void handleBack() {
-        Stage stage = (Stage) close.getScene().getWindow();
         try {
-            Scene scene = new Scene(Main.loadFXML("ManagerAccount"));
-            Main.moveSceneOnMouse(scene, stage);
-            stage.setScene(scene);
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

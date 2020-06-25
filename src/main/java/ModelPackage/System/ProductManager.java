@@ -27,7 +27,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ProductManager {
     private static ProductManager productManager = null;
 
-    public List<Product> getAllProductsActive() {
+    List<Product> getAllProductsActive() {
         Session session = HibernateUtil.getSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);

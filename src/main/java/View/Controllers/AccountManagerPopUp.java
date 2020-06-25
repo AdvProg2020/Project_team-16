@@ -38,15 +38,15 @@ public class AccountManagerPopUp {
             switch (CacheData.getInstance().getRole()) {
                 case "Manager":
                 case "manager":
-                    scene = new Scene(Main.loadFXML("ManagerAccount"));
+                    scene = new Scene(Main.loadFXML("ManagerAccount", "MainPage"));
                     break;
                 case "Customer":
                 case "customer":
-                    scene = new Scene(Main.loadFXML("CustomerAccount"));
+                    scene = new Scene(Main.loadFXML("CustomerAccount", "MainPage"));
                     break;
                 case "Seller":
                 case "seller":
-                    scene = new Scene(Main.loadFXML("SellerAccount"));
+                    scene = new Scene(Main.loadFXML("SellerAccount", "MainPage"));
                     break;
             }
             Main.moveSceneOnMouse(scene, stage);

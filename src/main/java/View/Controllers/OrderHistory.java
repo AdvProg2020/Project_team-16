@@ -16,6 +16,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -26,21 +27,24 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class OrderHistory {
+public class OrderHistory extends BackAbleController {
     public JFXButton back;
     public JFXButton cartButt;
     public JFXButton minimize;
     public JFXButton close;
+
     public Button viewProduct;
     public Button giveScore;
     public TableView<OrderLogPM> orderTable;
     public TableColumn<OrderLogPM, Integer> orderNoColumn;
     public TableColumn<OrderLogPM, String> dateColumn;
+
     public Label no;
     public Label date;
     public Label price;
     public Label discount;
     public Label delStatus;
+
     public TableView<OrderProductPM> productsTable;
     public TableColumn<OrderProductPM, String> pNameCol;
     public TableColumn<OrderProductPM, String> pSellerCol;
@@ -175,7 +179,8 @@ public class OrderHistory {
 
     private void handleBack() {
         try {
-            Main.setRoot("CustomerAccount");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();

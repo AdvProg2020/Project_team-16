@@ -25,6 +25,7 @@ import controler.ManagerController;
 import controler.ProductController;
 import controler.SellerController;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -35,7 +36,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class ProductPage {
+public class ProductPage extends BackAbleController {
     public ToggleGroup ADOrder;
     public ToggleGroup type;
     public JFXButton back ;
@@ -150,7 +151,8 @@ public class ProductPage {
 
     private void handleBack() {
         try {
-            Main.setRoot("ManagerAccount");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException ignore) {}
     }
 }

@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class NewProduct {
+public class NewProduct extends BackAbleController {
     public ComboBox<CategoryPM> category;
     public JFXTextField productName;
     public JFXTextField price;
@@ -187,7 +187,8 @@ public class NewProduct {
 
     private void handleBack() {
         try {
-            back.getScene().setRoot(Main.loadFXML("SellerAccount"));
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

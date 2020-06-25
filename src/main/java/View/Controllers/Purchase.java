@@ -18,6 +18,7 @@ import controler.CustomerController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
@@ -27,7 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Purchase {
+public class Purchase extends BackAbleController {
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
@@ -348,7 +349,8 @@ public class Purchase {
 
     private void handleBackButton() {
         try {
-            Main.setRoot("Cart");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException ignore) {}
     }
 }

@@ -6,11 +6,12 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import controler.AccountController;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 
-public class CreateManager {
+public class CreateManager extends BackAbleController {
 
     public JFXButton back;
     public JFXTextField username;
@@ -158,10 +159,10 @@ public class CreateManager {
         field.requestFocus();
     }
 
-
     private void handleBack() {
         try {
-            Main.setRoot("MainPage"); //TODO: Specify the best back Destination!!!
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

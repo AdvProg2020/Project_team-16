@@ -12,6 +12,7 @@ import View.PrintModels.SellPackagePM;
 import View.exceptions.CanceledException;
 import com.jfoenix.controls.JFXButton;
 import controler.ProductController;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -73,6 +74,13 @@ public class ProductDigest extends BackAbleController {
         loadProduct();
         buttonInit();
         commentSection();
+        binds();
+    }
+
+    private void binds() {
+        cartButt.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not().and(
+                Bindings.isEmpty(cacheData.roleProperty).not()
+        ));
     }
 
     private void buttonInit() {
@@ -80,9 +88,6 @@ public class ProductDigest extends BackAbleController {
         photoButtons();
         productButtons();
         commentButton();
-        if (!cacheData.getRole().equals("manager")) {
-            cartButt.setDisable(true);
-        }
         /*
             videoSection()
         */
@@ -127,7 +132,13 @@ public class ProductDigest extends BackAbleController {
     }
 
     private void gotoCompare() {
-        // TODO: 6/19/2020
+        /*try {
+            Scene scene = new Scene(Main.loadFXML("Compare",backForForward("ProductDigest")));
+            Main.setSceneToStage(back,scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+        // TODO: 6/25/2020
     }
 
     private void photoButtons() {
@@ -180,13 +191,9 @@ public class ProductDigest extends BackAbleController {
     }
 
     private void gotoCart() {
-        Stage stage = new Stage();
         try {
-            Scene scene = new Scene(Main.loadFXML("Cart"));
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setScene(scene);
-            Main.moveSceneOnMouse(scene, stage);
-            stage.show();
+            Scene scene = new Scene(Main.loadFXML("Cart", backForForward("ProductDigest")));
+            Main.setSceneToStage(new Stage(StageStyle.UNDECORATED), scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -194,10 +201,8 @@ public class ProductDigest extends BackAbleController {
 
     private void backHandle() {
         try {
-            Scene scene = new Scene(Main.loadFXML(back()));
-            Stage stage = (Stage) back.getScene().getWindow();
-            Main.moveSceneOnMouse(scene, stage);
-            stage.setScene(scene);
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

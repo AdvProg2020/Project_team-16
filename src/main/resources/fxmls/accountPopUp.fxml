@@ -15,7 +15,7 @@
         <JFXPasswordField fx:id="password" labelFloat="true" promptText="Password"/>
         <HBox alignment="CENTER_RIGHT" prefHeight="51.0" prefWidth="260.0" spacing="5.0">
             <children>
-                <JFXButton fx:id="signIn" focusTraversable="false" text="Sign In"/>
+                <JFXButton fx:id="signIn" focusTraversable="false" text="Sign Up"/>
                 <JFXButton fx:id="login" layoutX="10.0" layoutY="10.0" text="Login"/>
             </children>
         </HBox>

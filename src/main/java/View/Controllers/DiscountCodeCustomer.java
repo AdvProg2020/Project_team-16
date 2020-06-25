@@ -10,6 +10,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DiscountCodeCustomer {
+public class DiscountCodeCustomer extends BackAbleController {
     public JFXButton back;
     public JFXButton cartButt;
     public JFXButton minimize;
@@ -103,7 +104,8 @@ public class DiscountCodeCustomer {
 
     private void handleCart() {
         try {
-            Main.setRoot("Cart");
+            Scene scene = new Scene(Main.loadFXML("Cart", backForForward("DiscountCodeCustomer")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();
@@ -112,7 +114,8 @@ public class DiscountCodeCustomer {
 
     private void handleBack() {
         try {
-            Main.setRoot("CustomerAccount");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package ModelPackage.System;
 
 import ModelPackage.Product.Product;
+import ModelPackage.Product.SellPackage;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.filters.InvalidFilterException;
 
@@ -45,6 +46,16 @@ public class FilterManager {
         return true;
     }
 
+    private static boolean doesMatchTheFilters(Product product, HashMap<String, String> filters) {
+        HashMap<String, String> features = new HashMap<>(product.getPublicFeatures());
+        features.putAll(product.getSpecialFeatures());
+        for (String filter : filters.keySet()) {
+            if (!features.containsKey(filter)) return false;
+            if (!features.get(filter).equals(filters.get(filter))) return false;
+        }
+        return true;
+    }
+
     private static ArrayList<Product> matchProductsToFilters(List<Product> products,HashMap<String,String> filters,int[] priceRange){
         ArrayList<Product> filteredProducts = new ArrayList<>();
         for (Product product : products) {
@@ -64,5 +75,15 @@ public class FilterManager {
     private static boolean thisProductIsInPriceRange(int lower, int high, int leastPrice){
         if (high == 0) return true;
         return (leastPrice >= lower && leastPrice <= high);
+    }
+
+    public static List<SellPackage> filterSellPackages(List<SellPackage> list, HashMap<String, String> filters, int[] priceRange) {
+        List<SellPackage> sellPackages = new ArrayList<>();
+        list.forEach(sellPackage -> {
+            if (thisProductIsInPriceRange(priceRange[0], priceRange[1], sellPackage.getPrice())) {
+                if (doesMatchTheFilters(sellPackage.getProduct(), filters)) sellPackages.add(sellPackage);
+            }
+        });
+        return sellPackages;
     }
 }

@@ -14,6 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 
@@ -127,12 +128,19 @@ public class SignInUp {
 
     private void sellerSignUpSubmitRequest() {
         if (checkForEmptyValues()){
-            String[] infoForSeller = new String[8];
-            generateInfoPack(infoForSeller);
-            CacheData.getInstance().setSignUpData(infoForSeller);
             try {
-                Main.setRoot("sellerSignUp");
-            } catch (IOException ignore) {}
+                accountController.usernameInitialCheck(usernameUp.getText());
+                String[] infoForSeller = new String[8];
+                generateInfoPack(infoForSeller);
+                CacheData.getInstance().setSignUpData(infoForSeller);
+                try {
+                    Main.setRoot("sellerSignUp");
+                } catch (IOException ignore) {
+                }
+            } catch (UserNotAvailableException e) {
+                errorField(usernameUp, "Username : This username is unavailable");
+                e.printStackTrace();
+            }
         }
     }
 
@@ -140,6 +148,12 @@ public class SignInUp {
         if (checkForEmptyValues()){
             sendSignUpRequest();
             Notification.show("Successful", "Your Account was Created Successfully!!!", back.getScene().getWindow(), false);
+            try {
+                Scene scene = new Scene(Main.loadFXML("MainPage"));
+                Main.setSceneToStage(back, scene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }else {
             Notification.show("Error", "Please Check The Fields.", back.getScene().getWindow(), true);
         }
@@ -217,6 +231,12 @@ public class SignInUp {
         }
         else {
             sendSignInRequest();
+            try {
+                Scene scene = new Scene(Main.loadFXML("MainPage"));
+                Main.setSceneToStage(back, scene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -253,7 +273,8 @@ public class SignInUp {
     private void backInitialize() {
         back.setOnAction(e->{
             try {
-                Main.setRoot("MainPage");
+                Scene scene = new Scene(Main.loadFXML("MainPage"));
+                Main.setSceneToStage(back, scene);
             } catch (IOException ignore) {}
         });
     }

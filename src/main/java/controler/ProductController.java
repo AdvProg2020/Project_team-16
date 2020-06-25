@@ -41,6 +41,11 @@ public class ProductController extends Controller{
         return toReturn;
     }
 
+    public List<OffProductPM> showAllOnOffProducts() {
+        // TODO: 6/25/2020
+        return null;
+    }
+
     public void assignComment(String[] data) throws NoSuchAProductException, NoSuchACustomerException, UserNotAvailableException {
         String userId = data[0];
         String commentTitle = data[1];
