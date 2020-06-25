@@ -117,7 +117,7 @@ public class CustomerController extends Controller {
         );
     }
 
-    public long getPurchaseTotalPrice(String discode, String username) throws NoSuchADiscountCodeException, UserNotAvailableException {
+    public long getPurchaseTotalPrice(String discode, String username) throws NoSuchADiscountCodeException, UserNotAvailableException, NoSuchSellerException {
         DiscountCode discountCode = discountManager.getDiscountByCode(discode);
         Customer customer = (Customer) accountManager.getUserByUsername(username);
         return customerManager.getTotalPrice(discountCode, customer);

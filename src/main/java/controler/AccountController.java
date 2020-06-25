@@ -125,4 +125,9 @@ public class AccountController extends Controller {
         outStream.write(buffer);
         outStream.close();
     }
+
+    public String getPassByUsername(String username) throws UserNotAvailableException {
+        User user = accountManager.getUserByUsername(username);
+        return user.getPassword();
+    }
 }
