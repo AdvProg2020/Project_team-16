@@ -13,9 +13,9 @@ import javax.persistence.*;
 public class SellPackage {
     @Id@GeneratedValue
     int id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Seller seller;
     @Column(name = "PRICE")
     private int price;

@@ -10,6 +10,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -19,7 +20,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class requestManager {
+public class requestManager extends BackAbleController {
 
     public JFXButton back;
     public JFXButton minimize;
@@ -79,7 +80,8 @@ public class requestManager {
 
     private void doBack() {
         try {
-            back.getScene().setRoot(Main.loadFXML("ManagerAccount"));
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

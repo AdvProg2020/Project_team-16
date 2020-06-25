@@ -6,9 +6,11 @@ import View.Main;
 import View.PrintModels.MessagePM;
 import com.jfoenix.controls.JFXButton;
 import controler.MessageController;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -20,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Messages {
+public class Messages extends BackAbleController {
     public JFXButton back;
     public JFXButton cartButt;
     public JFXButton minimize;
@@ -40,6 +42,13 @@ public class Messages {
         initButtons();
         loadTable();
         listeners();
+        binds();
+    }
+
+    private void binds() {
+        cartButt.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not().and(
+                Bindings.isEmpty(cacheData.roleProperty).not()
+        ));
     }
 
     private void listeners() {
@@ -90,7 +99,8 @@ public class Messages {
 
     private void handleCartButt() {
         try {
-            Main.setRoot("Cart");
+            Scene scene = new Scene(Main.loadFXML("Cart", backForForward("Messages")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException ignore) {}
     }
 
@@ -105,9 +115,9 @@ public class Messages {
     }
 
     private void handleBackButton() {
-        // TODO: 6/14/2020 Change
         try {
-            Main.setRoot("CustomerAccount");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException ignore) {}
     }
 }

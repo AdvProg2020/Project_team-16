@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import controler.AccountController;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 
@@ -37,6 +38,12 @@ public class CreateCompany {
             if (checkForErrors()){
                 sendCompanyRequestSend();
                 Notification.show("Successful", "Your Company was Created!!!", back.getScene().getWindow(), false);
+                try {
+                    Scene scene = new Scene(Main.loadFXML("SellerSignUp"));
+                    Main.setSceneToStage(back, scene);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }

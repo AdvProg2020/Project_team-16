@@ -2,6 +2,7 @@ package controler;
 
 import ModelPackage.Product.Company;
 import ModelPackage.Product.Product;
+import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.UserEditAttributes;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.SecondManagerByUserException;
@@ -43,6 +44,15 @@ public class AccountController extends Controller {
             managerManager.createManagerProfile(info);
         } catch (SecondManagerByUserException e){
             throw new ManagerExist();
+        }
+    }
+
+    public boolean isTheFirstManager() {
+        try {
+            managerManager.checkIfIsTheFirstManager();
+            return true;
+        } catch (SecondManagerByUserException ignore) {
+            return false;
         }
     }
 

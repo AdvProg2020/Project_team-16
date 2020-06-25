@@ -36,4 +36,25 @@ public class MiniProductPM {
         }
         return null;
     }
+
+    public int getPrice() {
+        int price = 20000000;
+        for (SellPackagePM pm : sellPackagePMs) {
+            if (pm.getPrice() < price) price = pm.getPrice();
+        }
+        return price;
+    }
+
+    public int getOffPrice() {
+        int ofPrc = 20000000;
+        for (SellPackagePM pm : sellPackagePMs) {
+            if (pm.getOffPercent() != 0) {
+                int price = pm.getPrice() * (pm.getOffPercent() / 100);
+                if (ofPrc < price) {
+                    ofPrc = price;
+                }
+            }
+        }
+        return ofPrc == 20000000 ? 0 : ofPrc;
+    }
 }

@@ -14,7 +14,6 @@ import javax.persistence.*;
 @Data @Entity
 @Table(name = "t_request")
 public class Request {
-    @Setter(AccessLevel.NONE)
     @Id @GeneratedValue
     private int requestId;
 
@@ -26,7 +25,7 @@ public class Request {
     @Column(name = "REQUEST", length = 4096)
     String request;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "OFF")
     Off off;
 
@@ -34,7 +33,7 @@ public class Request {
         @JoinColumn(name = "OFF_EDIT")
     OffChangeAttributes offEdit;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "PRODUCT")
     Product product;
 
@@ -46,10 +45,10 @@ public class Request {
         @JoinColumn(name = "COMMENT")
     Comment comment;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     Advertise advertise;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     Seller seller;
 
     private boolean done;

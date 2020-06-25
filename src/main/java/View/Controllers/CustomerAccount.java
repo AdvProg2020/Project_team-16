@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXTextField;
 import controler.AccountController;
 import controler.CustomerController;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,7 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 
-public class CustomerAccount {
+public class CustomerAccount extends BackAbleController {
     public JFXButton cartButt;
     public JFXButton minimize;
     public JFXButton close;
@@ -149,7 +150,8 @@ public class CustomerAccount {
 
     private void handleBack() {
         try {
-            Main.setRoot("MainPage");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             System.out.println("Could Not Initialize Main Menu!!!");
         }
@@ -157,33 +159,37 @@ public class CustomerAccount {
 
     private void handleMessages() {
         try {
-            Main.setRoot("MessageMenu");
+            Scene scene = new Scene(Main.loadFXML("MessageMenu", backForForward("CustomerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
-            System.out.println("");
+            e.printStackTrace();
         }
     }
 
     private void handleCartButton() {
         try {
-            Main.setRoot("Cart");
+            Scene scene = new Scene(Main.loadFXML("Cart", backForForward("CustomerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
-            System.out.println("");
+            e.printStackTrace();
         }
     }
 
     private void handleOrders() {
         try {
-            Main.setRoot("OrderHistory");
+            Scene scene = new Scene(Main.loadFXML("OrderHistory", backForForward("CustomerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
-            System.out.println("");
+            e.printStackTrace();
         }
     }
 
     private void handleDiscount() {
         try {
-            Main.setRoot("DiscountCodeCustomer");
+            Scene scene = new Scene(Main.loadFXML("DiscountCodeCustomer", backForForward("CustomerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
-            System.out.println("");
+            e.printStackTrace();
         }
     }
 
@@ -240,7 +246,6 @@ public class CustomerAccount {
         if (newPass != null) {
             UserEditAttributes attributes = new UserEditAttributes();
             attributes.setNewPassword(newPass);
-
             try {
                 accountController.editPersonalInfo(cacheData.getUsername(), attributes);
             } catch (UserNotAvailableException e) {

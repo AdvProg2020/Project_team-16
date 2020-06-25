@@ -4,29 +4,28 @@ import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.ProductStatus;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.PrintModels.MicroProduct;
 import lombok.Data;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Data
 public class CategoryManager {
-    private List<Category> allCategories = new ArrayList<>();
-    private List<Category> baseCategories = new ArrayList<>();
     private static CategoryManager categoryManager = new CategoryManager();
     private static ArrayList<String> publicFeatures = new ArrayList<>(Arrays.asList("Dimension","Weigh","Color")) ;
 
-    private CategoryManager(){
+    private CategoryManager() {
 
-    }
-
-    public void initialBaseCategories(){
-        for (Category category : allCategories) {
-            if (category.getParent() == null) baseCategories.add(category);
-        }
     }
 
     public static CategoryManager getInstance(){
@@ -50,7 +49,6 @@ public class CategoryManager {
         checkIfThisNameIsValidForThisParent(name,parent);
 
         Category toCreate = new Category(name,parent);
-        allCategories.add(toCreate);
         toCreate.setSpecialFeatures(features);
         addToBase(toCreate,parent);
         DBManager.save(toCreate);
@@ -62,15 +60,24 @@ public class CategoryManager {
         if (parent != null)
             subCategories = parent.getSubCategories();
         else
-            subCategories = baseCategories;
+            subCategories = getBaseCats();
         for (Category category : subCategories) {
             if (category.getName().equals(name))
                 throw new RepeatedNameInParentCategoryException(name);
         }
     }
 
-    public List<Category> getBaseCats(){
-        return baseCategories;
+    public List<Category> getBaseCats() {
+        Session session = HibernateUtil.getSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Category> criteriaQuery = criteriaBuilder.createQuery(Category.class);
+        Root<Category> root = criteriaQuery.from(Category.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.isNull(root.get("parent").as(Category.class))
+        );
+        Query<Category> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
     public ArrayList<MicroProduct> allProductsInACategoryList(int id) throws NoSuchACategoryException {
@@ -229,7 +236,7 @@ public class CategoryManager {
     }
 
     public void removeFeatureInCategory(int categoryId,String removeFeature)
-            throws NoSuchACategoryException, RepeatedFeatureException {
+            throws NoSuchACategoryException {
         Category category = getCategoryById(categoryId);
         checkIfThisFeatureExistInThisCategoryForRemove(category,removeFeature);
         List<String> features = category.getSpecialFeatures();
@@ -293,11 +300,11 @@ public class CategoryManager {
         }
     }
 
-    public ArrayList<Product> getAllProductsInThisCategory(int categoryId)
+    List<Product> getAllProductsInThisCategory(int categoryId)
             throws NoSuchACategoryException {
-        if (categoryId == 0) return (ArrayList<Product>)ProductManager.getInstance().getAllProductsActive();
+        if (categoryId == 0) return ProductManager.getInstance().getAllProductsActive();
         Category category = getCategoryById(categoryId);
-        return (ArrayList<Product>) getAllProductsInThisCategory(category);
+        return getAllProductsInThisCategory(category);
     }
 
     private List<Product> getAllProductsInThisCategory(Category category){
@@ -318,12 +325,12 @@ public class CategoryManager {
         return publicFeatures;
     }
 
-    public void addToBase(Category cat,Category parent){
+    void addToBase(Category cat, Category parent) {
         List<Category> subCategories;
         if (parent != null)
             subCategories = parent.getSubCategories();
         else
-            subCategories = baseCategories;
+            subCategories = getBaseCats();
         subCategories.add(cat);
         if (parent != null){
             parent.setSubCategories(subCategories);

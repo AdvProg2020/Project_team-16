@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import controler.AccountController;
 import controler.SellerController;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,7 +23,7 @@ import org.controlsfx.control.PopOver;
 
 import java.io.*;
 
-public class SellerAccount {
+public class SellerAccount extends BackAbleController {
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
@@ -186,7 +187,8 @@ public class SellerAccount {
 
     private void handleNewProduct() {
         try {
-            Main.setRoot("newProduct");
+            Scene scene = new Scene(Main.loadFXML("newProduct", backForForward("SellerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -194,7 +196,8 @@ public class SellerAccount {
 
     private void handleSellHistory() {
         try {
-            Main.setRoot("SaleHistory");
+            Scene scene = new Scene(Main.loadFXML("SaleHistory", backForForward("SellerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -202,7 +205,8 @@ public class SellerAccount {
 
     private void handleMessage() {
         try {
-            Main.setRoot("Message");
+            Scene scene = new Scene(Main.loadFXML("Messages", backForForward("SellerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -210,7 +214,8 @@ public class SellerAccount {
 
     private void handleProducts() {
         try {
-            Main.setRoot("productManagePage");
+            Scene scene = new Scene(Main.loadFXML("productManagePage", backForForward("SellerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -218,7 +223,8 @@ public class SellerAccount {
 
     private void handleOffs() {
         try {
-            Main.setRoot("OffManager");
+            Scene scene = new Scene(Main.loadFXML("OffManager", backForForward("SellerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -226,9 +232,10 @@ public class SellerAccount {
 
     private void handleBack() {
         try {
-            Main.setRoot("MainPage");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
-            System.out.println("Could Not Initialize Main Menu!!!");
+            e.printStackTrace();
         }
     }
 

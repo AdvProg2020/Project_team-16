@@ -21,6 +21,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
@@ -34,11 +35,12 @@ import java.util.ArrayList;
 
 import static ModelPackage.Off.OffStatus.*;
 
-public class OffManager {
+public class OffManager extends BackAbleController {
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
     public JFXButton create;
+
     public JFXSlider createPercentage;
     public DatePicker crStartDt;
     public DatePicker crEndDate;
@@ -147,7 +149,8 @@ public class OffManager {
 
     private void handleBack() {
         try {
-            Main.setRoot("SellerAccount");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

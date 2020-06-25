@@ -4,6 +4,7 @@ import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.CacheData;
+import View.Main;
 import View.PrintModels.FullProductPM;
 import View.PrintModels.MiniProductPM;
 import View.PrintModels.SellPackagePM;
@@ -16,6 +17,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -35,7 +37,7 @@ import java.util.Map;
 
 import static View.Controllers.Notification.show;
 
-public class EditProduct {
+public class EditProduct extends BackAbleController {
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
@@ -140,6 +142,9 @@ public class EditProduct {
         ProductEditAttribute attribute = new ProductEditAttribute();
         attribute.setSourceId(id);
         Map<String, String> features = new HashMap<>();
+        if (!name.getText().isBlank()) {
+            attribute.setName(name.getText());
+        }
         if (!dimension.getText().isEmpty()) {
             features.put("Dimension", dimension.getText());
         }
@@ -154,7 +159,7 @@ public class EditProduct {
                 throw new NotValidFieldException("price", " positive integer");
             }
         }
-        if (!weigh.getText().isEmpty()) {
+        if (!stock.getText().isEmpty()) {
             String stock = this.stock.getText();
             if (stock.matches("\\d{0,9}")) {
                 attribute.setNewStock(Integer.parseInt(stock));
@@ -162,7 +167,7 @@ public class EditProduct {
                 throw new NotValidFieldException("stock", " positive integer");
             }
         }
-        if (colorBox.isShowing()) {
+        if (colorBox.getSelectionModel().getSelectedItem() != null) {
             features.put("Color", colorBox.getSelectionModel().getSelectedItem());
         }
         attribute.setPublicFeatures(features.size() == 0 ? null : features);
@@ -238,7 +243,12 @@ public class EditProduct {
     }
 
     private void handleBack() {
-        // TODO: 6/21/2020
+        try {
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void binds() {

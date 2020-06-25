@@ -104,7 +104,6 @@ public class RequestManager {
     private void acceptCreateProduct(Request request){
         Product product = request.getProduct();
         product.setProductStatus(ProductStatus.VERIFIED);
-        ProductManager.getInstance().addToActive(product);
         DBManager.save(product);
         CategoryManager.getInstance().addProductToCategory(product,product.getCategory());
         Seller seller = DBManager.load(Seller.class, request.getUserHasRequested());
@@ -146,7 +145,6 @@ public class RequestManager {
             } catch (NoSuchSellerException ignore) {
             }
         }
-        ProductManager.getInstance().addToActive(product);
     }
 
     private void editPublicFeatureProduct(Product product,ProductEditAttribute editAttribute){
@@ -251,7 +249,6 @@ public class RequestManager {
 
     public void decline(int requestId) throws NoSuchARequestException {
         Request request = findRequestById(requestId);
-        /* TODO : DELETE Extra Data from DB */
         request.setDone(true);
         request.setAccepted(false);
         DBManager.save(request);

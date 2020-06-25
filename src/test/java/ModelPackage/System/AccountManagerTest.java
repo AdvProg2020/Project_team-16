@@ -24,6 +24,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class AccountManagerTest {
 
     private AccountManager accountManager = AccountManager.getInstance();
@@ -94,9 +97,21 @@ public class AccountManagerTest {
     public void changeInfo() throws SameInfoException, UserNotAvailableException {
         UserEditAttributes info = new UserEditAttributes();
         info.setNewEmail("ali@gmail.com");
+        info.setNewFirstName("marmof");
+        info.setNewLastName("mofayezi");
+        info.setNewPassword("1234");
+        info.setNewPhone("+98 21 6420");
         accountManager.changeInfo("marmofayezi",info);
-        String expected = "ali@gmail.com";
-        Assert.assertEquals(expected,marmof.getEmail());
+        String expectedEmail = "ali@gmail.com";
+        String expectedFirstName = "marmof";
+        String expectedLastName = "mofayezi";
+        String expectedPassword = "1234";
+        String expectedPhone = "+98 21 6420";
+        assertEquals(expectedEmail,marmof.getEmail());
+        assertEquals(expectedFirstName, marmof.getFirstName());
+        assertEquals(expectedLastName, marmof.getLastName());
+        assertEquals(expectedPassword, marmof.getPassword());
+        assertEquals(expectedPhone, marmof.getPhoneNumber());
     }
 
     @Test
@@ -123,8 +138,6 @@ public class AccountManagerTest {
                 "1000000"
         };
         accountManager.createAccount(info,"customer");
-        User actual = accountManager.getUserByUsername("marmofayezi");
-        User expected = marmof;
     }
 
     @Test public void createAccount_Seller(){
@@ -158,13 +171,18 @@ public class AccountManagerTest {
                 "09121351223"
         };
         Manager actual = accountManager.createManager(info);
-        Assert.assertEquals(hatam,actual);
+        assertEquals(hatam,actual);
+    }
+    @Test
+    public void viewPersonalInfoTest() throws UserNotAvailableException {
+        User actual = accountManager.viewPersonalInfo("marmofayezi");
+        assertEquals(actual, marmof);
     }
 
     @Test
     public void login() throws WrongPasswordException, NotVerifiedSeller, UserNotAvailableException {
         String actual = accountManager.login("hatam008","hatam008@kimi");
-        Assert.assertEquals("Manager", actual);
+        assertEquals("Manager", actual);
     }
 
     @Test(expected = WrongPasswordException.class)
@@ -174,45 +192,30 @@ public class AccountManagerTest {
 
     @Test
     public void logout() throws UserNotAvailableException {
-        marmof.setHasSignedIn(true);
         accountManager.logout("marmofayezi");
-        boolean actual = marmof.isHasSignedIn();
-        Assert.assertFalse(actual);
     }
 
-    @Test(expected = UserNotLoggedInException.class)
+    @Test(expected = UserNotAvailableException.class)
     public void logout_NotSignedIn() throws UserNotAvailableException {
-        marmof.setHasSignedIn(false);
-        accountManager.logout("marmofayezi");
+        accountManager.logout("arash");
     }
 
     @Test
     public void getUserByUsername() throws UserNotAvailableException {
         User actualUser = accountManager.getUserByUsername("marmofayezi");
-        Assert.assertEquals(marmof,actualUser);
+        assertEquals(actualUser, marmof);
     }
 
     @Test(expected = UserNotAvailableException.class)
     public void getUserByUsername_UserNotFound() throws UserNotAvailableException {
-        User actualUser = accountManager.getUserByUsername("arash");
+        accountManager.getUserByUsername("arash");
     }
 
     @Test
     public void isUsernameAvailable(){
-        new Expectations(){
-            {
-                DBManager.load(User.class, "marmofayezi");
-                result = marmof;
-                times = 1;
-            }
-        };
         boolean actual = accountManager.isUsernameAvailable("marmofayezi");
-        Assert.assertTrue(actual);
+        assertTrue(actual);
     }
-
-
-
-
 
 }
 

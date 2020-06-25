@@ -1,17 +1,22 @@
 package ModelPackage.System;
 
+import ModelPackage.Off.Off;
 import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.editPackage.ProductEditAttribute;
-import ModelPackage.System.exeption.category.NoSuchACategoryException;
-import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.product.*;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
 import View.PrintModels.MicroProduct;
 import lombok.Data;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,12 +25,22 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Data
 public class ProductManager {
-    private List<Product> allProductsActive;
     private static ProductManager productManager = null;
 
-    private ProductManager(){
-        if (allProductsActive == null)
-            allProductsActive = new ArrayList<>();
+    List<Product> getAllProductsActive() {
+        Session session = HibernateUtil.getSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.equal(root.get("productStatus").as(ProductStatus.class), ProductStatus.VERIFIED)
+        );
+        Query<Product> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
+
+    private ProductManager() {
     }
 
     public static ProductManager getInstance(){
@@ -54,9 +69,9 @@ public class ProductManager {
     public void editProduct(ProductEditAttribute edited, String editor) throws NoSuchAProductException, EditorIsNotSellerException {
         String requestStr = String.format("%s has requested to edit Product \"%s\" with id %s",edited,edited.getName(),edited.getId());
         Product product = findProductById(edited.getSourceId());
+        System.out.println(edited.getName());
         DBManager.save(edited);
         checkIfEditorIsASeller(editor,product);
-        allProductsActive.remove(product);
         product.setProductStatus(ProductStatus.UNDER_EDIT);
         Request request = new Request(editor,RequestType.CHANGE_PRODUCT,requestStr,edited);
         RequestManager.getInstance().addRequest(request);
@@ -91,7 +106,7 @@ public class ProductManager {
 
     public ArrayList<MicroProduct> findProductByName(String name){
         ArrayList<MicroProduct> list = new ArrayList<>();
-        for (Product product : allProductsActive) {
+        for (Product product : getAllProductsActive()) {
             if(product.getName().toLowerCase().contains(name.toLowerCase()))
                 list.add(new MicroProduct(product.getName(),product.getId()));
         }
@@ -154,12 +169,24 @@ public class ProductManager {
         if (product == null) throw new NoSuchAProductException(Integer.toString(productId));
     }
 
-    public void deleteProduct(int productId,String remover)
-            throws NoSuchACategoryException, NoSuchAProductInCategoryException, NoSuchAProductException, EditorIsNotSellerException {
+    public void deleteProduct(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
-        if (!remover.equals("MAN@GER"))checkIfEditorIsASeller(remover,product);
-        CategoryManager.getInstance().removeProductFromCategory(productId, product.getCategory().getId());
-        CSCLManager.getInstance().removeProductFromCompany(product);
+        product.getPackages().forEach(sellPackage -> {
+            Seller seller = sellPackage.getSeller();
+            seller.getPackages().remove(sellPackage);
+            DBManager.save(seller);
+            if (sellPackage.isOnOff()) {
+                Off off = sellPackage.getOff();
+                off.getProducts().remove(product);
+                DBManager.save(off);
+            }
+        });
+        product.setPackages(null);
+        product.setCompany(null);
+        Category category = product.getCategory();
+        category.getAllProducts().remove(product);
+        DBManager.save(category);
+        DBManager.save(product);
         DBManager.delete(product);
     }
 
@@ -169,6 +196,10 @@ public class ProductManager {
             sellPackage.setPrice(newPrice);
             DBManager.save(sellPackage);
         }
+        if (newPrice < product.getLeastPrice()) {
+            product.setLeastPrice(newPrice);
+        }
+        DBManager.save(product);
     }
 
     public void changeStock(Product product, int newStock, String username) throws NoSuchSellerException {
@@ -215,17 +246,9 @@ public class ProductManager {
         return seller;
     }
 
-    public void clear(){
-        allProductsActive.clear();
-    }
-
-    public void addToActive(Product product){
-        allProductsActive.add(product);
-    }
-
     public List<Product> getAllOffFromActiveProducts(){
         List<Product> toReturn = new ArrayList<>();
-        for (Product product : allProductsActive) {
+        for (Product product : getAllProductsActive()) {
             if (product.isOnOff())toReturn.add(product);
         }
         return toReturn;
