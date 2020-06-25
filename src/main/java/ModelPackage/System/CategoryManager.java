@@ -164,7 +164,7 @@ public class CategoryManager {
     }
 
     public void editCategory(int categoryId, CategoryEditAttribute editAttribute)
-            throws NoSuchACategoryException, RepeatedNameInParentCategoryException, RepeatedFeatureException {
+            throws NoSuchACategoryException, RepeatedNameInParentCategoryException, RepeatedFeatureException, NoSuchAFeatureInCategoryException {
         Category category = getCategoryById(categoryId);
 
         String newName = editAttribute.getName();
@@ -176,10 +176,10 @@ public class CategoryManager {
             editName(newName, categoryId);
         }
         if (addFeature != null){
-            addFeatureToCategory(categoryId, addFeature);
+            addFeatureToCategory(category, addFeature);
         }
         if (removeFeature != null){
-            removeFeatureInCategory(categoryId, removeFeature);
+            removeFeatureInCategory(category, removeFeature);
         }
         if (newParentId != 0) {
             CategoryManager.getInstance().moveCategoryToAnotherParent(newParentId,categoryId);
@@ -217,9 +217,8 @@ public class CategoryManager {
         DBManager.save(category);
     }
 
-    public void addFeatureToCategory(int categoryId,String newFeature)
-            throws NoSuchACategoryException, RepeatedFeatureException {
-        Category category = getCategoryById(categoryId);
+    public void addFeatureToCategory(Category category, String newFeature)
+            throws RepeatedFeatureException {
         checkIfThisFeatureExistInThisCategory(category,newFeature);
         List<String> features = category.getSpecialFeatures();
         features.add(newFeature);
@@ -235,21 +234,12 @@ public class CategoryManager {
         }
     }
 
-    public void removeFeatureInCategory(int categoryId,String removeFeature)
-            throws NoSuchACategoryException {
-        Category category = getCategoryById(categoryId);
-        checkIfThisFeatureExistInThisCategoryForRemove(category,removeFeature);
+    public void removeFeatureInCategory(Category category, String removeFeature) {
         List<String> features = category.getSpecialFeatures();
         features.remove(removeFeature);
         category.setSpecialFeatures(features);
         removeAFeatureFromProducts(removeFeature,category.getAllProducts());
         DBManager.save(category);
-    }
-
-    private void checkIfThisFeatureExistInThisCategoryForRemove(Category category, String feature){
-        for (String specialFeature : category.getSpecialFeatures()) {
-            if (specialFeature.equals(feature)) throw new NoSuchAFeatureInCategoryException(feature,Integer.toString(category.getId()));
-        }
     }
 
     void addNewFeatureToProducts(String newFeature,List<Product> products){
@@ -258,7 +248,10 @@ public class CategoryManager {
             specialFeatures.put(newFeature,"");
             product.setSpecialFeatures(specialFeatures);
             DBManager.save(product);
-            /* TODO : Notify The Seller To Add New Feature */
+            MessageManager messageManager = MessageManager.getInstance();
+            String name = product.getName();
+            product.getPackages().forEach(sellPackage -> messageManager.sendMessage(sellPackage.getSeller(), "Feature Added",
+                    String.format("Edit Your Product \"%s\", Some Features Added to Category", name)));
         }
     }
 
@@ -267,7 +260,6 @@ public class CategoryManager {
             Map<String,String> specialFeatures = product.getSpecialFeatures();
             specialFeatures.remove(removeFeature);
             product.setSpecialFeatures(specialFeatures);
-            /* TODO : Notify The Seller To Add New Feature */
         }
     }
 
@@ -317,9 +309,6 @@ public class CategoryManager {
         }
         return products;
     }
-
-
-    /* TODO : Get Categories in Another Category */
 
     public static ArrayList<String> getPublicFeatures() {
         return publicFeatures;

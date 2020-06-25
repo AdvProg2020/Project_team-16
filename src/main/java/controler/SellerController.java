@@ -39,7 +39,7 @@ public class SellerController extends Controller{
 
     public CompanyPM viewCompanyInfo(String sellerUserName) throws UserNotAvailableException {
          Company company = sellerManager.viewCompanyInformation(sellerUserName);
-         return new CompanyPM(company.getName(), company.getGroup(), company.getPhone());
+        return new CompanyPM(company.getId(), company.getName(), company.getPhone(), company.getGroup());
      }
 
     public List<SellLogPM> viewSalesHistory(String sellerUserName) throws UserNotAvailableException {
@@ -189,6 +189,12 @@ public class SellerController extends Controller{
     public ArrayList<String> getSpecialFeaturesOfCat(int catId) throws NoSuchACategoryException {
         ArrayList<String> features = new ArrayList<>(CategoryManager.getPublicFeatures());
         features.addAll(categoryManager.getAllSpecialFeaturesFromCategory(catId));
+        return features;
+    }
+
+    public ArrayList<String> getSpecialFeatureOfCategory(int id) throws NoSuchACategoryException {
+        ArrayList<String> features = new ArrayList<>();
+        features.addAll(categoryManager.getAllSpecialFeaturesFromCategory(id));
         return features;
     }
 

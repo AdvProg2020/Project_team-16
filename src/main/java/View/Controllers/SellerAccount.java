@@ -97,12 +97,12 @@ public class SellerAccount extends BackAbleController {
         lName.setText(userFullPM.getLastName());
         email.setText(userFullPM.getEmail());
         phone.setText(userFullPM.getPhoneNumber());
-        companyName.setText(companyPM.getName());
+        companyName.setText(companyPM.getName() + "  (ID : " + companyPM.getId() + " )");
         companyPhone.setText(companyPM.getPhone());
     }
 
     private CompanyPM gatTestCompany() {
-        return new CompanyPM(
+        return new CompanyPM(1,
                 "Apple",
                 "+5 55 22 333",
                 "Digital"

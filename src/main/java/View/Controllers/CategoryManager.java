@@ -2,6 +2,7 @@ package View.Controllers;
 
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
+import ModelPackage.System.exeption.category.NoSuchAFeatureInCategoryException;
 import ModelPackage.System.exeption.category.RepeatedFeatureException;
 import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryException;
 import View.Main;
@@ -110,8 +111,8 @@ public class CategoryManager extends BackAbleController {
         try {
             managerController.editCategory(id, attribute);
             featureList.getItems().removeAll(featureToRemove);
-        } catch (RepeatedNameInParentCategoryException | NoSuchACategoryException | RepeatedFeatureException e) {
-            new OopsAlert().show("Fuck");
+        } catch (RepeatedNameInParentCategoryException | NoSuchACategoryException | RepeatedFeatureException | NoSuchAFeatureInCategoryException e) {
+            e.printStackTrace();
         }
     }
 
@@ -123,7 +124,7 @@ public class CategoryManager extends BackAbleController {
         try {
             managerController.editCategory(id, attribute);
             featureList.getItems().add(newFeatureTitle);
-        } catch (RepeatedNameInParentCategoryException | NoSuchACategoryException | RepeatedFeatureException e) {
+        } catch (RepeatedNameInParentCategoryException | NoSuchACategoryException | RepeatedFeatureException | NoSuchAFeatureInCategoryException e) {
             e.printStackTrace();
         }
     }
@@ -137,7 +138,7 @@ public class CategoryManager extends BackAbleController {
         try {
             managerController.editCategory(id, attribute);
             categoryName.setText(newName);
-        } catch (RepeatedNameInParentCategoryException | NoSuchACategoryException | RepeatedFeatureException e) {
+        } catch (RepeatedNameInParentCategoryException | NoSuchACategoryException | RepeatedFeatureException | NoSuchAFeatureInCategoryException e) {
             e.printStackTrace();
         }
     }
@@ -162,7 +163,7 @@ public class CategoryManager extends BackAbleController {
 
     private void fillFeatureTable(int id) {
         try {
-            ArrayList<String> list = sellerController.getSpecialFeaturesOfCat(id);
+            ArrayList<String> list = sellerController.getSpecialFeatureOfCategory(id);
             ObservableList<String> data = FXCollections.observableArrayList(list);
             featureList.setItems(data);
             if (false) throw new NoSuchACategoryException("");

@@ -8,10 +8,7 @@ import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
-import ModelPackage.System.exeption.category.NoSuchACategoryException;
-import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
-import ModelPackage.System.exeption.category.RepeatedFeatureException;
-import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryException;
+import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
@@ -217,7 +214,7 @@ public class ManagerController extends Controller {
     }
 
     public void editCategory(int id, CategoryEditAttribute editAttribute)
-            throws RepeatedNameInParentCategoryException, NoSuchACategoryException, RepeatedFeatureException {
+            throws RepeatedNameInParentCategoryException, NoSuchACategoryException, RepeatedFeatureException, NoSuchAFeatureInCategoryException {
         categoryManager.editCategory(id, editAttribute);
     }
 
