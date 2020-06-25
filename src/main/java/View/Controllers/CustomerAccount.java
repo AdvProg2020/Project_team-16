@@ -159,7 +159,7 @@ public class CustomerAccount extends BackAbleController {
 
     private void handleMessages() {
         try {
-            Scene scene = new Scene(Main.loadFXML("MessageMenu", backForForward("CustomerAccount")));
+            Scene scene = new Scene(Main.loadFXML("Messages", backForForward("CustomerAccount")));
             Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
