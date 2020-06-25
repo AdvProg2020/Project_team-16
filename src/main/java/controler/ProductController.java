@@ -147,6 +147,11 @@ public class ProductController extends Controller{
         return productManager.findProductByName(name);
     }
 
+    public List<MicroProduct> getAllProductInCategoryByProductId(int id) throws NoSuchACategoryException, NoSuchAProductException {
+        Product product = productManager.findProductById(id);
+        return categoryManager.allProductsInACategoryList(product.getCategory().getId());
+    }
+
     public ArrayList<Image> loadImage(int id) {
         ArrayList<Image> images = new ArrayList<>();
         File mainImageFile = new File("src/main/resources/db/images/products/" + id + "/main.jpg");
