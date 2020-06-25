@@ -16,6 +16,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -24,7 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 
-public class Cart {
+public class Cart extends BackAbleController {
     // TODO: 6/20/2020 Fu***** Full Of Problems !!!!!!!!!!!!!!!!!!!!!!! Need A ReProgram
     public JFXButton back;
     public JFXButton minimize;
@@ -116,7 +117,8 @@ public class Cart {
 
     private void handleBackButton() {
         try {
-            Main.setRoot("CustomerAccount");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -124,7 +126,8 @@ public class Cart {
 
     private void handlePurchaseButton() {
         try {
-            Main.setRoot("Purchase");
+            Scene scene = new Scene(Main.loadFXML("Purchase", backForForward("Cart")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

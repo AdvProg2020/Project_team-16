@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 
-public class ManagerAccount {
+public class ManagerAccount extends BackAbleController {
     public JFXButton chooseProf;
 
     public JFXButton back;
@@ -165,7 +165,8 @@ public class ManagerAccount {
 
     private void handleAddManager() {
         try {
-            Main.setRoot("AddManager");
+            Scene scene = new Scene(Main.loadFXML("CreateManager", backForForward("ManagerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -173,7 +174,8 @@ public class ManagerAccount {
 
     private void handleBack() {
         try {
-            Main.setRoot("MainPage");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -181,7 +183,8 @@ public class ManagerAccount {
 
     private void handleUsers() {
         try {
-            Main.setRoot("ManageUsers");
+            Scene scene = new Scene(Main.loadFXML("ManageUsers", backForForward("ManagerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -189,7 +192,8 @@ public class ManagerAccount {
 
     private void handleProducts() {
         try {
-            Main.setRoot("productManagerPage");
+            Scene scene = new Scene(Main.loadFXML("productManagePage", backForForward("ManagerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -197,7 +201,8 @@ public class ManagerAccount {
 
     private void handleCategories() {
         try {
-            Main.setRoot("CategoryManager");
+            Scene scene = new Scene(Main.loadFXML("CategoryManager", backForForward("ManagerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -205,7 +210,8 @@ public class ManagerAccount {
 
     private void handleRequests() {
         try {
-            Main.setRoot("requestManager");
+            Scene scene = new Scene(Main.loadFXML("requestManager", backForForward("ManagerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -213,7 +219,8 @@ public class ManagerAccount {
 
     private void handleDiscount() {
         try {
-            Main.setRoot("DiscountManager");
+            Scene scene = new Scene(Main.loadFXML("DiscountManager", backForForward("ManagerAccount")));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

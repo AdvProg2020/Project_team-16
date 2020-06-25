@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MessageManager {
-    private static MessageManager messageManager;
+    private static MessageManager messageManager = new MessageManager();
 
     public static MessageManager getInstance() {
         return messageManager;

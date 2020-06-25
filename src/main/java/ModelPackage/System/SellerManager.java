@@ -2,11 +2,14 @@ package ModelPackage.System;
 
 
 import ModelPackage.Log.SellLog;
+import ModelPackage.Off.Off;
 import ModelPackage.Product.Company;
 import ModelPackage.Product.NoSuchSellerException;
 import ModelPackage.Product.Product;
+import ModelPackage.Product.SellPackage;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Seller;
@@ -48,8 +51,28 @@ public class SellerManager {
             throw new UserNotAvailableException();
         }
         List<Product> toReturn = new ArrayList<>();
-        seller.getPackages().forEach(sellPackage -> toReturn.add(sellPackage.getProduct()));
+        if (seller.getPackages().size() != 0)
+            seller.getPackages().forEach(sellPackage -> toReturn.add(sellPackage.getProduct()));
         return toReturn;
+    }
+
+    public void deleteProductForSeller(String username, int productId) throws NoSuchAPackageException {
+        Seller seller = DBManager.load(Seller.class, username);
+        SellPackage sellPackage = seller.findPackageByProductId(productId);
+        seller.getPackages().remove(sellPackage);
+        DBManager.save(seller);
+        /*Product product = sellPackage.getProduct();
+        product.getPackages().remove(sellPackage);
+        DBManager.save(product);
+        if (sellPackage.isOnOff()) {
+            Off off = sellPackage.getOff();
+            off.getProducts().remove(sellPackage.getProduct());
+            DBManager.save(off);
+        }
+        sellPackage.setOff(null);
+        sellPackage.setProduct(null);
+        sellPackage.setSeller(null);*/
+        DBManager.delete(sellPackage);
     }
 
     public List<Seller> viewSellersOfProduct (int productId)

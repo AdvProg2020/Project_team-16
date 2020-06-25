@@ -9,9 +9,21 @@ public class FilterPackage {
     private int downPriceLimit;
     private int categoryId;
     private HashMap<String,String> activeFilters;
+    private boolean offMode;
 
     public FilterPackage(){
         activeFilters = new HashMap<>();
+        offMode = false;
+        upPriceLimit = 0;
+        downPriceLimit = 0;
+    }
+
+    public FilterPackage(int categoryId) {
+        activeFilters = new HashMap<>();
+        offMode = false;
+        upPriceLimit = 0;
+        downPriceLimit = 0;
+        this.categoryId = categoryId;
     }
 
     void reset(){

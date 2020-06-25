@@ -102,13 +102,8 @@ public class ManagerController extends Controller {
                 sellPackagePMs);
     }
 
-    public void removeProduct(int productId) throws NoSuchACategoryException,
-            NoSuchAProductInCategoryException, NoSuchAProductException {
-        try {
-            productManager.deleteProduct(productId,"MAN@GER");
-        } catch (EditorIsNotSellerException e) {
-            e.printStackTrace();
-        }
+    public void removeProduct(int productId) throws NoSuchAProductException {
+        productManager.deleteProduct(productId);
     }
 
     public void createDiscount(String[] data, Date startTime, Date endTime) throws
@@ -195,7 +190,6 @@ public class ManagerController extends Controller {
 
     public ArrayList<CategoryPM> getAllCategories(){
         List<Category> cats = categoryManager.getBaseCats();
-        System.out.println(cats.size());
         sortManager.sortCategories(cats);
         ArrayList<CategoryPM> toReturn = new ArrayList<>();
         for (Category cat : cats) {

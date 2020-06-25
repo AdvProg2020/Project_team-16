@@ -12,6 +12,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DiscountManager {
+public class DiscountManager extends BackAbleController {
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
@@ -323,7 +324,8 @@ public class DiscountManager {
 
     private void upBarInitialize() {
         back.setOnAction(e-> { try {
-            Main.setRoot("ManagerAccount");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException ignore) {}
         });
         minimize.setOnAction(e->Main.minimize());

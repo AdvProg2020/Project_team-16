@@ -20,7 +20,6 @@ import org.hibernate.cfg.Configuration;
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
     private static Session session;
-    private static Transaction transaction;
 
     private static SessionFactory buildSessionFactory() {
         try {
@@ -67,7 +66,6 @@ public class HibernateUtil {
     }
 
     public static void shutdown() {
-        transaction.commit();
         session.close();
         sessionFactory.close();
     }
@@ -75,7 +73,6 @@ public class HibernateUtil {
     public static void startUtil() {
         sessionFactory = buildSessionFactory();
         session = sessionFactory.openSession();
-        transaction = session.beginTransaction();
     }
 
     public static Session getSession() {

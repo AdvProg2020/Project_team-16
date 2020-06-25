@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SaleHistory {
+public class SaleHistory extends BackAbleController {
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;

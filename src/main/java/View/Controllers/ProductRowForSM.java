@@ -1,21 +1,18 @@
 package View.Controllers;
 
-import ModelPackage.System.exeption.category.NoSuchACategoryException;
-import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
-import ModelPackage.System.exeption.product.EditorIsNotSellerException;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.CacheData;
 import View.Main;
 import com.jfoenix.controls.JFXButton;
 import controler.ManagerController;
+import controler.ProductController;
 import controler.SellerController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -42,12 +39,13 @@ public class ProductRowForSM {
 
     @FXML
     public void initialize(){
-        // TODO: 6/13/2020 Image
-        canEditThis = CacheData.getInstance().getRole().equals("seller");
+        canEditThis = CacheData.getInstance().getRole().equals("Seller") |
+                CacheData.getInstance().getRole().equals("seller");
         name.setText(nameStr);
         id.setText("" + productId);
         editButt.setDisable(!canEditThis);
         idProduct = productId;
+        image.setImage(ProductController.getInstance().loadMainImage(idProduct));
         buttonInitialize();
     }
 
@@ -58,22 +56,28 @@ public class ProductRowForSM {
     }
 
     private void editButtHandle() {
-        // TODO: 6/20/2020 Completing
+        try {
+            CacheData.getInstance().setProductId(idProduct);
+            Scene scene = new Scene(Main.loadFXML("EditProduct", "MainPage", "ProductPage"));
+            Main.setSceneToStage(new Stage(StageStyle.UNDECORATED), scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void sendDeleteRequest() {
         if (canEditThis) {
             try {
                 SellerController.getInstance().removeProduct(idProduct, CacheData.getInstance().getUsername());
-            } catch (NoSuchACategoryException | NoSuchAProductInCategoryException | NoSuchAProductException | EditorIsNotSellerException e) {
+            } catch (NoSuchAPackageException e) {
                 e.printStackTrace();
-                new OopsAlert().show(e.getMessage());
+                Notification.show("Error", e.getMessage(), delete.getScene().getWindow(), true);
             }
         } else {
             try {
                 ManagerController.getInstance().removeProduct(idProduct);
-            } catch (NoSuchACategoryException | NoSuchAProductInCategoryException | NoSuchAProductException e) {
-                new OopsAlert().show(e.getMessage());
+            } catch (NoSuchAProductException e) {
+                Notification.show("Error", e.getMessage(), delete.getScene().getWindow(), true);
                 e.printStackTrace();
             }
         }
@@ -81,14 +85,9 @@ public class ProductRowForSM {
 
     private void show() {
         CacheData.getInstance().setProductId(idProduct);
-        Stage stage = new Stage();
         try {
-            Scene scene = new Scene(Main.loadFXML("ProductDigest"));
-            scene.setFill(Color.TRANSPARENT);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            Main.moveSceneOnMouse(scene, stage);
-            stage.setScene(scene);
-            stage.show();
+            Scene scene = new Scene(Main.loadFXML("ProductDigest", "MainPage", "ProductPage"));
+            Main.setSceneToStage(new Stage(StageStyle.UNDECORATED), scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
