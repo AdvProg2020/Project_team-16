@@ -97,6 +97,7 @@ public class CreateManager extends BackAbleController {
         if (checkForEmptyValues()){
             sendSignUpRequest();
             Notification.show("Successful", "The New Manager was Created!!!", back.getScene().getWindow(), false);
+            handleBack();
         } else {
             Notification.show("Error", "Please Check The Fields.", back.getScene().getWindow(), true);
         }

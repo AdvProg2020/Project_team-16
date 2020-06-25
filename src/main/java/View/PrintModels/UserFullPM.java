@@ -20,4 +20,9 @@ public class UserFullPM {
         this.phoneNumber = phoneNumber;
         this.role = role;
     }
+
+    @Override
+    public String toString() {
+        return username;
+    }
 }

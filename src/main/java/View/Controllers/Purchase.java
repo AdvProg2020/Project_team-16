@@ -248,7 +248,7 @@ public class Purchase extends BackAbleController {
     private void updateTotalPrice() {
         try {
             totalPrice.setText(String.valueOf(customerController.getPurchaseTotalPrice(selectedDisCode, cacheData.getUsername())));
-        } catch (NoSuchADiscountCodeException | UserNotAvailableException e) {
+        } catch (NoSuchADiscountCodeException | UserNotAvailableException | NoSuchSellerException e) {
             e.printStackTrace();
         }
     }

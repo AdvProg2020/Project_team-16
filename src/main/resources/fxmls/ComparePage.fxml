@@ -63,14 +63,15 @@
                         </HBox>
                         <HBox alignment="CENTER_RIGHT" prefHeight="39.0" prefWidth="910.0">
                             <children>
+                        <Region prefHeight="26.0" prefWidth="79.0" />
                                 <JFXComboBox fx:id="choose" prefHeight="26.0" prefWidth="359.0" promptText="Select A Prouct To Compare" unFocusColor="#190202" />
                             </children>
                         </HBox>
                         <TableView fx:id="table" focusTraversable="false" prefHeight="335.0" prefWidth="910.0">
                             <columns>
-                                <TableColumn fx:id="feature" editable="false" prefWidth="183.2000053524971" style="-fx-text-fill: white;" text="Feature" />
-                                <TableColumn fx:id="product1Col" editable="false" prefWidth="366.40008544921875" style="-fx-text-fill: white;" text="Product1" />
-                                <TableColumn fx:id="product2Col" editable="false" prefWidth="366.40008544921875" style="-fx-text-fill: black;" text="Product2" />
+                                <TableColumn fx:id="feature" editable="false" prefWidth="183.2000053524971" text="Feature" />
+                                <TableColumn fx:id="product1Col" editable="false" prefWidth="366.40008544921875" />
+                                <TableColumn fx:id="product2Col" editable="false" prefWidth="366.40008544921875" />
                             </columns>
                         </TableView>
                     </children>

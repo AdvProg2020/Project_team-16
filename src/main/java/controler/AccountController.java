@@ -124,6 +124,11 @@ public class AccountController extends Controller {
         outStream.close();
     }
 
+    public String getPassByUsername(String username) throws UserNotAvailableException {
+        User user = accountManager.getUserByUsername(username);
+        return user.getPassword();
+    }
+
     public List<RequestPM> viewRequestSent(String username, String role) {
         List<Request> requests = new ArrayList<>();
         if (role.equalsIgnoreCase("seller")) {
