@@ -96,14 +96,14 @@ public class OrderHistory extends BackAbleController {
     private ObservableList<OrderLogPM> getOrders(){
         ObservableList<OrderLogPM> orders = FXCollections.observableArrayList();
 
-        /*try {
+        try {
             orders.addAll(customerController.viewOrders(username));
         } catch (UserNotAvailableException | NoSuchALogException | NoSuchAProductException e) {
             Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();
-        }*/
+        }
 
-        orders.addAll(loadOrders());
+        //orders.addAll(loadOrders());
 
         return orders;
     }
