@@ -162,7 +162,7 @@ public class CategoryManager extends BackAbleController {
 
     private void fillFeatureTable(int id) {
         try {
-            ArrayList<String> list = /*loadFeature();*/ sellerController.getSpecialFeaturesOfCat(id);
+            ArrayList<String> list = sellerController.getSpecialFeaturesOfCat(id);
             ObservableList<String> data = FXCollections.observableArrayList(list);
             featureList.setItems(data);
             if (false) throw new NoSuchACategoryException("");
@@ -172,37 +172,13 @@ public class CategoryManager extends BackAbleController {
     }
 
     private void loadList() {
-        ArrayList<CategoryPM> categoryPMS = /* load(); */managerController.getAllCategories();
+        ArrayList<CategoryPM> categoryPMS = managerController.getAllCategories();
         ObservableList<CategoryPM> data = FXCollections.observableArrayList(categoryPMS);
         categoryPMS.add(0, new CategoryPM("---", 0, 0));
         ObservableList<CategoryPM> data1 = FXCollections.observableArrayList(categoryPMS);
 
         crParent.setItems(data1);
         categories.setItems(data);
-    }
-
-    private ArrayList<CategoryPM> load() {
-        CategoryPM categoryPM1 = new CategoryPM("Human", 1, 0);
-        CategoryPM categoryPM2 = new CategoryPM("Ass", 2, 1);
-        CategoryPM categoryPM3 = new CategoryPM("Arm", 3, 1);
-        CategoryPM categoryPM4 = new CategoryPM("Butt", 4, 1);
-        CategoryPM categoryPM5 = new CategoryPM("Animal", 5, 0);
-        ArrayList<CategoryPM> arrayList = new ArrayList<>();
-        arrayList.add(categoryPM1);
-        arrayList.add(categoryPM2);
-        arrayList.add(categoryPM3);
-        arrayList.add(categoryPM4);
-        arrayList.add(categoryPM5);
-        return arrayList;
-    }
-
-    private ArrayList<String> loadFeature() {
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("color");
-        arrayList.add("cascade");
-        arrayList.add("dimention");
-        arrayList.add("parameter");
-        return arrayList;
     }
 
     private void reset() {

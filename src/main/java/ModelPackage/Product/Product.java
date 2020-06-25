@@ -15,7 +15,6 @@ import java.util.*;
 @Data @AllArgsConstructor
 @Entity
 @Table(name = "t_product")
-@SQLDelete(sql = "UPDATE t_product SET state = 'DELETED' WHERE id = ?", check = ResultCheckStyle.COUNT)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

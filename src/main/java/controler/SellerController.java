@@ -187,7 +187,7 @@ public class SellerController extends Controller{
     }
 
     public ArrayList<String> getSpecialFeaturesOfCat(int catId) throws NoSuchACategoryException {
-        ArrayList<String> features = CategoryManager.getPublicFeatures();
+        ArrayList<String> features = new ArrayList<>(CategoryManager.getPublicFeatures());
         features.addAll(categoryManager.getAllSpecialFeaturesFromCategory(catId));
         return features;
     }

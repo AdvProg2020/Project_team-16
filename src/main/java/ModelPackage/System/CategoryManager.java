@@ -22,7 +22,7 @@ import java.util.*;
 @Data
 public class CategoryManager {
     private static CategoryManager categoryManager = new CategoryManager();
-    private static ArrayList<String> publicFeatures = new ArrayList<>(Arrays.asList("Dimension","Weigh","Color")) ;
+    private static final ArrayList<String> publicFeatures = new ArrayList<>(Arrays.asList("Dimension", "Weigh", "Color"));
 
     private CategoryManager() {
 

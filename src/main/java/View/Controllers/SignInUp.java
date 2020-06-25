@@ -139,7 +139,6 @@ public class SignInUp {
                 }
             } catch (UserNotAvailableException e) {
                 errorField(usernameUp, "Username : This username is unavailable");
-                e.printStackTrace();
             }
         }
     }
