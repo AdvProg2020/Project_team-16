@@ -222,8 +222,8 @@ public class OffManager extends BackAbleController {
     private void changeData(OffPM off) {
         offStatus.setText(off.getStatus());
         percent.setValue(off.getOffPercentage());
-        startDate.setValue(LocalDate.parse(off.getStartTime().toString()));
-        endDate.setValue(LocalDate.parse(off.getEndTime().toString()));
+        startDate.setPromptText(off.getStartTime().toString());
+        endDate.setPromptText(off.getEndTime().toString());
 
         productsList.getItems().clear();
         productsList.getItems().addAll(off.getProducts());
@@ -256,11 +256,14 @@ public class OffManager extends BackAbleController {
     private void handleDeleteProduct() {
         ObservableList<MiniProductPM> products = productsList.getItems();
 
+
         MiniProductPM selected = productsList.getSelectionModel().getSelectedItem();
         products.remove(selected);
 
         OffChangeAttributes attributes = new OffChangeAttributes();
         attributes.setProductIdToRemove(selected.getId());
+        OffPM off = offsList.getSelectionModel().getSelectedItem();
+        attributes.setSourceId(off.getOffId());
         try {
             sellerController.editOff(username, attributes);
         } catch (ThisOffDoesNotBelongssToYouException | NoSuchAOffException e) {
@@ -301,22 +304,24 @@ public class OffManager extends BackAbleController {
 
     private void addAttributes(OffChangeAttributes attributes) {
         OffPM off = offsList.getSelectionModel().getSelectedItem();
+        attributes.setSourceId(off.getOffId());
 
         if ((int)percent.getValue() != off.getOffPercentage()){
             attributes.setPercentage((int) percent.getValue());
-        } else if (Date.from(Instant.from(startDate.getValue())).compareTo(off.getStartTime()) != 0){
-            attributes.setStart(Date.from(Instant.from(startDate.getValue())));
-        } else if (Date.from(Instant.from(endDate.getValue())).compareTo(off.getEndTime()) != 0){
-            attributes.setEnd(Date.from(Instant.from(endDate.getValue())));
+        } else if (startDate.getValue() != null) {
+            attributes.setStart(convertToDateViaInstant(startDate.getValue()));
+        } else if (endDate.getValue() != null) {
+            attributes.setEnd(convertToDateViaInstant(endDate.getValue()));
         }
     }
-
     private void handleReset() {
         OffPM off = offsList.getSelectionModel().getSelectedItem();
 
         percent.setValue(off.getOffPercentage());
-        startDate.setValue(LocalDate.parse(off.getStartTime().toString()));
-        endDate.setValue(LocalDate.parse(off.getEndTime().toString()));
+        startDate.setValue(null);
+        startDate.getEditor().clear();
+        endDate.setValue(null);
+        endDate.getEditor().clear();
 
         confirm.setDisable(true);
         reset.setDisable(true);

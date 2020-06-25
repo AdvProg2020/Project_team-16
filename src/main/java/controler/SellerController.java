@@ -72,10 +72,10 @@ public class SellerController extends Controller{
 
     public List<MiniProductPM> manageProducts(String sellerUserName, SortPackage sort) throws UserNotAvailableException {
          List<Product> sellerProducts = sellerManager.viewProducts(sellerUserName);
-         List<Product> sortedSellerProducts = sortManager.sort(sellerProducts,sort.getSortType());
-         if (!sort.isAscending()) Collections.reverse(sortedSellerProducts);
+        //List<Product> sortedSellerProducts = sortManager.sort(sellerProducts,sort.getSortType());
+        //if (!sort.isAscending()) Collections.reverse(sortedSellerProducts);
          ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
-         for (Product sellerProduct : sortedSellerProducts) {
+        for (Product sellerProduct : sellerProducts) {
              miniProductPMs.add(createMiniProductPM(sellerProduct));
         }
          return miniProductPMs;
