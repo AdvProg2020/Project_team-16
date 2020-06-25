@@ -1,8 +1,11 @@
 package View.Controllers;
 
+import ModelPackage.System.exeption.account.UserNotAvailableException;
+import View.CacheData;
 import View.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
+import controler.AccountController;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -95,12 +98,17 @@ public class EditPassDialog {
         return newPass.getText().equals(repeat.getText());
     }
 
-    private boolean isCorrectPassCorrect(){
+    private boolean isCorrectPass(){
+        try {
+            return AccountController.getInstance().getPassByUsername(CacheData.getInstance().getUsername()).equals(current.getText());
+        } catch (UserNotAvailableException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     private void submit(MouseEvent e) {
-        if (!isCorrectPassCorrect()) {
+        if (!isCorrectPass()) {
             current.setPromptText("Incorrect Password");
             current.setFocusColor(Paint.valueOf("#c0392b"));
             current.requestFocus();
