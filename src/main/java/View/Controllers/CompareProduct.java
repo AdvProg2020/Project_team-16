@@ -6,13 +6,13 @@ import View.CacheData;
 import View.Main;
 import View.PrintModels.FullProductPM;
 import View.PrintModels.MicroProduct;
+import View.PrintModels.MiniProductPM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import controler.ProductController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,6 +23,8 @@ import javafx.stage.Stage;
 import lombok.Data;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CompareProduct {
@@ -31,7 +33,6 @@ public class CompareProduct {
     public JFXButton minimize;
     public JFXButton close;
 
-    public Label mainProduct;
     public JFXComboBox<MicroProduct> choose;
     public Rectangle mainProductImage;
     public Rectangle secondProductImage;
@@ -52,14 +53,9 @@ public class CompareProduct {
     public void initialize(){
         initProduct(mainProductId, true);
         initButtons();
-        initLabel();
         loadImage(mainProductImage, mainProductId);
         initChooseProduct();
         initProductsTable();
-    }
-
-    private void initLabel() {
-        mainProduct.setText(mainProductPM.getProduct().getName());
     }
 
     private void initProduct(int id, boolean main) {
@@ -72,14 +68,77 @@ public class CompareProduct {
         } catch (NoSuchAProductException e) {
             e.printStackTrace();
         }
+
+        /*if (main){
+            mainProductPM = getTestProduct(true);
+        } else {
+            secondProductPM = getTestProduct(false);
+        }*/
+    }
+
+    private FullProductPM getTestProduct(boolean main) {
+        if (main){
+            return new FullProductPM(
+                    new MiniProductPM(
+                            "Asus Rog GL502VS",
+                            123,
+                            "Laptop",
+                            "Asus",
+                            1.22,
+                            null,
+                            null),
+                    getFeatures(true)
+            );
+        } else {
+            return new FullProductPM(
+                    new MiniProductPM(
+                            "Lenovo Ashghal 320RD",
+                            54,
+                            "Laptop",
+                            "Lenovo",
+                            0.22,
+                            null,
+                            null),
+                    getFeatures(false)
+            );
+        }
+    }
+
+    private Map<String, String> getFeatures(boolean main) {
+        Map<String, String> map = new HashMap<>();
+        if (main) {
+            map.put("color", "black");
+            map.put("memory", "10g");
+            map.put("pass", "high");
+            map.put("size", "big");
+        } else {
+            map.put("color", "white");
+            map.put("memory", "11g");
+            map.put("pass", "low");
+            map.put("size", "small");
+        }
+        return map;
     }
 
     private void initProductsTable() {
+        initColumns();
         feature.setCellValueFactory(new PropertyValueFactory<>("feature"));
         product1Col.setCellValueFactory(new PropertyValueFactory<>("firstProduct"));
-        product2Col.setCellValueFactory(new PropertyValueFactory<>("secondProduct"));
 
+        addColumns();
         table.setItems(getRows());
+    }
+
+    private void initColumns() {
+        feature = new TableColumn<>("Feature");
+        feature.setMinWidth(183);
+        feature.setStyle("-fx-alignment: CENTER;");
+        product1Col = new TableColumn<>(mainProductPM.getProduct().getName());
+        product1Col.setMinWidth(366);
+        product1Col.setStyle("-fx-alignment: CENTER;");
+        product2Col = new TableColumn<>();
+        product2Col.setMinWidth(366);
+        product2Col.setStyle("-fx-alignment: CENTER;");
     }
 
     private ObservableList<CompareRowFactory> getRows() {
@@ -92,7 +151,9 @@ public class CompareProduct {
     }
 
     private void initChooseProduct() {
-        choose.getItems().addAll(getProductsInCategory());
+        choose.setItems(getProductsInCategory());
+        //choose.getItems().add(new MicroProduct("Lenovo Ashghal 320RD",54));
+
         choose.getSelectionModel().selectedItemProperty().addListener( (v, oldProduct, newProduct) -> updateCompareProduct(newProduct));
     }
 
@@ -113,7 +174,13 @@ public class CompareProduct {
     }
 
     private void updateTable() {
-        table.getItems().forEach(row ->{
+        product2Col = new TableColumn<>(secondProductPM.getProduct().getName());
+        product2Col.setCellValueFactory(new PropertyValueFactory<>("secondProduct"));
+        product2Col.setMinWidth(366);
+        product2Col.setStyle("-fx-alignment: CENTER;");
+
+        ArrayList<CompareRowFactory> rows = new ArrayList<>(table.getItems());
+        rows.forEach(row ->{
             Map<String, String> features = secondProductPM.getFeatures();
             for (String feature : features.keySet()) {
                 if (feature.equals(row.feature)){
@@ -122,6 +189,17 @@ public class CompareProduct {
                 }
             }
         });
+        ObservableList<CompareRowFactory> observableRows = FXCollections.observableArrayList(rows);
+
+        addColumns();
+        table.setItems(observableRows);
+    }
+
+    private void addColumns() {
+        table.getColumns().clear();
+        table.getColumns().add(feature);
+        table.getColumns().add(product1Col);
+        table.getColumns().add(product2Col);
     }
 
     private void initButtons() {
@@ -153,7 +231,7 @@ public class CompareProduct {
     }
 
     @Data
-    static class CompareRowFactory{
+    public class CompareRowFactory{
         private String feature;
         private String firstProduct;
         private String secondProduct;
