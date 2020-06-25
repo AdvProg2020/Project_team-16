@@ -38,8 +38,8 @@ public class SingleMiniProduct {
     private void initData(int id, int prc, int offPrc, String name) {
         boolean onOff = (offPrc != 0);
         specialOffer.setVisible(onOff);
-        offPrice.setText("" + offPrc);
-        price.setText("" + prc);
+        offPrice.setText("Offer : " + offPrc + "$");
+        price.setText("" + prc + "$");
         productName.setText(name);
         offPrice.setVisible(onOff);
         pane.setOnMouseClicked(e -> {

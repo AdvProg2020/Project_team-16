@@ -60,6 +60,8 @@ public class ProductDigest extends BackAbleController {
     public TableView<Map.Entry<String, String>> features;
     public VBox commentVBox;
     public JFXButton addComment;
+    public ImageView specialOffer;
+    public ImageView notAvailableSign;
 
     private int id;
     private static final CacheData cacheData = CacheData.getInstance();
@@ -241,13 +243,20 @@ public class ProductDigest extends BackAbleController {
 
     private void loadPricing(SellPackagePM pm) {
         if (pm.getOffPercent() != 0) {
-            double price = pm.getPrice() * (pm.getOffPercent() / 100.0);
-            this.price.setText("" + price);
-            offPrice.setText("" + pm.getPrice());
+            double price = pm.getPrice() * (100 - pm.getOffPercent()) / 100;
+            this.price.setText("" + price + "$");
+            offPrice.setText("RealPrice : " + pm.getPrice() + "$");
             offPrice.setVisible(true);
+            specialOffer.setVisible(true);
         } else {
             price.setText("" + pm.getPrice());
             offPrice.setVisible(false);
+            specialOffer.setVisible(false);
+        }
+        if (pm.isAvailable()) {
+            notAvailableSign.setVisible(false);
+        } else {
+            notAvailableSign.setVisible(true);
         }
     }
 

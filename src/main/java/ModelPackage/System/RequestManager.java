@@ -4,13 +4,9 @@ import ModelPackage.Off.Off;
 import ModelPackage.Off.OffStatus;
 import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
-import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.editPackage.OffChangeAttributes;
 import ModelPackage.System.editPackage.ProductEditAttribute;
-import ModelPackage.System.exeption.category.NoSuchACategoryException;
-import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
 import ModelPackage.System.exeption.off.NoSuchAOffException;
-import ModelPackage.System.exeption.product.AlreadyASeller;
 import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
@@ -18,13 +14,7 @@ import ModelPackage.Users.Advertise;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.RequestType;
 import ModelPackage.Users.Seller;
-import com.google.gson.Gson;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -197,8 +187,9 @@ public class RequestManager {
                 addProductToOff(off,changeAttributes);
             }
             if (changeAttributes.getProductIdToRemove() != 0){
-                removeProductToOff(off,changeAttributes);
+                removeProductFromOff(off, changeAttributes);
             }
+            off.setOffStatus(OffStatus.ACCEPTED);
             DBManager.save(off);
         } catch (NoSuchAOffException ignore) {
         }
@@ -225,12 +216,16 @@ public class RequestManager {
         }
     }
 
-    private void removeProductToOff(Off off,OffChangeAttributes changeAttributes){
+    private void removeProductFromOff(Off off, OffChangeAttributes changeAttributes) {
         try {
             Product product = ProductManager.getInstance().findProductById(changeAttributes.getProductIdToRemove());
+            SellPackage sellPackage = off.getSeller().findPackageByProductId(product.getId());
+            sellPackage.setOff(null);
+            sellPackage.setOnOff(false);
+            DBManager.save(sellPackage);
             off.getProducts().remove(product);
-        } catch (NoSuchAProductException e) {
-
+        } catch (NoSuchAProductException | NoSuchAPackageException ignore) {
+            ignore.printStackTrace();
         }
     }
 
