@@ -65,7 +65,8 @@
          </children>
       </Pane>
        <Pane fx:id="signInPage" layoutX="594.0" prefHeight="593.0" prefWidth="367.0"
-             style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@../CSSs/button.css">
+             style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@../CSSs/button.css"
+             visible="false">
          <children>
             <JFXTextField fx:id="usernameIn" focusColor="#405aa8" labelFloat="true" layoutX="49.0" layoutY="91.0" prefHeight="45.0" prefWidth="270.0" promptText="Username">
                <font>
@@ -85,8 +86,7 @@
          </children>
       </Pane>
        <Pane fx:id="signUpPage" layoutX="594.0" prefHeight="593.0" prefWidth="367.0"
-             style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@../CSSs/button.css"
-             visible="false">
+             style="-fx-background-color: white;" styleClass="roudPaneRight" stylesheets="@../CSSs/button.css">
          <children>
             <ScrollPane hbarPolicy="NEVER" prefHeight="510.0" prefWidth="367.0" style="-fx-background-color: white;" vbarPolicy="ALWAYS">
                <content>
