@@ -5,15 +5,13 @@ import ModelPackage.Log.PurchaseLog;
 import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Off.DiscountCode;
 import ModelPackage.Product.NoSuchSellerException;
+import ModelPackage.Product.SellPackage;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.NotEnoughMoneyException;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
-import ModelPackage.Users.Cart;
-import ModelPackage.Users.Customer;
-import ModelPackage.Users.CustomerInformation;
-import ModelPackage.Users.SubCart;
+import ModelPackage.Users.*;
 
 import java.util.List;
 
@@ -81,7 +79,7 @@ public class CustomerManager {
         }
     }
 
-    public void purchaseForCustomer(Customer customer, CustomerInformation customerInformation, DiscountCode discountCode) {
+    public void purchaseForCustomer(Customer customer, CustomerInformation customerInformation, DiscountCode discountCode) throws NoSuchSellerException {
         long totalPrice = getTotalPrice(discountCode, customer);
 
         long difference = totalPrice - customer.getBalance();
@@ -104,9 +102,18 @@ public class CustomerManager {
         }
     }
 
-    public long getTotalPrice(DiscountCode discountCode, Customer customer) {
+    public long getTotalPrice(DiscountCode discountCode, Customer customer) throws NoSuchSellerException {
         Cart cart = customer.getCart();
-        long totalPrice;
+        long totalPrice = 0;
+
+        Seller seller;
+        int off;
+        for (SubCart subCart : cart.getSubCarts()) {
+            seller = subCart.getSeller();
+            totalPrice = CSCLManager.getInstance().findPrice(subCart);
+            off = getOff(seller, subCart);
+            totalPrice = (long) (totalPrice * subCart.getAmount() * (double) (100 - off) / 100);
+        }
 
         if (discountCode != null){
             double discount = (double) cart.getTotalPrice() * discountCode.getOffPercentage() / 100;
@@ -115,10 +122,19 @@ public class CustomerManager {
             } else {
                 totalPrice = cart.getTotalPrice() - (int)discount;
             }
-        } else {
-            totalPrice = cart.getTotalPrice();
         }
         return totalPrice;
+    }
+
+    private int getOff(Seller seller, SubCart subCart) {
+        for (SellPackage product : subCart.getProduct().getPackages()){
+            if (product.getSeller().equals(seller)){
+                if (product.isOnOff()){
+                    return product.getOff().getOffPercentage();
+                }
+            }
+        }
+        return 0;
     }
 
     public void checkIfCustomerHasEnoughMoney(long difference){
