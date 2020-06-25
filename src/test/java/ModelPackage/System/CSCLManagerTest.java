@@ -2,101 +2,112 @@ package ModelPackage.System;
 
 import ModelPackage.Log.DeliveryStatus;
 import ModelPackage.Log.Log;
+import ModelPackage.Log.PurchaseLog;
 import ModelPackage.Log.SellLog;
+import ModelPackage.Maps.SoldProductSellerMap;
 import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.exeption.account.NoSuchACustomerException;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
+import ModelPackage.System.exeption.clcsmanager.NotABuyer;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
 import ModelPackage.Users.*;
-import mockit.Expectations;
-import mockit.Mocked;
-import mockit.Verifications;
+import mockit.*;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
+
 public class CSCLManagerTest {
-    private CSCLManager csclManager;
-    private Company adidas;
-    private Company puma;
-    private Company nike;
-    private Product product;
+    private final CSCLManager csclManager;
+    private final Company adidas;
+    private final Company puma;
+    private final Product product;
     private Product shoe;
-    private Cart cart;
-    private SubCart subCart;
-    private Comment comment;
-    private SellLog sellLog;
-    private Customer customer;
-    private Seller sajad;
+    private final Cart cart;
+    private final SubCart subCart;
+    private final Comment comment;
+    private final SellLog sellLog;
+    private final Customer sapa;
+    private final Seller sajad;
     {
         csclManager = CSCLManager.getInstance();
         adidas = new Company("Adidas", "34524532", "Sports");
         puma = new Company("Puma", "12434565", "Sports");
-        nike = new Company("Nike", "2123435", "Sports");
-        csclManager.createCompany(puma);
-        csclManager.createCompany(nike);
-        shoe = new Product("Shoes", "Adidas", new ArrayList<>(), new Category(),
-                new HashMap<>(), new HashMap<>(), "good", new ArrayList<>(), new ArrayList<>());
-        shoe.setId(13);
-        product = new Product();
-        product.setId(12);
+        Company nike = new Company("Nike", "2123435", "Sports");
+
         sajad = new Seller("sapa", "1234", "sajad", "paksima", "sajad@gmail.com",
                 "12345", new Cart(), adidas, 12);
+
+        SellPackage shoeSellPackage = new SellPackage(shoe, sajad, 1000, 4, null, false, true);
+
+        shoe = new Product("Shoes", adidas, new Category(),
+                new HashMap<>(), new HashMap<>(),
+                "good", shoeSellPackage);
+        shoe.setId(1);
+
+        product = new Product();
+        product.setId(12);
+
         subCart = new SubCart(shoe, sajad, 1);
         cart = new Cart();
         cart.getSubCarts().add(subCart);
-        CategoryManager.getInstance().addProductToCategory(product, new Category());
-        comment = new Comment("reza120",
+
+        comment = new Comment("sapa",
                 "very Good",
                 "Awesome !",
                 CommentStatus.VERIFIED,
                 true);
         comment.setProduct(product);
 
-        customer = new Customer("ali110", "12434", "Ali", "Alavi",
+        SoldProductSellerMap soldProductSellerMap = new SoldProductSellerMap();
+        SoldProduct soldProduct = new SoldProduct();
+        soldProduct.setSourceId(1);
+        soldProductSellerMap.setSoldProduct(soldProduct);
+        soldProductSellerMap.setSeller(sajad);
+        List<SoldProductSellerMap> soldProductSellerMaps = new ArrayList<>();
+        soldProductSellerMaps.add(soldProductSellerMap);
+
+        sapa = new Customer("sapa", "12434", "Ali", "Alavi",
                 "alavi@gmail.com", "123435", new Cart(), 21);
+        sapa.getPurchaseLogs().add(new PurchaseLog(new Date(2014, Calendar.MARCH, 3),
+                DeliveryStatus.DELIVERED, soldProductSellerMaps, 21, 1));
 
         sellLog = new SellLog();
-        DBManager.save(sellLog);
+        sellLog.setLogId(1);
+        FakeDBManager fakeDBManager = new FakeDBManager();
+        fakeDBManager.save(sellLog);
+        fakeDBManager.save(puma);
+        fakeDBManager.save(nike);
+        fakeDBManager.save(sapa);
+        fakeDBManager.save(shoe);
     }
     @Test
     public void getInstanceTest() {
         CSCLManager test = CSCLManager.getInstance();
-        Assert.assertEquals(test, csclManager);
+        assertEquals(test, csclManager);
     }
     @Test
     public void createCompanyTest() {
-        csclManager.createCompany(adidas);
-        new Verifications(){{
-            DBManager.save(adidas);
-        }};
-        Assert.assertEquals(adidas, DBManager.load(Company.class, adidas.getId()));
+        int id = csclManager.createCompany(adidas);
+        assertEquals(adidas, csclManager.getCompanyById(id));
     }
-    @Test
-    public void getCompanyByIdTest() {
-        new Expectations(){{
-            DBManager.load(Company.class, puma.getId());
-        }};
-        Company actual = csclManager.getCompanyById(puma.getId());
-        Assert.assertEquals(puma, actual);
-    }
+
     @Test(expected = NoSuchACompanyException.class)
     public void getCompanyByIdNotFountExcTest() {
         csclManager.getCompanyById(adidas.getId());
     }
+
     @Test
     public void editCompanyNameTest() {
-        new Expectations(){{
-            DBManager.load(Company.class, puma.getId());
-        }};
-        csclManager.editCompanyName(puma.getId(), "adidas");
-        new Verifications(){{
-            DBManager.save(puma);
-        }};
-        Assert.assertEquals("adidas", puma.getName());
+        int id = csclManager.createCompany(adidas);
+        csclManager.editCompanyName(id, "adidas");
+        assertEquals("adidas", adidas.getName());
     }
     @Test(expected = NoSuchACompanyException.class)
     public void editCompanyNameNotFoundExcTest() {
@@ -104,11 +115,9 @@ public class CSCLManagerTest {
     }
     @Test
     public void editCompanyGroupTest() {
-        csclManager.editCompanyGroup(nike.getId(), "Sporty");
-        new Verifications(){{
-            DBManager.save(nike);
-        }};
-        Assert.assertEquals("Sporty", nike.getGroup());
+        csclManager.createCompany(adidas);
+        csclManager.editCompanyGroup(adidas.getId(), "Sporty");
+        assertEquals("Sporty", adidas.getGroup());
     }
     @Test(expected = NoSuchACompanyException.class)
     public void editCompanyGroupNotFoundExcTest() {
@@ -121,12 +130,9 @@ public class CSCLManagerTest {
              productManager.findProductById(12);
              result = product;
         }};
-        csclManager.addProductToCompany(12, nike.getId());
-        new Verifications(){{
-           DBManager.save(product);
-           DBManager.save(nike);
-        }};
-        Assert.assertEquals(nike.getProductsIn().get(nike.getProductsIn().size() - 1), product);
+        csclManager.createCompany(adidas);
+        csclManager.addProductToCompany(12, adidas.getId());
+        assertEquals(adidas.getProductsIn().get(adidas.getProductsIn().size() - 1), product);
     }
     @Test(expected = NoSuchACompanyException.class)
     public void addProductToCartNotFoundComExcTest()
@@ -136,7 +142,8 @@ public class CSCLManagerTest {
     @Test(expected = NoSuchAProductException.class)
     public void addProductToCartNotFoundProExcTest()
             throws NoSuchAProductException {
-        csclManager.addProductToCompany(13, puma.getId());
+        csclManager.createCompany(adidas);
+        csclManager.addProductToCompany(13, adidas.getId());
     }
     @Test
     public void removeProductFromCompanyTest(@Mocked ProductManager productManager)
@@ -145,67 +152,84 @@ public class CSCLManagerTest {
             productManager.findProductById(12);
             result = product;
         }};
-        csclManager.addProductToCompany(12, puma.getId());
-        new Verifications(){{
-            DBManager.save(product);
-            DBManager.save(puma);
-        }};
-        int oldSize = puma.getProductsIn().size();
-        csclManager.removeProductFromCompany(12, puma.getId());
-        new Verifications(){{
-            DBManager.save(puma);
-            DBManager.save(product);
-        }};
+        csclManager.createCompany(adidas);
+        csclManager.addProductToCompany(12, adidas.getId());
+        int oldSize = adidas.getProductsIn().size();
+        csclManager.removeProductFromCompany(12, adidas.getId());
         int newSize = puma.getProductsIn().size();
-        Assert.assertEquals(newSize + 1, oldSize);
+        assertEquals(newSize + 1, oldSize);
     }
     @Test(expected = NoSuchACompanyException.class)
-    public void removeProductFromCompanyTest() throws NoSuchAProductException {
+    public void removeProductFromCompanyTest_NoSuchACompany() throws NoSuchAProductException {
         csclManager.removeProductFromCompany(12, adidas.getId());
     }
     @Test(expected = NoSuchAProductException.class)
     public void removeProductFromCompanyNoProExcTest()
             throws NoSuchAProductException {
-        csclManager.removeProductFromCompany(13, puma.getId());
+        csclManager.createCompany(adidas);
+        csclManager.removeProductFromCompany(13, adidas.getId());
     }
-    /*@Test
-    public void removeProductFromCompany1Test() {
-        csclManager.removeProductFromCompany(shoe);
-        new Verifications(){{
-            DBManager.save(shoe);
-            DBManager.save(puma);
-        }};
-        Assert.assertEquals(0, puma.getProductsIn().size());
-    }*/
     @Test
-    public void createCommentTest(@Mocked RequestManager requestManager) throws NoSuchARequestException {
+    public void removeProductFromCompany1Test(@Mocked ProductManager productManager) throws NoSuchAProductException {
         new Expectations(){{
-            DBManager.save(comment);
+            productManager.findProductById(12);
+            result = product;
         }};
+        csclManager.createCompany(adidas);
+        csclManager.addProductToCompany(12, adidas.getId());
+        csclManager.removeProductFromCompany(product);
+        Assert.assertEquals(0, adidas.getProductsIn().size());
+    }
+    @Test
+    public void createCommentTest() throws UserNotAvailableException {
         csclManager.createComment(comment);
-        Request request = new Request("reza120", RequestType.ASSIGN_COMMENT,
-                "User (reza120) has requested to assign a comment on product (12) :\n" +
-                        "Title : very Good\n" +
-                        "Text : Awesome !", comment);
-        Assert.assertNotNull(requestManager.findRequestById(request.getRequestId()));
     }
     // TODO : write correct test for createScoreTest
     @Test
-    public void createScoreTest(@Mocked ProductManager productManager) throws NoSuchAProductException {
+    public void createScoreTest(@Mocked ProductManager productManager, @Mocked CustomerManager customerManager) throws NoSuchAProductException, NotABuyer, NoSuchACustomerException {
+        Score score = new Score("sapa", 1, 1);
+        new MockUp<ProductManager>() {
+            @Mock
+            public void assignAScore(int productId, Score score1) {
+                if (productId == 1) {
+                    shoe.getAllScores().add(score);
+                }
+            }
+        };
         new Expectations(){{
-            productManager.findProductById(13);
-            result = shoe;
+            customerManager.findCustomerById("sapa");
+            result = sapa;
         }};
-        Score score = new Score("ali110", 13, 1);
-        csclManager.createScore("ali110", 13, 1);
-        productManager.assignAScore(13, score);
-        Assert.assertEquals(shoe.getAllScores().get(0).getProductId(), 13);
+        csclManager.createScore("sapa", 1, 1);
+        assertEquals(shoe.getAllScores().get(0).getProductId(), 1);
     }
-    @Test(expected = NoSuchAProductException.class)
-    public void createScoreNotExistedProductExcTest() throws NoSuchAProductException {
-        csclManager.createScore("ali110", 13, 2);
+    @Test(expected = NotABuyer.class)
+    public void createScoreNotExistedProductExcTest() throws NoSuchAProductException, NotABuyer, NoSuchACustomerException {
+        csclManager.createScore("sapa", 11, 2);
     }
     @Test
+    public void getLogByIdTest() throws NoSuchALogException {
+        SellLog actualSellLog = (SellLog) csclManager.getLogById(sellLog.getLogId());
+        Assert.assertEquals(sellLog, actualSellLog);
+    }
+    @Test(expected = NoSuchALogException.class)
+    public void getLogByIdNotFoundExcTest() throws NoSuchALogException {
+        csclManager.getLogById(1000);
+    }
+    @Test
+    public void createPurchaseLogTest() throws NoSuchSellerException {
+        new MockUp<CustomerManager>() {
+            @Mock
+            public void addPurchaseLog(PurchaseLog log, Customer customer) {
+                if (customer.getUsername().equals("sapa")) {
+                    sapa.getPurchaseLogs().add(log);
+                }
+            }
+        };
+        csclManager.createPurchaseLog(cart, 10, sapa);
+        assertEquals(sapa.getPurchaseLogs().size(), 2);
+    }
+    /*@Test
     public void createSellLogTest(@Mocked ProductManager productManager) throws NoSuchAProductException, NoSuchSellerException {
         new Expectations(){{
             DBManager.load(User.class, customer.getUsername());
@@ -223,21 +247,5 @@ public class CSCLManagerTest {
             sajad.getSellLogs().add(sellLog);
         }};
         Assert.assertEquals(sajad.getSellLogs().get(0).getProduct().getSourceId(), 13);
-    }
-    @Test
-    public void getLogByIdTest() {
-        new Expectations(){{
-            DBManager.load(Log.class, sellLog.getLogId());
-        }};
-        SellLog actualSellLog = (SellLog) csclManager.getLogById(sellLog.getLogId());
-        Assert.assertEquals(sellLog, actualSellLog);
-    }
-    @Test(expected = NoSuchALogException.class)
-    public void getLogByIdNotFoundExcTest() {
-        csclManager.getLogById(10000);
-    }
-    @Test
-    public void allBuyersTest() {
-        
-    }
+    }*/
 }
