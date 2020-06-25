@@ -85,13 +85,29 @@ public class SellerManager {
 
     public void getMoneyFromSale(Cart cart) throws NoSuchSellerException {
         Seller seller;
+        int off;
         long price;
+        long balance;
+
         for (SubCart subCart : cart.getSubCarts()) {
             seller = subCart.getSeller();
             price = CSCLManager.getInstance().findPrice(subCart);
-            seller.setBalance(seller.getBalance() + price * subCart.getAmount());
+            off = getOff(seller, subCart);
+            balance = (long) (seller.getBalance() + price * subCart.getAmount() * (double) (100 - off) / 100);
+            seller.setBalance(balance);
             DBManager.save(seller);
         }
+    }
+
+    private int getOff(Seller seller, SubCart subCart) {
+        for (SellPackage product : subCart.getProduct().getPackages()){
+            if (product.getSeller().equals(seller)){
+                if (product.isOnOff()){
+                    return product.getOff().getOffPercentage();
+                }
+            }
+        }
+        return 0;
     }
 
     public void addASellLog(SellLog sellLog,Seller seller){
