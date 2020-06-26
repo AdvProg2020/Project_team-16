@@ -112,7 +112,6 @@ public class ProductManager {
         return list;
     }
 
-    // TODO: 6/23/2020 Add to Product Digest
     public void addView(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
         product.setView(product.getView()+1);
@@ -120,9 +119,9 @@ public class ProductManager {
     }
 
     // TODO: 6/23/2020 Add to Purchase
-    public void addBought(int productId) throws NoSuchAProductException {
+    public void addBought(int productId, int amount) throws NoSuchAProductException {
         Product product = findProductById(productId);
-        product.setBoughtAmount(product.getBoughtAmount()+1);
+        product.setBoughtAmount(product.getBoughtAmount() + amount);
         DBManager.save(product);
     }
 

@@ -74,7 +74,8 @@ public class CustomerManager {
         cart.getSubCarts().forEach(subCart -> {
             try {
                 csclManager.createSellLog(subCart, name);
-            } catch (NoSuchAPackageException e) {
+                ProductManager.getInstance().addBought(subCart.getProduct().getId(), subCart.getAmount());
+            } catch (NoSuchAPackageException | NoSuchAProductException e) {
                 e.printStackTrace();
             }
         });

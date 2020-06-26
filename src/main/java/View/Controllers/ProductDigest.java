@@ -11,6 +11,7 @@ import View.PrintModels.MiniProductPM;
 import View.PrintModels.SellPackagePM;
 import View.exceptions.CanceledException;
 import com.jfoenix.controls.JFXButton;
+import controler.CustomerController;
 import controler.ProductController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -262,6 +263,7 @@ public class ProductDigest extends BackAbleController {
     private void loadProduct() {
         try {
             FullProductPM pm = productController.viewAttributes(id);
+            CustomerController.getInstance().addViewDigest(id);
             fullProductPM = pm;
             loadInformation(pm.getProduct());
             loadImage();
