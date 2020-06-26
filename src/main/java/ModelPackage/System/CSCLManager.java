@@ -129,7 +129,9 @@ public class CSCLManager {
     private int getOffPercent(SubCart subCart) {
         try {
             SellPackage sellPackage = subCart.getSeller().findPackageByProductId(subCart.getProduct().getId());
-            return sellPackage.getOff().getOffPercentage();
+            if (sellPackage.isOnOff())
+                return sellPackage.getOff().getOffPercentage();
+            else return 0;
         } catch (NoSuchAPackageException e) {
             return 0;
         }

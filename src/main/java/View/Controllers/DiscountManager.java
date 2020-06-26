@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -328,9 +329,9 @@ public class DiscountManager extends BackAbleController {
             Main.setSceneToStage(back, scene);
         } catch (IOException ignore) {}
         });
-        minimize.setOnAction(e->Main.minimize());
+        minimize.setOnAction(e -> ((Stage) close.getScene().getWindow()).setIconified(true));
         refresh.setOnAction(e -> reset());
-        close.setOnAction(e -> Main.close());
+        close.setOnAction(e -> ((Stage) close.getScene().getWindow()).close());
     }
 
     private void binds() {

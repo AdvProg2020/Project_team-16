@@ -10,6 +10,9 @@ import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.NotEnoughMoneyException;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
+import ModelPackage.System.exeption.discount.NoMoreDiscount;
+import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
+import ModelPackage.System.exeption.discount.UserNotExistedInDiscountCodeException;
 import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
@@ -57,7 +60,13 @@ public class CustomerManager {
         sellerManager.getMoneyFromSale(cart);
 
         if (discountCode != null) {
-            csclManager.createPurchaseLog(cart, discountCode.getOffPercentage(), customer);
+            try {
+                DiscountManager.getInstance().useADiscount(customer, discountCode.getCode());
+                csclManager.createPurchaseLog(cart, discountCode.getOffPercentage(), customer);
+            } catch (NoSuchADiscountCodeException | UserNotExistedInDiscountCodeException | NoMoreDiscount e) {
+                csclManager.createPurchaseLog(cart, 0, customer);
+                e.printStackTrace();
+            }
         } else {
             csclManager.createPurchaseLog(cart, 0, customer);
         }
