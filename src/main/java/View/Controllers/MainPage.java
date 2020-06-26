@@ -4,6 +4,8 @@ import ModelPackage.Users.MainContent;
 import View.CacheData;
 import View.Main;
 import View.PrintModels.AdPM;
+import View.Sound;
+import View.SoundCenter;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -17,12 +19,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.controlsfx.control.PopOver;
+import org.jgroups.protocols.MAKE_BATCH;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static View.Controllers.Notification.show;
+import static View.Sound.*;
 
 public class MainPage extends BackAbleController {
     public JFXButton account;
@@ -30,7 +34,6 @@ public class MainPage extends BackAbleController {
     public JFXButton close;
     public JFXButton minimize;
     public JFXButton products;
-    public JFXButton offs;
     public VBox mainBox;
 
     private PopOver accountPopOver;
@@ -122,9 +125,7 @@ public class MainPage extends BackAbleController {
     }
 
     private void binds() {
-        cart.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not().and(
-                Bindings.isEmpty(cacheData.roleProperty).not()
-        ));
+        cart.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not());
     }
 
     private void buttons() {
@@ -138,6 +139,7 @@ public class MainPage extends BackAbleController {
         if (accountPopOver.isShowing()) {
             accountPopOver.hide();
         } else {
+            SoundCenter.play(POP_UP);
             accountPopOver.show(account);
         }
     }
@@ -145,9 +147,7 @@ public class MainPage extends BackAbleController {
     private void gotoCart() {
         try {
             Scene scene = new Scene(Main.loadFXML("Cart", "MainPage"));
-            Stage stage = (Stage) cart.getScene().getWindow();
-            stage.setScene(scene);
-            Main.moveSceneOnMouse(scene, stage);
+            Main.setSceneToStage(cart, scene);
         } catch (IOException e) {
             show("Error", e.getMessage(), cart.getScene().getWindow(), true);
             e.printStackTrace();

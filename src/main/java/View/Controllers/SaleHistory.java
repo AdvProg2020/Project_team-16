@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,13 +79,12 @@ public class SaleHistory extends BackAbleController {
 
     private void loadInformation() {
         try {
-            List<SellLogPM> list = logTest(); //sellerController.viewSalesHistory(cacheData.getUsername());
+            List<SellLogPM> list = sellerController.viewSalesHistory(cacheData.getUsername());
             sellNoCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             sellDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
             ObservableList<SellLogPM> data = FXCollections.observableArrayList(list);
             saleTable.setItems(data);
             loadTotalPrice(list);
-            if (false) throw new UserNotAvailableException();
         } catch (UserNotAvailableException e) {
             e.printStackTrace();
         }
@@ -113,14 +113,11 @@ public class SaleHistory extends BackAbleController {
     }
 
     private void loadProduct() {
-        int id = Integer.parseInt(productId.getText());
+        int id = saleTable.getSelectionModel().getSelectedItem().getProductId();
         cacheData.setProductId(id);
         try {
-            Scene scene = new Scene(Main.loadFXML("ProductDigest"));
-            Stage stage = new Stage();
-            Main.moveSceneOnMouse(scene, stage);
-            stage.setScene(scene);
-            stage.show();
+            Scene scene = new Scene(Main.loadFXML("ProductDigest", backForForward("SaleHistory")));
+            Main.setSceneToStage(new Stage(StageStyle.UNDECORATED), scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

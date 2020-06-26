@@ -33,7 +33,7 @@ public class Category {
 
     @ElementCollection(targetClass = Category.class)
     @LazyCollection(LazyCollectionOption.FALSE)
-        @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> subCategories;
 
     @ManyToOne
@@ -44,7 +44,7 @@ public class Category {
 
     @ElementCollection(targetClass = Product.class)
     @LazyCollection(LazyCollectionOption.FALSE)
-        @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> allProducts;
 
     public Category(String name, Category parent) {

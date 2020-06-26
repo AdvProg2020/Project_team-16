@@ -270,7 +270,7 @@ public class CategoryManager {
     }
 
     private void removeCategory(Category category) {
-        List<Category> subCategories = category.getSubCategories();
+        /*List<Category> subCategories = category.getSubCategories();
         if (!subCategories.isEmpty()){
             for (Category subCategory : subCategories) {
                 removeCategory(subCategory);
@@ -280,9 +280,9 @@ public class CategoryManager {
         Category parent = category.getParent();
         List<Category> subcategories = parent.getSubCategories();
         subCategories.remove(category);
-        parent.setSubCategories(subcategories);
+        parent.setSubCategories(subcategories);*/
         DBManager.delete(category);
-        DBManager.save(parent);
+        //DBManager.save(parent);
     }
 
     private void removeAllProductsIn(Category category){

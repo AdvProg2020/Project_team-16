@@ -1,9 +1,8 @@
 package controler;
 
-import ModelPackage.Product.Comment;
-import ModelPackage.Product.CommentStatus;
-import ModelPackage.Product.Product;
+import ModelPackage.Product.*;
 import ModelPackage.System.FilterManager;
+import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
@@ -15,12 +14,14 @@ import View.PrintModels.*;
 import View.SortPackage;
 import controler.exceptions.ProductsNotBelongToUniqueCategoryException;
 import javafx.scene.image.Image;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ProductController extends Controller{
     private static ProductController productController = new ProductController();
@@ -41,9 +42,29 @@ public class ProductController extends Controller{
         return toReturn;
     }
 
-    public List<OffProductPM> showAllOnOffProducts() {
-        // TODO: 6/25/2020
-        return null;
+    public List<OffProductPM> showAllOnOffProducts(FilterPackage filter, SortPackage sort) {
+        List<SellPackage> allSellPackagesOnOff = offManager.getAllSellPackagesOnOff();
+        List<SellPackage> filtered = FilterManager.filterSellPackages(filter.getCategoryId(), allSellPackagesOnOff,
+                filter.getActiveFilters(),
+                new int[]{filter.getDownPriceLimit(), filter.getUpPriceLimit()});
+        sortManager.sortSellPackage(filtered, sort.getSortType());
+        if (!sort.isAscending()) Collections.reverse(filtered);
+        List<OffProductPM> toReturn = new ArrayList<>();
+        filtered.forEach(sellPackage -> {
+            OffProductPM offProductPM = createOffPM(sellPackage);
+            toReturn.add(offProductPM);
+        });
+        return toReturn;
+    }
+
+    private OffProductPM createOffPM(SellPackage sellPackage) {
+        int price = sellPackage.getPrice();
+        int percent = sellPackage.getOff().getOffPercentage();
+        String name = sellPackage.getProduct().getName();
+        int id = sellPackage.getProduct().getId();
+        Image image = ProductController.getInstance().loadMainImage(id);
+        Date end = sellPackage.getOff().getEndTime();
+        return new OffProductPM(name, id, price * (100 - percent) / 100, percent, image, end);
     }
 
     public void assignComment(String[] data) throws NoSuchAProductException, NoSuchACustomerException, UserNotAvailableException {

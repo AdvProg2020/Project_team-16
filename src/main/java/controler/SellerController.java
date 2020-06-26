@@ -47,7 +47,7 @@ public class SellerController extends Controller{
         ArrayList<SellLogPM> sellLogPMs = new ArrayList<>();
         for (SellLog sellLog : sellLogs) {
             sellLogPMs.add(new SellLogPM(sellLog.getLogId(),
-                    sellLog.getProduct().getId(),
+                    sellLog.getProduct().getSourceId(),
                     sellLog.getMoneyGotten(),
                     sellLog.getDiscount(),
                     sellLog.getDate(),

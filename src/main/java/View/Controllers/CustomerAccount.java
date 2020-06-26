@@ -224,7 +224,7 @@ public class CustomerAccount extends BackAbleController {
     }
 
     private void handleLogout() {
-        // TODO: 6/22/2020
+        // TODO: 6/22/2020 phase 3
         CacheData.getInstance().logout();
         try {
             back.getScene().setRoot(Main.loadFXML("MainPage"));
