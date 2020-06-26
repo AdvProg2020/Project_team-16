@@ -58,6 +58,8 @@ public class NewProduct extends BackAbleController {
     private SellerController sellerController = SellerController.getInstance();
     private CacheData cacheData = CacheData.getInstance();
 
+    // TODO : Add Preloaded TextFields!!!
+
     @FXML
     public void initialize(){
         initButtons();
@@ -250,6 +252,7 @@ public class NewProduct extends BackAbleController {
                 savePics(productId);
                 Notification.show("Successful", "Your Product was Registered Successfully!!!",
                         back.getScene().getWindow(), false);
+                handleBack();
             } catch (NoSuchACategoryException | UserNotAvailableException | RuntimeException e) {
                 Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             }

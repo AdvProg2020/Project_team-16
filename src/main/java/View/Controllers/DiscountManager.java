@@ -186,6 +186,7 @@ public class DiscountManager extends BackAbleController {
             int amount = Integer.parseInt(addUserQuantity.getText());
             try {
                 managerController.addUserToDiscountCode(code, user, amount);
+                Notification.show("Successful", "User Was Added To Your Discount Code!!!\nRefresh To See", back.getScene().getWindow(), false);
             } catch (UserNotAvailableException | UserExistedInDiscountCodeException | NoSuchADiscountCodeException ex) {
                 Notification.show("Error", ex.getMessage(), back.getScene().getWindow(), true);
                 ex.printStackTrace();
@@ -215,6 +216,7 @@ public class DiscountManager extends BackAbleController {
         String code = codes.getSelectionModel().getSelectedItem().getDiscountCode();
         try {
             managerController.removeUserFromDiscountCodeUsers(code,userId);
+            Notification.show("Successful", "User Was Removed From Your Discount Code!!!", back.getScene().getWindow(), false);
             reset();
         } catch (UserNotExistedInDiscountCodeException | NoSuchADiscountCodeException | UserNotAvailableException e) {
             Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
