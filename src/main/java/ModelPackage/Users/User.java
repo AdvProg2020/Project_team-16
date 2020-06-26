@@ -34,7 +34,7 @@ public class User {
         @JoinColumn(name = "CART")
     protected Cart cart;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages;
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart) {

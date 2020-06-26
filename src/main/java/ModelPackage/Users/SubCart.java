@@ -17,12 +17,15 @@ public class SubCart{
         @JoinColumn(name = "PRODUCT")
     private Product product;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "SELLER")
     private Seller seller;
 
     @Column(name = "AMOUNT")
     private int amount;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Cart cart;
 
     public SubCart(Product product, Seller seller, int amount) {
         this.product = product;

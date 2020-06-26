@@ -21,9 +21,7 @@ public class SoldProductSellerMap {
         @JoinColumn(name =  "SOLD_PRODUCT")
     private SoldProduct soldProduct;
 
-    @OneToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "SELLER")
-    private Seller seller;
+    private String seller;
 
     public boolean isProduct(int id){
         return soldProduct.getSourceId() == id;

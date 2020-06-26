@@ -39,7 +39,9 @@ public class CartManager {
         }else {
             seller = ProductManager.getInstance().bestSellerOf(product);
         }
+
         SubCart subCart = new SubCart(product, seller, amount);
+        subCart.setCart(cart);
 
         cart.getSubCarts().add(subCart);
         cart.setTotalPrice(calculateTotalPrice(cart));

@@ -186,12 +186,12 @@ public class CustomerController extends Controller {
         return orderProductPMS;
     }
 
-    private OrderProductPM createOrderProductPMFrom(Product product, Seller seller) {
+    private OrderProductPM createOrderProductPMFrom(Product product, String seller) {
         OrderProductPM orderProductPM = null;
 
         for (SellPackage aPackage : product.getPackages()) {
-            if (aPackage.getSeller().equals(seller)){
-                orderProductPM = new OrderProductPM(product.getId(), product.getName(), seller.getUsername(), aPackage.getPrice());
+            if (aPackage.getSeller().getUsername().equals(seller)) {
+                orderProductPM = new OrderProductPM(product.getId(), product.getName(), seller, aPackage.getPrice());
             }
         }
 

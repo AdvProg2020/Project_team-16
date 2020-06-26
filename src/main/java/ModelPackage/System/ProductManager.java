@@ -6,9 +6,7 @@ import ModelPackage.System.database.DBManager;
 import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.product.*;
-import ModelPackage.Users.Request;
-import ModelPackage.Users.RequestType;
-import ModelPackage.Users.Seller;
+import ModelPackage.Users.*;
 import View.PrintModels.MicroProduct;
 import lombok.Data;
 import org.hibernate.Session;
@@ -16,6 +14,7 @@ import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -220,11 +219,39 @@ public class ProductManager {
         packages.remove(sellPackage);
         seller.setPackages(new ArrayList<>(packages));
         Product product = sellPackage.getProduct();
+        deleteAllSubCarts(seller, product);
         sellPackage.setProduct(null);
         sellPackage.setSeller(null);
         DBManager.save(product);
         DBManager.save(seller);
         DBManager.delete(sellPackage);
+    }
+
+    private void deleteAllSubCarts(Seller seller, Product product) {
+        List<SubCart> subCarts = getAllSubCarts(seller, product);
+        subCarts.forEach(subCart -> {
+            Cart cart = subCart.getCart();
+            cart.getSubCarts().remove(subCart);
+            DBManager.save(cart);
+            DBManager.delete(subCart);
+        });
+    }
+
+    private List<SubCart> getAllSubCarts(Seller seller, Product product) {
+        Session session = HibernateUtil.getSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<SubCart> criteriaQuery = criteriaBuilder.createQuery(SubCart.class);
+        Root<SubCart> root = criteriaQuery.from(SubCart.class);
+        criteriaQuery.select(root);
+        Predicate[] predicates = {
+                criteriaBuilder.equal(root.get("seller").as(Seller.class), seller),
+                criteriaBuilder.equal(root.get("product").as(Product.class), product)
+        };
+        criteriaQuery.where(
+                predicates
+        );
+        Query<SubCart> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
     public void changePrice(Product product, int newPrice, String username) throws NoSuchSellerException {

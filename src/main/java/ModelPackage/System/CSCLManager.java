@@ -148,7 +148,7 @@ public class CSCLManager {
                 soldProduct.setSoldPrice(price);
                 pricePaid += price * subCart.getAmount();
                 SoldProductSellerMap toAdd = new SoldProductSellerMap();
-                toAdd.setSeller(subCart.getSeller());
+                toAdd.setSeller(subCart.getSeller().getUsername());
                 toAdd.setSoldProduct(soldProduct);
                 map.add(toAdd);
             } catch (NoSuchAPackageException e) {
