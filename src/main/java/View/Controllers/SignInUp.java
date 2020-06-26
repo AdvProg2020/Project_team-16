@@ -70,34 +70,7 @@ public class SignInUp {
         resetSettingForFields(phone,"Phone Number");
         resetSettingForFields(rePasswordUp,"Repeat Password");
         resetSettingForFields(balance,"Balance");
-
-        bindPassField();
-    }
-
-    private void bindPassField() {
-        passwordUp.textProperty().addListener(e ->{
-            if (passwordUp.getText().isEmpty()){
-                passwordUp.setPromptText("Password is Required");
-                passwordUp.setFocusColor(redColor);
-            }
-            int strength = calculatePasswordStrength(passwordUp.getText());
-            if (strength == 0) {
-                passwordUp.setPromptText("Password must be more than 8 character");
-                passwordUp.setFocusColor(redColor);
-            } else if (strength < 4) {
-                passwordUp.setPromptText("Password is weak");
-                passwordUp.setFocusColor(redColor);
-            } else if (strength < 6) {
-                passwordUp.setPromptText("Password is good");
-                passwordUp.setFocusColor(greenColor);
-            } else if (strength <= 8) {
-                passwordUp.setPromptText("Password is strong");
-                passwordUp.setFocusColor(greenColor);
-            } else {
-                passwordUp.setPromptText("Password is INSANE! Hey buddy it's not a FBI account :)");
-                passwordUp.setFocusColor(greenColor);
-            }
-        });
+        PasswordStrength.bindPassField(passwordUp);
     }
 
     private void resetSettingForFields(JFXTextField field,String prompt){
@@ -180,7 +153,7 @@ public class SignInUp {
             return false;
         } else if (passwordUp.getText().isEmpty()){
             return false;
-        } else if (calculatePasswordStrength(passwordUp.getText()) < 4){
+        } else if (PasswordStrength.calculatePasswordStrength(passwordUp.getText()) < 4){
             return false;
         }  else if (!rePasswordUp.getText().equals(passwordUp.getText())){
             errorField(rePasswordUp,"Doesn't Match Above");
@@ -276,27 +249,5 @@ public class SignInUp {
                 Main.setSceneToStage(back, scene);
             } catch (IOException ignore) {}
         });
-    }
-
-    private static int calculatePasswordStrength(String password){
-        int iPasswordScore = 0;
-
-        if( password.length() < 8 )
-            return 0;
-        else if( password.length() >= 10 )
-            iPasswordScore += 2;
-        else
-            iPasswordScore += 1;
-
-        if( password.matches("(?=.*[0-9]).*") )
-            iPasswordScore += 2;
-        if( password.matches("(?=.*[a-z]).*") )
-            iPasswordScore += 2;
-        if( password.matches("(?=.*[A-Z]).*") )
-            iPasswordScore += 2;
-        if( password.matches("(?=.*[~!@#$%^&*()_-]).*") )
-            iPasswordScore += 2;
-
-        return iPasswordScore;
     }
 }

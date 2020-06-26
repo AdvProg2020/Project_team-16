@@ -316,6 +316,7 @@ public class ManagerAccount extends BackAbleController {
             cancelButt.setVisible(false);
 
             Notification.show("Successful", "Your Information was Updated!!!", back.getScene().getWindow(), false);
+            handleCancel();
         }
     }
 

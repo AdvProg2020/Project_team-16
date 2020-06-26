@@ -43,34 +43,7 @@ public class CreateManager extends BackAbleController {
         resetSettingForFields(phone,"Phone Number");
         resetSettingForFields(password,"Password");
         resetSettingForFields(rePassword,"Repeat Password");
-
-        bindPassField();
-    }
-
-    private void bindPassField() {
-        password.textProperty().addListener(e ->{
-            if (password.getText().isEmpty()){
-                password.setPromptText("Password is Required");
-                password.setFocusColor(redColor);
-            }
-            int strength = calculatePasswordStrength(password.getText());
-            if (strength == 0) {
-                password.setPromptText("Password must be more than 8 character");
-                password.setFocusColor(redColor);
-            } else if (strength < 4) {
-                password.setPromptText("Password is weak");
-                password.setFocusColor(redColor);
-            } else if (strength < 6) {
-                password.setPromptText("Password is good");
-                password.setFocusColor(greenColor);
-            } else if (strength <= 8) {
-                password.setPromptText("Password is strong");
-                password.setFocusColor(greenColor);
-            } else {
-                password.setPromptText("Password is INSANE! Hey buddy it's not a FBI account :)");
-                password.setFocusColor(greenColor);
-            }
-        });
+        PasswordStrength.bindPassField(password);
     }
 
     private void resetSettingForFields(JFXTextField field,String prompt){
@@ -124,7 +97,7 @@ public class CreateManager extends BackAbleController {
             return false;
         } else if (password.getText().isEmpty()){
             return false;
-        } else if (calculatePasswordStrength(password.getText()) < 4){
+        } else if (PasswordStrength.calculatePasswordStrength(password.getText()) < 4){
             return false;
         } else if (!rePassword.getText().equals(password.getText())){
             errorField(rePassword,"Doesn't Match Above");
@@ -167,27 +140,5 @@ public class CreateManager extends BackAbleController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static int calculatePasswordStrength(String password){
-        int iPasswordScore = 0;
-
-        if( password.length() < 8 )
-            return 0;
-        else if( password.length() >= 10 )
-            iPasswordScore += 2;
-        else
-            iPasswordScore += 1;
-
-        if( password.matches("(?=.*[0-9]).*") )
-            iPasswordScore += 2;
-        if( password.matches("(?=.*[a-z]).*") )
-            iPasswordScore += 2;
-        if( password.matches("(?=.*[A-Z]).*") )
-            iPasswordScore += 2;
-        if( password.matches("(?=.*[~!@#$%^&*()_-]).*") )
-            iPasswordScore += 2;
-
-        return iPasswordScore;
     }
 }

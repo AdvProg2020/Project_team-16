@@ -52,7 +52,7 @@ public class ManagerController extends Controller {
                 user.getLastName(),
                 user.getEmail(),
                 user.getPhoneNumber(),
-                user.getClass().getName()
+                user.getClass().getName().split("\\.")[2]
         );
     }
 

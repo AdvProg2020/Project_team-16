@@ -289,9 +289,9 @@ public class CustomerAccount extends BackAbleController {
                 e.printStackTrace();
             }
 
-            handleCancel();
 
             Notification.show("Successful", "Your Information was Updated!!!", back.getScene().getWindow(), false);
+            handleCancel();
         }
     }
 
