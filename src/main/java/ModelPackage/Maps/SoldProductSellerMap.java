@@ -17,7 +17,7 @@ public class SoldProductSellerMap {
     @Id @GeneratedValue
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
         @JoinColumn(name =  "SOLD_PRODUCT")
     private SoldProduct soldProduct;
 

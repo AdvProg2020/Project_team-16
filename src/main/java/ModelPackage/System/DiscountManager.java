@@ -119,6 +119,7 @@ public class DiscountManager {
         DiscountCode discountCode = getDiscountByCode(code);
         if (checkIfUserExists(newUser, discountCode))throw new UserExistedInDiscountCodeException(newUser.getUsername());
         UserIntegerMap map = new UserIntegerMap();
+        map.setDiscountCode(discountCode);
         map.setInteger(timesToUse);
         map.setUser(newUser);
         discountCode.getUsers().add(map);

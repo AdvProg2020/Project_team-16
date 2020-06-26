@@ -1,5 +1,7 @@
 package ModelPackage.System;
 
+import ModelPackage.Maps.UserIntegerMap;
+import ModelPackage.Off.DiscountCode;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.Product;
 import ModelPackage.Product.SellPackage;
@@ -44,7 +46,45 @@ public class ManagerManager {
         User user = AccountManager.getInstance().getUserByUsername(username);
         if (user instanceof Seller) {
             deleteSeller(username);
+        } else if (user instanceof Customer) {
+            deleteCustomer(username);
+        } else if (user instanceof Manager) {
+            deleteManager(username);
         }
+    }
+
+    private void deleteManager(String username) {
+        Manager manager = DBManager.load(Manager.class, username);
+        DBManager.delete(manager);
+    }
+
+    private void deleteCustomer(String username) {
+        Customer customer = DBManager.load(Customer.class, username);
+        deleteAllUserIntegerMaps(customer);
+        DBManager.delete(customer);
+    }
+
+    private void deleteAllUserIntegerMaps(User customer) {
+        List<UserIntegerMap> userIntegerMaps = getAllUserIntegerMaps(customer);
+        userIntegerMaps.forEach(userIntegerMap -> {
+            DiscountCode discountCode = userIntegerMap.getDiscountCode();
+            discountCode.getUsers().remove(userIntegerMap);
+            DBManager.save(discountCode);
+            DBManager.delete(userIntegerMap);
+        });
+    }
+
+    private List<UserIntegerMap> getAllUserIntegerMaps(User customer) {
+        Session session = HibernateUtil.getSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<UserIntegerMap> criteriaQuery = criteriaBuilder.createQuery(UserIntegerMap.class);
+        Root<UserIntegerMap> root = criteriaQuery.from(UserIntegerMap.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.equal(root.get("user").as(User.class), customer)
+        );
+        Query<UserIntegerMap> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
     private void deleteSeller(String username) {

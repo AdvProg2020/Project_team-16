@@ -1,9 +1,9 @@
 package ModelPackage.Maps;
 
+import ModelPackage.Off.DiscountCode;
 import ModelPackage.Users.User;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -21,4 +21,7 @@ public class UserIntegerMap {
 
     @Column(name = "INTEGER_VALUE")
     int integer;
+
+    @ManyToOne
+    private DiscountCode discountCode;
 }

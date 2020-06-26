@@ -18,12 +18,12 @@ public class Customer extends User {
     private long balance;
 
     @ElementCollection(targetClass = CustomerInformation.class)
-        @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
         @JoinTable(name = "t_customer_info_map")
     private List<CustomerInformation> customerInformation;
 
     @ElementCollection(targetClass = PurchaseLog.class)
-        @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
         @JoinTable(name = "t_customer_purchase_map")
     private List<PurchaseLog> purchaseLogs;
 
