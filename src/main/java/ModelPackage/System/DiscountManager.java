@@ -57,7 +57,9 @@ public class DiscountManager {
     }
 
     private void deleteMapForUser(UserIntegerMap map, DiscountCode code) {
-        // TODO: 6/23/2020
+        code.getUsers().remove(map);
+        DBManager.save(code);
+        DBManager.delete(map);
     }
 
     public void editDiscountCode(String code, DiscountCodeEditAttributes editAttributes)
@@ -74,7 +76,6 @@ public class DiscountManager {
             checkIfStartingDateIsBeforeEndingDate(newStart, discountCode.getEndTime());
             discountCode.setStartTime(newStart);
         }
-        // TODO : checkIfStartingDateIsBeforeEndingDate(discountCode.getStartTime(), newEnd);
         if (newEnd != null){
             checkIfStartingDateIsBeforeEndingDate(discountCode.getStartTime(), newEnd);
             discountCode.setEndTime(newEnd);

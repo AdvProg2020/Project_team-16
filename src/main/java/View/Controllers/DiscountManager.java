@@ -335,6 +335,19 @@ public class DiscountManager extends BackAbleController {
     private void binds() {
         editBox.disableProperty().bind(Bindings.isEmpty(codes.getSelectionModel().getSelectedItems()));
         removeUser.disableProperty().bind(Bindings.isEmpty(userTable.getSelectionModel().getSelectedItems()));
+        addUser.disableProperty().bind(Bindings.isEmpty(addUserQuantity.textProperty())
+                .or(Bindings.isEmpty(addUsername.textProperty())));
+        edReset.disableProperty().bind(edConfirm.disableProperty());
+        crButton.disableProperty().bind((crStartDate.valueProperty().isNull()
+                .or(Bindings.isEmpty(crStartH.textProperty())
+                        .or(Bindings.isEmpty(crStartM.textProperty())
+                                .or(Bindings.isEmpty(crStartS.textProperty())))))
+                .or((crEndDate.valueProperty().isNull()
+                        .or(Bindings.isEmpty(crEndH.textProperty()))
+                        .or(Bindings.isEmpty(crEndM.textProperty()))
+                        .or(Bindings.isEmpty(crEndS.textProperty()))))
+                .or(Bindings.isEmpty(crMaximum.textProperty()))
+                .or(Bindings.isEmpty(crCode.textProperty())));
     }
 
     private void listeners() {
@@ -356,6 +369,20 @@ public class DiscountManager extends BackAbleController {
         edStartDate.setValue(null);
         setDatesToFields(edEndDate,endDate,1);
         edEndDate.setValue(null);
+        confirmBindings(pm);
+    }
+
+    private void confirmBindings(DisCodeManagerPM pm) {
+        edConfirm.disableProperty().bind((edStartDate.valueProperty().isNull()
+                .or(Bindings.isEmpty(edStartH.textProperty())
+                        .or(Bindings.isEmpty(edStartM.textProperty())
+                                .or(Bindings.isEmpty(edStartS.textProperty())))))
+                .and((edEndDate.valueProperty().isNull()
+                        .or(Bindings.isEmpty(edEndH.textProperty()))
+                        .or(Bindings.isEmpty(edEndM.textProperty()))
+                        .or(Bindings.isEmpty(edEndS.textProperty()))))
+                .and(edPercent.valueProperty().isEqualTo(pm.getOffPercentage()))
+                .and(Bindings.isEmpty(edMaximum.textProperty())));
     }
 
     private void setDatesToFields(DatePicker datePicker, Date date,int mode) {

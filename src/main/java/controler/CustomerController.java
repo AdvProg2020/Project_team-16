@@ -186,6 +186,10 @@ public class CustomerController extends Controller {
         return orderProductPMS;
     }
 
+    public void addViewDigest(int id) throws NoSuchAProductException {
+        productManager.addView(id);
+    }
+
     private OrderProductPM createOrderProductPMFrom(Product product, String seller) {
         OrderProductPM orderProductPM = null;
 

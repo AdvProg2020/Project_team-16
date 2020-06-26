@@ -6,6 +6,8 @@ import View.CacheData;
 import View.Main;
 import View.PrintModels.CompanyPM;
 import View.PrintModels.UserFullPM;
+import View.Sound;
+import View.SoundCenter;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import controler.AccountController;
@@ -163,6 +165,7 @@ public class SellerAccount extends BackAbleController {
         if (popOver.isShowing()) {
             popOver.hide();
         } else {
+            SoundCenter.play(Sound.POP_UP);
             popOver.show(ad);
         }
     }

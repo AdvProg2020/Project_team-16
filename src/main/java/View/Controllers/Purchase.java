@@ -6,13 +6,11 @@ import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
 import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
-import View.CacheData;
-import View.Main;
+import View.*;
 import View.PrintModels.CartPM;
 import View.PrintModels.DisCodeUserPM;
 import View.PrintModels.InCartPM;
 import View.PrintModels.MiniProductPM;
-import View.SortPackage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextArea;
@@ -245,7 +243,14 @@ public class Purchase extends BackAbleController {
                 checkCardsNumbers() && checkCVV2Numbers() && checkCardPass() && checkExpDateNumber()) {
             try {
                 customerController.purchase(cacheData.getUsername(), makeCustomerInformation(), selectedDisCode);
+                SoundCenter.play(Sound.PURCHASE);
                 reset();
+                try {
+                    Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+                    Main.setSceneToStage(back, scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } catch (NoSuchADiscountCodeException | NotEnoughAmountOfProductException | NoSuchAProductException | NoSuchSellerException | NoSuchAPackageException e) {
                 e.printStackTrace();
             }
