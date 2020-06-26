@@ -58,6 +58,7 @@ public class MainPage extends BackAbleController {
         try {
             Scene scene = new Scene(Main.loadFXML("ProductsPage", "MainPage"));
             Main.setSceneToStage(products, scene);
+            SoundCenter.play(CLICK);
         } catch (IOException e) {
             e.printStackTrace();
         }
