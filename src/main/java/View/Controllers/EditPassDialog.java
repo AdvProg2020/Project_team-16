@@ -76,6 +76,7 @@ public class EditPassDialog {
             repeat.setPromptText("Current Password");
             repeat.setFocusColor(Paint.valueOf("#4059a9"));
         });
+        PasswordStrength.bindPassField(newPass);
     }
 
     private FadeTransition makeFade(int from, int to){
@@ -117,6 +118,7 @@ public class EditPassDialog {
                 newPass.setFocusColor(Paint.valueOf("#c0392b"));
                 newPass.setPromptText("Cannot Be Empty");
                 newPass.requestFocus();
+            } else if (PasswordStrength.calculatePasswordStrength(newPass.getText()) < 4){
             } else {
                 if (!isSame()) {
                     repeat.setPromptText("Doesn't Match Above");
