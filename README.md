@@ -17,4 +17,4 @@ A hard-working member that we appreciate his efforts.
 
 Coach
 --
-And special thanks to our coach "Zumar" :)
+And special thanks to our coach "Zumaar" :)
