@@ -9,6 +9,7 @@ import ModelPackage.System.exeption.product.*;
 import ModelPackage.Users.*;
 import View.PrintModels.MicroProduct;
 import lombok.Data;
+import org.apache.commons.io.FileUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -16,6 +17,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -118,7 +121,6 @@ public class ProductManager {
         DBManager.save(product);
     }
 
-    // TODO: 6/23/2020 Add to Purchase
     public void addBought(int productId, int amount) throws NoSuchAProductException {
         Product product = findProductById(productId);
         product.setBoughtAmount(product.getBoughtAmount() + amount);
@@ -183,6 +185,16 @@ public class ProductManager {
         DBManager.save(category);
         product.setCategory(null);
         product.setCompanyClass(null);
+        deletePictures(product.getId());
+    }
+
+    private void deletePictures(int id) {
+        File directory = new File("src/main/resources/db/images/products/" + id);
+        try {
+            FileUtils.deleteDirectory(directory);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void deleteAllRequestRelatedToProduct(Product product) {

@@ -102,22 +102,6 @@ public class SellerController extends Controller{
         return list;
     }
 
-    // TODO: 6/11/2020 If Is needed later will be impl
-    /*
-    public List<UserMiniPM> viewAllBuyersOfProduct(int productId,String viwer,SortPackage sortPackage) throws NoSuchAProductException, YouAreNotASellerException {
-        List<UserMiniPM> userMiniPMs = new ArrayList<>();
-        Product product = productManager.findProductById(productId);
-        csclManager.checkIfIsASellerOFProduct(product,viwer);
-        Seller seller = DBManager.load(Seller.class,viwer);
-        List<User> allBuyers = new ArrayList<>(csclManager.allBuyers(productId, seller));
-        allBuyers = sortManager.sortUser(allBuyers);
-        if (!sortPackage.isAscending())Collections.reverse(allBuyers);
-        for (User buyer : allBuyers) {
-            userMiniPMs.add(createUserMiniPM(buyer));
-        }
-        return userMiniPMs;
-    }*/
-
     public void removeProduct(int productId, String editor) throws NoSuchAPackageException {
         sellerManager.deleteProductForSeller(editor, productId);
     }
