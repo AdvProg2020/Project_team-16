@@ -104,10 +104,9 @@ public class ProductDigest extends BackAbleController {
             String[] comment = new CommentGetter().returnAComment();
             String[] info = {cacheData.getUsername(), comment[0], comment[1], "" + id};
             productController.assignComment(info);
-        } catch (UserNotAvailableException | NoSuchAProductException | NoSuchACustomerException e) {
-            new OopsAlert().show(e.getMessage());
-        } catch (CanceledException e) {
-            System.out.println(e.getMessage());
+        } catch (UserNotAvailableException | NoSuchAProductException | NoSuchACustomerException | CanceledException e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
+            e.printStackTrace();
         }
     }
 
@@ -123,13 +122,16 @@ public class ProductDigest extends BackAbleController {
             String[] info = {cacheData.getUsername(), "" + id, sellerId, "1"};
             try {
                 productController.addToCart(info);
+                Notification.show("Successful", "Item Was Added To Your Cart!!!", back.getScene().getWindow(), false);
             } catch (Exception e) {
-                new OopsAlert().show(e.getMessage());
+                Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
+                e.printStackTrace();
             }
         } else if (role.isEmpty()) {
             cacheData.getCart().addToCart(fullProductPM.getProduct(), sellerBox.getSelectionModel().getSelectedItem());
+            Notification.show("Successful", "Item Was Added To Your Cart!!!", back.getScene().getWindow(), false);
         } else {
-            new OopsAlert().show("You must be A Customer To Buy");
+            Notification.show("Error", "You must be A Customer To Buy", back.getScene().getWindow(), true);
         }
     }
 
@@ -138,6 +140,7 @@ public class ProductDigest extends BackAbleController {
             Scene scene = new Scene(Main.loadFXML("ComparePage", backForForward("ProductDigest")));
             Main.setSceneToStage(back,scene);
         } catch (IOException e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();
         }
     }
@@ -196,6 +199,7 @@ public class ProductDigest extends BackAbleController {
             Scene scene = new Scene(Main.loadFXML("Cart", backForForward("ProductDigest")));
             Main.setSceneToStage(new Stage(StageStyle.UNDECORATED), scene);
         } catch (IOException e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();
         }
     }
@@ -205,6 +209,7 @@ public class ProductDigest extends BackAbleController {
             Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
             Main.setSceneToStage(back, scene);
         } catch (IOException e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();
         }
     }
@@ -214,6 +219,7 @@ public class ProductDigest extends BackAbleController {
             List<CommentPM> comments = productController.viewProductComments(id);
             loadComments(comments);
         } catch (NoSuchAProductException e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();
         }
     }
@@ -231,6 +237,7 @@ public class ProductDigest extends BackAbleController {
         try {
             return Comment.generateComment(comment);
         } catch (IOException e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();
             return null;
         }
@@ -268,6 +275,7 @@ public class ProductDigest extends BackAbleController {
             loadImage();
             initialFeatures(pm.getFeatures());
         } catch (NoSuchAProductException e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();
         }
     }

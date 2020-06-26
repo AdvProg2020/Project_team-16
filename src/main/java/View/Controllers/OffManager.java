@@ -281,12 +281,11 @@ public class OffManager extends BackAbleController {
         attributes.setSourceId(offsList.getSelectionModel().getSelectedItem().getOffId());
         try {
             sellerController.editOff(username, attributes);
+            Notification.show("Successful", "Your Request was Sent to The Manager!!!", back.getScene().getWindow(), false);
         } catch (ThisOffDoesNotBelongssToYouException | NoSuchAOffException e) {
-            new OopsAlert().show(e.getMessage());
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
+            e.printStackTrace();
         }
-
-        productsList.getItems().add(selected);
-        availableProducts.getItems().remove(selected);
     }
 
     private void handleConfirm() {
