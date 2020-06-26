@@ -19,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -36,13 +37,13 @@ public class CompareProduct extends BackAbleController {
     public JFXButton close;
 
     public JFXComboBox<MicroProduct> choose;
-    public Rectangle mainProductImage;
     public Rectangle secondProductImage;
 
     public TableView<CompareRowFactory> table;
     public TableColumn<CompareRowFactory, String> feature;
     public TableColumn<CompareRowFactory, String> product1Col;
     public TableColumn<CompareRowFactory, String> product2Col;
+    public ImageView mainImage;
 
     private ProductController productController = ProductController.getInstance();
     private CacheData cacheData = CacheData.getInstance();
@@ -55,10 +56,15 @@ public class CompareProduct extends BackAbleController {
     public void initialize(){
         initProduct(mainProductId, true);
         initButtons();
-        loadImage(mainProductImage, mainProductId);
         initChooseProduct();
         initProductsTable();
+        loadFirstImage(mainProductId);
         binds();
+    }
+
+    private void loadFirstImage(int mainProductId) {
+        Image image = productController.loadMainImage(mainProductId);
+        mainImage.setImage(image);
     }
 
     private void binds() {
@@ -75,12 +81,6 @@ public class CompareProduct extends BackAbleController {
         } catch (NoSuchAProductException e) {
             e.printStackTrace();
         }
-
-        /*if (main){
-            mainProductPM = getTestProduct(true);
-        } else {
-            secondProductPM = getTestProduct(false);
-        }*/
     }
 
     private FullProductPM getTestProduct(boolean main) {
