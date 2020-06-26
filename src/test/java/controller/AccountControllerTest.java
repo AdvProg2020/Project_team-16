@@ -83,11 +83,26 @@ public class AccountControllerTest {
             public <T>T load(Class<T> type, Serializable id) {
                 if (id.equals(marmof.getUsername()))
                     return type.cast(marmof);
-                else if (id.equals(hatam.getUsername()))
+                else if (id.equals("hatam008"))
                     return type.cast(hatam);
                 else if (id.equals(sapa.getUsername()))
                     return type.cast(sapa);
                 return null;
+            }
+        };
+        new MockUp<AccountManager>(){
+            @Mock
+            public String login(String username, String password) throws WrongPasswordException, UserNotAvailableException, NotVerifiedSeller {
+                if (username.equals("sapa")) {
+                    if (!sapa.getVerified())
+                        throw new NotVerifiedSeller();
+                    else if (password.equals(sapa.getPassword()))
+                        return "Seller";
+                    else if (password.equals("sapa"))
+                        throw new WrongPasswordException(password);
+                } else if (username.equals("hata"))
+                    throw new UserNotAvailableException();
+                return "";
             }
         };
     }
@@ -133,17 +148,23 @@ public class AccountControllerTest {
 
     @Test
     public void login() throws NotVerifiedSeller, UserNotAvailableException, WrongPasswordException {
-        new MockUp<AccountManager>(){
-            @Mock
-            public String login(String username, String password){
-                return "Seller";
-            }
-        };
-
         String actual =  accountController.login("sapa", "sapa.pak");
-
         Assert.assertEquals("Seller", actual);
     }
+    @Test(expected = WrongPasswordException.class)
+    public void login_WrongPasswordTest() throws NotVerifiedSeller, UserNotAvailableException, WrongPasswordException {
+        accountController.login("sapa", "sapa");
+    }
+    @Test(expected = UserNotAvailableException.class)
+    public void login_UserNotAvailableTest() throws NotVerifiedSeller, UserNotAvailableException, WrongPasswordException {
+        accountController.login("hata", "sapa");
+    }
+    @Test(expected = NotVerifiedSeller.class)
+    public void login_NotVerifiedTest() throws NotVerifiedSeller, UserNotAvailableException, WrongPasswordException {
+        sapa.setVerified(false);
+        accountController.login("sapa", sapa.getPassword());
+    }
+
 
     @Test
     public void viewPersonalInfo() throws UserNotAvailableException {
