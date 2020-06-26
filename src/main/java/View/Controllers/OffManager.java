@@ -220,6 +220,9 @@ public class OffManager extends BackAbleController {
     }
 
     private void changeData(OffPM off) {
+        if (off == null) {
+            return;
+        }
         offStatus.setText(off.getStatus());
         percent.setValue(off.getOffPercentage());
         startDate.setPromptText(off.getStartTime().toString());

@@ -30,7 +30,7 @@ public class Seller extends User {
     private List<Off> offs;
 
     @ElementCollection(targetClass = SellLog.class)
-        @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SellLog> sellLogs;
 
     @OneToMany
