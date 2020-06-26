@@ -5,6 +5,7 @@ import ModelPackage.System.AccountManager;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
+import ModelPackage.System.exeption.account.WrongPasswordException;
 import ModelPackage.Users.*;
 import View.PrintModels.UserFullPM;
 import controler.AccountController;
@@ -14,6 +15,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class AccountControllerTest {
@@ -74,9 +76,20 @@ public class AccountControllerTest {
 
     @Before
     public void initialize(){
-        DBManager.save(marmof);
-        DBManager.save(hatam);
-        DBManager.save(sapa);
+        new MockUp<DBManager>() {
+            @Mock
+            public void save(Object object){}
+            @Mock
+            public <T>T load(Class<T> type, Serializable id) {
+                if (id.equals(marmof.getUsername()))
+                    return type.cast(marmof);
+                else if (id.equals(hatam.getUsername()))
+                    return type.cast(hatam);
+                else if (id.equals(sapa.getUsername()))
+                    return type.cast(sapa);
+                return null;
+            }
+        };
     }
 
     @Test
@@ -119,7 +132,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void login() throws NotVerifiedSeller, UserNotAvailableException {
+    public void login() throws NotVerifiedSeller, UserNotAvailableException, WrongPasswordException {
         new MockUp<AccountManager>(){
             @Mock
             public String login(String username, String password){
@@ -134,10 +147,16 @@ public class AccountControllerTest {
 
     @Test
     public void viewPersonalInfo() throws UserNotAvailableException {
-        marmof.setHasSignedIn(true);
+        new MockUp<AccountManager>() {
+            @Mock
+            public User viewPersonalInfo(String userName) {
+                if (userName.equals("marmofayezi"))
+                    return marmof;
+                return null;
+            }
+        };
 
         UserFullPM actual = accountController.viewPersonalInfo("marmofayezi");
-
         Assert.assertEquals(marmofPM, actual);
     }
 }

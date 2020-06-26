@@ -219,13 +219,4 @@ public class SellerManagerTest {
         sellerManager.addASellLog(skirtSellLog, marmof);
         assertArrayEquals(sellLogs.toArray(), marmof.getSellLogs().toArray());
     }
-
-    @Test
-    public void deleteProductFromSellerTest() throws NoSuchAPackageException {
-        new MockUp<DBManager>() {
-            public void delete(Object object){}
-        };
-        sellerManager.deleteProductForSeller(marmof.getUsername(), 1);
-        assertEquals(marmof.getPackages().size(), 0);
-    }
 }

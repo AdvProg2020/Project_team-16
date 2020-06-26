@@ -15,8 +15,10 @@ import org.junit.Test;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class CategoryManagerTest {
     private CategoryManager categoryManager;
@@ -25,18 +27,24 @@ public class CategoryManagerTest {
     private Category category2;
     private Category category3;
     private ArrayList<String> features;
+    private Product product;
 
     {
         categoryManager = CategoryManager.getInstance();
         main = new Category("Main",null);
         main.setCategoryId("MNCTCFKala");
+        main.setId(3);
         category1 = new Category("cloth",main);
+        category1.setId(1);
         //categoryManager.addToBase(category1,main);
 
         /*main.getSubCategories().add(category1);
         category1.setParent(main);*/
 
         category2 = new Category("mobile",main);
+        category2.setId(2);
+        main.getSubCategories().add(category1);
+        main.getSubCategories().add(category2);
         //categoryManager.addToBase(category2,main);
         category3 = new Category("men",category1);
         //categoryManager.addToBase(category3,category1);
@@ -48,8 +56,9 @@ public class CategoryManagerTest {
         category1.setSpecialFeatures(features);
 
         ArrayList<Product> productCat1 = new ArrayList<>();
-        Product product = new Product();
+        product = new Product();
         product.setId(1);
+        product.setSpecialFeatures(new HashMap<>());
 
         FakeDBManager fakeDBManager = new FakeDBManager();
         fakeDBManager.save(product);
@@ -65,6 +74,8 @@ public class CategoryManagerTest {
 
         category3.setAllProducts(new ArrayList<>());
         category3.setSpecialFeatures(new ArrayList<>());
+        category3.setId(10);
+
 
        /* categoryManager.clear();
 
@@ -83,9 +94,31 @@ public class CategoryManagerTest {
             public void save(Object object){}
             @Mock
             public <T>T load(Class<T> type, Serializable id) {
-                if (id.equals(0))
-                    return type.cast(category1);
+                if (type.isInstance(category2)){
+                    if (id.equals(1))
+                        return type.cast(category1);
+                    else if (id.equals(2))
+                        return type.cast(category2);
+                    else if (id.equals(3))
+                        return type.cast(main);
+                    else if (id.equals(10))
+                        return type.cast(category3);
+                    return null;
+                }
+                else if (type.isInstance(product)) {
+                    if (id.equals(1))
+                        return type.cast(product);
+                    return null;
+                }
                 return null;
+            }
+        };
+        new MockUp<CategoryManager>(){
+            @Mock
+            public List<Category> getBaseCats() {
+                List<Category> baseCategories = new ArrayList<>();
+                baseCategories.add(main);
+                return baseCategories;
             }
         };
     }
@@ -109,22 +142,20 @@ public class CategoryManagerTest {
     @Test
     public void createCategoryRepNameExcTest(){
         Assert.assertThrows(RepeatedNameInParentCategoryException.class, () -> {
-            categoryManager.createCategory("men",0, new ArrayList<>());
-            categoryManager.createCategory("men",0, new ArrayList<>());
+            categoryManager.createCategory(main.getName(),0, new ArrayList<>());
         });
     }
 
     @Test
-    public void createCategoryNoCatExcTest(){
-        Assert.assertThrows(NoSuchACategoryException.class,() -> {
-            categoryManager.createCategory("men",1, new ArrayList<>());
-        });
+    public void createCategoryNoSuchCategoryTest() {
+        assertThrows(NoSuchACategoryException.class, () ->
+                categoryManager.createCategory("sa", 4, new ArrayList<>()));
     }
 
     @Test
-    public void addProductToCategoryTest(@Mocked ProductManager productManager)
+    public void addProductToCategoryTest()
             throws Exception{
-       categoryManager.createCategory("cloth", 0, new ArrayList<>());
+       categoryManager.createCategory("cloth", 3, new ArrayList<>());
        categoryManager.addProductToCategory(new Product(1), category1);
 
         int countOfProducts = category1.getAllProducts().size();
@@ -133,14 +164,8 @@ public class CategoryManagerTest {
 
     @Test
     public void getCategorySpecialFeaturesTest() throws NoSuchACategoryException {
-        /*new MockUp<CategoryManager>() {
-            public ArrayList<String> getAllSpecialFeaturesFromCategory(int categoryId)
-                    throws NoSuchACategoryException{
-                if (categoryId == 0) return features;
-                return null;
-            }
-        };*/
-        assertEquals(categoryManager.getAllSpecialFeaturesFromCategory(category1.getId()), features);
+        assertArrayEquals(categoryManager.getAllSpecialFeaturesFromCategory(category1.getId()).toArray(),
+                features.toArray());
     }
 
     @Test
@@ -151,25 +176,26 @@ public class CategoryManagerTest {
 
     @Test(expected = NoSuchACategoryException.class)
     public void getAllSpecialFeaturesFromCategoryNoCatExcTest() throws Exception{
-        categoryManager.getAllSpecialFeaturesFromCategory(1);
+        categoryManager.getAllSpecialFeaturesFromCategory(4);
     }
 
-    /*@Test
+    @Test
     public void editProductCategoryTest(@Mocked ProductManager productManager) throws Exception{
         new Expectations(){{
             productManager.checkIfThisProductExists(1);
             times = 1;
         }};
-        categoryManager.editProductCategory(1,category2.getCategoryId(),category1.getCategoryId());
 
-        int actualCountOfProductInCat1 = category1.getAllProductInThis().size();
-        Assert.assertEquals(2,actualCountOfProductInCat1);
+        categoryManager.editProductCategory(1,category1.getId(),category2.getId());
+
+        int actualCountOfProductInCat1 = category2.getAllProducts().size();
+        assertEquals(1, actualCountOfProductInCat1);
     }
 
     @Test(expected = NoSuchAProductInCategoryException.class)
     public void editProductCategoryNoPrInCtExcTest() throws Exception{
-        categoryManager.editProductCategory("456",category2.getCategoryId(),category1.getCategoryId());
-    }*/
+        categoryManager.editProductCategory(1,category2.getId(),category1.getId());
+    }
 
     @Test
     public void removeProductFromCategoryTest(@Mocked ProductManager productManager) throws Exception {
@@ -191,26 +217,26 @@ public class CategoryManagerTest {
         Assert.assertEquals("cloth",actualName);
     }
 
-    /*@Test(expected = RepeatedNameInParentCategoryException.class)
+    @Test(expected = RepeatedNameInParentCategoryException.class)
     public void editNameRenExcTest() throws Exception {
-        categoryManager.editName("mobile",category1.getId());
-    }*/
+        categoryManager.editName(category2.getName(),category1.getId());
+    }
 
-    /*@Test
+    @Test
     public void moveCategoryToAnotherParentTest() throws Exception{
-        categoryManager.moveCategoryToAnotherParent("MNCTCFKala",category3.getCategoryId());
+        categoryManager.moveCategoryToAnotherParent(3, category3.getId());
         int countOfMainCats = main.getSubCategories().size();
-        Assert.assertEquals(3,countOfMainCats);
+        assertEquals(3,countOfMainCats);
 
         int countOfCat1Cats = category1.getSubCategories().size();
-        Assert.assertEquals(0,countOfCat1Cats);
+        assertEquals(0,countOfCat1Cats);
     }
 
     @Test(expected = RepeatedNameInParentCategoryException.class)
     public void moveCategoryToAnotherParentRenExcTest() throws Exception{
-       category3.setName("cloth");
-       categoryManager.moveCategoryToAnotherParent("MNCTCFKala",category3.getCategoryId());
-    }*/
+       category3.setName(category2.getName());
+       categoryManager.moveCategoryToAnotherParent(3,category3.getId());
+    }
 
     @Test
     public void checkIfThisFeatureExistInThisCategoryTest() throws Exception{

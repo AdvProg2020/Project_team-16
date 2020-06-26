@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "t_category")
 public class Category {
-    @Setter(AccessLevel.NONE)
+    @Setter
     @Id @GeneratedValue
     private int id;
 
