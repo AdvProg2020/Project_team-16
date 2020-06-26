@@ -7,6 +7,7 @@ import View.FilterPackage;
 import View.Main;
 import View.PrintModels.CategoryPM;
 import View.PrintModels.MiniProductPM;
+import View.PrintModels.OffProductPM;
 import View.SortPackage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
@@ -19,6 +20,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -112,7 +114,32 @@ public class ProductsPage extends BackAbleController {
     }
 
     private void loadOffProducts(int id) {
-        // TODO: 6/24/2020
+        FilterPackage filter = createFilterPackage(id);
+        SortPackage sorts = createSortPackage();
+        List<OffProductPM> offs = productController.showAllOnOffProducts(filter, sorts);
+        createOffProduct(offs);
+    }
+
+    private void createOffProduct(List<OffProductPM> offs) {
+        productVBox.getChildren().clear();
+        List<List<OffProductPM>> chopped = chopped(offs, 4);
+        chopped.forEach(sub -> productVBox.getChildren().add(row4ForBoxOff(sub)));
+    }
+
+    private Node row4ForBoxOff(List<OffProductPM> sub) {
+        HBox hBox = new HBox();
+        hBox.setSpacing(10);
+        ArrayList<Parent> products = new ArrayList<>();
+        sub.forEach(pm -> {
+            try {
+                Parent parent = SingleProductOnOff.generate(pm);
+                products.add(parent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        hBox.getChildren().addAll(products);
+        return hBox;
     }
 
     private void loadNormalProducts(int id) {
@@ -120,7 +147,6 @@ public class ProductsPage extends BackAbleController {
         SortPackage sorts = createSortPackage();
         try {
             List<MiniProductPM> list = productController.showAllProducts(sorts, filter);
-            System.out.println(list.size());
             creatingMiniProducts(list);
         } catch (NoSuchACategoryException | InvalidFilterException e) {
             new OopsAlert().show(e.getMessage());

@@ -46,8 +46,6 @@ public class ProductPage extends BackAbleController {
     public JFXComboBox<String> color;
     public JFXSlider minPrice;
     public JFXSlider maxPrice;
-    // TODO: 6/20/2020 Fucking Full Of Problems Should Be Diagnose
-
     @FXML
     public void initialize() {
         initButtons();

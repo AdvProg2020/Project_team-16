@@ -75,7 +75,6 @@ public class RequestManager {
             if (seller.getBalance() > 20) {
                 seller.setBalance(seller.getBalance() - 20);
                 Advertise ad = request.getAdvertise();
-                //todo : Add to Timer
                 ad.setActive(true);
                 ad.setCreated(new Date());
                 DBManager.save(ad);
