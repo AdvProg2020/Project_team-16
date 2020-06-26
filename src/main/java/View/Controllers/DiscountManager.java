@@ -127,6 +127,7 @@ public class DiscountManager extends BackAbleController {
                 NotValidPercentageException |
                 StartingDateIsAfterEndingDate |
                 NoSuchADiscountCodeException e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();
         }
     }
@@ -186,6 +187,7 @@ public class DiscountManager extends BackAbleController {
             try {
                 managerController.addUserToDiscountCode(code, user, amount);
             } catch (UserNotAvailableException | UserExistedInDiscountCodeException | NoSuchADiscountCodeException ex) {
+                Notification.show("Error", ex.getMessage(), back.getScene().getWindow(), true);
                 ex.printStackTrace();
             }
         }
@@ -215,7 +217,7 @@ public class DiscountManager extends BackAbleController {
             managerController.removeUserFromDiscountCodeUsers(code,userId);
             reset();
         } catch (UserNotExistedInDiscountCodeException | NoSuchADiscountCodeException | UserNotAvailableException e) {
-            new OopsAlert().show(e.getMessage());
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
         }
     }
 
@@ -249,6 +251,7 @@ public class DiscountManager extends BackAbleController {
             managerController.createDiscount(data,start,end);
             reset();
         } catch (NotValidPercentageException | AlreadyExistCodeException | StartingDateIsAfterEndingDate e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             e.printStackTrace();
         }
     }
