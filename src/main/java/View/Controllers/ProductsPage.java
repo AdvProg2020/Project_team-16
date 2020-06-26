@@ -226,9 +226,7 @@ public class ProductsPage extends BackAbleController {
     }
 
     private void binds() {
-        cartButt.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not().and(
-                Bindings.isEmpty(cacheData.roleProperty).not()
-        ));
+        cartButt.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not());
         minPrice.valueProperty().addListener((v, oldValue, newValue) -> {
             if (newValue.doubleValue() > maxPrice.getValue()) {
                 maxPrice.setValue(newValue.doubleValue());

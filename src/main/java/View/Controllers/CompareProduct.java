@@ -10,6 +10,7 @@ import View.PrintModels.MiniProductPM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import controler.ProductController;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -57,6 +58,11 @@ public class CompareProduct extends BackAbleController {
         loadImage(mainProductImage, mainProductId);
         initChooseProduct();
         initProductsTable();
+        binds();
+    }
+
+    private void binds() {
+        cartButt.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not());
     }
 
     private void initProduct(int id, boolean main) {
