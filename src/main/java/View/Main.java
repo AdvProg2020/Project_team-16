@@ -35,10 +35,12 @@ public class Main extends Application {
         }catch (Exception e){
             e.printStackTrace();
         }
+
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+        SoundCenter.background();
         window = stage;
         loadLogo();
         try {

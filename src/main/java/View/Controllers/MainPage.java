@@ -4,6 +4,8 @@ import ModelPackage.Users.MainContent;
 import View.CacheData;
 import View.Main;
 import View.PrintModels.AdPM;
+import View.Sound;
+import View.SoundCenter;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static View.Controllers.Notification.show;
+import static View.Sound.*;
 
 public class MainPage extends BackAbleController {
     public JFXButton account;
@@ -31,7 +34,6 @@ public class MainPage extends BackAbleController {
     public JFXButton close;
     public JFXButton minimize;
     public JFXButton products;
-    public JFXButton offs;
     public VBox mainBox;
 
     private PopOver accountPopOver;
@@ -137,6 +139,7 @@ public class MainPage extends BackAbleController {
         if (accountPopOver.isShowing()) {
             accountPopOver.hide();
         } else {
+            SoundCenter.play(POP_UP);
             accountPopOver.show(account);
         }
     }
