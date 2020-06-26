@@ -76,7 +76,7 @@ public class Product {
     @Column(name = "LEAST_PRICE")
     private int leastPrice;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     private List<SellPackage> packages;
 
     public Product(int id){this.id = id;}

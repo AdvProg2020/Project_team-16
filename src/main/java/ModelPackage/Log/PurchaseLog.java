@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "t_purchase_log")
 public class PurchaseLog extends Log {
     @ElementCollection(targetClass = SoldProductSellerMap.class)
-        @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
         @JoinColumn(name = "PRODUCTS")
     private List<SoldProductSellerMap> productsAndItsSellers;
 

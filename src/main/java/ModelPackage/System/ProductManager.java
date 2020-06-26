@@ -6,9 +6,7 @@ import ModelPackage.System.database.DBManager;
 import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.editPackage.ProductEditAttribute;
 import ModelPackage.System.exeption.product.*;
-import ModelPackage.Users.Request;
-import ModelPackage.Users.RequestType;
-import ModelPackage.Users.Seller;
+import ModelPackage.Users.*;
 import View.PrintModels.MicroProduct;
 import lombok.Data;
 import org.hibernate.Session;
@@ -16,6 +14,7 @@ import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -171,23 +170,88 @@ public class ProductManager {
 
     public void deleteProduct(int productId) throws NoSuchAProductException {
         Product product = findProductById(productId);
-        product.getPackages().forEach(sellPackage -> {
-            Seller seller = sellPackage.getSeller();
-            seller.getPackages().remove(sellPackage);
-            DBManager.save(seller);
-            if (sellPackage.isOnOff()) {
-                Off off = sellPackage.getOff();
-                off.getProducts().remove(product);
-                DBManager.save(off);
-            }
-        });
-        product.setPackages(null);
-        product.setCompany(null);
+        deleteProduct(product);
+    }
+
+    public void deleteProduct(Product product) {
+        List<SellPackage> packages = product.getPackages();
+        product.setPackages(new ArrayList<>());
+        DBManager.save(product);
+        packages.forEach(this::deleteSellPackage);
+        deleteAllRequestRelatedToProduct(product);
         Category category = product.getCategory();
         category.getAllProducts().remove(product);
         DBManager.save(category);
+        product.setCategory(null);
+        product.setCompanyClass(null);
+    }
+
+    private void deleteAllRequestRelatedToProduct(Product product) {
+        List<Request> requests = getAllRequests(product);
+        requests.forEach(request -> {
+            request.setProduct(null);
+            DBManager.save(request);
+        });
+    }
+
+    private List<Request> getAllRequests(Product product) {
+        Session session = HibernateUtil.getSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Request> criteriaQuery = criteriaBuilder.createQuery(Request.class);
+        Root<Request> root = criteriaQuery.from(Request.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.equal(root.get("product").as(Product.class), product)
+        );
+        Query<Request> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
+
+    private void deleteSellPackage(SellPackage sellPackage) {
+        Seller seller = sellPackage.getSeller();
+        if (sellPackage.isOnOff()) {
+            Off off = sellPackage.getOff();
+            off.getProducts().remove(sellPackage.getProduct());
+            DBManager.save(off);
+            sellPackage.setOff(null);
+        }
+        List<SellPackage> packages = seller.getPackages();
+        packages.remove(sellPackage);
+        seller.setPackages(new ArrayList<>(packages));
+        Product product = sellPackage.getProduct();
+        deleteAllSubCarts(seller, product);
+        sellPackage.setProduct(null);
+        sellPackage.setSeller(null);
         DBManager.save(product);
-        DBManager.delete(product);
+        DBManager.save(seller);
+        DBManager.delete(sellPackage);
+    }
+
+    private void deleteAllSubCarts(Seller seller, Product product) {
+        List<SubCart> subCarts = getAllSubCarts(seller, product);
+        subCarts.forEach(subCart -> {
+            Cart cart = subCart.getCart();
+            cart.getSubCarts().remove(subCart);
+            DBManager.save(cart);
+            DBManager.delete(subCart);
+        });
+    }
+
+    private List<SubCart> getAllSubCarts(Seller seller, Product product) {
+        Session session = HibernateUtil.getSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<SubCart> criteriaQuery = criteriaBuilder.createQuery(SubCart.class);
+        Root<SubCart> root = criteriaQuery.from(SubCart.class);
+        criteriaQuery.select(root);
+        Predicate[] predicates = {
+                criteriaBuilder.equal(root.get("seller").as(Seller.class), seller),
+                criteriaBuilder.equal(root.get("product").as(Product.class), product)
+        };
+        criteriaQuery.where(
+                predicates
+        );
+        Query<SubCart> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
     public void changePrice(Product product, int newPrice, String username) throws NoSuchSellerException {

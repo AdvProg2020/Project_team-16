@@ -97,7 +97,8 @@ public class SellerController extends Controller{
     public List<MicroProduct> getProductsForSeller(String seller) throws UserNotAvailableException {
         List<Product> sellerProducts = sellerManager.viewProducts(seller);
         List<MicroProduct> list = new ArrayList<>();
-        sellerProducts.forEach(product -> list.add(new MicroProduct(product.getName(), product.getId())));
+        if (sellerProducts != null)
+            sellerProducts.forEach(product -> list.add(new MicroProduct(product.getName(), product.getId())));
         return list;
     }
 
@@ -218,7 +219,10 @@ public class SellerController extends Controller{
     private MiniProductPM createMiniProductPM(Product product) {
         List<SellPackagePM> sellPackagePMs = new ArrayList<>();
         product.getPackages().forEach(sellPackage -> {
-            int offPercent = sellPackage.isOnOff()? sellPackage.getOff().getOffPercentage() : 0;
+            int offPercent = 0;
+            if (sellPackage.isOnOff()) {
+                offPercent = sellPackage.getOff().getOffPercentage();
+            }
             sellPackagePMs.add(new SellPackagePM(offPercent,
                     sellPackage.getPrice(),
                     sellPackage.getStock(),

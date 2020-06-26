@@ -64,6 +64,7 @@ public class OffManager {
         off.setOffStatus(OffStatus.EDIT);
         String strRequest = String.format("%s requested to edit %s", editor, changeAttributes);
         Request request = new Request(editor, RequestType.EDIT_OFF,strRequest,changeAttributes);
+        DBManager.save(changeAttributes);
         RequestManager.getInstance().addRequest(request);
         Seller seller = DBManager.load(Seller.class, editor);
         if (seller != null) {
@@ -90,8 +91,35 @@ public class OffManager {
     }
 
     void deleteOff(Off off) {
-        off.getProducts().forEach(product -> deleteOff(product, off.getSeller()));
+        Seller seller = off.getSeller();
+        off.getProducts().forEach(product -> deleteOff(product, seller));
+        seller.getOffs().remove(off);
+        DBManager.save(seller);
+        deleteRequestsContainOff(off);
+        off.setSeller(null);
+        off.setProducts(null);
         DBManager.delete(off);
+    }
+
+    private void deleteRequestsContainOff(Off off) {
+        List<Request> requests = getAllRequests(off);
+        requests.forEach(request -> {
+            request.setOff(null);
+            DBManager.save(request);
+        });
+    }
+
+    private List<Request> getAllRequests(Off off) {
+        Session session = HibernateUtil.getSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Request> criteriaQuery = criteriaBuilder.createQuery(Request.class);
+        Root<Request> root = criteriaQuery.from(Request.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.equal(root.get("off").as(Off.class), off)
+        );
+        Query<Request> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
     public void checkIfThisSellerCreatedTheOff(Off off,String viewer) throws ThisOffDoesNotBelongssToYouException {

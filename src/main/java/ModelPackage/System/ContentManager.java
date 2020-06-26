@@ -59,6 +59,7 @@ public class ContentManager {
     }
 
     void removeAdvertise(Advertise advertise) {
+        advertise.setProduct(null);
         DBManager.delete(advertise);
     }
 }

@@ -19,12 +19,12 @@ public class Off {
     @Id @GeneratedValue(strategy = GenerationType.TABLE)
     private int offId;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "SELLER")
     private Seller seller;
 
     @ElementCollection(targetClass = Product.class)
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "PRODUCTS")
     private List<Product> products;
 

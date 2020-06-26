@@ -18,6 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Data
 public class CategoryManager {
@@ -270,25 +271,26 @@ public class CategoryManager {
     }
 
     private void removeCategory(Category category) {
-        /*List<Category> subCategories = category.getSubCategories();
-        if (!subCategories.isEmpty()){
-            for (Category subCategory : subCategories) {
+        if (!category.getSubCategories().isEmpty())
+            for (Category subCategory : category.getSubCategories()) {
                 removeCategory(subCategory);
             }
-        }
         removeAllProductsIn(category);
+        category.setAllProducts(null);
         Category parent = category.getParent();
-        List<Category> subcategories = parent.getSubCategories();
-        subCategories.remove(category);
-        parent.setSubCategories(subcategories);*/
+        if (parent != null) {
+            parent.getSubCategories().remove(category);
+            DBManager.save(parent);
+        }
+        category.setParent(null);
         DBManager.delete(category);
-        //DBManager.save(parent);
     }
 
     private void removeAllProductsIn(Category category){
         ProductManager productManager = ProductManager.getInstance();
-        for (Product product : category.getAllProducts()) {
-            productManager.deleteProductCategoryOrder(product);
+        List<Product> list = new CopyOnWriteArrayList<>(category.getAllProducts());
+        for (Product product : list) {
+            productManager.deleteProduct(product);
         }
     }
 
