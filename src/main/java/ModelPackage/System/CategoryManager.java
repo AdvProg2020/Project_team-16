@@ -142,7 +142,6 @@ public class CategoryManager {
         }
         product.setSpecialFeatures(features);
         product.setProductStatus(ProductStatus.UNDER_EDIT);
-        /* TODO : send message to seller to edit the product's feature */
     }
 
     private void checkIfThisProductExistInThisCategory(int productId,Category category)

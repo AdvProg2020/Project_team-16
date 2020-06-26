@@ -5,6 +5,9 @@ import javafx.stage.Window;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
+import static View.Sound.*;
+import static View.SoundCenter.play;
+
 public class Notification {
     public static void show(String title, String message, Window window, boolean error){
         Notifications notification = Notifications.create()
@@ -15,8 +18,10 @@ public class Notification {
                 .owner(window);
         if (error){
             notification.showError();
+            play(ERROR);
         } else {
             notification.showInformation();
+            play(SUCCESSFUL);
         }
     }
 }

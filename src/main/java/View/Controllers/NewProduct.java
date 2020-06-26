@@ -203,8 +203,14 @@ public class NewProduct extends BackAbleController {
             String username = cacheData.getUsername();
             try {
                 sellerController.becomeSellerOfExistingProgram(info,username);
+                try {
+                    Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+                    Main.setSceneToStage(back, scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } catch (NoSuchAProductException | UserNotAvailableException e) {
-                e.printStackTrace();
+                Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             }
         }
     }
@@ -250,6 +256,12 @@ public class NewProduct extends BackAbleController {
                 savePics(productId);
                 Notification.show("Successful", "Your Product was Registered Successfully!!!",
                         back.getScene().getWindow(), false);
+                try {
+                    Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+                    Main.setSceneToStage(back, scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } catch (NoSuchACategoryException | UserNotAvailableException | RuntimeException e) {
                 Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             }

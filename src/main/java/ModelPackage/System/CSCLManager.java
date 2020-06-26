@@ -72,18 +72,14 @@ public class CSCLManager {
 
     public void removeProductFromCompany(int productId,int companyId)
             throws NoSuchACompanyException, NoSuchAProductException {
-        // TODO : third exception should be added (NoSuchAProductInCompanyException)
         Company company = getCompanyById(companyId);
         company.getProductsIn().remove(ProductManager.getInstance().findProductById(productId));
-        // TODO : DBManager.save(ProductManager.getInstance().findProductById(productId))
         DBManager.save(company);
     }
 
     public void removeProductFromCompany(Product product){
-        // TODO : product.getCompanyClass is null!
         Company company = product.getCompanyClass();
         company.getProductsIn().remove(product);
-        // TODO : DBManager.save(ProductManager.getInstance().findProductById(productId))
         DBManager.save(company);
     }
 

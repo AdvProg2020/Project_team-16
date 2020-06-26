@@ -3,12 +3,10 @@ package View.Controllers;
 import ModelPackage.System.SortType;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
 import ModelPackage.System.exeption.filters.InvalidFilterException;
-import View.FilterPackage;
-import View.Main;
+import View.*;
 import View.PrintModels.CategoryPM;
 import View.PrintModels.MiniProductPM;
 import View.PrintModels.OffProductPM;
-import View.SortPackage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXToggleButton;
@@ -87,6 +85,7 @@ public class ProductsPage extends BackAbleController {
         maxPrice.setOnMouseReleased(productGetter);
         minPrice.setOnMouseReleased(productGetter);
         offOnly.setOnMouseClicked(productGetter);
+        offOnly.setOnAction(event -> SoundCenter.play(Sound.SWITCH));
         ADOrder.selectedToggleProperty().addListener(observable -> productGetter.handle(null));
         type.selectedToggleProperty().addListener(observable -> productGetter.handle(null));
     }
@@ -226,9 +225,7 @@ public class ProductsPage extends BackAbleController {
     }
 
     private void binds() {
-        cartButt.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not().and(
-                Bindings.isEmpty(cacheData.roleProperty).not()
-        ));
+        cartButt.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not());
         minPrice.valueProperty().addListener((v, oldValue, newValue) -> {
             if (newValue.doubleValue() > maxPrice.getValue()) {
                 maxPrice.setValue(newValue.doubleValue());
