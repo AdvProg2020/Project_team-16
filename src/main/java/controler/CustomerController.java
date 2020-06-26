@@ -33,13 +33,16 @@ public class CustomerController extends Controller {
         return customerController;
     }
 
-    public CartPM viewCart(String username) throws UserNotAvailableException, NoSuchSellerException {
+    public CartPM viewCart(String username) throws UserNotAvailableException {
         Customer customer = (Customer)accountManager.getUserByUsername(username);
         Cart cart = customer.getCart();
         ArrayList<InCartPM> inCartPMS = new ArrayList<>();
 
         for (SubCart subCart : cart.getSubCarts()) {
-            inCartPMS.add(createInCartPM(subCart));
+            InCartPM inCartPM = createInCartPM(subCart);
+            if (inCartPM != null) {
+                inCartPMS.add(inCartPM);
+            }
         }
 
         return new CartPM(
@@ -48,22 +51,27 @@ public class CustomerController extends Controller {
         );
     }
 
-    private InCartPM createInCartPM(SubCart subCart) throws NoSuchSellerException {
+    private InCartPM createInCartPM(SubCart subCart) {
         Product product = subCart.getProduct();
         MiniProductPM miniProductPM = createMiniProductPMFrom(product);
 
-        return new InCartPM(
-                miniProductPM,
-                subCart.getSeller().getUsername(),
-                findPriceForSpecialSeller(subCart.getSeller(), product) * subCart.getAmount(),
-                (int) findOffPriceFor(subCart),
-                subCart.getAmount()
-        );
+        try {
+            int price = findPriceForSpecialSeller(subCart.getSeller(), product);
+            return new InCartPM(
+                    miniProductPM,
+                    subCart.getSeller().getUsername(),
+                    price,
+                    findOffPriceFor(subCart, price),
+                    subCart.getAmount()
+            );
+        } catch (NoSuchSellerException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public List<InCartPM> showProducts(String username) throws UserNotAvailableException, NoSuchSellerException {
+    public List<InCartPM> showProducts(String username) throws UserNotAvailableException {
         ArrayList<InCartPM> inCartPMS = new ArrayList<>();
-
         Customer customer = DBManager.load(Customer.class,username);
         if (customer == null) {
             throw new UserNotAvailableException();
@@ -73,7 +81,6 @@ public class CustomerController extends Controller {
         for (SubCart subCart : cart.getSubCarts()) {
             inCartPMS.add(createInCartPM(subCart));
         }
-
         return inCartPMS;
     }
 
@@ -90,13 +97,21 @@ public class CustomerController extends Controller {
         cartManager.changeProductAmountInCart(cart, id, sellerId, change);
     }
 
+    public void deleteProductFromCart(String username, int id)
+            throws UserNotAvailableException, NoSuchAProductInCart {
+        Customer customer = DBManager.load(Customer.class, username);
+        if (customer == null) {
+            throw new UserNotAvailableException();
+        }
+        cartManager.deleteProductFromCart(customer.getCart(), id);
+    }
+
     public long showTotalPrice(String username) throws UserNotAvailableException {
         Customer customer = DBManager.load(Customer.class,username);
         if (customer == null) {
             throw new UserNotAvailableException();
         }
         Cart cart = customer.getCart();
-
         return cart.getTotalPrice();
     }
 
@@ -177,10 +192,10 @@ public class CustomerController extends Controller {
         return orderProductPM;
     }
 
-    private int findOffPriceFor(SubCart subCart) throws NoSuchSellerException {
+    private int findOffPriceFor(SubCart subCart, int price) throws NoSuchSellerException {
         Off off = subCart.getProduct().findPackageBySeller(subCart.getSeller().getUsername()).getOff();
         if (off != null) {
-            return off.getOffPercentage();
+            return price * (100 - off.getOffPercentage()) / 100;
         }
         else return 0;
     }

@@ -22,97 +22,52 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
 public class Cart extends BackAbleController {
-    // TODO: 6/20/2020 Fu***** Full Of Problems !!!!!!!!!!!!!!!!!!!!!!! Need A ReProgram
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
+
     public Label totalPrice;
+
     public JFXButton purchase;
+
+    public TableView<InCartPM> tableView;
     public TableColumn<InCartPM, MiniProductPM> product;
     public TableColumn<InCartPM, Integer> price;
     public TableColumn<InCartPM, Integer> afterOff;
-    public TableView<InCartPM> tableView;
+    public TableColumn<InCartPM, Integer> totalCol;
+    public TableColumn<InCartPM, Integer> amount;
+
     public Button goToProduct;
     public Button delete;
     public Button increase;
     public Button decrease;
-    public TableColumn<InCartPM, Integer> amount;
 
 
-    private CustomerController customerController;
-    private CacheData cacheData;
-    private CartPM cartPM;
+    private static CustomerController customerController = CustomerController.getInstance();
+    private CacheData cacheData = CacheData.getInstance();
 
     @FXML
-    public void initialize() {
-        customerController = CustomerController.getInstance();
-        cacheData = CacheData.getInstance();
-        buttonInitialize();
-        setDisabilityOfButtons();
-        loadCartPM();
-        totalPrice.setText(Long.toString(cartPM.getTotalPrice()));
-        loadTable();
+    private void initialize() {
+        buttons();
+        binds();
+        load();
     }
 
-    private void buttonInitialize() {
-        close.setOnAction(e -> handleClose());
-        minimize.setOnAction(e -> Main.minimize());
+    private void buttons() {
+        close.setOnAction(e -> ((Stage) close.getScene().getWindow()).close());
+        minimize.setOnAction(e -> ((Stage) close.getScene().getWindow()).setIconified(true));
         back.setOnAction(e -> handleBackButton());
-        purchase.setOnAction(e -> handlePurchaseButton());
-        delete.setOnAction(e -> handleDeleteButton());
-        increase.setOnAction(e -> handleIncreaseDecreaseButton(1));
-        decrease.setOnAction(e -> handleIncreaseDecreaseButton(-1));
-        goToProduct.setOnAction(e -> handleGoToProductButton());
-    }
-
-    private void handleClose() {
-
-    }
-
-    private void setDisabilityOfButtons() {
-        goToProduct.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
-        increase.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
-        decrease.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
-        delete.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
-    }
-
-    private void handleGoToProductButton() {
-        try {
-            Main.setRoot("ProductDigest");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void handleIncreaseDecreaseButton(int change) {
-        InCartPM purchase = tableView.getSelectionModel().getSelectedItem();
-        try {
-            customerController.changeAmount(cacheData.getUsername(), purchase.getProduct().getId(), change);
-            tableView.refresh();
-        } catch (UserNotAvailableException | NotEnoughAmountOfProductException |
-                NoSuchSellerException | NoSuchAProductException | NoSuchAProductInCart e) {
-            new OopsAlert().show(e.getMessage());
-        }
-    }
-
-    private void handleDeleteButton() {
-        ObservableList<InCartPM> purchase = tableView.getItems();
-        ObservableList<InCartPM> selected = tableView.getSelectionModel().getSelectedItems();
-        selected.forEach(purchase::remove);
-        // TODO: 6/20/2020
-        Notification.show(null, "Items were Deleted Successfully!!!", back.getScene().getWindow(), false);
-    }
-
-    private void loadCartPM() {
-        try {
-            cartPM = customerController.viewCart(cacheData.getUsername());
-        } catch (UserNotAvailableException | NoSuchSellerException e) {
-            e.printStackTrace();
-        }
+        purchase.setOnAction(e -> purchase());
+        delete.setOnAction(e -> delete());
+        increase.setOnAction(e -> increaseDecrease(1));
+        decrease.setOnAction(e -> increaseDecrease(-1));
+        goToProduct.setOnAction(e -> viewProduct());
     }
 
     private void handleBackButton() {
@@ -124,7 +79,23 @@ public class Cart extends BackAbleController {
         }
     }
 
-    private void handlePurchaseButton() {
+    private void binds() {
+        goToProduct.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+        increase.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+        decrease.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+        delete.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+    }
+
+    private void load() {
+        loadTable();
+        loadTotalPrice();
+    }
+
+    private void loadTotalPrice() {
+        totalPrice.setText("" + tableView.getItems().stream().mapToInt(InCartPM::getTotal).sum() + "$");
+    }
+
+    private void purchase() {
         try {
             Scene scene = new Scene(Main.loadFXML("Purchase", backForForward("Cart")));
             Main.setSceneToStage(back, scene);
@@ -133,17 +104,70 @@ public class Cart extends BackAbleController {
         }
     }
 
+    private void delete() {
+        String username = cacheData.getUsername();
+        InCartPM inCartPM = tableView.getSelectionModel().getSelectedItem();
+        int productId = inCartPM.getProduct().getId();
+        try {
+            customerController.deleteProductFromCart(username, productId);
+            tableView.getItems().remove(inCartPM);
+            tableView.refresh();
+            loadTotalPrice();
+        } catch (UserNotAvailableException | NoSuchAProductInCart e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
+        }
+    }
+
+    private void viewProduct() {
+        InCartPM inCartPM = tableView.getSelectionModel().getSelectedItem();
+        int productId = inCartPM.getProduct().getId();
+        cacheData.setProductId(productId);
+        try {
+            Scene scene = new Scene(Main.loadFXML("ProductDigest", backForForward("Cart")));
+            Main.setSceneToStage(new Stage(StageStyle.UNDECORATED), scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void increaseDecrease(int change) {
+        String username = cacheData.getUsername();
+        InCartPM inCartPM = tableView.getSelectionModel().getSelectedItem();
+        int productId = inCartPM.getProduct().getId();
+        try {
+            customerController.changeAmount(username, productId, change);
+            int current = inCartPM.getAmount();
+            int tobe = current + change;
+            if (tobe == 0) {
+                tableView.getItems().remove(inCartPM);
+                tableView.refresh();
+            } else {
+                inCartPM.setAmount(tobe);
+                tableView.refresh();
+            }
+            loadTotalPrice();
+        } catch (UserNotAvailableException | NoSuchAProductInCart | NoSuchAProductException | NoSuchSellerException | NotEnoughAmountOfProductException e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
+        }
+    }
+
     private void loadTable() {
         product.setCellValueFactory(new PropertyValueFactory<>("product"));
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
         afterOff.setCellValueFactory(new PropertyValueFactory<>("offPrice"));
         amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        tableView.setItems(getEverySubCartInformation());
+        totalCol.setCellValueFactory(new PropertyValueFactory<>("total"));
+        tableView.setItems(loadTableData());
+        tableView.setPlaceholder(new Label("No Product In Cart :("));
     }
 
-    private ObservableList<InCartPM> getEverySubCartInformation() {
-        ObservableList<InCartPM> purchases = FXCollections.observableArrayList();
-        purchases.addAll(cartPM.getPurchases());
-        return purchases;
+    private ObservableList<InCartPM> loadTableData() {
+        try {
+            CartPM pm = customerController.viewCart(cacheData.getUsername());
+            return FXCollections.observableArrayList(pm.getPurchases());
+        } catch (UserNotAvailableException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package View;
 
+import ModelPackage.System.TimeMachine;
 import ModelPackage.System.database.HibernateUtil;
 import View.Controllers.BackAbleController;
 import controler.AccountController;
@@ -27,6 +28,8 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         HibernateUtil.startUtil();
+        TimeMachine timeMachine = new TimeMachine();
+        //new Thread(timeMachine).start();
         try {
             launch(args);
         }catch (Exception e){

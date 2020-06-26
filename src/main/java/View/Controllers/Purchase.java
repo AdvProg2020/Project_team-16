@@ -185,33 +185,9 @@ public class Purchase extends BackAbleController {
     private void loadCart() {
         try {
             cartPM = customerController.viewCart(cacheData.getUsername());
-        } catch (UserNotAvailableException | NoSuchSellerException e) {
+        } catch (UserNotAvailableException e) {
             new OopsAlert().show(e.getMessage());
         }
-        //cartPM = getTestCart();
-    }
-
-    private CartPM getTestCart() {
-        ArrayList<InCartPM> purchases = new ArrayList<>();
-        purchases.add(new InCartPM(
-                new MiniProductPM(
-                        "dullForKimmi",
-                        123,
-                        "Clothes",
-                        "Addidas",
-                        1.26,
-                        "Hey thats good!!!",
-                        null),
-                "12",
-                200000,
-                46,
-                12
-        ));
-
-        return new CartPM(
-               150000,
-                purchases
-        );
     }
 
     private void initializeButtons() {

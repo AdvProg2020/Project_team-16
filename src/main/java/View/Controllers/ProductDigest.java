@@ -119,7 +119,7 @@ public class ProductDigest extends BackAbleController {
     private void handleAdd() {
         String role = cacheData.getRole();
         String sellerId = sellerBox.getSelectionModel().getSelectedItem().getSellerUsername();
-        if (role.equals("customer")) {
+        if (role.equalsIgnoreCase("customer")) {
             String[] info = {cacheData.getUsername(), "" + id, sellerId, "1"};
             try {
                 productController.addToCart(info);
@@ -134,13 +134,12 @@ public class ProductDigest extends BackAbleController {
     }
 
     private void gotoCompare() {
-        /*try {
-            Scene scene = new Scene(Main.loadFXML("Compare",backForForward("ProductDigest")));
+        try {
+            Scene scene = new Scene(Main.loadFXML("ComparePage", backForForward("ProductDigest")));
             Main.setSceneToStage(back,scene);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
-        // TODO: 6/25/2020
+        }
     }
 
     private void photoButtons() {

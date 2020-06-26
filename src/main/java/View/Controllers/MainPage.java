@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.controlsfx.control.PopOver;
+import org.jgroups.protocols.MAKE_BATCH;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -122,9 +123,7 @@ public class MainPage extends BackAbleController {
     }
 
     private void binds() {
-        cart.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not().and(
-                Bindings.isEmpty(cacheData.roleProperty).not()
-        ));
+        cart.disableProperty().bind(cacheData.roleProperty.isEqualTo("Customer").not());
     }
 
     private void buttons() {
@@ -145,9 +144,7 @@ public class MainPage extends BackAbleController {
     private void gotoCart() {
         try {
             Scene scene = new Scene(Main.loadFXML("Cart", "MainPage"));
-            Stage stage = (Stage) cart.getScene().getWindow();
-            stage.setScene(scene);
-            Main.moveSceneOnMouse(scene, stage);
+            Main.setSceneToStage(cart, scene);
         } catch (IOException e) {
             show("Error", e.getMessage(), cart.getScene().getWindow(), true);
             e.printStackTrace();
