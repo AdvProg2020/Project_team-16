@@ -29,7 +29,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         HibernateUtil.startUtil();
         TimeMachine timeMachine = new TimeMachine();
-        //new Thread(timeMachine).start();
+        new Thread(timeMachine).start();
         try {
             launch(args);
         }catch (Exception e){
@@ -40,7 +40,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        //SoundCenter.background();
+        SoundCenter.background();
         window = stage;
         loadLogo();
         try {
