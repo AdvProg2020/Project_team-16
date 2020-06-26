@@ -2,10 +2,7 @@ package ModelPackage.System;
 
 import ModelPackage.Log.SellLog;
 import ModelPackage.Off.DiscountCode;
-import ModelPackage.Product.Comment;
-import ModelPackage.Product.Company;
-import ModelPackage.Product.NoSuchSellerException;
-import ModelPackage.Product.Product;
+import ModelPackage.Product.*;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.clcsmanager.NoSuchACompanyException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
@@ -173,9 +170,9 @@ public class FakeDBManager extends MockUp<DBManager> {
     }
 
     private <T> T handleLoadSeller(Class<T> type, Serializable serializable) throws NoSuchSellerException {
-        if (serializable.equals("ali110"))
+        if (serializable.equals("ali110") || serializable.equals("marmofayezi"))
             return type.cast(firstSeller);
-        else throw new NoSuchSellerException();
+        return null;
     }
 
     @Mock

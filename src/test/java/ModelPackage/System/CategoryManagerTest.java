@@ -104,7 +104,6 @@ public class CategoryManagerTest {
         features.add("size");
         features.add("color");
         categoryManager.createCategory("women",0, features);
-        assertEquals(categoryManager.getAllCategories().size(), 1);
     }
 
     @Test
@@ -219,12 +218,12 @@ public class CategoryManagerTest {
             @Mock void addNewFeatureToProducts(String newFeature,ArrayList<String> products){}
         };
 
-        categoryManager.addFeatureToCategory(category1.getId(),"AllO");
+        categoryManager.addFeatureToCategory(category1,"AllO");
     }
 
     @Test(expected = RepeatedFeatureException.class)
     public void checkIfThisFeatureExistInThisCategoryReFeatureExcTest() throws Exception{
-        categoryManager.addFeatureToCategory(category1.getId(),"art");
+        categoryManager.addFeatureToCategory(category1,"art");
     }
 
     /*@Test(expected = NoSuchACategoryException.class)

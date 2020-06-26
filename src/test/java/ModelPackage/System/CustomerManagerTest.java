@@ -12,6 +12,7 @@ import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.NotEnoughMoneyException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
 import mockit.Expectations;
@@ -69,7 +70,7 @@ public class CustomerManagerTest {
 
         SoldProductSellerMap productSeller = new SoldProductSellerMap();
         productSeller.setSoldProduct(new SoldProduct());
-        productSeller.setSeller(marmof);
+        productSeller.setSeller(marmof.getUsername());
 
         ArrayList<SoldProductSellerMap> productSellerMaps = new ArrayList<>();
         productSellerMaps.add(productSeller);
@@ -172,7 +173,7 @@ public class CustomerManagerTest {
 
     @Test
     public void purchase() throws NotEnoughAmountOfProductException, NoSuchAProductException,
-            NoSuchSellerException {
+            NoSuchSellerException, NoSuchAPackageException {
         new MockUp<CustomerManager>(){
             @Mock
             public void checkIfThereIsEnoughAmount(Customer customer){}
@@ -208,14 +209,14 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void purchaseForCustomer() {
+    public void purchaseForCustomer() throws NoSuchSellerException, NoSuchAPackageException {
         customerManager.purchaseForCustomer(hatam, customerInformation, discountCode);
 
         assertEquals(2000, hatam.getBalance());
     }
 
     @Test
-    public void getTotalPrice() {
+    public void getTotalPrice() throws NoSuchAPackageException {
         long actual = customerManager.getTotalPrice(discountCode, hatam);
         long expected = 18000;
         assertEquals(expected, actual);
@@ -247,7 +248,7 @@ public class CustomerManagerTest {
     public void addPurchaseLogTest() {
         SoldProductSellerMap productSeller = new SoldProductSellerMap();
         productSeller.setSoldProduct(new SoldProduct());
-        productSeller.setSeller(marmof);
+        productSeller.setSeller(marmof.getUsername());
 
         ArrayList<SoldProductSellerMap> productSellerMaps = new ArrayList<>();
         productSellerMaps.add(productSeller);

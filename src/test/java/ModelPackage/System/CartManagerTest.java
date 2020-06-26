@@ -9,6 +9,7 @@ import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.cart.NotTheSellerException;
 import ModelPackage.System.exeption.cart.ProductExistedInCart;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
 import mockit.*;
@@ -82,7 +83,7 @@ public class CartManagerTest {
     @Test
     public void addProductToCartTest(@Mocked ProductManager productManager)
             throws ProductExistedInCart, NotEnoughAmountOfProductException,
-            NoSuchAProductException, UserNotAvailableException, NoSuchSellerException, NotTheSellerException {
+            NoSuchAProductException, UserNotAvailableException, NoSuchSellerException, NotTheSellerException, NoSuchAPackageException {
         new Expectations() {{
             productManager.findProductById(2);
             result = product1;
@@ -98,7 +99,7 @@ public class CartManagerTest {
     @Test
     public void changeProductAmount_deleteSubCartTest(@Mocked ProductManager productManager)
             throws NoSuchAProductInCart, NoSuchAProductException, NoSuchSellerException,
-            NotEnoughAmountOfProductException {
+            NotEnoughAmountOfProductException, NoSuchAPackageException {
         new Expectations(){{
             cartManager.getSubCartByProductId(cart, 1);
             result = subCart;
@@ -109,7 +110,7 @@ public class CartManagerTest {
         assertEquals(cart.getSubCarts().size(), 0);
     }
     @Test
-    public void changeProductAmountInCartTest(@Mocked ProductManager productManager) throws NoSuchAProductInCart, NoSuchAProductException, NoSuchSellerException, NotEnoughAmountOfProductException {
+    public void changeProductAmountInCartTest(@Mocked ProductManager productManager) throws NoSuchAProductInCart, NoSuchAProductException, NoSuchSellerException, NotEnoughAmountOfProductException, NoSuchAPackageException {
         new Expectations(){{
             cartManager.getSubCartByProductId(cart, 1);
             result = subCart;
@@ -137,13 +138,13 @@ public class CartManagerTest {
     @Test(expected = ProductExistedInCart.class)
     public void addProductToCartExistedProductTest() throws ProductExistedInCart,
             NotEnoughAmountOfProductException, NoSuchAProductException,
-            UserNotAvailableException, NoSuchSellerException, NotTheSellerException {
+            UserNotAvailableException, NoSuchSellerException, NotTheSellerException, NoSuchAPackageException {
         cartManager.addProductToCart(cart, "ali110", 1, 2);
     }
     @Test(expected = NotEnoughAmountOfProductException.class)
     public void addProductToCartNotEnoughAmountExcTest(@Mocked ProductManager productManager)
             throws NoSuchAProductException, ProductExistedInCart,
-            UserNotAvailableException, NotEnoughAmountOfProductException, NoSuchSellerException, NotTheSellerException {
+            UserNotAvailableException, NotEnoughAmountOfProductException, NoSuchSellerException, NotTheSellerException, NoSuchAPackageException {
         cart.getSubCarts().remove(subCart);
         new Expectations(){{
              productManager.findProductById(1);
@@ -154,7 +155,7 @@ public class CartManagerTest {
     @Test(expected = NoSuchAProductException.class)
     public void addProductToCartNoSuchProductExcTest(@Mocked ProductManager productManager) throws ProductExistedInCart,
             NotEnoughAmountOfProductException, NoSuchAProductException, UserNotAvailableException,
-            NoSuchSellerException, NotTheSellerException {
+            NoSuchSellerException, NotTheSellerException, NoSuchAPackageException {
         new Expectations(){{
             DBManager.load(Product.class, 8);
             result = null;
@@ -165,7 +166,7 @@ public class CartManagerTest {
     public void addProductToCartUserNotAvailableExcTest(@Mocked ProductManager productManager, @Mocked AccountManager accountManager)
             throws NoSuchAProductException, ProductExistedInCart,
             UserNotAvailableException, NotEnoughAmountOfProductException,
-            NoSuchSellerException, NotTheSellerException {
+            NoSuchSellerException, NotTheSellerException, NoSuchAPackageException {
 
         new Expectations(){{
             productManager.findProductById(2);

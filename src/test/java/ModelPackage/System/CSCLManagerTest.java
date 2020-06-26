@@ -69,7 +69,7 @@ public class CSCLManagerTest {
         SoldProduct soldProduct = new SoldProduct();
         soldProduct.setSourceId(1);
         soldProductSellerMap.setSoldProduct(soldProduct);
-        soldProductSellerMap.setSeller(sajad);
+        soldProductSellerMap.setSeller(sajad.getUsername());
         List<SoldProductSellerMap> soldProductSellerMaps = new ArrayList<>();
         soldProductSellerMaps.add(soldProductSellerMap);
 
