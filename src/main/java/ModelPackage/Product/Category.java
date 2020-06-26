@@ -50,8 +50,8 @@ public class Category {
     public Category(String name, Category parent) {
         this.name = name;
         this.parent = parent;
-        this.specialFeatures = new ArrayList<String>();
-        this.subCategories  = new ArrayList<Category>();
+        this.specialFeatures = new ArrayList<>();
+        this.subCategories  = new ArrayList<>();
         this.allProducts = new ArrayList<>();
     }
 
