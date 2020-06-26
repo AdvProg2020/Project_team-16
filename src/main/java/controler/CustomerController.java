@@ -16,6 +16,7 @@ import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
 import ModelPackage.System.exeption.clcsmanager.NotABuyer;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
 import View.PrintModels.*;
@@ -87,7 +88,7 @@ public class CustomerController extends Controller {
     public void changeAmount(String username, int id, int change)
             throws UserNotAvailableException, NoSuchAProductInCart,
             NoSuchAProductException, NoSuchSellerException,
-            NotEnoughAmountOfProductException {
+            NotEnoughAmountOfProductException, NoSuchAPackageException {
         Customer customer = DBManager.load(Customer.class,username);
         if (customer == null) {
             throw new UserNotAvailableException();
@@ -116,15 +117,20 @@ public class CustomerController extends Controller {
     }
 
     public void purchase(String username, String[] customerInfo, String disCode)
-            throws NoSuchADiscountCodeException, NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException {
+            throws NoSuchADiscountCodeException, NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException, NoSuchAPackageException {
         CustomerInformation customerInformation = new CustomerInformation(
                 customerInfo[0],
                 customerInfo[1],
                 customerInfo[2],
                 customerInfo[3]
         );
-        DiscountCode discountCode = discountManager.getDiscountByCode(disCode);
 
+        DiscountCode discountCode;
+        if (disCode.isBlank()) {
+            discountCode = null;
+        } else {
+            discountCode = discountManager.getDiscountByCode(disCode);
+        }
         customerManager.purchase(
                 username,
                 customerInformation,
@@ -132,7 +138,7 @@ public class CustomerController extends Controller {
         );
     }
 
-    public long getPurchaseTotalPrice(String discode, String username) throws NoSuchADiscountCodeException, UserNotAvailableException, NoSuchSellerException {
+    public long getPurchaseTotalPrice(String discode, String username) throws NoSuchADiscountCodeException, UserNotAvailableException, NoSuchSellerException, NoSuchAPackageException {
         DiscountCode discountCode = discountManager.getDiscountByCode(discode);
         Customer customer = (Customer) accountManager.getUserByUsername(username);
         return customerManager.getTotalPrice(discountCode, customer);

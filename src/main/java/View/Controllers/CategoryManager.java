@@ -27,9 +27,9 @@ public class CategoryManager extends BackAbleController {
     public JFXButton back;
     public JFXButton minimize;
     public JFXButton close;
-    public Label categoryName;
+    public TextField categoryName;
+    public JFXButton deleteCategory;
     public JFXButton editName;
-    public Label productCount;
     public ListView<String> featureList;
     public TextField newFeature;
     public Button newFeatureButt;
@@ -44,6 +44,7 @@ public class CategoryManager extends BackAbleController {
 
     private static ManagerController managerController = ManagerController.getInstance();
     private static SellerController sellerController = SellerController.getInstance();
+
 
     @FXML
     public void initialize() {
@@ -73,6 +74,16 @@ public class CategoryManager extends BackAbleController {
                 sendCategoryCreationRequest();
             }
         });
+        deleteCategory.setOnAction(event -> deleteCategoryAction());
+    }
+
+    private void deleteCategoryAction() {
+        int id = categories.getSelectionModel().getSelectedItem().getId();
+        try {
+            managerController.removeCategory(id);
+        } catch (NoSuchACategoryException e) {
+            Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
+        }
     }
 
     private void sendCategoryCreationRequest() {
@@ -130,14 +141,14 @@ public class CategoryManager extends BackAbleController {
     }
 
     private void sendEditNameRequest() {
-        // TODO: 6/13/2020
-        String newName = "";//todo : from dialog
+        String newName = categoryName.getText();
         CategoryEditAttribute attribute = new CategoryEditAttribute();
         attribute.setName(newName);
         int id = categories.getSelectionModel().getSelectedItem().getId();
         try {
             managerController.editCategory(id, attribute);
-            categoryName.setText(newName);
+            categoryName.setPromptText(newName);
+            reset();
         } catch (RepeatedNameInParentCategoryException | NoSuchACategoryException | RepeatedFeatureException | NoSuchAFeatureInCategoryException e) {
             e.printStackTrace();
         }
@@ -147,14 +158,15 @@ public class CategoryManager extends BackAbleController {
         removeFeatureButt.disableProperty().bind(Bindings.isEmpty(featureList.getSelectionModel().getSelectedItems()));
         newFeatureButt.disableProperty().bind(Bindings.isEmpty(newFeature.textProperty()));
         addFeatureCr.disableProperty().bind(Bindings.isEmpty(featureInput.textProperty()));
-        editName.disableProperty().bind(Bindings.isEmpty(categories.getSelectionModel().getSelectedItems()));
+        editName.disableProperty().bind(Bindings.isEmpty(categoryName.textProperty())
+                .or(Bindings.isEmpty(categories.getSelectionModel().getSelectedItems())));
         createCategory.disableProperty().bind(crParent.valueProperty().isNull().or(Bindings.isEmpty(featureListCr.getItems())));
     }
 
     private void listeners() {
         categories.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             if (newValue != null) {
-                categoryName.setText(newValue.getName());
+                categoryName.setPromptText(newValue.getName());
                 fillFeatureTable(newValue.getId());
             }
         });
@@ -186,7 +198,7 @@ public class CategoryManager extends BackAbleController {
         categories.getItems().clear();
         featureList.getItems().clear();
         featureListCr.getItems().clear();
-        categoryName.setText("");
+        categoryName.setPromptText("");
         loadList();
     }
 }

@@ -4,6 +4,7 @@ import ModelPackage.Product.NoSuchSellerException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.CacheData;
 import View.Main;
@@ -146,7 +147,7 @@ public class Cart extends BackAbleController {
                 tableView.refresh();
             }
             loadTotalPrice();
-        } catch (UserNotAvailableException | NoSuchAProductInCart | NoSuchAProductException | NoSuchSellerException | NotEnoughAmountOfProductException e) {
+        } catch (UserNotAvailableException | NoSuchAProductInCart | NoSuchAProductException | NoSuchSellerException | NotEnoughAmountOfProductException | NoSuchAPackageException e) {
             Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
         }
     }

@@ -10,6 +10,7 @@ import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.NotEnoughMoneyException;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
 
@@ -47,24 +48,30 @@ public class CustomerManager {
     }
 
     public void purchase(String username, CustomerInformation customerInformation, DiscountCode discountCode)
-            throws NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException {
+            throws NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException, NoSuchAPackageException {
         Customer customer = DBManager.load(Customer.class, username);
 
+        Cart cart = customer.getCart();
         checkIfThereIsEnoughAmount(customer);
-
         purchaseForCustomer(customer, customerInformation, discountCode);
-
-        sellerManager.getMoneyFromSale(customer.getCart());
+        sellerManager.getMoneyFromSale(cart);
 
         if (discountCode != null) {
-            csclManager.createPurchaseLog(customer.getCart(), discountCode.getOffPercentage(),customer);
+            csclManager.createPurchaseLog(cart, discountCode.getOffPercentage(), customer);
         } else {
-            csclManager.createPurchaseLog(customer.getCart(), 0,customer);
+            csclManager.createPurchaseLog(cart, 0, customer);
         }
-
+        String name = customer.getUsername();
+        cart.getSubCarts().forEach(subCart -> {
+            try {
+                csclManager.createSellLog(subCart, name);
+            } catch (NoSuchAPackageException e) {
+                e.printStackTrace();
+            }
+        });
         productChangeInPurchase(customer);
-
         DBManager.save(customer);
+        csclManager.emptyCart(cart);
     }
 
     public void checkIfThereIsEnoughAmount(Customer customer) throws NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException {
@@ -79,7 +86,7 @@ public class CustomerManager {
         }
     }
 
-    public void purchaseForCustomer(Customer customer, CustomerInformation customerInformation, DiscountCode discountCode) throws NoSuchSellerException {
+    public void purchaseForCustomer(Customer customer, CustomerInformation customerInformation, DiscountCode discountCode) throws NoSuchSellerException, NoSuchAPackageException {
         long totalPrice = getTotalPrice(discountCode, customer);
 
         long difference = totalPrice - customer.getBalance();
@@ -102,7 +109,7 @@ public class CustomerManager {
         }
     }
 
-    public long getTotalPrice(DiscountCode discountCode, Customer customer) throws NoSuchSellerException {
+    public long getTotalPrice(DiscountCode discountCode, Customer customer) throws NoSuchAPackageException {
         Cart cart = customer.getCart();
         long totalPrice = 0;
 

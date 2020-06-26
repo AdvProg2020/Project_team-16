@@ -83,7 +83,7 @@ public class SellerManager {
         return sellers;
     }
 
-    public void getMoneyFromSale(Cart cart) throws NoSuchSellerException {
+    public void getMoneyFromSale(Cart cart) throws NoSuchAPackageException {
         Seller seller;
         int off;
         long price;

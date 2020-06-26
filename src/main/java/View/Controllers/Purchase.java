@@ -4,6 +4,7 @@ import ModelPackage.Product.NoSuchSellerException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import View.CacheData;
 import View.Main;
@@ -224,7 +225,7 @@ public class Purchase extends BackAbleController {
     private void updateTotalPrice() {
         try {
             totalPrice.setText(String.valueOf(customerController.getPurchaseTotalPrice(selectedDisCode, cacheData.getUsername())));
-        } catch (NoSuchADiscountCodeException | UserNotAvailableException | NoSuchSellerException e) {
+        } catch (NoSuchADiscountCodeException | UserNotAvailableException | NoSuchSellerException | NoSuchAPackageException e) {
             e.printStackTrace();
         }
     }
@@ -245,8 +246,7 @@ public class Purchase extends BackAbleController {
             try {
                 customerController.purchase(cacheData.getUsername(), makeCustomerInformation(), selectedDisCode);
                 reset();
-            } catch (NoSuchADiscountCodeException | NotEnoughAmountOfProductException |
-                    NoSuchAProductException | NoSuchSellerException e) {
+            } catch (NoSuchADiscountCodeException | NotEnoughAmountOfProductException | NoSuchAProductException | NoSuchSellerException | NoSuchAPackageException e) {
                 e.printStackTrace();
             }
         }

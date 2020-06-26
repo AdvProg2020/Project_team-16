@@ -15,6 +15,7 @@ import ModelPackage.System.exeption.clcsmanager.NoSuchALogException;
 import ModelPackage.System.exeption.clcsmanager.NotABuyer;
 import ModelPackage.System.exeption.clcsmanager.YouAreNotASellerException;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.*;
 import lombok.Data;
@@ -107,31 +108,50 @@ public class CSCLManager {
         ProductManager.getInstance().assignAScore(productId,SCORE);
     }
 
-    public void createSellLog(SubCart subCart, String buyerId, int discount) throws NoSuchSellerException {
+    public void createSellLog(SubCart subCart, String buyerId) throws NoSuchAPackageException {
         Product product = subCart.getProduct();
         int moneyGotten = findPrice(subCart);
         User user = DBManager.load(User.class,buyerId);
         SoldProduct soldProduct = new SoldProduct();
         soldProduct.setSourceId(product.getId());
         soldProduct.setSoldPrice(moneyGotten);
+        int discount = getOffPercent(subCart);
         SellLog log = new SellLog(soldProduct,moneyGotten,discount,user,new Date(),DeliveryStatus.DEPENDING);
         DBManager.save(soldProduct);
         SellerManager.getInstance().addASellLog(log,subCart.getSeller());
     }
 
-    public void createPurchaseLog(Cart cart, int discount,Customer customer) throws NoSuchSellerException {
+    public void emptyCart(Cart cart) {
+        cart.setSubCarts(new ArrayList<>());
+        DBManager.save(cart);
+    }
+
+    private int getOffPercent(SubCart subCart) {
+        try {
+            SellPackage sellPackage = subCart.getSeller().findPackageByProductId(subCart.getProduct().getId());
+            return sellPackage.getOff().getOffPercentage();
+        } catch (NoSuchAPackageException e) {
+            return 0;
+        }
+    }
+
+    public void createPurchaseLog(Cart cart, int discount, Customer customer) {
         List<SoldProductSellerMap> map = new ArrayList<>();
         int pricePaid = 0;
         for (SubCart subCart : cart.getSubCarts()) {
             SoldProduct soldProduct = new SoldProduct();
             soldProduct.setSourceId(subCart.getProduct().getId());
-            int price = findPrice(subCart);
-            soldProduct.setSoldPrice(price);
-            pricePaid += price*subCart.getAmount();
-            SoldProductSellerMap toAdd = new SoldProductSellerMap();
-            toAdd.setSeller(subCart.getSeller());
-            toAdd.setSoldProduct(soldProduct);
-            map.add(toAdd);
+            try {
+                int price = findPrice(subCart);
+                soldProduct.setSoldPrice(price);
+                pricePaid += price * subCart.getAmount();
+                SoldProductSellerMap toAdd = new SoldProductSellerMap();
+                toAdd.setSeller(subCart.getSeller());
+                toAdd.setSoldProduct(soldProduct);
+                map.add(toAdd);
+            } catch (NoSuchAPackageException e) {
+                e.printStackTrace();
+            }
         }
         PurchaseLog log = new PurchaseLog(new Date(),DeliveryStatus.DEPENDING,map,pricePaid,discount);
         DBManager.save(log);
@@ -139,9 +159,10 @@ public class CSCLManager {
         CustomerManager.getInstance().addPurchaseLog(log,customer);
     }
 
-    int findPrice(SubCart subCart) throws NoSuchSellerException {
-        String username = subCart.getSeller().getUsername();
-        return subCart.getProduct().findPackageBySeller(username).getPrice();
+    int findPrice(SubCart subCart) throws NoSuchAPackageException {
+        SellPackage sellPackage = subCart.getSeller().findPackageByProductId(subCart.getProduct().getId());
+        int price = sellPackage.isOnOff() ? sellPackage.getPrice() * (100 - sellPackage.getOff().getOffPercentage()) / 100 : sellPackage.getPrice();
+        return price;
     }
 
     public Log getLogById(int id) throws NoSuchALogException {

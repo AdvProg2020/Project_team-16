@@ -10,6 +10,7 @@ import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.cart.NotTheSellerException;
 import ModelPackage.System.exeption.cart.ProductExistedInCart;
+import ModelPackage.System.exeption.product.NoSuchAPackageException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.Users.Cart;
 import ModelPackage.Users.Seller;
@@ -27,7 +28,7 @@ public class CartManager {
     private CartManager() {}
 
     public void addProductToCart(Cart cart, String sellerId, int productId, int amount)
-            throws ProductExistedInCart, NotEnoughAmountOfProductException, NoSuchAProductException, UserNotAvailableException, NotTheSellerException, NoSuchSellerException {
+            throws ProductExistedInCart, NotEnoughAmountOfProductException, NoSuchAProductException, UserNotAvailableException, NotTheSellerException, NoSuchSellerException, NoSuchAPackageException {
         checkIfProductExistsInCart(cart, productId);
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, amount);
         Product product = ProductManager.getInstance().findProductById(productId);
@@ -51,7 +52,7 @@ public class CartManager {
         if (!product.hasSeller(seller))throw new NotTheSellerException();
     }
 
-    private long calculateTotalPrice(Cart cart) throws NoSuchSellerException {
+    private long calculateTotalPrice(Cart cart) throws NoSuchAPackageException {
         long total = 0;
         CSCLManager csclManager = CSCLManager.getInstance();
         for (SubCart subCart : cart.getSubCarts()) {
@@ -89,7 +90,7 @@ public class CartManager {
 
     public void changeProductAmountInCart(Cart cart, int productId, String sellerId, int change)
             throws NoSuchAProductInCart, NoSuchAProductException, NoSuchSellerException,
-            NotEnoughAmountOfProductException {
+            NotEnoughAmountOfProductException, NoSuchAPackageException {
         SubCart subCart = getSubCartByProductId(cart, productId);
         int previousAmount = subCart.getAmount();
         checkIfThereIsEnoughAmountOfProduct(productId, sellerId, previousAmount + change);
