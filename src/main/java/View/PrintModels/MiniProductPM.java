@@ -49,8 +49,8 @@ public class MiniProductPM {
         int ofPrc = 20000000;
         for (SellPackagePM pm : sellPackagePMs) {
             if (pm.getOffPercent() != 0) {
-                int price = pm.getPrice() * (pm.getOffPercent() / 100);
-                if (ofPrc < price) {
+                int price = pm.getPrice() * (100 - pm.getOffPercent()) / 100;
+                if (ofPrc > price) {
                     ofPrc = price;
                 }
             }

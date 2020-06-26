@@ -13,6 +13,7 @@ import controler.ProductController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CompareProduct {
+public class CompareProduct extends BackAbleController {
     public JFXButton back;
     public JFXButton cartButt;
     public JFXButton minimize;
@@ -216,7 +217,8 @@ public class CompareProduct {
 
     private void handleBack() {
         try {
-            Main.setRoot("ProductDigest");
+            Scene scene = new Scene(Main.loadFXML(back(), backForBackward()));
+            Main.setSceneToStage(back, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

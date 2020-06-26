@@ -54,6 +54,7 @@ public class SellerAccount extends BackAbleController {
     public JFXButton chooseProf;
     public JFXButton ad;
     public Circle imageCircle;
+    public JFXButton requestsButt;
 
     private static final Paint redColor = Paint.valueOf("#c0392b");
     private static final Paint blueColor = Paint.valueOf("#405aa8");
@@ -97,12 +98,12 @@ public class SellerAccount extends BackAbleController {
         lName.setText(userFullPM.getLastName());
         email.setText(userFullPM.getEmail());
         phone.setText(userFullPM.getPhoneNumber());
-        companyName.setText(companyPM.getName());
+        companyName.setText(companyPM.getName() + "  (ID : " + companyPM.getId() + " )");
         companyPhone.setText(companyPM.getPhone());
     }
 
     private CompanyPM gatTestCompany() {
-        return new CompanyPM(
+        return new CompanyPM(1,
                 "Apple",
                 "+5 55 22 333",
                 "Digital"
@@ -146,6 +147,16 @@ public class SellerAccount extends BackAbleController {
         chooseProf.setOnAction(event -> handleChooseProf());
         loadPopup();
         ad.setOnAction(event -> showPopUp());
+        requestsButt.setOnAction(event -> handleRequestView());
+    }
+
+    private void handleRequestView() {
+        try {
+            Scene scene = new Scene(Main.loadFXML("RequestView", backForForward("SellerAccount")));
+            Main.setSceneToStage(requestsButt, scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showPopUp() {

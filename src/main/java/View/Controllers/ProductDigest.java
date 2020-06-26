@@ -60,6 +60,8 @@ public class ProductDigest extends BackAbleController {
     public TableView<Map.Entry<String, String>> features;
     public VBox commentVBox;
     public JFXButton addComment;
+    public ImageView specialOffer;
+    public ImageView notAvailableSign;
 
     private int id;
     private static final CacheData cacheData = CacheData.getInstance();
@@ -117,7 +119,7 @@ public class ProductDigest extends BackAbleController {
     private void handleAdd() {
         String role = cacheData.getRole();
         String sellerId = sellerBox.getSelectionModel().getSelectedItem().getSellerUsername();
-        if (role.equals("customer")) {
+        if (role.equalsIgnoreCase("customer")) {
             String[] info = {cacheData.getUsername(), "" + id, sellerId, "1"};
             try {
                 productController.addToCart(info);
@@ -132,13 +134,12 @@ public class ProductDigest extends BackAbleController {
     }
 
     private void gotoCompare() {
-        /*try {
-            Scene scene = new Scene(Main.loadFXML("Compare",backForForward("ProductDigest")));
+        try {
+            Scene scene = new Scene(Main.loadFXML("ComparePage", backForForward("ProductDigest")));
             Main.setSceneToStage(back,scene);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
-        // TODO: 6/25/2020
+        }
     }
 
     private void photoButtons() {
@@ -241,13 +242,20 @@ public class ProductDigest extends BackAbleController {
 
     private void loadPricing(SellPackagePM pm) {
         if (pm.getOffPercent() != 0) {
-            double price = pm.getPrice() * (pm.getOffPercent() / 100.0);
-            this.price.setText("" + price);
-            offPrice.setText("" + pm.getPrice());
+            double price = pm.getPrice() * (100 - pm.getOffPercent()) / 100;
+            this.price.setText("" + price + "$");
+            offPrice.setText("RealPrice : " + pm.getPrice() + "$");
             offPrice.setVisible(true);
+            specialOffer.setVisible(true);
         } else {
             price.setText("" + pm.getPrice());
             offPrice.setVisible(false);
+            specialOffer.setVisible(false);
+        }
+        if (pm.isAvailable()) {
+            notAvailableSign.setVisible(false);
+        } else {
+            notAvailableSign.setVisible(true);
         }
     }
 

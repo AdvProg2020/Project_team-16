@@ -5,6 +5,7 @@ import ModelPackage.Off.DiscountCode;
 import ModelPackage.Off.Off;
 import ModelPackage.Product.Category;
 import ModelPackage.Product.Product;
+import ModelPackage.Product.SellPackage;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
 import lombok.Data;
@@ -102,23 +103,6 @@ public class SortManager {
         list.sort(Comparator.comparing(DiscountCode::getCode));
     }
 
-    public void sortRequests(List<Request> list,SortType sortType){
-        switch (sortType){
-            case DEFAULT:
-            case CATEGORIZED_REQUESTS:sortRequestsCategorized(list);break;
-            case NAME:sortRequestsByName(list);break;
-            case TIME:default:break;
-        }
-    }
-
-    private void sortRequestsCategorized(List<Request> list){
-        list.sort(Comparator.comparing(Request::getRequestType));
-    }
-
-    private void sortRequestsByName(List<Request> list){
-        list.sort(Comparator.comparing(Request::getUserHasRequested));
-    }
-
     public void sortOff(List<Off> list){
         list.sort(Comparator.comparingInt(Off::getOffPercentage));
     }
@@ -150,5 +134,47 @@ public class SortManager {
     private void sortByScore(List<Product> products) {
         products.sort((firstProduct, secondProduct) -> Double.toString(secondProduct.getTotalScore()).
                 compareTo(Double.toString(firstProduct.getLeastPrice())));
+    }
+
+    public void sortSellPackage(List<SellPackage> list, SortType type) {
+        switch (type) {
+            default:
+            case VIEW:
+                sortPackagesByView(list);
+            case TIME:
+                sortPackagesByTime(list);
+            case NAME:
+                sortPackagesByName(list);
+            case SCORE:
+                sortPackagesByScore(list);
+            case MORE_PRICE:
+                sortPackagesByPrice(list);
+            case BOUGHT_AMOUNT:
+                sortPackagesByBought(list);
+        }
+    }
+
+    private void sortPackagesByBought(List<SellPackage> list) {
+        list.sort(Comparator.comparing(o -> o.getProduct().getBoughtAmount()));
+    }
+
+    private void sortPackagesByPrice(List<SellPackage> list) {
+        list.sort(Comparator.comparing(SellPackage::getPrice));
+    }
+
+    private void sortPackagesByScore(List<SellPackage> list) {
+        list.sort(Comparator.comparing(o -> o.getProduct().getTotalScore()));
+    }
+
+    private void sortPackagesByName(List<SellPackage> list) {
+        list.sort(Comparator.comparing(o -> o.getProduct().getName()));
+    }
+
+    private void sortPackagesByTime(List<SellPackage> list) {
+        list.sort(Comparator.comparing(o -> o.getProduct().getDateAdded()));
+    }
+
+    private void sortPackagesByView(List<SellPackage> list) {
+        list.sort(Comparator.comparingInt(sellPackage -> sellPackage.getProduct().getView()));
     }
 }

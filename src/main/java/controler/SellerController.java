@@ -39,7 +39,7 @@ public class SellerController extends Controller{
 
     public CompanyPM viewCompanyInfo(String sellerUserName) throws UserNotAvailableException {
          Company company = sellerManager.viewCompanyInformation(sellerUserName);
-         return new CompanyPM(company.getName(), company.getGroup(), company.getPhone());
+        return new CompanyPM(company.getId(), company.getName(), company.getPhone(), company.getGroup());
      }
 
     public List<SellLogPM> viewSalesHistory(String sellerUserName) throws UserNotAvailableException {
@@ -47,7 +47,7 @@ public class SellerController extends Controller{
         ArrayList<SellLogPM> sellLogPMs = new ArrayList<>();
         for (SellLog sellLog : sellLogs) {
             sellLogPMs.add(new SellLogPM(sellLog.getLogId(),
-                    sellLog.getProduct().getId(),
+                    sellLog.getProduct().getSourceId(),
                     sellLog.getMoneyGotten(),
                     sellLog.getDiscount(),
                     sellLog.getDate(),
@@ -72,10 +72,10 @@ public class SellerController extends Controller{
 
     public List<MiniProductPM> manageProducts(String sellerUserName, SortPackage sort) throws UserNotAvailableException {
          List<Product> sellerProducts = sellerManager.viewProducts(sellerUserName);
-         List<Product> sortedSellerProducts = sortManager.sort(sellerProducts,sort.getSortType());
-         if (!sort.isAscending()) Collections.reverse(sortedSellerProducts);
+        //List<Product> sortedSellerProducts = sortManager.sort(sellerProducts,sort.getSortType());
+        //if (!sort.isAscending()) Collections.reverse(sortedSellerProducts);
          ArrayList<MiniProductPM> miniProductPMs = new ArrayList<>();
-         for (Product sellerProduct : sortedSellerProducts) {
+        for (Product sellerProduct : sellerProducts) {
              miniProductPMs.add(createMiniProductPM(sellerProduct));
         }
          return miniProductPMs;
@@ -187,8 +187,14 @@ public class SellerController extends Controller{
     }
 
     public ArrayList<String> getSpecialFeaturesOfCat(int catId) throws NoSuchACategoryException {
-        ArrayList<String> features = CategoryManager.getPublicFeatures();
+        ArrayList<String> features = new ArrayList<>(CategoryManager.getPublicFeatures());
         features.addAll(categoryManager.getAllSpecialFeaturesFromCategory(catId));
+        return features;
+    }
+
+    public ArrayList<String> getSpecialFeatureOfCategory(int id) throws NoSuchACategoryException {
+        ArrayList<String> features = new ArrayList<>();
+        features.addAll(categoryManager.getAllSpecialFeaturesFromCategory(id));
         return features;
     }
 

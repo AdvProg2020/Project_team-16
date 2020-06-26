@@ -62,8 +62,7 @@ public class OffManager {
         Off off = findOffById(changeAttributes.getSourceId());
         checkIfThisSellerCreatedTheOff(off,editor);
         off.setOffStatus(OffStatus.EDIT);
-        /* TODO : Alert Time manager to remove off */
-        String strRequest = String.format("%s requested to edit an off with id %d",editor,off.getOffId());
+        String strRequest = String.format("%s requested to edit %s", editor, changeAttributes);
         Request request = new Request(editor, RequestType.EDIT_OFF,strRequest,changeAttributes);
         RequestManager.getInstance().addRequest(request);
         Seller seller = DBManager.load(Seller.class, editor);

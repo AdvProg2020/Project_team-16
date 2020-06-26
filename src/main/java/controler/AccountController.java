@@ -8,11 +8,9 @@ import ModelPackage.System.exeption.account.NotVerifiedSeller;
 import ModelPackage.System.exeption.account.SecondManagerByUserException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.account.WrongPasswordException;
-import ModelPackage.Users.Cart;
-import ModelPackage.Users.Customer;
-import ModelPackage.Users.SubCart;
-import ModelPackage.Users.User;
+import ModelPackage.Users.*;
 import View.Main;
+import View.PrintModels.RequestPM;
 import View.PrintModels.UserFullPM;
 import controler.exceptions.ManagerExist;
 import javafx.scene.image.Image;
@@ -129,5 +127,46 @@ public class AccountController extends Controller {
     public String getPassByUsername(String username) throws UserNotAvailableException {
         User user = accountManager.getUserByUsername(username);
         return user.getPassword();
+    }
+
+    public List<RequestPM> viewRequestSent(String username, String role) {
+        List<Request> requests = new ArrayList<>();
+        if (role.equalsIgnoreCase("seller")) {
+            Seller seller = DBManager.load(Seller.class, username);
+            if (seller != null) {
+                requests = seller.getRequests();
+            }
+        } else if (role.equalsIgnoreCase("customer")) {
+            Customer customer = DBManager.load(Customer.class, username);
+            if (customer != null) {
+                requests = customer.getRequests();
+            }
+        }
+
+        if (requests == null | requests.isEmpty()) {
+            return null;
+        } else {
+            return makeRequestPMs(requests);
+        }
+    }
+
+    private List<RequestPM> makeRequestPMs(List<Request> requests) {
+        List<RequestPM> requestPMS = new ArrayList<>();
+        requests.forEach(req -> requestPMS.add(newReqPm(req)));
+        return requestPMS;
+    }
+
+    private RequestPM newReqPm(Request req) {
+        String status;
+        if (!req.isDone()) {
+            status = "Not Considered Yet";
+        } else {
+            if (req.isAccepted()) {
+                status = "Accepted";
+            } else {
+                status = "Rejected";
+            }
+        }
+        return new RequestPM(req.getRequestId(), status, req.getRequest());
     }
 }

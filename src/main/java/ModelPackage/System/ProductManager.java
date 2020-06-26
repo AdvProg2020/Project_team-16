@@ -138,7 +138,7 @@ public class ProductManager {
 
     public void assignAScore(int productId, Score score) throws NoSuchAProductException {
         Product product = findProductById(productId);
-        ArrayList<Score> scores = (ArrayList<Score>) product.getAllScores();
+        List<Score> scores = product.getAllScores();
         int amount = scores.size();
         scores.add(score);
         product.setAllScores(scores);

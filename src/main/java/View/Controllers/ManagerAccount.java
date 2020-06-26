@@ -135,11 +135,9 @@ public class ManagerAccount extends BackAbleController {
     }
 
     private void handleMainContent() {
-        Stage stage = (Stage) mainContent.getScene().getWindow();
         try {
-            Scene scene = new Scene(Main.loadFXML("ContentManager"));
-            Main.moveSceneOnMouse(scene, stage);
-            stage.setScene(scene);
+            Scene scene = new Scene(Main.loadFXML("ContentManager", backForForward("ManagerAccount")));
+            Main.setSceneToStage(mainContent, scene);
         } catch (IOException e) {
             e.printStackTrace();
         }

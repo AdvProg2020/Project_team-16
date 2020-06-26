@@ -8,20 +8,19 @@ import ModelPackage.System.database.DBManager;
 import ModelPackage.System.editPackage.CategoryEditAttribute;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
-import ModelPackage.System.exeption.category.NoSuchACategoryException;
-import ModelPackage.System.exeption.category.NoSuchAProductInCategoryException;
-import ModelPackage.System.exeption.category.RepeatedFeatureException;
-import ModelPackage.System.exeption.category.RepeatedNameInParentCategoryException;
+import ModelPackage.System.exeption.category.*;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.product.EditorIsNotSellerException;
 import ModelPackage.System.exeption.product.NoSuchAProductException;
 import ModelPackage.System.exeption.request.NoSuchARequestException;
+import ModelPackage.Users.Customer;
 import ModelPackage.Users.Request;
 import ModelPackage.Users.User;
 import View.FilterPackage;
 import View.PrintModels.*;
 import View.SortPackage;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -59,6 +58,14 @@ public class ManagerController extends Controller {
 
     public void deleteUser(String username) throws UserNotAvailableException {
         managerManager.deleteUser(username);
+        deleteProfilePhoto(username);
+    }
+
+    private void deleteProfilePhoto(String username) {
+        File file = new File("src\\main\\resources\\db\\images\\users\\" + username + ".jpg");
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
     public void createManagerProfile(String[] info) {
@@ -144,7 +151,10 @@ public class ManagerController extends Controller {
     }
 
     public void addUserToDiscountCode(String code,String username,int time) throws UserNotAvailableException, UserExistedInDiscountCodeException, NoSuchADiscountCodeException {
-        User user = accountManager.getUserByUsername(username);
+        Customer user = DBManager.load(Customer.class, username);
+        if (user == null) {
+            throw new UserNotAvailableException();
+        }
         discountManager.addUserToDiscountCodeUsers(code,user,time);
     }
 
@@ -213,7 +223,7 @@ public class ManagerController extends Controller {
     }
 
     public void editCategory(int id, CategoryEditAttribute editAttribute)
-            throws RepeatedNameInParentCategoryException, NoSuchACategoryException, RepeatedFeatureException {
+            throws RepeatedNameInParentCategoryException, NoSuchACategoryException, RepeatedFeatureException, NoSuchAFeatureInCategoryException {
         categoryManager.editCategory(id, editAttribute);
     }
 

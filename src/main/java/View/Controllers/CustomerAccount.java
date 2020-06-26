@@ -50,11 +50,11 @@ public class CustomerAccount extends BackAbleController {
     public JFXTextField phoneText;
     public JFXButton cancelButt;
     public JFXButton confirmButt;
+    public JFXButton requestsButt;
 
     private static final Paint redColor = Paint.valueOf("#c0392b");
     private static final Paint blueColor = Paint.valueOf("#405aa8");
     private static final String userPhoto = "/Images/user-png-icon-male-user-icon-512.png";
-
 
 
     private AccountController accountController = AccountController.getInstance();
@@ -127,6 +127,16 @@ public class CustomerAccount extends BackAbleController {
         confirmButt.setOnAction(event -> handleConfirm());
         cancelButt.setOnAction(event -> handleCancel());
         chooseProf.setOnAction(event -> handleChooseProf());
+        requestsButt.setOnAction(event -> handleRequestView());
+    }
+
+    private void handleRequestView() {
+        try {
+            Scene scene = new Scene(Main.loadFXML("RequestView", backForForward("CustomerAccount")));
+            Main.setSceneToStage(requestsButt, scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleChooseProf() {
@@ -214,7 +224,7 @@ public class CustomerAccount extends BackAbleController {
     }
 
     private void handleLogout() {
-        // TODO: 6/22/2020
+        // TODO: 6/22/2020 phase 3
         CacheData.getInstance().logout();
         try {
             back.getScene().setRoot(Main.loadFXML("MainPage"));

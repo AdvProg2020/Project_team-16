@@ -53,9 +53,12 @@ public class AccountPopUp {
                 CacheData.getInstance().setRole(role);
                 List<Window> stages = Stage.getWindows().filtered(Window::isFocused);
                 show("Successful", "Logged In Successfully", stages.get(0), false);
-            } catch (NotVerifiedSeller | UserNotAvailableException | WrongPasswordException e) {
+            } catch (NotVerifiedSeller | WrongPasswordException e) {
                 List<Window> stages = Stage.getWindows().filtered(Window::isFocused);
                 show("Error", e.getMessage(), stages.get(0), true);
+            } catch (UserNotAvailableException e) {
+                List<Window> stages = Stage.getWindows().filtered(Window::isFocused);
+                show("Error", "This User Doesn't Exist", stages.get(0), true);
             }
         }
     }

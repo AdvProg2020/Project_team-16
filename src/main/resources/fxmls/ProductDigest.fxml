@@ -13,6 +13,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -100,6 +101,18 @@
                               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                            </padding>
                         </VBox>
+                         <ImageView fx:id="specialOffer" fitHeight="93.0" fitWidth="89.0" layoutX="247.0"
+                                    layoutY="203.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                             <image>
+                                 <Image url="@../Images/dicount.png"/>
+                             </image>
+                         </ImageView>
+                         <ImageView fx:id="notAvailableSign" fitHeight="218.0" fitWidth="220.0" layoutX="121.0"
+                                    layoutY="56.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                             <image>
+                                 <Image url="@../Images/soldout.png"/>
+                             </image>
+                         </ImageView>
                      </children>
                   </AnchorPane>
                    <Label fx:id="productName" alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0"

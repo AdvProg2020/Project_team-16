@@ -77,11 +77,13 @@ public class FilterManager {
         return (leastPrice >= lower && leastPrice <= high);
     }
 
-    public static List<SellPackage> filterSellPackages(List<SellPackage> list, HashMap<String, String> filters, int[] priceRange) {
+    public static List<SellPackage> filterSellPackages(int catId, List<SellPackage> list, HashMap<String, String> filters, int[] priceRange) {
         List<SellPackage> sellPackages = new ArrayList<>();
         list.forEach(sellPackage -> {
             if (thisProductIsInPriceRange(priceRange[0], priceRange[1], sellPackage.getPrice())) {
-                if (doesMatchTheFilters(sellPackage.getProduct(), filters)) sellPackages.add(sellPackage);
+                if (sellPackage.getProduct().getCategory().getId() == catId) {
+                    if (doesMatchTheFilters(sellPackage.getProduct(), filters)) sellPackages.add(sellPackage);
+                }
             }
         });
         return sellPackages;

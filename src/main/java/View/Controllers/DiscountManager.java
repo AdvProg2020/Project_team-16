@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -89,8 +90,6 @@ public class DiscountManager extends BackAbleController {
         userTableInitialize();
         addUserInitialize();
         editCode();
-        /*
-         */
         // TODO: 6/13/2020
         //systematicAdditionInitialize();
     }
@@ -328,53 +327,14 @@ public class DiscountManager extends BackAbleController {
             Main.setSceneToStage(back, scene);
         } catch (IOException ignore) {}
         });
-        minimize.setOnAction(e->Main.minimize());
+        minimize.setOnAction(e -> ((Stage) close.getScene().getWindow()).setIconified(true));
         refresh.setOnAction(e -> reset());
-        close.setOnAction(e -> Main.close());
+        close.setOnAction(e -> ((Stage) close.getScene().getWindow()).close());
     }
 
     private void binds() {
         editBox.disableProperty().bind(Bindings.isEmpty(codes.getSelectionModel().getSelectedItems()));
         removeUser.disableProperty().bind(Bindings.isEmpty(userTable.getSelectionModel().getSelectedItems()));
-    }
-
-    private ArrayList<DisCodeManagerPM> load(){
-        ArrayList<DisCodeManagerPM> list = new ArrayList<>();
-        UserIntegerPM pm1 = new UserIntegerPM("Asghar",5);
-        UserIntegerPM pm2 = new UserIntegerPM("Akbar",4);
-        UserIntegerPM pm3 = new UserIntegerPM("Ali",3);
-        UserIntegerPM pm4 = new UserIntegerPM("reza",3);
-        UserIntegerPM pm5 = new UserIntegerPM("Asghar",4);
-        UserIntegerPM pm6 = new UserIntegerPM("Asghar",6);
-        UserIntegerPM pm7 = new UserIntegerPM("Asghar",7);
-        UserIntegerPM pm8 = new UserIntegerPM("Asghar",1);
-        UserIntegerPM pm9 = new UserIntegerPM("Asghar",10);
-        UserIntegerPM pm10 = new UserIntegerPM("Asghar",8);
-        UserIntegerPM pm11= new UserIntegerPM("Asghar",1);
-        UserIntegerPM pm12 = new UserIntegerPM("Asghar",6);
-        UserIntegerPM pm13 = new UserIntegerPM("Asghar",4);
-        ArrayList<UserIntegerPM> map1 = new ArrayList<>();
-        ArrayList<UserIntegerPM> map2 = new ArrayList<>();
-        map1.add(pm1);
-        map1.add(pm2);
-        map1.add(pm3);
-        map1.add(pm4);
-        map1.add(pm5);
-        map1.add(pm6);
-        map1.add(pm7);
-        map1.add(pm8);
-        map2.add(pm9);
-        map2.add(pm10);
-        map2.add(pm11);
-        map2.add(pm12);
-        map2.add(pm13);
-        Date date1 = new Date();
-        Date date2 = new Date(date1.getTime()+654112453);
-        Date date3 = new Date(date1.getTime()+989712453);
-        Date date4 = new Date(date1.getTime()+1200012453);
-        list.add(new DisCodeManagerPM("Eid99",date1,date2,10,540,map1));
-        list.add(new DisCodeManagerPM("FetR",date3,date4,40,1800,map2));
-        return list;
     }
 
     private void listeners() {
