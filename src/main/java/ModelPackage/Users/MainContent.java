@@ -26,8 +26,6 @@ public class MainContent {
 
     @Override
     public String toString() {
-        return "MainContent{" +
-                "title='" + title + '\'' +
-                '}';
+        return title;
     }
 }
