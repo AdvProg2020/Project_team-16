@@ -25,30 +25,30 @@ public class Request {
     @Column(name = "REQUEST", length = 4096)
     String request;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
         @JoinColumn(name = "OFF")
     Off off;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
         @JoinColumn(name = "OFF_EDIT")
     OffChangeAttributes offEdit;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
         @JoinColumn(name = "PRODUCT")
     Product product;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "PRODUCT_EDIT")
     ProductEditAttribute productEditAttribute;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
         @JoinColumn(name = "COMMENT")
     Comment comment;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     Advertise advertise;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     Seller seller;
 
     private boolean done;

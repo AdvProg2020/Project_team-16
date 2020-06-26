@@ -59,19 +59,23 @@ public class SellerManager {
     public void deleteProductForSeller(String username, int productId) throws NoSuchAPackageException {
         Seller seller = DBManager.load(Seller.class, username);
         SellPackage sellPackage = seller.findPackageByProductId(productId);
-        seller.getPackages().remove(sellPackage);
-        DBManager.save(seller);
-        /*Product product = sellPackage.getProduct();
-        product.getPackages().remove(sellPackage);
-        DBManager.save(product);
         if (sellPackage.isOnOff()) {
             Off off = sellPackage.getOff();
             off.getProducts().remove(sellPackage.getProduct());
             DBManager.save(off);
+            sellPackage.setOff(null);
         }
-        sellPackage.setOff(null);
+        List<SellPackage> packages = seller.getPackages();
+        packages.remove(sellPackage);
+        seller.setPackages(new ArrayList<>(packages));
+        Product product = sellPackage.getProduct();
+        List<SellPackage> sellPackages = product.getPackages();
+        sellPackages.remove(sellPackage);
+        product.setPackages(new ArrayList<>(sellPackages));
         sellPackage.setProduct(null);
-        sellPackage.setSeller(null);*/
+        sellPackage.setSeller(null);
+        DBManager.save(product);
+        DBManager.save(seller);
         DBManager.delete(sellPackage);
     }
 
