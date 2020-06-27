@@ -24,6 +24,7 @@ import ModelPackage.Users.Seller;
 import View.FilterPackage;
 import View.PrintModels.*;
 import View.SortPackage;
+import javafx.scene.media.Media;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -284,6 +285,19 @@ public class SellerController extends Controller{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Media getViedo(int id) {
+        File video = new File("src/main/resources/db/videos/products/" + id + ".mp4");
+        if (video.exists()) {
+            return new Media(video.toURI().toString());
+        }
+        return null;
+    }
+
+    public boolean hasVideo(int id) {
+        File video = new File("src/main/resources/db/videos/products/" + id + ".mp4");
+        return video.exists();
     }
 
     private String generateUniqueFileName() {

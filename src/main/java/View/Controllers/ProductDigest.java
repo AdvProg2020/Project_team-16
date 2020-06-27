@@ -13,6 +13,7 @@ import View.exceptions.CanceledException;
 import com.jfoenix.controls.JFXButton;
 import controler.CustomerController;
 import controler.ProductController;
+import controler.SellerController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -90,9 +91,13 @@ public class ProductDigest extends BackAbleController {
         photoButtons();
         productButtons();
         commentButton();
-        /*
-            videoSection()
-        */
+        videoSection();
+    }
+
+    private void videoSection() {
+        boolean hasVideo = SellerController.getInstance().hasVideo(id);
+        video.setDisable(!hasVideo);
+        video.setOnMouseClicked(event -> VideoPlayer.playVideoFor(id));
     }
 
     private void commentButton() {
