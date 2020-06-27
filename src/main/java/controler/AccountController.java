@@ -27,7 +27,7 @@ public class AccountController extends Controller {
     }
 
     public void usernameInitialCheck(String username) throws UserNotAvailableException {
-        if (accountManager.isUsernameAvailable(username)){
+        if (!accountManager.isUsernameAvailable(username)) {
             throw new UserNotAvailableException();
         }
     }

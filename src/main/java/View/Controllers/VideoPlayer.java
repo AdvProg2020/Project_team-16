@@ -37,7 +37,7 @@ public class VideoPlayer {
     private void initialize() {
         Media media = SellerController.getInstance().getViedo(id);
         mediaPlayer = new MediaPlayer(media);
-        player = new MediaView();
+        player = new MediaView(mediaPlayer);
         player.setMediaPlayer(mediaPlayer);
         mediaPlayer.play();
         buttonInitialize();

@@ -118,14 +118,22 @@ public class SignInUp {
 
     private void signUpSubmitRequest() {
         if (checkForEmptyValues()){
-            sendSignUpRequest();
-            Notification.show("Successful", "Your Account was Created Successfully!!!", back.getScene().getWindow(), false);
             try {
-                Scene scene = new Scene(Main.loadFXML("MainPage"));
-                Main.setSceneToStage(back, scene);
-            } catch (IOException e) {
+                accountController.usernameInitialCheck(usernameUp.getText());
+                sendSignUpRequest();
+                Notification.show("Successful", "Your Account was Created Successfully!!!", back.getScene().getWindow(), false);
+                try {
+                    Scene scene = new Scene(Main.loadFXML("MainPage"));
+                    Main.setSceneToStage(back, scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (UserNotAvailableException e) {
+                errorField(usernameUp, "Username Is Unavailable");
+                //Notification.show("Error","Username UnAvailable",back.getScene().getWindow(),true);
                 e.printStackTrace();
             }
+
         }else {
             Notification.show("Error", "Please Check The Fields.", back.getScene().getWindow(), true);
         }

@@ -93,50 +93,49 @@
                   <VBox alignment="TOP_CENTER" prefWidth="340.0" spacing="35.0" style="-fx-background-color: white;">
                      <children>
                          <JFXTextField fx:id="usernameUp" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
-                                       prefWidth="270.0" promptText="Username" text="user">
+                                       prefWidth="270.0" promptText="Username">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </JFXTextField>
                          <JFXPasswordField fx:id="passwordUp" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
-                                           prefWidth="270.0" promptText="Password" text="4420953403">
+                                           prefWidth="270.0" promptText="Password">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </JFXPasswordField>
                          <JFXPasswordField fx:id="rePasswordUp" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
-                                           prefWidth="270.0" promptText="Repeat Password" text="4420953403">
+                                           prefWidth="270.0" promptText="Repeat Password">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </JFXPasswordField>
                          <JFXTextField fx:id="firstName" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
-                                       prefWidth="270.0" promptText="First Name" text="a">
+                                       prefWidth="270.0" promptText="First Name">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </JFXTextField>
                          <JFXTextField fx:id="lastName" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
-                                       prefWidth="270.0" promptText="Last Name" text="a">
+                                       prefWidth="270.0" promptText="Last Name">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </JFXTextField>
                          <JFXTextField fx:id="email" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
-                                       prefWidth="270.0" promptText="Email" text="a@a.com">
+                                       prefWidth="270.0" promptText="Email">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </JFXTextField>
                          <JFXTextField fx:id="phone" focusColor="#405aa8" labelFloat="true" prefHeight="45.0"
-                                       prefWidth="270.0" promptText="Phone Number" text="321561">
+                                       prefWidth="270.0" promptText="Phone Number">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </JFXTextField>
                          <JFXTextField fx:id="balance" focusColor="#405aa8" labelFloat="true" layoutX="30.0"
-                                       layoutY="515.0" prefHeight="45.0" prefWidth="270.0" promptText="Balance"
-                                       text="20">
+                                       layoutY="515.0" prefHeight="45.0" prefWidth="270.0" promptText="Balance">
                            <font>
                               <Font size="15.0" />
                            </font>

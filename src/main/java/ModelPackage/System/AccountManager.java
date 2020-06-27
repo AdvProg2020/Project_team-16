@@ -144,7 +144,7 @@ public class AccountManager {
 
     public boolean isUsernameAvailable(String username){
         User user = DBManager.load(User.class,username);
-        return user != null;
+        return user == null;
     }
 
 }
