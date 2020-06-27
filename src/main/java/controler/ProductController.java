@@ -2,7 +2,6 @@ package controler;
 
 import ModelPackage.Product.*;
 import ModelPackage.System.FilterManager;
-import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.exeption.account.NoSuchACustomerException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.category.NoSuchACategoryException;
@@ -14,14 +13,10 @@ import View.PrintModels.*;
 import View.SortPackage;
 import controler.exceptions.ProductsNotBelongToUniqueCategoryException;
 import javafx.scene.image.Image;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ProductController extends Controller{
     private static ProductController productController = new ProductController();
@@ -32,7 +27,9 @@ public class ProductController extends Controller{
 
     public List<MiniProductPM> showAllProducts(SortPackage sortPackage, FilterPackage filterPackage) throws NoSuchACategoryException, InvalidFilterException {
         int[] priceRange = {filterPackage.getDownPriceLimit(),filterPackage.getUpPriceLimit()};
-        List<Product> products = FilterManager.updateFilterList(filterPackage.getCategoryId(), filterPackage.getActiveFilters(), priceRange, filterPackage.isOffMode());
+        List<Product> products = FilterManager.updateFilterList(filterPackage.getCategoryId(),
+                filterPackage.getActiveFilters(), priceRange, filterPackage.isOffMode(), filterPackage.isAvaiOnly());
+        products = filterProductByFields(products, filterPackage);
         sortManager.sort(products, sortPackage.getSortType());
         if (!sortPackage.isAscending()) Collections.reverse(products);
         List<MiniProductPM> toReturn = new ArrayList<>();
@@ -42,11 +39,62 @@ public class ProductController extends Controller{
         return toReturn;
     }
 
+    private List<Product> filterProductByFields(List<Product> products, FilterPackage filterPackage) {
+        String name = filterPackage.getName();
+        String seller = filterPackage.getSeller();
+        String brand = filterPackage.getBrand();
+        List<Product> list = new CopyOnWriteArrayList<>(products);
+        if (name != null)
+            for (Product product : list) {
+                if (!product.getName().toLowerCase().contains(name.toLowerCase())) list.remove(product);
+            }
+        if (seller != null)
+            for (Product product : list) {
+                if (!hasSeller(product, seller)) list.remove(product);
+            }
+        if (brand != null)
+            for (Product product : list) {
+                if (!product.getCompanyClass().getName().toLowerCase().contains(brand.toLowerCase()))
+                    list.remove(product);
+            }
+        return list;
+    }
+
+    private List<SellPackage> filterSellPackagesField(List<SellPackage> sellPackages, FilterPackage filterPackage) {
+        String name = filterPackage.getName();
+        String seller = filterPackage.getSeller();
+        String brand = filterPackage.getBrand();
+        List<SellPackage> list = new CopyOnWriteArrayList<>(sellPackages);
+        if (name != null)
+            for (SellPackage product : list) {
+                if (!product.getProduct().getName().toLowerCase().contains(name.toLowerCase())) list.remove(product);
+            }
+        if (seller != null)
+            for (SellPackage product : list) {
+                if (!product.getSeller().getUsername().toLowerCase().contains(seller.toLowerCase()))
+                    list.remove(product);
+            }
+        if (brand != null)
+            for (SellPackage product : list) {
+                if (!product.getProduct().getCompanyClass().getName().toLowerCase().contains(brand.toLowerCase()))
+                    list.remove(product);
+            }
+        return list;
+    }
+
+    private boolean hasSeller(Product product, String seller) {
+        for (SellPackage aPackage : product.getPackages()) {
+            if (aPackage.getSeller().getUsername().toLowerCase().contains(seller.toLowerCase())) return true;
+        }
+        return false;
+    }
+
     public List<OffProductPM> showAllOnOffProducts(FilterPackage filter, SortPackage sort) {
         List<SellPackage> allSellPackagesOnOff = offManager.getAllSellPackagesOnOff();
         List<SellPackage> filtered = FilterManager.filterSellPackages(filter.getCategoryId(), allSellPackagesOnOff,
                 filter.getActiveFilters(),
-                new int[]{filter.getDownPriceLimit(), filter.getUpPriceLimit()});
+                new int[]{filter.getDownPriceLimit(), filter.getUpPriceLimit()}, filter.isAvaiOnly());
+        filtered = filterSellPackagesField(filtered, filter);
         sortManager.sortSellPackage(filtered, sort.getSortType());
         if (!sort.isAscending()) Collections.reverse(filtered);
         List<OffProductPM> toReturn = new ArrayList<>();
@@ -150,7 +198,7 @@ public class ProductController extends Controller{
                 product.getCompanyClass().getName(),
                 product.getTotalScore(),
                 product.getDescription(),
-                sellPackagePMs);
+                sellPackagePMs, product.isAvailable());
     }
 
     public List<MiniProductPM> showOffs(SortPackage sortPackage,FilterPackage filterPackage){

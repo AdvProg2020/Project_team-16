@@ -12,6 +12,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -79,9 +80,9 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <TitledPane expanded="false" text="Filters">
+                              <TitledPane expanded="false" prefWidth="201.0" text="Filters">
                                  <content>
-                                    <VBox fx:id="filterVBox" prefHeight="339.0" prefWidth="199.0" spacing="10.0">
+                                    <VBox fx:id="filterVBox" prefWidth="199.0" spacing="5.0">
                                        <padding>
                                           <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                        </padding>
@@ -94,16 +95,33 @@
                                           <Separator prefWidth="200.0" />
                                           <JFXToggleButton fx:id="offOnly" alignment="CENTER_LEFT" graphicTextGap="50.0" prefHeight="58.0" prefWidth="178.0" size="8.0" text="Off Only">
                                              <opaqueInsets>
+                                                <Insets/>
+                                             </opaqueInsets>
+                                          </JFXToggleButton>
+                                          <JFXToggleButton fx:id="avaiOnly" alignment="CENTER_LEFT"
+                                                           graphicTextGap="20.0" layoutX="25.0" layoutY="144.0"
+                                                           prefHeight="58.0" prefWidth="178.0" size="8.0"
+                                                           text="Available Only">
+                                             <opaqueInsets>
                                                 <Insets />
                                              </opaqueInsets>
                                           </JFXToggleButton>
                                           <Separator prefWidth="200.0" />
-                                          <TableView fx:id="featureTable" prefHeight="200.0" prefWidth="200.0">
+                                          <TableView fx:id="featureTable" prefHeight="115.0" prefWidth="169.0">
                                              <columns>
                                                 <TableColumn fx:id="filterCol" prefWidth="75.0" text="Filter"/>
                                                 <TableColumn fx:id="fieldCol" prefWidth="75.0"/>
                                              </columns>
                                           </TableView>
+                                          <Separator layoutX="25.0" layoutY="243.0" prefWidth="200.0"/>
+                                          <Label text="Filter By Name"/>
+                                          <TextField fx:id="nameFilter"/>
+                                          <Label layoutX="25.0" layoutY="379.0" text="Filter By Brand"/>
+                                          <TextField fx:id="brandFilter" layoutX="25.0" layoutY="401.0"/>
+                                          <Label layoutX="25.0" layoutY="432.0" text="Filter By Seller"/>
+                                          <TextField fx:id="sellerFilter" layoutX="25.0" layoutY="448.0"/>
+                                          <Button fx:id="filterByFiled" mnemonicParsing="false" prefHeight="26.0"
+                                                  prefWidth="210.0" text="Filter By Fields"/>
                                        </children>
                                     </VBox>
                                  </content>

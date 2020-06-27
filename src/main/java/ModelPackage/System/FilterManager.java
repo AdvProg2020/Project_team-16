@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class FilterManager {
 
-    public static List<Product> updateFilterList(int categoryId, HashMap<String, String> filters, int[] priceRange, boolean offMode)
+    public static List<Product> updateFilterList(int categoryId, HashMap<String, String> filters, int[] priceRange, boolean offMode, boolean AvaiOnly)
             throws NoSuchACategoryException, InvalidFilterException {
         List<Product> allProductsInCategory = CategoryManager.getInstance().getAllProductsInThisCategory(categoryId);
         ArrayList<String>  validFeatures = CategoryManager.getInstance().getAllSpecialFeaturesFromCategory(categoryId);
@@ -19,9 +19,9 @@ public class FilterManager {
         ArrayList<String> filter = new ArrayList<>(filterSet);
         checkIfFiltersAreAvailable(filter,validFeatures);
         List<Product> products = new CopyOnWriteArrayList<>(matchProductsToFilters(allProductsInCategory, filters, priceRange));
-        if (offMode) {
+        if (AvaiOnly) {
             for (Product product : products) {
-                if (!product.isOnOff()) products.remove(product);
+                if (!product.isAvailable()) products.remove(product);
             }
         }
         return products;
@@ -77,7 +77,7 @@ public class FilterManager {
         return (leastPrice >= lower && leastPrice <= high);
     }
 
-    public static List<SellPackage> filterSellPackages(int catId, List<SellPackage> list, HashMap<String, String> filters, int[] priceRange) {
+    public static List<SellPackage> filterSellPackages(int catId, List<SellPackage> list, HashMap<String, String> filters, int[] priceRange, boolean avaiOnly) {
         List<SellPackage> sellPackages = new ArrayList<>();
         list.forEach(sellPackage -> {
             if (thisProductIsInPriceRange(priceRange[0], priceRange[1], sellPackage.getPrice())) {
@@ -86,6 +86,14 @@ public class FilterManager {
                 }
             }
         });
-        return sellPackages;
+        if (avaiOnly) {
+            List<SellPackage> packages = new CopyOnWriteArrayList<>(sellPackages);
+            for (SellPackage aPackage : packages) {
+
+            }
+            return packages;
+        } else {
+            return sellPackages;
+        }
     }
 }

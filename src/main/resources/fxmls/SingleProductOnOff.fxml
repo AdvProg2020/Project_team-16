@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="200.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/11.0.1"
+<AnchorPane fx:id="pane" prefHeight="200.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controllers.SingleProductOnOff">
     <children>
         <Rectangle fx:id="root" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="194.0" layoutX="2.0" layoutY="3.0"
@@ -42,6 +43,12 @@
         <FontIcon iconColor="#bd2727" iconLiteral="fa-percent" iconSize="35" layoutX="18.0" layoutY="125.0"
                   wrappingWidth="33.25710678100586"/>
         <Label fx:id="price" layoutX="52.0" layoutY="168.0" text="price"/>
+        <ImageView fx:id="soldOut" fitHeight="92.0" fitWidth="85.0" layoutX="22.0" layoutY="33.0" pickOnBounds="true"
+                   preserveRatio="true" visible="false">
+            <image>
+                <Image url="@../Images/soldout.png"/>
+            </image>
+        </ImageView>
     </children>
     <cursor>
         <Cursor fx:constant="HAND"/>

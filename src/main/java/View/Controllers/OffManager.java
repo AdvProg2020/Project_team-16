@@ -176,49 +176,6 @@ public class OffManager extends BackAbleController {
         return offs;
     }
 
-    private ObservableList<OffPM> getTestOffs() {
-        ObservableList<OffPM> offs = FXCollections.observableArrayList();
-        offs.add(new OffPM(
-                12456,
-                getTestProducts(),
-                "marmof",
-                new Date(2001, 12, 22),
-                new Date(2002, 11, 30),
-                50,
-                EDIT.toString()
-        ));
-        offs.add(new OffPM(
-                48662,
-                getTestProducts(),
-                "sapa",
-                new Date(2012, 3, 13),
-                new Date(2022, 6, 22),
-                0,
-                CREATION.toString()
-        ));
-        offs.add(new OffPM(
-                21556,
-                getTestProducts(),
-                "memo",
-                new Date(2021, 12, 22),
-                new Date(2044, 6, 4),
-                2,
-                ACCEPTED.toString()
-        ));
-
-        return offs;
-    }
-
-    private ArrayList<MiniProductPM> getTestProducts() {
-        ArrayList<MiniProductPM> products = new ArrayList<>();
-        products.add(new MiniProductPM("asus rog g512", 112, "Laptop", "Asus", 5.42, null, null));
-        products.add(new MiniProductPM("skirt for kimmi", 245, "Clothes", "Adidas", 5.42, null, null));
-        products.add(new MiniProductPM("asus zenbook e333", 230, "Laptop", "Asus", 5.42, null, null));
-        products.add(new MiniProductPM("asus vivobook d551", 7885, "Laptop", "Asus", 5.42, null, null));
-
-        return products;
-    }
-
     private void changeData(OffPM off) {
         if (off == null) {
             return;

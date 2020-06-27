@@ -83,49 +83,6 @@ public class CompareProduct extends BackAbleController {
         }
     }
 
-    private FullProductPM getTestProduct(boolean main) {
-        if (main){
-            return new FullProductPM(
-                    new MiniProductPM(
-                            "Asus Rog GL502VS",
-                            123,
-                            "Laptop",
-                            "Asus",
-                            1.22,
-                            null,
-                            null),
-                    getFeatures(true)
-            );
-        } else {
-            return new FullProductPM(
-                    new MiniProductPM(
-                            "Lenovo Ashghal 320RD",
-                            54,
-                            "Laptop",
-                            "Lenovo",
-                            0.22,
-                            null,
-                            null),
-                    getFeatures(false)
-            );
-        }
-    }
-
-    private Map<String, String> getFeatures(boolean main) {
-        Map<String, String> map = new HashMap<>();
-        if (main) {
-            map.put("color", "black");
-            map.put("memory", "10g");
-            map.put("pass", "high");
-            map.put("size", "big");
-        } else {
-            map.put("color", "white");
-            map.put("memory", "11g");
-            map.put("pass", "low");
-            map.put("size", "small");
-        }
-        return map;
-    }
 
     private void initProductsTable() {
         initColumns();

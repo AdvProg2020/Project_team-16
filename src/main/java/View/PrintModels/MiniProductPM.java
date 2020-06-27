@@ -14,8 +14,9 @@ public class MiniProductPM {
     private String brand;
     private double score;
     private String description;
+    private boolean available;
 
-    public MiniProductPM(String name, int id, String categoryName, String brand, double score, String description, List<SellPackagePM> sellPackages) {
+    public MiniProductPM(String name, int id, String categoryName, String brand, double score, String description, List<SellPackagePM> sellPackages, boolean available) {
         this.name = name;
         this.id = id;
         this.categoryName = categoryName;
@@ -23,6 +24,7 @@ public class MiniProductPM {
         this.score = score;
         this.description = description;
         sellPackagePMs = sellPackages;
+        this.available = available;
     }
 
     @Override
@@ -42,7 +44,7 @@ public class MiniProductPM {
         for (SellPackagePM pm : sellPackagePMs) {
             if (pm.getPrice() < price) price = pm.getPrice();
         }
-        return price;
+        return price == 20000000 ? -1 : price;
     }
 
     public int getOffPrice() {

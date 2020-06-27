@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -30,6 +31,8 @@ public class SingleProductOnOff {
     public Label price;
     public Label days;
     public Rectangle root;
+    public ImageView soldOut;
+    public AnchorPane pane;
 
     private static final int SECONDS_PER_DAY = 86_400;
     private static final int SECONDS_PER_HOUR = 3600;
@@ -71,6 +74,16 @@ public class SingleProductOnOff {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
         id = pm.getId();
+        pane.setOnMouseClicked(event -> {
+            CacheData.getInstance().setProductId(id);
+            try {
+                Scene scene = new Scene(Main.loadFXML("ProductDigest", "MainPage", "ProductsPage"));
+                Main.setSceneToStage(pane, scene);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
     }
 
     private void updateTime() {

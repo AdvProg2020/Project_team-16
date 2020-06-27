@@ -301,7 +301,7 @@ public class CategoryManager {
     }
 
     private List<Product> getAllProductsInThisCategory(Category category){
-        List<Product> products = category.getAllProducts();
+        List<Product> products = new ArrayList<>(category.getAllProducts());
         List<Category> subcategories = category.getSubCategories();
         if (!subcategories.isEmpty()){
             for (Category subcategory : subcategories) {

@@ -16,6 +16,7 @@ import controler.SellerController;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -52,6 +53,12 @@ public class ProductsPage extends BackAbleController {
     public TableColumn<TableFeatureRow, String> filterCol;
     public TableColumn<TableFeatureRow, TextField> fieldCol;
     public ScrollPane filterPane;
+    public JFXToggleButton avaiOnly;
+
+    public TextField nameFilter;
+    public TextField brandFilter;
+    public TextField sellerFilter;
+    public Button filterByFiled;
 
     private ProductController productController = ProductController.getInstance();
 
@@ -85,9 +92,13 @@ public class ProductsPage extends BackAbleController {
         maxPrice.setOnMouseReleased(productGetter);
         minPrice.setOnMouseReleased(productGetter);
         offOnly.setOnMouseClicked(productGetter);
-        offOnly.setOnAction(event -> SoundCenter.play(Sound.SWITCH));
+        EventHandler<ActionEvent> actionEventEventHandler = event -> SoundCenter.play(Sound.SWITCH);
+        offOnly.setOnAction(actionEventEventHandler);
         ADOrder.selectedToggleProperty().addListener(observable -> productGetter.handle(null));
         type.selectedToggleProperty().addListener(observable -> productGetter.handle(null));
+        avaiOnly.setOnMouseClicked(productGetter);
+        avaiOnly.setOnAction(actionEventEventHandler);
+        filterByFiled.setOnAction(event -> productGetter.handle(null));
     }
 
     private void loadFeatures(int id) {
@@ -180,7 +191,7 @@ public class ProductsPage extends BackAbleController {
         ArrayList<Parent> products = new ArrayList<>();
         list.forEach(pm -> {
             try {
-                Parent parent = SingleMiniProduct.generate(pm.getId(), pm.getName(), pm.getPrice(), pm.getOffPrice());
+                Parent parent = SingleMiniProduct.generate(pm);
                 products.add(parent);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -211,6 +222,16 @@ public class ProductsPage extends BackAbleController {
         filterPackage.setDownPriceLimit(min);
         filterPackage.setActiveFilters(CreateActiveFilter());
         filterPackage.setOffMode(offOnly.isSelected());
+        filterPackage.setAvaiOnly(avaiOnly.isSelected());
+        if (!nameFilter.getText().isBlank()) {
+            filterPackage.setName(nameFilter.getText());
+        }
+        if (!sellerFilter.getText().isBlank()) {
+            filterPackage.setSeller(sellerFilter.getText());
+        }
+        if (!brandFilter.getText().isBlank()) {
+            filterPackage.setBrand(brandFilter.getText());
+        }
         return filterPackage;
     }
 

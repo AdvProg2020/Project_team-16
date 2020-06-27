@@ -263,6 +263,6 @@ public class CustomerController extends Controller {
                 product.getCompanyClass().getName(),
                 product.getTotalScore(),
                 product.getDescription(),
-                sellPackagePMs);
+                sellPackagePMs, product.isAvailable());
     }
 }

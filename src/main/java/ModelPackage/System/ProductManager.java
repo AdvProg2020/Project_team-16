@@ -296,7 +296,7 @@ public class ProductManager {
     }
 
     public void addASellerToProduct(Product product,Seller seller,int amount,int price) {
-        SellPackage sellPackage = new SellPackage(product,seller,price,amount,null, false,true);
+        SellPackage sellPackage = new SellPackage(product, seller, price, amount, null, false, price != 0);
         DBManager.save(sellPackage);
         int currentLeast = product.getLeastPrice();
         if (currentLeast > price) {

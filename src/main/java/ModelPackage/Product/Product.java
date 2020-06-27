@@ -138,4 +138,12 @@ public class Product {
         }
         return false;
     }
+
+    public boolean isAvailable() {
+        if (packages != null)
+            for (SellPackage aPackage : packages) {
+                if (aPackage.getStock() != 0) return true;
+            }
+        return false;
+    }
 }

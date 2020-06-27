@@ -106,7 +106,7 @@ public class ManagerController extends Controller {
                 product.getCompanyClass().getName(),
                 product.getTotalScore(),
                 product.getDescription(),
-                sellPackagePMs);
+                sellPackagePMs, product.isAvailable());
     }
 
     public void removeProduct(int productId) throws NoSuchAProductException {

@@ -219,7 +219,7 @@ public class SellerController extends Controller{
                 product.getCompanyClass().getName(),
                 product.getTotalScore(),
                 product.getDescription(),
-                sellPackagePMs);
+                sellPackagePMs, product.isAvailable());
     }
 
     public void saveImagesForProduct(int id, InputStream mainImage, ArrayList<InputStream> files) {

@@ -10,6 +10,11 @@ public class FilterPackage {
     private int categoryId;
     private HashMap<String,String> activeFilters;
     private boolean offMode;
+    private boolean avaiOnly;
+
+    private String name;
+    private String seller;
+    private String brand;
 
     public FilterPackage(){
         activeFilters = new HashMap<>();

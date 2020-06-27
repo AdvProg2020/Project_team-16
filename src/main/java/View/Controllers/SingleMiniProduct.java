@@ -2,6 +2,7 @@ package View.Controllers;
 
 import View.CacheData;
 import View.Main;
+import View.PrintModels.MiniProductPM;
 import controler.ProductController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,12 +22,13 @@ public class SingleMiniProduct {
     public Label price;
     public Label offPrice;
     public Pane pane;
+    public ImageView soldOut;
 
-    public static Parent generate(int id, String name, int price, int offPrice) throws IOException {
+    public static Parent generate(MiniProductPM pm) throws IOException {
         FXMLLoader loader = Main.getFXMLLoader("SingleMiniProduct");
         Parent parent = loader.load();
         SingleMiniProduct controller = loader.getController();
-        controller.initData(id, price, offPrice, name);
+        controller.initData(pm);
         return parent;
     }
 
@@ -35,7 +37,11 @@ public class SingleMiniProduct {
 
     }
 
-    private void initData(int id, int prc, int offPrc, String name) {
+    private void initData(MiniProductPM pm) {
+        int offPrc = pm.getOffPrice();
+        int prc = pm.getPrice();
+        String name = pm.getName();
+        int id = pm.getId();
         boolean onOff = (offPrc != 0);
         specialOffer.setVisible(onOff);
         offPrice.setText("Offer : " + offPrc + "$");
@@ -52,5 +58,6 @@ public class SingleMiniProduct {
             }
         });
         productPreViewImage.setImage(ProductController.getInstance().loadMainImage(id));
+        soldOut.setVisible(!pm.isAvailable());
     }
 }
