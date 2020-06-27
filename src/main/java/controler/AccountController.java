@@ -32,7 +32,7 @@ public class AccountController extends Controller {
         }
     }
 
-    public void createAccount(String[] info, String type){
+    public void createAccount(String[] info, String type) throws UserNotAvailableException {
         accountManager.createAccount(info, type);
     }
 

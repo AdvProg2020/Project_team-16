@@ -243,19 +243,19 @@
                                  </graphic>
                               </JFXButton>
                               <Separator layoutX="15.0" layoutY="263.0" prefWidth="200.0" />
-                              <VBox fx:id="sysAddBox" disable="true" prefHeight="125.0" prefWidth="198.0" spacing="5.0">
+                              <VBox fx:id="sysAddBox" prefHeight="125.0" prefWidth="198.0" spacing="5.0">
                                  <children>
                                     <Label prefHeight="18.0" prefWidth="171.0" text="Systematic User Addition">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <JFXComboBox focusColor="#40a84b" prefHeight="26.0" prefWidth="215.0">
+                                    <JFXComboBox fx:id="sysMode" focusColor="#40a84b" prefHeight="26.0"
+                                                 prefWidth="215.0">
                                        <items>
                                           <FXCollections fx:factory="observableArrayList">
                                              <String fx:value="Users Shop More Than 1500$" />
                                              <String fx:value="Users Shop More Than 2500$" />
-                                             <String fx:value="Users Shop More Than 4000$" />
                                              <String fx:value="To 10 Random User" />
                                              <String fx:value="To 50 Random User" />
                                              <String fx:value="To 100 Random User" />

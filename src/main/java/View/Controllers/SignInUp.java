@@ -134,7 +134,12 @@ public class SignInUp {
     private void sendSignUpRequest() {
         String[] info = new String[7];
         generateInfoPack(info);
-        accountController.createAccount(info,"customer");
+        try {
+            accountController.createAccount(info, "customer");
+        } catch (UserNotAvailableException e) {
+            errorField(usernameUp, "Username Is Invalid");
+            e.printStackTrace();
+        }
     }
 
     private void generateInfoPack(String[] infoPack) {

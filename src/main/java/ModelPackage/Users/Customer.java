@@ -36,6 +36,8 @@ public class Customer extends User {
     @OneToMany
     private List<Request> requests;
 
+    private long allPurchase;
+
     public Customer(String username, String password, String firstName, String lastName, String email, String phoneNumber, Cart cart, long balance) {
         super(username, password, firstName, lastName, email, phoneNumber, cart);
         this.balance = balance;

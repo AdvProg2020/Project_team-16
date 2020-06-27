@@ -4,20 +4,27 @@ import ModelPackage.Maps.DiscountcodeIntegerMap;
 import ModelPackage.Maps.SellerIntegerMap;
 import ModelPackage.Maps.UserIntegerMap;
 import ModelPackage.Off.DiscountCode;
+import ModelPackage.Product.Product;
 import ModelPackage.System.database.DBManager;
+import ModelPackage.System.database.HibernateUtil;
 import ModelPackage.System.editPackage.DiscountCodeEditAttributes;
 import ModelPackage.System.exeption.discount.*;
 import ModelPackage.System.exeption.off.InvalidTimes;
 import ModelPackage.Users.Customer;
+import ModelPackage.Users.Seller;
+import ModelPackage.Users.SubCart;
 import ModelPackage.Users.User;
 import lombok.Data;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.*;
 
 @Data
 public class DiscountManager {
@@ -197,12 +204,58 @@ public class DiscountManager {
     }
 
     private DiscountcodeIntegerMap findDiscountMap(User user,String code){
-        //System.out.println(user.getUsername());
         Customer customer = DBManager.load(Customer.class,user.getUsername());
-        //System.out.println(customer.getUsername());
         for (DiscountcodeIntegerMap map : customer.getDiscountCodes()) {
             if (map.getDiscountCode().getCode().equals(code)) return map;
         }
         return null;
+    }
+
+    public void sysTo(String code, int amount, int numberOfUsers) {
+        Random random = new Random();
+        List<Customer> customers = DBManager.loadAllData(Customer.class);
+        List<Customer> randomList = new ArrayList<>();
+        if (numberOfUsers < customers.size())
+            for (int i = 0; i < numberOfUsers; i++) {
+                int index = random.nextInt(customers.size());
+                randomList.add(customers.get(index));
+                customers.remove(index);
+            }
+        else {
+            randomList.addAll(customers);
+        }
+        randomList.forEach(customer -> {
+            try {
+                discountManager.addUserToDiscountCodeUsers(code, customer, amount);
+            } catch (NoSuchADiscountCodeException | UserExistedInDiscountCodeException ignore) {
+            }
+        });
+    }
+
+    public void sysMore(String code, int amount, int i) {
+        List<Customer> customers = getCustomersWithMorePurchase(i);
+        DiscountManager discountManager = DiscountManager.getInstance();
+        customers.forEach(customer -> {
+            try {
+                discountManager.addUserToDiscountCodeUsers(code, customer, amount);
+            } catch (NoSuchADiscountCodeException | UserExistedInDiscountCodeException ignore) {
+            }
+        });
+    }
+
+    private List<Customer> getCustomersWithMorePurchase(int i) {
+        Session session = HibernateUtil.getSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Customer> criteriaQuery = criteriaBuilder.createQuery(Customer.class);
+        Root<Customer> root = criteriaQuery.from(Customer.class);
+        criteriaQuery.select(root);
+        Predicate[] predicates = {
+                criteriaBuilder.greaterThan(root.get("allPurchase"), i),
+        };
+        criteriaQuery.where(
+                predicates
+        );
+        Query<Customer> query = session.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 }

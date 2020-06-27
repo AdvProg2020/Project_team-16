@@ -1,6 +1,7 @@
 package View.Controllers;
 
 import ModelPackage.System.AccountManager;
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import View.CacheData;
 import View.Main;
 import com.jfoenix.controls.JFXButton;
@@ -72,7 +73,6 @@ public class SellerSignUp {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 }

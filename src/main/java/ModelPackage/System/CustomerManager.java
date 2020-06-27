@@ -98,13 +98,12 @@ public class CustomerManager {
 
     public void purchaseForCustomer(Customer customer, CustomerInformation customerInformation, DiscountCode discountCode) throws NoSuchSellerException, NoSuchAPackageException {
         long totalPrice = getTotalPrice(discountCode, customer);
-
         long difference = totalPrice - customer.getBalance();
-
         checkIfCustomerHasEnoughMoney(difference);
-
         customer.setBalance(customer.getBalance() - totalPrice);
         customer.getCustomerInformation().add(customerInformation);
+        customer.setAllPurchase(customer.getAllPurchase() + totalPrice);
+        DBManager.save(customer);
     }
 
     public void productChangeInPurchase(Customer customer) throws NoSuchSellerException {

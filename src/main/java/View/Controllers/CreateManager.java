@@ -1,5 +1,6 @@
 package View.Controllers;
 
+import ModelPackage.System.exeption.account.UserNotAvailableException;
 import View.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -79,7 +80,11 @@ public class CreateManager extends BackAbleController {
     private void sendSignUpRequest() {
         String[] info = new String[7];
         generateInfoPack(info);
-        accountController.createAccount(info,"manager");
+        try {
+            accountController.createAccount(info, "manager");
+        } catch (UserNotAvailableException e) {
+            Notification.show("Error", "Invalid Username", back.getScene().getWindow(), true);
+        }
     }
 
     private void generateInfoPack(String[] infoPack) {

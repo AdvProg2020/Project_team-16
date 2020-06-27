@@ -19,6 +19,7 @@ import ModelPackage.Users.User;
 import View.FilterPackage;
 import View.PrintModels.*;
 import View.SortPackage;
+import View.SysDis;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -235,5 +236,18 @@ public class ManagerController extends Controller {
         categoryManager.removeCategory(id);
     }
 
-
+    public void systematicDiscount(String code, int amount, SysDis sysDis) {
+        switch (sysDis) {
+            case TO10:
+                discountManager.sysTo(code, amount, 10);
+            case TO50:
+                discountManager.sysTo(code, amount, 50);
+            case TO100:
+                discountManager.sysTo(code, amount, 100);
+            case MORE1500:
+                discountManager.sysMore(code, amount, 1500);
+            case MORE2500:
+                discountManager.sysMore(code, amount, 2000);
+        }
+    }
 }

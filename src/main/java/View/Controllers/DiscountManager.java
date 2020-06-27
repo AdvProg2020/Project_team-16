@@ -6,6 +6,7 @@ import ModelPackage.System.exeption.discount.*;
 import View.Main;
 import View.PrintModels.DisCodeManagerPM;
 import View.PrintModels.UserIntegerPM;
+import View.SysDis;
 import com.jfoenix.controls.*;
 import controler.ManagerController;
 import javafx.beans.binding.Bindings;
@@ -25,6 +26,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import static View.SysDis.*;
 
 public class DiscountManager extends BackAbleController {
     public JFXButton back;
@@ -71,6 +74,8 @@ public class DiscountManager extends BackAbleController {
     public VBox sysAddBox;
     public JFXTextField sysQuantity;
     public JFXButton sysAdd;
+    public JFXComboBox<String> sysMode;
+
     public JFXButton delete;
 
     public ListView<DisCodeManagerPM> codes;
@@ -78,7 +83,6 @@ public class DiscountManager extends BackAbleController {
     private static final Paint redColor = Paint.valueOf("#c0392b");
     private static final Paint blueColor = Paint.valueOf("#405aa8");
     private static final ManagerController managerController = ManagerController.getInstance();
-
     @FXML
     public void initialize(){
         loadList();
@@ -90,8 +94,35 @@ public class DiscountManager extends BackAbleController {
         userTableInitialize();
         addUserInitialize();
         editCode();
-        // TODO: 6/13/2020
-        //systematicAdditionInitialize();
+        systematicAdditionInitialize();
+    }
+
+    private void systematicAdditionInitialize() {
+        sysAdd.setOnAction(event -> getUsersSystematicDiscount());
+    }
+
+    private void getUsersSystematicDiscount() {
+        if (sysQuantity.getText().isBlank()) {
+            errorField(sysQuantity, "Amount Required");
+        } else if (!sysQuantity.getText().matches("\\d{1,9}")) {
+            errorField(sysQuantity, "Number Required");
+        } else {
+            SysDis sysDis = TO10;
+            switch (sysMode.getValue()) {
+                case "Users Shop More Than 1500$":
+                    sysDis = MORE1500;
+                case "Users Shop More Than 2500$":
+                    sysDis = MORE2500;
+                case "To 10 Random User":
+                    sysDis = TO10;
+                case "To 50 Random User":
+                    sysDis = TO50;
+                case "To 100 Random User":
+                    sysDis = TO100;
+            }
+            managerController.systematicDiscount(codes.getSelectionModel().getSelectedItem().getDiscountCode()
+                    , Integer.parseInt(sysQuantity.getText()), sysDis);
+        }
     }
 
     private void editCode() {
@@ -100,6 +131,13 @@ public class DiscountManager extends BackAbleController {
             if (checkEditBoxValidity()){
                 sendEditRequest();
                 reset();
+            }
+        });
+        delete.setOnAction(event -> {
+            try {
+                managerController.removeDiscountCode(codes.getSelectionModel().getSelectedItem().getDiscountCode());
+            } catch (NoSuchADiscountCodeException e) {
+                Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             }
         });
     }
@@ -353,6 +391,7 @@ public class DiscountManager extends BackAbleController {
                         .or(Bindings.isEmpty(crEndS.textProperty()))))
                 .or(Bindings.isEmpty(crMaximum.textProperty()))
                 .or(Bindings.isEmpty(crCode.textProperty())));
+        sysAdd.disableProperty().bind(sysMode.getSelectionModel().selectedItemProperty().isNull());
     }
 
     private void listeners() {
