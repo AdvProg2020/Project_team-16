@@ -10,6 +10,7 @@ import ModelPackage.Product.Product;
 import ModelPackage.Product.SellPackage;
 import ModelPackage.System.database.DBManager;
 import ModelPackage.System.exeption.account.NoSuchACustomerException;
+import ModelPackage.System.exeption.account.NotEnoughMoneyException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NoSuchAProductInCart;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
@@ -117,7 +118,7 @@ public class CustomerController extends Controller {
     }
 
     public void purchase(String username, String[] customerInfo, String disCode)
-            throws NoSuchADiscountCodeException, NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException, NoSuchAPackageException {
+            throws NoSuchADiscountCodeException, NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException, NoSuchAPackageException, NotEnoughMoneyException {
         CustomerInformation customerInformation = new CustomerInformation(
                 customerInfo[0],
                 customerInfo[1],

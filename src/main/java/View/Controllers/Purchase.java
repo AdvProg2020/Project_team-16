@@ -1,6 +1,7 @@
 package View.Controllers;
 
 import ModelPackage.Product.NoSuchSellerException;
+import ModelPackage.System.exeption.account.NotEnoughMoneyException;
 import ModelPackage.System.exeption.account.UserNotAvailableException;
 import ModelPackage.System.exeption.cart.NotEnoughAmountOfProductException;
 import ModelPackage.System.exeption.discount.NoSuchADiscountCodeException;
@@ -251,8 +252,8 @@ public class Purchase extends BackAbleController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } catch (NoSuchADiscountCodeException | NotEnoughAmountOfProductException | NoSuchAProductException | NoSuchSellerException | NoSuchAPackageException e) {
-                e.printStackTrace();
+            } catch (NoSuchADiscountCodeException | NotEnoughAmountOfProductException | NoSuchAProductException | NoSuchSellerException | NoSuchAPackageException | NotEnoughMoneyException e) {
+                Notification.show("Error", e.getMessage(), back.getScene().getWindow(), true);
             }
         }
     }

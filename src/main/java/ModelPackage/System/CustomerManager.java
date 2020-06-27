@@ -51,7 +51,7 @@ public class CustomerManager {
     }
 
     public void purchase(String username, CustomerInformation customerInformation, DiscountCode discountCode)
-            throws NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException, NoSuchAPackageException {
+            throws NotEnoughAmountOfProductException, NoSuchAProductException, NoSuchSellerException, NoSuchAPackageException, NotEnoughMoneyException {
         Customer customer = DBManager.load(Customer.class, username);
 
         Cart cart = customer.getCart();
@@ -96,7 +96,7 @@ public class CustomerManager {
         }
     }
 
-    public void purchaseForCustomer(Customer customer, CustomerInformation customerInformation, DiscountCode discountCode) throws NoSuchSellerException, NoSuchAPackageException {
+    public void purchaseForCustomer(Customer customer, CustomerInformation customerInformation, DiscountCode discountCode) throws NoSuchSellerException, NoSuchAPackageException, NotEnoughMoneyException {
         long totalPrice = getTotalPrice(discountCode, customer);
         long difference = totalPrice - customer.getBalance();
         checkIfCustomerHasEnoughMoney(difference);
@@ -153,7 +153,7 @@ public class CustomerManager {
         return 0;
     }
 
-    public void checkIfCustomerHasEnoughMoney(long difference){
+    public void checkIfCustomerHasEnoughMoney(long difference) throws NotEnoughMoneyException {
         if (difference > 0){
             throw new NotEnoughMoneyException(difference);
         }
